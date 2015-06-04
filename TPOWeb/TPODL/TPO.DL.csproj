@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CC45198C-AEFC-4FAC-ADDA-35858B7A3703}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TPO.DL</RootNamespace>
+    <AssemblyName>TPO.DL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Entity.Design" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Framework\DBProvider.cs" />
+    <Compile Include="Framework\RepositoryBase.cs" />
+    <Compile Include="Models\FailProperty.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IMProd.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IMProduct.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IMProductType.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IMQC.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IMessage.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Plant.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProdDteChng.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProdLine.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProdLineRollConfig.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProdLinesPerform.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProdLinesPerformProd.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProdLineType.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProdSupervisorOnShift.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductionBudget.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductionBudgetType.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductionLineSchedule.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductionShift.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductionShiftType.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductionShiftUse.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QCKickout.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QCPrintSpecification.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QCPrintSpecificationType.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QCRedHold.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterial.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterialAction.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterialActionReason.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterialActionType.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterialQC.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterialQCRedHold.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterialReceived.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterialSpecificGravity.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterialSpecificGravityDetail.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterialTest.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterialVendor.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RoleAssignment.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ScrimAction.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ScrimActionReason.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ScrimActionType.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ScrimRoll.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ScrimType.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TestLimitType.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOCProductRoll.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOCurrentRawMaterial.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOCurrentScrim.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOExtruder.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOFormulation.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOFormulationLineProduct.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOFormulationRawMaterial.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOMVCModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TPOMVCModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOMVCModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOMVCModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TPOMVCModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOProduct.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOProductCapCoreDetail.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOProductCEDetail.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOProductDimDetail.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOProductGrabDetail.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOProductLabelDetail.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPOProductStandardCost.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UnitOfMeasure.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UnitOfMeasureType.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorkOrder.cs">
+      <DependentUpon>TPOMVCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\MessageRepository.cs" />
+    <Compile Include="Repositories\RawMaterialsRepository.cs" />
+    <Compile Include="Repositories\ReferenceDataRepository.cs" />
+    <Compile Include="Repositories\ScrimRepository.cs" />
+    <Compile Include="Repositories\SystemSettingsRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Models\TPOMVCModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TPOMVCModel.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>TPO.DL.Models</CustomToolNamespace>
+    </EntityDeploy>
+    <None Include="Models\TPOMVCModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TPOMVCModel.edmx</DependentUpon>
+      <LastGenOutput>TPOMVCModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Models\TPOMVCModel.edmx.diagram">
+      <DependentUpon>TPOMVCModel.edmx</DependentUpon>
+    </None>
+    <None Include="Models\TPOMVCModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TPOMVCModel.edmx</DependentUpon>
+      <LastGenOutput>TPOMVCModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

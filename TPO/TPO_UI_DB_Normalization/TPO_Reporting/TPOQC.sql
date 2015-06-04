@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[TPOQC]
+(
+	[ID] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [PlantID] INT NOT NULL, 
+    [RollID] INT NOT NULL, 
+    [LineID] INT NOT NULL, 
+    [LotID] INT NOT NULL, 
+    [ShiftID] INT NOT NULL, 
+    [LabTechUserID] INT NOT NULL, 
+    [ProductID] INT NOT NULL, 
+    [TypeID] INT NOT NULL, 
+    [WidthUoMID] INT NOT NULL, 
+    [EastWidth] FLOAT NULL, 
+	[WestWidth] FLOAT NULL,
+	[MassArea] FLOAT NULL,
+    [PrintPass] BIT NULL, 
+    [LotPass] BIT NULL, 
+    [DateEntered] DATETIME NOT NULL, 
+    [EnteredBy] NVARCHAR(100) NOT NULL, 
+    [LastModified] DATETIME NOT NULL, 
+    [ModifiedBy] NVARCHAR(100) NOT NULL, 
+    CONSTRAINT [FK_TPOQC_Plant] FOREIGN KEY ([PlantID]) REFERENCES [Plant]([ID]),
+	CONSTRAINT [FK_TPOQC_ProductionShift] FOREIGN KEY ([ShiftID]) REFERENCES [ProductionShift]([ID]),
+	CONSTRAINT [FK_TPOQC_TPOQCType] FOREIGN KEY ([TypeID]) REFERENCES [TPOQCType]([ID]),
+	CONSTRAINT [FK_TPOQC_User] FOREIGN KEY ([LabTechUserID]) REFERENCES [User]([ID]),
+	CONSTRAINT [FK_TPOQC_TPOCProductRoll] FOREIGN KEY ([RollID]) REFERENCES [TPOCProductRoll]([ID]),
+	CONSTRAINT [FK_TPOQC_WidthUnitOfMeasure] FOREIGN KEY ([WidthUoMID]) REFERENCES [UnitOfMeasure]([ID])
+)

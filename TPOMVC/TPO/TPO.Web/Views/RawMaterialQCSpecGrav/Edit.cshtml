@@ -1,0 +1,87 @@
+﻿@model TPO.Web.Models.RawMaterialQcSpecificGravity
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.RawMaterialQcId)
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.RawMaterialQCId, "Raw Material", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RawMaterialQCID", String.Empty)
+                    @Html.ValidationMessageFor(model => model.RawMaterialQCId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LabTechUserID, "Lab Tech", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("LabTechUserID",(SelectList)ViewBag.QCTech, String.Empty)
+                    @Html.ValidationMessageFor(model => model.LabTechUserID)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DenIso, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DenIso)
+                    @Html.ValidationMessageFor(model => model.DenIso)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateEntered, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DateEntered)
+                    @Html.ValidationMessageFor(model => model.DateEntered)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EnteredBy, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EnteredBy)
+                    @Html.ValidationMessageFor(model => model.EnteredBy)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastModified, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LastModified)
+                    @Html.ValidationMessageFor(model => model.LastModified)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ModifiedBy, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ModifiedBy)
+                    @Html.ValidationMessageFor(model => model.ModifiedBy)
+                </div>
+            </div>*@
+
+        <div id="QCForm">
+            @Html.Partial("/Views/RawMaterialQCSpecGrav/GravityDetail.cshtml", Model)
+            @*<script type="text/javascript">
+                    if ($.validator != null) {
+                        $.validator.unobtrusive.parse('form');
+                    }
+                </script>*@
+        </div>
+
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>*@
+    </div>
+}

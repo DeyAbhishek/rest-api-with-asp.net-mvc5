@@ -1,0 +1,105 @@
+﻿@model IEnumerable<TPOWeb.Models.CurrentRawMaterialViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+<h3>Set Current Raw Material List</h3><br />
+
+@using (@Html.BeginForm("Index", "RawMaterialCurrent", FormMethod.Post, FormMethod.Post, new { id = "TheForm" }))
+{
+    
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>*@
+    
+    @Html.DisplayNameFor(model => model.LineId)
+    <span>&nbsp;&nbsp;</span>
+    
+    @*@Html.DropDownListFor(model=> model.LineId,(SelectList)ViewBag.LineIDSelectList,
+                                TPO.BL.Constants.Labels.SelectBoxSelectOne,
+        new
+        {
+            onchange = "document.getElementById('TheForm').submit();"
+        })*@
+    @Html.DropDownList("lineId",
+            (SelectList)ViewBag.productionLineSelectList,
+        TPO.BL.Constants.Labels.SelectBoxSelectOne,
+    new
+    {
+        onchange = "document.getElementById('TheForm').submit();"
+    })
+    <br />
+    <br />
+    <p>
+        @*//TODO: Populate Plant from current plant.*@
+        @*updated link to button and used simple text instead of lookup: TPO.BL.Constants.Labels.CreateLink*@
+        @*@Html.ActionLink("Add Raw Material", "Create", "RawMaterialCurrent", new { plantId = 1 }, new { @class = "btn btn-default btn-shado leftMar20px" })*@
+        <button class="btn btn-default btn-shadow leftMar20px"
+                onclick="window.location.href = '@Url.Action("Create", new { plantId = 1 })'; return false;">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Add Raw Material
+        </button>
+    </p>
+<table class="table">
+    
+
+    @if (Model.Count() == 0)
+{
+        <tr>
+            <td colspan="4">
+                No records match search criteria
+            </td>
+        </tr>
+}
+else
+{
+<tr>
+    @*<th style="background-color:yellow" width="20%">
+        @Html.DisplayNameFor(model => model.LineId)
+    </th>*@
+
+    <th width="20%">
+        @Html.DisplayNameFor(model => model.RawMaterialReceivedCode)
+    </th>
+
+    <th width="20%">
+        @Html.DisplayNameFor(model => model.LotId)
+    </th>
+    <th></th>
+</tr>
+
+foreach (var item in Model) {
+        <tr>
+            @*<td style="background-color:yellow">
+                @Html.DisplayFor(modelItem => item.LineId)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.RawMaterialReceivedCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LotId)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Edit","RawMaterialCurrent",new{id=item.Id})';return false;">
+                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+                </button>
+                <button value="Details"
+                        class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Details","RawMaterialCurrent",new{id=item.Id})';return false;">
+                    <span class="glyphicon glyphicon-eye-open"></span>&nbsp;Details
+                </button>
+                <button class="btn btn-default btn-danger btn-delete"
+                        onclick="window.location.href = '@Url.Action("Delete","RawMaterialCurrent",new{id=item.Id})'; return false;">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+                </button>
+
+            </td>
+        </tr>
+}
+}
+</table>
+}

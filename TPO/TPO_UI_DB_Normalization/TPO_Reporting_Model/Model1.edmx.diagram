@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="75b0744117d94dd7b757d7d5ba273fa7" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="TPO_ReportingModel.Comment" Width="1.5" PointX="32.875" PointY="17.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.DownTime" Width="1.5" PointX="35.875" PointY="16.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.DownTimeEquipment" Width="1.875" PointX="3.25" PointY="18.375" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.DownTimeReason" Width="1.75" PointX="6.25" PointY="18.125" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.DownTimeType" Width="1.5" PointX="1" PointY="26.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.EndOfRun" Width="1.5" PointX="32.875" PointY="22.125" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.EndOfRunRework" Width="1.75" PointX="3.25" PointY="14.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.EndOfRunTPOFeeder" Width="2" PointX="32.375" PointY="12" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.FailProperty" Width="1.5" PointX="44.875" PointY="30.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.IMLineScrap" Width="1.5" PointX="38.875" PointY="16.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.IMLineScrapReason" Width="1.875" PointX="36.25" PointY="28.875" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.IMLineScrapType" Width="1.75" PointX="36.375" PointY="32.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.IMProduction" Width="1.5" PointX="35.875" PointY="22.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.IMQC" Width="1.5" PointX="35.875" PointY="10.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.IMQCDetail" Width="1.5" PointX="38.125" PointY="4" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.Plant" Width="1.5" PointX="1" PointY="14.875" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ProductionBudget" Width="1.75" PointX="3.25" PointY="23.375" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ProductionBudgetType" Width="2" PointX="1" PointY="30.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ProductionLineSchedule" Width="2" PointX="6.25" PointY="13.375" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ProductionShift" Width="1.5" PointX="9.25" PointY="16.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ProductionShiftType" Width="1.875" PointX="6.625" PointY="27.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ProductionShiftUse" Width="1.875" PointX="14.5" PointY="17.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.QCKickout" Width="1.5" PointX="41.875" PointY="8.375" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.QCPrintSpecification" Width="1.875" PointX="6.25" PointY="23.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.QCPrintSpecificationType" Width="2.125" PointX="3.375" PointY="31.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.QCRedHold" Width="1.5" PointX="47.125" PointY="14.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.RawMaterialAction" Width="1.875" PointX="41.875" PointY="18.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.RawMaterialActionReason" Width="2.125" PointX="39.25" PointY="32" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.RawMaterialActionType" Width="2.125" PointX="39.625" PointY="35.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.RawMaterialQC" Width="1.5" PointX="38.875" PointY="8.875" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.RawMaterialReceived" Width="1.875" PointX="9.25" PointY="10.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.RawMaterialReceivedSizeLimit" Width="2.625" PointX="29.5" PointY="22.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.RawMaterialTest" Width="1.625" PointX="12.25" PointY="16.125" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ReclaimType" Width="1.5" PointX="22.25" PointY="2.375" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ScrimAction" Width="1.5" PointX="44.875" PointY="10.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ScrimActionReason" Width="2" PointX="42.125" PointY="1.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ScrimActionType" Width="2" PointX="22.375" PointY="29.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ScrimRoll" Width="1.5" PointX="9.25" PointY="24.875" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.ScrimType" Width="1.5" PointX="3.25" PointY="8.875" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.SupervisorOnShift" Width="1.75" PointX="44.625" PointY="19.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TestLimitType" Width="1.5" PointX="10" PointY="32.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOBatch" Width="1.5" PointX="63" PointY="0.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOCProductRoll" Width="1.75" PointX="38.625" PointY="23.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOExtruder" Width="1.5" PointX="10" PointY="6.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOFormulation" Width="2" PointX="10" PointY="2.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOFormulationLineProduct" Width="2.375" PointX="3.25" PointY="27.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOLineScrap" Width="1.5" PointX="44.875" PointY="23.375" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOLineScrapCode" Width="1.875" PointX="63" PointY="8.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOLineScrapType" Width="1.875" PointX="42.25" PointY="24.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQC" Width="1.5" PointX="47.125" PointY="4" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQC2X2Detail" Width="1.75" PointX="54.5" PointY="7.125" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCAshDetail" Width="2" PointX="26.75" PointY="12.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCCapThicknessDetail" Width="1.5" PointX="55.5" PointY="1.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCColorDetail" Width="1.75" PointX="49.625" PointY="0.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCCoreThicknessDetail" Width="2.25" PointX="52.5" PointY="11.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCDimensionalStabilityDetail" Width="2.625" PointX="49.125" PointY="10.125" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCFlashElongationDetail" Width="2.25" PointX="57.5" PointY="6.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCFlashTearingDetail" Width="1.5" PointX="57.5" PointY="0.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCFlashTensileDetail" Width="1.5" PointX="55.375" PointY="12.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCGrabElongationDetail" Width="2.25" PointX="49.375" PointY="14.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCGrabTearingDetail" Width="2" PointX="60.5" PointY="6.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCGrabTensileDetail" Width="1.5" PointX="60.5" PointY="0.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCGumDetail" Width="1.875" PointX="49.625" PointY="19.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCOverallThicknessDetail" Width="1.5" PointX="58.375" PointY="12.375" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCPlyDetail" Width="1.5" PointX="62.125" PointY="11.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCPrintMeasurementDetail" Width="2.375" PointX="55.375" PointY="18.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCPunctureDetail" Width="2" PointX="52.875" PointY="18.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCSpecificGravityDetail" Width="2.25" PointX="58" PointY="22.125" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCThicknessFromEdgeDetail" Width="2.625" PointX="52.375" PointY="29.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCType" Width="1.5" PointX="44.875" PointY="2.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOQCWeldStrengthDetail" Width="2.125" PointX="52.75" PointY="21.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPORawMaterialFormulation" Width="2.375" PointX="11.625" PointY="11" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOReclaimAction" Width="1.875" PointX="24.125" PointY="8.125" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOReclaimActionType" Width="2" PointX="22.25" PointY="13.875" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOReclaimWIP" Width="1.5" PointX="60.25" PointY="14.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOReworkAction" Width="1.875" PointX="21.5" PointY="6.375" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOReworkActionType" Width="2" PointX="18.75" PointY="8.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOReworkRoll" Width="1.5" PointX="14.5" PointY="11.375" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOSpecificGravity" Width="1.875" PointX="44.125" PointY="6" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOSpecificGravityWeightDetail" Width="2.625" PointX="49.25" PointY="5.25" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.TPOSpecificGravityWeightDetailType" Width="2.75" PointX="51.625" PointY="0.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.UnitOfMeasure" Width="1.5" PointX="1" PointY="4.875" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.UnitOfMeasureConversion" Width="2.125" PointX="3.25" PointY="4.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.UnitOfMeasureDefault" Width="2" PointX="6.25" PointY="9.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.UnitOfMeasureType" Width="2.125" PointX="1.75" PointY="0.5" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.User" Width="1.5" PointX="63" PointY="23.75" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.WorkOrder" Width="1.5" PointX="49.75" PointY="29.875" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_Comment_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_Comment_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_Comment_WorkOrder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_DownTime_DownTimeEquipment" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_DownTime_DownTimeReason" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_DownTime_DownTimeType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_DownTime_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_DownTime_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_DownTime_WorkOrder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_DownTimeEquipment_DownTimeType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_DownTimeEquipment_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_DownTimeReason_DownTimeType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_DownTimeReason_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_EndOfRun_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_EndOfRun_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_EndOfRun_WorkOrder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_EndOfRunRework_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_EndOfRunRework_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_EndOfRunTPOFeeder_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_EndOfRunTPOFeeder_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_EndOfRunTPOFeeder_TPOExtruder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_EndOfRunTPOFeeder_WorkOrder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCRedHold_FailProperty" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMLineScrap_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMLineScrap_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMLineScrap_ScrapReason" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMLineScrap_ScrapType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMLineScrap_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMLineScrap_WorkOrder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMProduction_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMProduction_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMProduction_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMProduction_WorkOrder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMQC_LabTechUserID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMQC_OperatorUserID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMQC_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_IMQCDetail_IMQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ProductionBudget_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ProductionLineSchedule_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ProductionShift_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ProductionShiftUse_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCKickout_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCPrintSpecification_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCRedHold_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialAction_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialQC_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialReceived_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialReceivedSizeLimit_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialTest_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimAction_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimActionType_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimRoll_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimType_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOBatch_Plant" ManuallyRouted="true" >
+          <ConnectorPoint PointX="1.2523866036224369" PointY="14.875" />
+          <ConnectorPoint PointX="1.2523866036224369" PointY="13.263733723958332" />
+          <ConnectorPoint PointX="2.5625" PointY="13.263733723958332" />
+          <ConnectorPoint PointX="2.5625" PointY="3.5042936197916656" />
+          <ConnectorPoint PointX="6.7897115104166668" PointY="3.5042936197916652" />
+          <ConnectorPoint PointX="6.9563781770833328" PointY="3.5042936197916656" />
+          <ConnectorPoint PointX="9.4166666666666661" PointY="3.5042936197916648" />
+          <ConnectorPoint PointX="9.7083333333333339" PointY="3.5042936197916656" />
+          <ConnectorPoint PointX="9.9375" PointY="3.5042936197916656" />
+          <ConnectorPoint PointX="9.9375" PointY="1.6875" />
+          <ConnectorPoint PointX="47.319613388884861" PointY="1.6875" />
+          <ConnectorPoint PointX="47.319613388884861" PointY="3.5619921874999996" />
+          <ConnectorPoint PointX="47.551255012820505" PointY="3.5619921874999991" />
+          <ConnectorPoint PointX="47.717921679487176" PointY="3.5619921874999996" />
+          <ConnectorPoint PointX="49.291666666666664" PointY="3.5619921874999991" />
+          <ConnectorPoint PointX="49.458333333333336" PointY="3.5619921874999996" />
+          <ConnectorPoint PointX="53.3125" PointY="3.5619921874999996" />
+          <ConnectorPoint PointX="53.3125" PointY="0.5625" />
+          <ConnectorPoint PointX="55.041666666666664" PointY="0.56249999999999944" />
+          <ConnectorPoint PointX="55.208333333333336" PointY="0.5625" />
+          <ConnectorPoint PointX="60.041666666666664" PointY="0.56249999999999944" />
+          <ConnectorPoint PointX="60.208333333333336" PointY="0.5625" />
+          <ConnectorPoint PointX="62.90625" PointY="0.5625" />
+          <ConnectorPoint PointX="62.90625" PointY="2.2593489583333333" />
+          <ConnectorPoint PointX="63" PointY="2.2593489583333333" />
+        </AssociationConnector>
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOCProductRoll_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOFormulationLineProduct_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOLineScrap_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOLineScrapCode_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQC_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPORawMaterialFormulation_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReclaimAction_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReclaimWIP_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkAction_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkRoll_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOSpecificGravity_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_UnitOfMeasureDefault_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_User_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_WorkOrder_Plant" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ProductionBudget_ProductionBudgetType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ProductionLineSchedule_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ProductionShift_ProductionShiftType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ProductionShiftUse_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCKickout_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialAction_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimAction_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_SupervisorOnShift_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOCProductRoll_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOLineScrap_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQC_ProductionShift" ManuallyRouted="true" >
+          <ConnectorPoint PointX="9.68735601923077" PointY="16.5" />
+          <ConnectorPoint PointX="9.68735601923077" PointY="15.417705078125" />
+          <ConnectorPoint PointX="11.433815954387519" PointY="15.417705078125" />
+          <ConnectorPoint PointX="11.433815954387519" PointY="6.109375" />
+          <ConnectorPoint PointX="12.537269315104167" PointY="6.1093749999999991" />
+          <ConnectorPoint PointX="12.703935981770835" PointY="6.109375" />
+          <ConnectorPoint PointX="24.979166666666668" PointY="6.1093749999999991" />
+          <ConnectorPoint PointX="25.145833333333332" PointY="6.109375" />
+          <ConnectorPoint PointX="36.541666666666664" PointY="6.1093749999999991" />
+          <ConnectorPoint PointX="36.708333333333336" PointY="6.109375" />
+          <ConnectorPoint PointX="37.6875" PointY="6.109375" />
+          <ConnectorPoint PointX="37.6875" PointY="7.8359993489583317" />
+          <ConnectorPoint PointX="37.729166666666664" PointY="7.8359993489583308" />
+          <ConnectorPoint PointX="37.958333333333336" PointY="7.8359993489583317" />
+          <ConnectorPoint PointX="43.541666666666664" PointY="7.8359993489583308" />
+          <ConnectorPoint PointX="43.708333333333336" PointY="7.8359993489583317" />
+          <ConnectorPoint PointX="43.8125" PointY="7.8359993489583317" />
+          <ConnectorPoint PointX="43.8125" PointY="9.9766243489583317" />
+          <ConnectorPoint PointX="43.885416666666664" PointY="9.9766243489583317" />
+          <ConnectorPoint PointX="44.052083333333336" PointY="9.9766243489583317" />
+          <ConnectorPoint PointX="44.260416666666664" PointY="9.9766243489583317" />
+          <ConnectorPoint PointX="44.427083333333336" PointY="9.9766243489583317" />
+          <ConnectorPoint PointX="46.625" PointY="9.9766243489583317" />
+          <ConnectorPoint PointX="46.625" PointY="12.086171375" />
+          <ConnectorPoint PointX="46.729166666666664" PointY="12.086171375" />
+          <ConnectorPoint PointX="46.958333333333336" PointY="12.086171375" />
+          <ConnectorPoint PointX="47.125" PointY="12.086171375" />
+        </AssociationConnector>
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReclaimAction_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkAction_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkRoll_ProductionShift" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCKickout_LeadOperatorID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCKickout_QCTechID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCKickout_SupervisorID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCKickout_TPOCProductRoll" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCPrintSpecification_QCPrintSpecificationType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCRedHold_LeadOperatorID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCRedHold_ManagerID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCRedHold_QCTechID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCRedHold_SupervisorID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_QCRedHold_TPOCProductRoll" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialAction_RawMaterialActionReason" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialAction_RawMaterialActionType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialAction_User" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialAction_WorkOrder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialQC_QCTechUser" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialReceived_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialTest_ACLimitType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialTest_CBLimitType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialTest_ColorLimitType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialTest_MFLimitType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_RawMaterialTest_MoistLimitType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReclaimAction_ReclaimType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimAction_ScrimActionReason" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimAction_ScrimActionType" ManuallyRouted="true" >
+          <ConnectorPoint PointX="23.906252000000002" PointY="32.384095052083339" />
+          <ConnectorPoint PointX="23.906252000000002" PointY="38.560688916002761" />
+          <ConnectorPoint PointX="44.125" PointY="38.560688916002761" />
+          <ConnectorPoint PointX="44.125" PointY="12.382031505208428" />
+          <ConnectorPoint PointX="44.260416666666664" PointY="12.382031505208428" />
+          <ConnectorPoint PointX="44.427083333333336" PointY="12.382031505208428" />
+          <ConnectorPoint PointX="44.875" PointY="12.382031505208428" />
+        </AssociationConnector>
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimAction_ScrimRoll" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimAction_TPOCProductRoll" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimAction_User" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimAction_WorkOrder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimRoll_LengthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimRoll_ScrimType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimRoll_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimType_LengthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimType_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_ScrimType_WidthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_SupervisorOnShift_User" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOCProductRoll_LengthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOCProductRoll_MasterRollID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOCProductRoll_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOCProductRoll_WorkOrder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQC_TPOCProductRoll" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkAction_OutputRollID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOSpecificGravity_TPOCProductRoll" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPORawMaterialFormulation_TPOExtruder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOFormulationLineProduct_TPOFormulation" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPORawMaterialFormulation_TPOFormulation" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOLineScrap_TPOLineScrapType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOLineScrap_TPOReworkRoll" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOLineScrap_WorkOrder" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReclaimAction_TPOLineScrap" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQC_TPOQCType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQC_User" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQC_WidthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQC2X2Detail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCAshDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCCapThickDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCColorDetail_TPOQC" ></AssociationConnector>
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCCoreThicknessDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCDimensionalStabilityDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCFlashElongationDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCFlashTearingDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCFlashTensileDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCGrabElongationDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCGrabTearingDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCGrabTensileDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCGumDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCOverallThicknessDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCPlyDetail_TPOQC" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCPrintMeasurementDetail_TPOQC" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCPunctureDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCSpecificGravityDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCThicknessFromEdgeDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCWeldStrengthDetail_TPOQC" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQC2X2Detail_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCCapThickDetail_WidthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCCoreThicknessDetail_WidthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCFlashElongationDetail_UnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCFlashTearingDetail_UnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCFlashTensileDetail_UnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCGrabElongationDetail_UnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCGrabTearingDetail_UnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCGrabTensileDetail_UnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOQCOverallThicknessDetail_WidthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReclaimAction_TPOReclaimActionType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkAction_LengthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkAction_StartRoll2ID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkAction_StartRollID" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkAction_TPOReworkActionType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkAction_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkAction_WidthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkRoll_LengthUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOReworkRoll_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOSpecificGravity_User" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOSpecificGravityWeightDetail_TPOSpecificGravity" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_TPOSpecificGravityWeightDetail_TPOSpecificGravityWeightDetailType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_AreaUnitOfMeasureConversion_UnitOfMeasure1" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_AreaUnitOfMeasureConversion_UnitOfMeasure2" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_UnitOfMeasure_UnitOfMeasureType" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_UnitOfMeasureDefault_UnitOfMeasure" />
+        <AssociationConnector Association="TPO_ReportingModel.FK_UnitOfMeasureDefault_UnitOfMeasureType" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.Role" Width="1.5" PointX="66.375" PointY="21.625" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.RoleAssignment" Width="1.5" PointX="65.375" PointY="24.875" />
+        <AssociationConnector Association="TPO_ReportingModel.RoleAssignmentUser" />
+        <EntityTypeShape EntityType="TPO_ReportingModel.SecuredArea" Width="1.5" PointX="67.75" PointY="24.5" />
+        <AssociationConnector Association="TPO_ReportingModel.RoleSecuredArea" />
+        <AssociationConnector Association="TPO_ReportingModel.RoleRoleAssignment" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

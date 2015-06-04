@@ -1,0 +1,261 @@
+﻿@{
+    ViewBag.Title = "EnterDowntime";
+}
+
+<h2>Enter Downtime</h2>
+
+
+<div id="divEnterLineScrap">
+    <table id="downtimeDataGrid" class="easyui-datagrid" title="Enter Line Scrap" style="width:1000px;"
+           data-options="iconCls: 'icon-edit',
+           singleSelect: true,
+           toolbar: '#lineScrapTab',
+           url: '/',
+           method: 'get' ,
+           onDblClickRow: downtimeDblClickRow,
+           pagination: true,
+           pageSize: 15,
+           pageList:[15,25,50],
+           rownumbers: true,
+           fitColumns: true
+           ">
+
+        <thead>
+            <tr>
+                <th data-options="field:'Id',hidden:true"></th>
+                <th data-options="field:'LengthUoMID',hidden:true"></th>
+                @*<th data-options="field:'TPOLineScrapCodeDescription'">Scrap Code</th>
+                <th data-options="field:'TPOLineScrapTypeDescription'">Disposition</th>*@
+            </tr>
+        </thead>
+    </table>
+    <div id="lineScrapTab">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="  downtimeCreate() ">Create New</a>
+    </div>
+</div>
+
+
+
+<div id="dialogBox1" class="easyui-dialog" title="Enter Downtime" data-options="iconCls:'icon-save'"
+     style="width:400px;height:200px;padding:10px">
+    <form id="enterDowntime">
+
+        <table>
+            <tr>
+                <td>
+                    <input type="text" value="1" id="lineScrapWorkOrder" hidden />
+                    <input type="hidden" id="lineScrapId" />
+                    <input type="hidden" id="lineScrapDateEntered" />
+                    <input type="hidden" id="lineScrapEnteredBy" />
+                    <input type="hidden" id="lineScrapLastModified" />
+                    <input type="hidden" id="lineScrapModifiedBy" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Scrap Roll ID:</label>
+                </td>
+                <td>
+                    @*<input id="scrapRollID" class="easyui-numberbox" style="width:100px">*@
+                    <input id="scrapRollID" type="text" style="width:100px">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Production Date:</label>
+                </td>
+                <td>
+                    <input id="lineScrapProductionDate" class="easyui-datebox" style="width:100px">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>Shift:</label>
+                </td>
+                <td>
+                    <input id="productionShiftSelection" class="easyui-combogrid" style="width:100px;" data-options="
+                    idField: 'Id',
+                    textField: 'Code',
+                    url: '/EnterLineScrap/GetProductionShift',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'',width:50},
+                    ]],
+                    fitColumns: true">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>Length :</label>
+                </td>
+                <td>
+                    <input type="text" id="lineScrapLength" data-options="min:0,precision:0" />
+                </td>
+                <td>
+                    <input id="lsLengthUoM" class="easyui-combogrid" style="width:100px;"
+                           data-options="
+                    idField: 'Id',
+                    textField: 'Code',
+                    url: '/EnterLineScrap/GetAllLengthUoMResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'',width:100}
+                    ]],
+                    fitColumns: true">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>Comments:</label>
+                </td>
+                <td>
+                    <textarea id="lineScrapComment" rows="4" cols="50"></textarea>
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-success btn-shadow" onclick="saveLineScrap(); return false;">
+                        <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                    </button>
+                    <button class="btn btn-default btn-shadow"
+                            onclick="  $('#dialogBox1').dialog('close'); return false;">
+                        <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                    </button>
+
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $("#dialogBox1").dialog({
+            autoOpen: false,
+            height: 600,
+            width: 500,
+            modal: true,
+            title: "Enter Downtime"
+        });
+        $("#dialogBox1").dialog("close");
+    });
+    function downtimeCreate() {
+        //var shiftID = $('#ShiftId').val();
+        //var prodDate = $("#ProductionDate").val();
+        //var workOrderID = $("#WorkOrderId").val();
+
+        //$('#productionShiftSelection').combogrid('setValue', shiftID);
+        //$('#lineScrapWorkOrder').val(workOrderID);
+        //$('#lineScrapProductionDate').datebox('setValue', prodDate);
+        //$('#dialogBox1').dialog('open');
+    }
+
+
+    function downtimeDblClickRow(rowIndex, rowData) {
+
+        //$('#dialogBox1').dialog('open');
+
+        //$('#scrapRollID').val(rowData.Code);
+        //$('#productionShiftSelection').combogrid('setValue', rowData.ShiftID);
+        //$('#lineScrapProductionDate').datebox('setValue', rowData.ProductionDate);
+        //$('#lineScrapWorkOrder').val(rowData.WorkOrderID);
+        //$('#lineScrapLength').val(rowData.Length);
+        //$('#lineScrapWidth').val(rowData.Width);
+        //$('#lineScrapWeight').val(rowData.Weight);
+        //$('#lsLengthUoM').combogrid('setValue', rowData.LengthUoMID);
+        //$('#lsWeightUoM').combogrid('setValue', rowData.WeightUoMID);
+        //$('#lsWidthUoM').combogrid('setValue', rowData.WidthUoMID);
+        //$('#scrapGroupSelection').combogrid('setValue', rowData.LineScrapCodeGroupID);
+        //$('#scrapCodeSelection').combogrid('setValue', rowData.LineScrapCodeID);
+        //$('#dispositionSelection').combogrid('setValue', rowData.TypeID);
+        //$('#lineScrapComment').val(rowData.Comment);
+        //$('#lineScrapId').val(rowData.Id);
+        //$('#lineScrapDateEntered').val(rowData.DateEntered);
+        //$('#lineScrapEnteredBy').val(rowData.EnteredBy);
+        //$('#lineScrapLastModified').val(rowData.LastModified);
+        //$('#lineScrapModifiedBy').val(rowData.ModifiedBy);
+
+
+    }
+
+    $(document).ready(function () {
+
+    });
+
+    //function scrapGroupSelected(record) {
+    //    var val = $('#scrapGroupSelection').combogrid('getValue');
+    //    $('#scrapCodeSelection').combogrid(
+    //    {
+    //        queryParams:
+    //        {
+    //            groupID: val
+    //        }
+    //    });
+
+    //}
+
+    //function demo() {
+    //    $('#dialogBox1').dialog('close');
+
+    //}
+
+    //function saveLineScrap() {
+
+    //    var myJSONObject = {
+    //        "Id": $('#lineScrapId').val(),
+    //        "Code": $('#scrapRollID').val(),
+    //        "ShiftID": $('#productionShiftSelection').combogrid('getValue'),
+    //        "ProductionShiftCode": 1,
+    //        "ProductionDate": $('#lineScrapProductionDate').datebox('getValue'),
+    //        "WorkOrderID": $('#lineScrapWorkOrder').val(),
+    //        "Length": $('#lineScrapLength').val(),
+    //        "Width": $('#lineScrapWidth').val(),
+    //        "Weight": $('#lineScrapWeight').val(),
+    //        "LengthUoMID": $('#lsLengthUoM').combogrid('getValue'),
+    //        "WidthUoMID": $('#lsWidthUoM').combogrid('getValue'),
+    //        "WeightUoMID": $('#lsWeightUoM').combogrid('getValue'),
+    //        "LineScrapCodeGroupID": $('#scrapGroupSelection').combogrid('getValue'),
+    //        "LineScrapCodeID": $('#scrapCodeSelection').combogrid('getValue'),
+    //        "TypeID": $('#dispositionSelection').combogrid('getValue'),
+    //        "Comment": $('#lineScrapComment').val(),
+    //        "DateEntered": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt($('#lineScrapDateEntered').val().substr(1, 6)))),
+    //        "EnteredBy": $('#lineScrapEnteredBy').val(),
+    //        "LastModified": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt($('#lineScrapLastModified').val().substr(1, 6)))),
+    //        "ModifiedBy": $('#lineScrapModifiedBy').val()
+    //    };
+
+
+    //    $.ajax({
+    //        url: '/EnterLineScrap/LineScrapAjaxCreate',
+    //        type: 'POST',
+    //        cache: false,
+    //        data: myJSONObject,
+    //        success: function (data) {
+    //            // alert("Save Success");
+    //            $('#lineScrapDataGrid').datagrid('reload');
+    //        },
+    //        error: function (data) {
+    //            //  alert("Save Failed!!!!");
+    //            $('#lineScrapDataGrid').datagrid('reload');
+    //        }
+    //    });
+    //    $("#dialogBox1").dialog("close");
+    //    return false;
+    //}
+
+
+
+</script>
+
+
+
+
+
+

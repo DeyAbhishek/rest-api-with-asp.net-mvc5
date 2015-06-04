@@ -1,0 +1,226 @@
+﻿@{
+    ViewBag.Title = "Raw Material Received Size and Limits";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+<h2>Raw Material Received Size and Limits</h2>
+
+    <table id="dg" class="easyui-datagrid" title="Raw Materials Recieved Size and Limits" style="height: 250px; width:450px;"
+           data-options="iconCls: 'icon-edit',
+           singleSelect: true,
+           toolbar: '#tb' ,
+           url: '/RawMaterialReceivedSizeLimit/GetAllReceiptContainerResult',
+           method: 'get',
+           pagination: false,
+           rownumbers: true,
+           fitColumns: false,
+           onClickRow: onClickRow
+           ">
+        <thead>
+            <tr>
+                <th data-options="field: 'Id', title:'Id', hidden: true"></th>
+                <th data-options="field: 'Code', title:'Size', editor:'text', width:240"></th>
+                <th data-options="field: 'LowLimit', title:'Low Limit' , editor: 'numberbox'"></th>
+                <th data-options="field: 'HighLimit', title:'High Limit' , editor: 'numberbox'"></th>
+                <th data-options="field: 'View', align: 'center',
+                    editor:
+                    {
+                        type: 'workingcheckbox',
+                        required: true
+                    },
+                    formatter:function(value,row,index)
+                    {
+                        if (value == true)
+                        {
+                            return 'Yes';
+                        }
+                        return 'No';
+                    }
+                    ">Show In List</th>
+                <th data-options="field: 'LastModified', title:'Last Modified', hidden: true"></th>
+        </thead>
+    </table>
+
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" append() ">Create New</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeit() ">Delete</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" accept() ">Save Changes</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Undo</a>
+    </div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+        });
+
+        var editIndex = undefined;
+        function createGrid()
+        {
+            $("#dg").datagrid(
+                {
+                    iconCls: 'icon-edit',
+                    singleSelect: true,
+                    toolbar: '#tb',
+                    url: '/RawMaterialReceivedSizeLimit/GetAllReceiptContainerResult',
+                    method: 'get',
+                    pagination: false,
+                    rownumbers: true,
+                    fitColumns: false,
+                    onClickRow: onClickRow,
+                    columns: [[
+                        { field: 'Id', hidden: true },
+                        { field: 'Code', title: 'Size', editor: 'text', width: 280 },
+                        { field: 'LowLimit', title: 'Low Limit', editor: 'numberbox' },
+                        { field: 'HighLimit', title: 'High Limit', editor: 'numberbox' },
+                        { field: 'View', title: 'View',
+                            editor:
+                            {
+                                type: 'workingcheckbox',
+                                required: true
+                            }, formatter: function (value, row, index)
+                            {
+                                if (value == true)
+                                {
+                                    return "Yes";
+                                }
+                                return "No";
+                            }
+                        },
+                        { field: 'LastModified', hidden: true }
+                    ]]
+                });
+        }
+        function endEditing() {
+            if (editIndex == undefined)
+                return true;
+            if ( $("#dg").datagrid('validateRow', editIndex) ) {
+                var ed = $("#dg").datagrid('getEditor',
+                {
+                    index: editIndex,
+                    field: 'Id'
+                });
+                $("#dg").datagrid('endEdit', editIndex);
+                editIndex = undefined;
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function onClickRow(index) {
+            if (editIndex != index) {
+                if (endEditing()) {
+                    $("#dg").datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                    editIndex = index;
+                } else {
+                    $("dg").datagrid('selectRow', editIndex);
+                }
+            }
+        }
+
+        function append() {
+            if (endEditing()) {
+                $('#dg').datagrid('appendRow', { status: 'P' });
+                editIndex = $('#dg').datagrid('getRows').length - 1;
+                $('#dg').datagrid('selectRow', editIndex)
+                    .datagrid('beginEdit', editIndex);
+            }
+        }
+
+        function removeit() {
+            if (editIndex == undefined)
+                return;
+
+            var row = $('#dg').datagrid('getSelected');
+            if ( row ) {
+                var values = {
+                    "id": row.Id
+                };
+                var options = {
+                    url: '/RawMaterialReceivedSizeLimit/Delete',
+                    type: 'post',
+                    data: values
+                };
+
+                $.ajax(options)
+                    .success(function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dg').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    })
+                    .error(function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    });
+            }
+            else
+
+            $("#dg").datagrid('cancelEdit', editIndex)
+                .datagrid('deleteRow', editIndex);
+            editIndex = undefined;
+        }
+
+        function accept() {
+
+            if (endEditing()) {
+                $('#dg').datagrid('acceptChanges');
+
+                var row = $('#dg').datagrid('getSelected');
+                if (row) {
+                    var rowData = {
+                        "Id": row.Id,
+                        "Code": row.Code,
+                        "LowLimit": row.LowLimit,
+                        "HighLimit": row.HighLimit,
+                        "View": row.View
+                    };
+
+                    var options = {
+                        url: '/RawMaterialReceivedSizeLimit/Save',
+                        type: 'post',
+                        data: rowData
+                    };
+
+                    $.ajax(options)
+                    .success(function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dg').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    })
+                    .error(function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    });
+                }
+            }
+        }
+
+        function reject() {
+            $('#dg').datagrid('rejectChanges');
+            editIndex = undefined;
+        }
+
+        function getChanges() {
+            var rows = $('#dg').datagrid('reload');
+        }
+        function ShowSuccess() {
+            $("#alertDIV").css("display", "block").addClass('alert-success');
+            $("#alertP").css("display", "block").text("The item was saved.");
+            $('#dg').datagrid('reload');
+        }
+        function ShowSuccessDelete() {
+            $("#alertDIV").css("display", "block").addClass('alert-success');
+            $("#alertP").css("display", "block").text("The item was removed.");
+            $('#dg').datagrid('reload');
+        }
+        function ShowError(errMessage) {
+            $("#alertDIV").css("display", "block").addClass('alert-danger');
+            $("#alertP").css("display", "block").text("The item could not be saved. Error:" + errMessage);
+            $('#dg').datagrid('reload');
+        }
+</script>
+}

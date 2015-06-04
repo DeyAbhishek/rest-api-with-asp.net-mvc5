@@ -1,0 +1,926 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+
+
+@if (Model.ProductionLineTypeCode == "IM")
+{
+    <div id="imMatrixDiv">
+        <input type="hidden" id="imFormulationId" />
+        <input type="hidden" id="imRmUse" />
+        <table border="1" cellpadding="10">
+            <tr>
+                <td></td>
+                <td><b>Pieces</b></td>
+                <td><b>Weight<span id="PUoM"></span>)</b></td>
+                <td><b>% of Total</b></td>
+                <td><b># of Cartons</b></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>Good Product</b></td>
+                <td><input type="text" id="GoodParts" disabled /></td>
+                <td><input type="text" id="GoodWt" disabled /></td>
+                <td><input type="text" id="GoodPerc" disabled /></td>
+                <td><input type="text" id="GoodCartons" disabled /></td>
+                <td></td>
+                <td><b>Shift Totals</b></td>
+            </tr>
+            <tr>
+                <td><b>Rework</b></td>
+                <td><input type="text" id="ScParts2" disabled /></td>
+                <td><input type="text" id="ScWt2" disabled /></td>
+                <td><input type="text" id="ScPerc2" disabled /></td>
+                <td></td>
+                <td><b>Total Down Time (min)</b></td>
+                <td><input type="text" id="ShiftDT" disabled /></td>
+            </tr>
+            <tr>
+                <td><b>Reclaim</b></td>
+                <td><input type="text" id="ScParts3" disabled /></td>
+                <td><input type="text" id="ScWt3" disabled /></td>
+                <td><input type="text" id="ScPerc3" disabled /></td>
+                <td></td>
+                <td><b>Scheduled Run Time (min)</b></td>
+                <td><input type="text" id="SchedTime" disabled /></td>
+            </tr>
+            <tr>
+                <td><b>Landfill</b></td>
+                <td><input type="text" id="ScParts4" disabled /></td>
+                <td><input type="text" id="ScWt4" disabled /></td>
+                <td><input type="text" id="ScPerc4" disabled /></td>
+                <td></td>
+                <td><b>Uptime (%)</b></td>
+                <td><input type="text" id="UptimeIM" disabled /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><b>Down Time (min)</b></td>
+                <td><input type="text" id="TtlDT" disabled /></td>
+                <td></td>
+                <td></td>
+                <td><b>FPY (%)</b></td>
+                <td><input type="text" id="ShiftFPYIM" disabled /></td>
+            </tr>
+        </table>
+    </div>
+}
+
+else if (Model.ProductionLineTypeCode == "CO")
+    {
+           <div id="endOfShiftDataDiv">
+            <div id="matrixDiv">
+                <input type="hidden" id="formulationId" />
+                <input type="hidden" id="rmUse" />
+                <table border="1" cellpadding="10">
+                    <tr>
+                        <td></td>
+                        <td><b>Length (<span id="UoML"></span>)</b></td>
+                        <td><b>Weight (<span id="UoMW"></span>)</b></td>
+                        <td><b>% of Total</b></td>
+                        <td><b># of Rolls</b></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>Prime</b></td>
+                        <td><input type="text" id="Len1" disabled /></td>
+                        <td><input type="text" id="Wt1" disabled /></td>
+                        <td><input type="text" id="Perc1" disabled /></td>
+                        <td><input type="text" id="Rolls1" disabled /></td>
+                        <td></td>
+                        <td><b>Shift Totals</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>Rework</b></td>
+                        <td><input type="text" id="Len2" disabled /></td>
+                        <td><input type="text" id="Wt2" disabled /></td>
+                        <td><input type="text" id="Perc2" disabled /></td>
+                        <td></td>
+                        <td><b>Total Down Time (min)</b></td>
+                        <td><input type="text" id="DTShift" disabled /></td>
+                    </tr>
+                    <tr>
+                        <td><b>Reclaim</b></td>
+                        <td><input type="text" id="Len3" disabled /></td>
+                        <td><input type="text" id="Wt3" disabled /></td>
+                        <td><input type="text" id="Perc3" disabled /></td>
+                        <td></td>
+                        <td><b>Scheduled Run Time (min)</b></td>
+                        <td><input type="text" id="ST" disabled /></td>
+                    </tr>
+                    <tr>
+                        <td><b>Landfill</b></td>
+                        <td><input type="text" id="Len4" disabled /></td>
+                        <td><input type="text" id="Wt4" disabled /></td>
+                        <td><input type="text" id="Perc4" disabled /></td>
+                        <td></td>
+                        <td><b>Uptime (%)</b></td>
+                        <td><input type="text" id="Uptime" disabled /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Down Time (min)</b></td>
+                        <td><input type="text" id="DT" disabled /></td>
+                        <td></td>
+                        <td></td>
+                        <td><b>FPY (%)</b></td>
+                        <td><input type="text" id="ShiftFPY" disabled /></td>
+                    </tr>
+                </table>
+            </div>
+
+     </div>
+    }
+
+else
+{
+    <div id="endOfShiftDataDiv">
+        <div id="matrixDiv">
+            <input type="hidden" id="formulationId" />
+            <input type="hidden" id="rmUse" />
+            <table border="1" cellpadding="10">
+                <tr>
+                    <td></td>
+                    <td><b>Length (<span id="UoML"></span>)</b></td>
+                    <td><b>Weight (<span id="UoMW"></span>)</b></td>
+                    <td><b>% of Total</b></td>
+                    <td><b># of Rolls</b></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><b>Prime</b></td>
+                    <td><input type="text" id="Len1" disabled /></td>
+                    <td><input type="text" id="Wt1" disabled /></td>
+                    <td><input type="text" id="Perc1" disabled /></td>
+                    <td><input type="text" id="Rolls1" disabled /></td>
+                    <td></td>
+                    <td><b>Shift Totals</b></td>
+                </tr>
+                <tr>
+                    <td><b>Rework</b></td>
+                    <td><input type="text" id="Len2" disabled /></td>
+                    <td><input type="text" id="Wt2" disabled /></td>
+                    <td><input type="text" id="Perc2" disabled /></td>
+                    <td></td>
+                    <td><b>Total Down Time (min)</b></td>
+                    <td><input type="text" id="DTShift" disabled /></td>
+                </tr>
+                <tr>
+                    <td><b>Reclaim</b></td>
+                    <td><input type="text" id="Len3" disabled /></td>
+                    <td><input type="text" id="Wt3" disabled /></td>
+                    <td><input type="text" id="Perc3" disabled /></td>
+                    <td></td>
+                    <td><b>Scheduled Run Time (min)</b></td>
+                    <td><input type="text" id="ST" disabled /></td>
+                </tr>
+                <tr>
+                    <td><b>Landfill</b></td>
+                    <td><input type="text" id="Len4" disabled /></td>
+                    <td><input type="text" id="Wt4" disabled /></td>
+                    <td><input type="text" id="Perc4" disabled /></td>
+                    <td></td>
+                    <td><b>Uptime (%)</b></td>
+                    <td><input type="text" id="Uptime" disabled /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Down Time (min)</b></td>
+                    <td><input type="text" id="DT" disabled /></td>
+                    <td></td>
+                    <td></td>
+                    <td><b>FPY (%)</b></td>
+                    <td><input type="text" id="ShiftFPY" disabled /></td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div id="tpoDiv">
+            <div id="divTabs" class="easyui-tabs">
+                <div title="Scrim / Edge Trim" id="tab-scrim-edge-trim" style="padding:20px;">
+                    <div>
+                        <table>
+                            <tr>
+                                <td></td>
+                                <td><b>Area (SQ FT)</b></td>
+                                <td><b>Weight (lb)</b></td>
+                                <td>&nbsp;</td>
+                                <td></td>
+                                <td><b>Weight (lb)</b></td>
+                            </tr>
+                            <tr>
+                                <td><b>Scrim Used</b></td>
+                                <td><input type="text" id="ScrimA" /></td>
+                                <td><input type="text" id="ScrimW" /></td>
+                                <td>&nbsp;</td>
+                                <td><b>Edge Trim / Drained Resin</b></td>
+                                <td><input type="text" id="Resin" /></td>
+                            </tr>
+                        </table>
+                        <button class="btn btn-default btn-shadow"
+                                onclick="SaveScrimTabData()">
+                            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                        </button>
+                    </div>
+                </div>
+                <div title="Extruder" id="tab-extruder" style="padding:20px;">
+                    <div>
+
+                        <div id="gridExtruderA" style="float: left;">
+                            <table id="dgExtruderA" class="easyui-datagrid" title="Extruder A" style="height: 300px;width: 300px"
+                                   data-options="iconCls: 'icon-edit',
+                            singleselect: true,
+                            toolbar: '#tbExtruderA' ,
+                            method: 'get',
+                            onClickRow: onClickRowdgExtruderA,
+                            pagination: true,
+                            rownumbers: true,
+                            fitColumns: true">
+                                <thead>
+                                    <tr>
+                                        <th data-options="field:'FeedNumber',editor:'numberbox'">Feeder #</th>
+                                        <th data-options="field:'RawMaterialID', width: 160,
+                                    formatter:function(value,row){
+                                        return row.RawMaterialCode;
+                                    },
+                                    editor:{
+                                        type:'combogrid',
+                                        options:{
+                                            panelWidth: 200,
+                                            idField: 'Id',
+                                            textField: 'Code',
+                                            url: '/RawMaterial/GetAllRawMaterialResult',
+                                            method: 'get',
+                                            columns: [[
+                                            {field:'Code',title:'Code',width:60},
+                                            {field:'Description',title:'Description',width:100}
+                                            ]],
+                                            fitColumns: true
+                                        }
+                                    }">Component</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div id="tbExtruderA">
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" appenddgExtruderA() ">Create New</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeitdgExtruderA() ">Delete</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" acceptdgExtruderA() ">Save Changes</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" rejectdgExtruderA() ">Undo</a>
+                            </div>
+                        </div>
+
+                        <div id="gridExtruderB" style="float: left; margin-left: 2em;">
+                            <table id="dgExtruderB" class="easyui-datagrid" title="Extruder B" style="height: 300px;width: 300px"
+                                   data-options="iconCls: 'icon-edit',
+                            singleselect: true,
+                            toolbar: '#tbExtruderB' ,
+                            method: 'get',
+                            onClickRow: onClickRowdgExtruderB,
+                            pagination: true,
+                            rownumbers: true,
+                            fitColumns: true">
+                                <thead>
+                                    <tr>
+                                        <th data-options="field:'FeedNumber',editor:'numberbox'">Feeder #</th>
+                                        <th data-options="field:'RawMaterialID', width: 160,
+                                    formatter:function(value,row){
+                                        return row.RawMaterialCode;
+                                    },
+                                    editor:{
+                                        type:'combogrid',
+                                        options:{
+                                            panelWidth: 200,
+                                            idField: 'Id',
+                                            textField: 'Code',
+                                            url: '/RawMaterial/GetAllRawMaterialResult',
+                                            method: 'get',
+                                            columns: [[
+                                            {field:'Code',title:'Code',width:60},
+                                            {field:'Description',title:'Description',width:100}
+                                            ]],
+                                            fitColumns: true
+                                        }
+                                    }">Component</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div id="tbExtruderB">
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" appenddgExtruderB() ">Create New</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitdgExtruderB() ">Delete</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" acceptdgExtruderB() ">Save Changes</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" rejectdgExtruderB() ">Undo</a>
+                            </div>
+                        </div>
+
+                        <div id="gridExtruderC" style="float: left; margin-left: 2em;">
+                            <table id="dgExtruderC" class="easyui-datagrid" title="Extruder C" style="height: 300px;width: 300px"
+                                   data-options="iconCls: 'icon-edit',
+                            singleselect: true,
+                            toolbar: '#tbExtruderC' ,
+                            method: 'get',
+                            onClickRow: onClickRowdgExtruderC,
+                            pagination: true,
+                            rownumbers: true,
+                            fitColumns: true">
+                                <thead>
+                                    <tr>
+                                        <th data-options="field:'FeedNumber',editor:'numberbox'">Feeder #</th>
+                                        <th data-options="field:'RawMaterialID', width: 160,
+                                    formatter:function(value,row){
+                                        return row.RawMaterialCode;
+                                    },
+                                    editor:{
+                                        type:'combogrid',
+                                        options:{
+                                            panelWidth: 200,
+                                            idField: 'Id',
+                                            textField: 'Code',
+                                            url: '/RawMaterial/GetAllRawMaterialResult',
+                                            method: 'get',
+                                            columns: [[
+                                            {field:'Code',title:'Code',width:60},
+                                            {field:'Description',title:'Description',width:100}
+                                            ]],
+                                            fitColumns: true
+                                        }
+                                    }">Component</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div id="tbExtruderC">
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" appenddgExtruderC() ">Create New</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeitdgExtruderC() ">Delete</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" acceptdgExtruderC() ">Save Changes</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" rejectdgExtruderC() ">Undo</a>
+                            </div>
+                        </div>
+
+                        <div id="gridExtruderD" style="float: left; margin-left: 2em;">
+                            <table id="dgExtruderD" class="easyui-datagrid" title="Extruder D" style="height: 300px;width: 300px"
+                                   data-options="iconCls: 'icon-edit',
+                            singleselect: true,
+                            toolbar: '#tbExtruderD' ,
+                            method: 'get',
+                            onClickRow: onClickRowdgExtruderD,
+                            pagination: true,
+                            rownumbers: true,
+                            fitColumns: true">
+                                <thead>
+                                    <tr>
+                                        <th data-options="field:'FeedNumber',editor:'numberbox'">Feeder #</th>
+                                        <th data-options="field:'RawMaterialID', width: 160,
+                                    formatter:function(value,row){
+                                        return row.RawMaterialCode;
+                                    },
+                                    editor:{
+                                        type:'combogrid',
+                                        options:{
+                                            panelWidth: 200,
+                                            idField: 'Id',
+                                            textField: 'Code',
+                                            url: '/RawMaterial/GetAllRawMaterialResult',
+                                            method: 'get',
+                                            columns: [[
+                                            {field:'Code',title:'Code',width:60},
+                                            {field:'Description',title:'Description',width:100}
+                                            ]],
+                                            fitColumns: true
+                                        }
+                                    }">Component</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div id="tbExtruderD">
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" appenddgExtruderD() ">Create New</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeitdgExtruderD() ">Delete</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" acceptdgExtruderD() ">Save Changes</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" rejectdgExtruderD() ">Undo</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    function CheckForValues() {
+        $("#tpoDiv").hide();
+
+        var lineCode = '@Model.ProductionLineTypeCode';
+        var lineID = $("#ProductionLineId").val();
+        var shiftID = $("#ShiftId").val();
+        var workOrderID = $("#WorkOrderId").val();
+        var prodDate = $("#ProductionDate").val();
+
+        if (lineID == "" || shiftID == 0) {
+            $("#imMatrixDiv").hide();
+        } else if (lineID == "" || shiftID == 0 || workOrderID == 0) {
+            $("#matrixDiv").hide();
+        }
+
+        if (lineCode == "IM") {
+            $.ajax({
+                url: '/WorkOrderShiftData/GetIMWorkOrderShiftData',
+                type: 'GET',
+                data: { lineID: lineID, shiftID: shiftID },
+                success: function (data, textStatus, xhr) {
+                    $("#PUoM").val(data.PUoM);
+                    $("#GoodCartons").val(data.GoodCartons);
+                    $("#GoodParts").val(data.GoodParts);
+                    $("#GoodWt").val(data.GoodWt);
+                    $("#GoodPerc").val(data.GoodPerc);
+                    $("#ScParts2").val(data.ScParts2);
+                    $("#ScWt2").val(data.ScWt2);
+                    $("#ScPerc2").val(data.ScPerc2);
+                    $("#ScParts3").val(data.ScParts3);
+                    $("#ScWt3").val(data.ScWt3);
+                    $("#ScPerc3").val(data.ScPerc3);
+                    $("#ScParts4").val(data.ScParts4);
+                    $("#ScWt4").val(data.ScWt4);
+                    $("#ScPerc4").val(data.ScPerc4);
+                    $("#TtlDT").val(data.TtlDT);
+                    $("#ShiftDT").val(data.ShiftDT);
+                    $("#SchedTime").val(data.SchedTime);
+                    $("#UptimeIM").val(data.UptimeIM);
+                    $("#ShiftFPYIM").val(data.ShiftFPYIM);
+
+                    $("#RMUoM").val(data.RMUoM);
+                    $("#QtyUsed").val(data.QtyUsed);
+                    $("#RawMatID").val(data.RawMatID);
+                },
+                error: function (jqxhr, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqxhr.status);
+                }
+            });
+        } else if (lineCode == "TPO") {
+            $.ajax({
+                url: '/WorkOrderShiftData/GetWorkOrderShiftData',
+                type: 'GET',
+                data: { lineID: lineID, shiftID: shiftID, workOrderID: workOrderID, prodDate: prodDate },
+                success: function (data, textStatus, xhr) {
+                    $("#UoML").text(data.LengthUnitOfMeasure);
+                    $("#UoMW").text(data.WeightUnitOfMeasure);
+                    $("#Rolls1").val(data.RollCount1);
+                    $("#Len1").val(data.Length1);
+                    $("#Wt1").val(data.Weight1);
+                    $("#Len2").val(data.Length2);
+                    $("#Wt2").val(data.Weight2);
+                    $("#Len3").val(data.Length3);
+                    $("#Wt3").val(data.Weight3);
+                    $("#Len4").val(data.Length4);
+                    $("#Wt4").val(data.Weight4);
+                    $("#Perc1").val(data.TotalPercent1);
+                    $("#Perc2").val(data.TotalPercent2);
+                    $("#Perc3").val(data.TotalPercent3);
+                    $("#Perc4").val(data.TotalPercent4);
+                    $("#ShiftFPY").val(data.ShiftFPY);
+                    $("#DT").val(data.DownTimeMinutes);
+                    $("#DTShift").val(data.ShiftDownTimeMinutes);
+                    $("#ST").val(data.ScheduledRunTime);
+                    $("#Uptime").val(data.Uptime);
+                    $("#ScrimA").val(data.ScrimA);
+                    $("#ScrimW").val(data.ScrimW);
+                    $("#Resin").val(data.Resin);
+                    $("#formulationId").val(data.Form);
+                    $("#rmUse").val(data.RMUse);
+
+                    if (data.RMUse) {
+                        $("#matrixDiv").show();
+                        $("#tpoDiv").show();
+                        displayGrids(data.Form);
+                    }
+                },
+                error: function (jqxhr, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqxhr.status);
+                }
+            });
+        }
+    }
+
+    function displayGrids(val) {
+
+        $('#dgExtruderA').datagrid({
+            url: '/TPOFormulationRawMaterial/GetAllFormulationRawMaterialResult',
+            queryParams: {
+                formulationId: val,
+                extruderId: 1
+            }
+        });
+        $('#dgExtruderB').datagrid({
+            url: '/TPOFormulationRawMaterial/GetAllFormulationRawMaterialResult',
+            queryParams: {
+                formulationId: val,
+                extruderId: 2
+            }
+        });
+        $('#dgExtruderC').datagrid({
+            url: '/TPOFormulationRawMaterial/GetAllFormulationRawMaterialResult',
+            queryParams: {
+                formulationId: val,
+                extruderId: 3
+            }
+        });
+        $('#dgExtruderD').datagrid({
+            url: '/TPOFormulationRawMaterial/GetAllFormulationRawMaterialResult',
+            queryParams: {
+                formulationId: val,
+                extruderId: 4
+            }
+        });
+    }
+
+    function SaveScrimTabData() {
+        var lineID = $("#ProductionLineId").val();
+        var shiftID = $("#ShiftId").val();
+        var workOrderID = $("#WorkOrderId").val();
+        var prodDate = $("#ProductionDate").val();
+        var scrimA = $("#ScrimA").val();
+        var scrimW = $("#ScrimW").val();
+        var resin = $("#Resin").val();
+
+        $.ajax({
+            url: '/WorkOrderShiftData/Save',
+            type: 'POST',
+            data: { lineID: lineID, shiftID: shiftID, workOrderID: workOrderID, prodDate: prodDate, scrimA: scrimA, scrimW: scrimW, resin: resin },
+            success: function (data, textStatus, xhr) {
+
+            },
+            error: function (jqxhr, textStatus, errorThrown) {
+                displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqxhr.status);
+            }
+        });
+    }
+
+    //dg1
+    var editIndexdg1 = undefined;
+    function endEditingdg1() {
+        if (editIndexdg1 == undefined) {
+            return true;
+        }
+        if ($('#dgExtruderA').datagrid('validateRow', editIndexdgExtruderA)) {
+            var ed = $('#dgExtruderA').datagrid('getEditor', { index: editIndexdgExtruderA, field: 'Id' });
+            $('#dgExtruderA').datagrid('endEdit', editIndexdgExtruderA);
+            editIndexdgExtruderA = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRowdgExtruderA(index) {
+        if (editIndexdgExtruderA != index) {
+            if (endEditingdgExtruderA()) {
+                $('#dgExtruderA').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndexdgExtruderA = index;
+            } else {
+                $('#dgExtruderA').datagrid('selectRow', editIndexdgExtruderA);
+            }
+        }
+    }
+    function appenddgExtruderA() {
+        if (endEditingdgExtruderA()) {
+            $('#dgExtruderA').datagrid('appendRow', { status: 'P' });
+            editIndexdgExtruderA = $('#dgExtruderA').datagrid('getRows').length - 1;
+            $('#dgExtruderA').datagrid('selectRow', editIndexdgExtruderA)
+                .datagrid('beginEdit', editIndexdgExtruderA);
+        }
+    }
+    function removeitdgExtruderA() {
+        if (editIndexdgExtruderA == undefined) {
+            return;
+        }
+        var row = $('#dgExtruderA').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPOFormulation/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dgExtruderA').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndexdgExtruderA = undefined;
+    }
+    function reloadGriddgExtruderA() {
+        $('#dgExtruderA').datagrid('load');
+    }
+    function acceptdgExtruderA() {
+        if (endEditingdgExtruderA()) {
+            $('#dgExtruderA').datagrid('acceptChanges');
+
+            var row = $('#dgExtruderA').datagrid('getSelected');
+            var formID = $('#formulationId').val();
+            var extruderID = 1;
+            if (row) {
+                $.ajax({
+                    url: '/TPOFormulation/AjaxTypeUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row), formulationID: formID, extruderID: extruderID },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dgExtruderA').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+    function rejectdgExtruderA() {
+        $('#dgExtruderA').datagrid('rejectChanges');
+        editIndexdgExtruderA = undefined;
+    }
+
+    //dgExtruderB
+    var editIndexdgExtruderB = undefined;
+    function endEditingdgExtruderB() {
+        if (editIndexdgExtruderB == undefined) {
+            return true;
+        }
+        if ($('#dgExtruderB').datagrid('validateRow', editIndexdgExtruderB)) {
+            var ed = $('#dgExtruderB').datagrid('getEditor', { index: editIndexdgExtruderB, field: 'Id' });
+            $('#dgExtruderB').datagrid('endEdit', editIndexdgExtruderB);
+            editIndexdgExtruderB = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRowdgExtruderB(index) {
+        if (editIndexdgExtruderB != index) {
+            if (endEditingdgExtruderB()) {
+                $('#dgExtruderB').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndexdgExtruderB = index;
+            } else {
+                $('#dgExtruderB').datagrid('selectRow', editIndexdgExtruderB);
+            }
+        }
+    }
+    function appenddgExtruderB() {
+        if (endEditingdgExtruderB()) {
+            $('#dgExtruderB').datagrid('appendRow', { status: 'P' });
+            editIndexdgExtruderB = $('#dgExtruderB').datagrid('getRows').length - 1;
+            $('#dgExtruderB').datagrid('selectRow', editIndexdgExtruderB)
+                .datagrid('beginEdit', editIndexdgExtruderB);
+        }
+    }
+    function removeitdgExtruderB() {
+        if (editIndexdgExtruderB == undefined) { return; }
+        var row = $('#dgExtruderB').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPOFormulation/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dgExtruderB').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndexdgExtruderB = undefined;
+    }
+    function reloadGriddgExtruderB() {
+        $('#dgExtruderB').datagrid('load');
+    }
+    function acceptdgExtruderB() {
+        if (endEditingdgExtruderB()) {
+            $('#dgExtruderB').datagrid('acceptChanges');
+
+            var row = $('#dgExtruderB').datagrid('getSelected');
+            var formID = $('#formulationId').val();
+            var extruderID = 2;
+            if (row) {
+                $.ajax({
+                    url: '/TPOFormulation/AjaxTypeUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row), formulationID: formID, extruderID: extruderID },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dgExtruderB').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+    function rejectdgExtruderB() {
+        $('#dgExtruderB').datagrid('rejectChanges');
+        editIndexdgExtruderB = undefined;
+    }
+
+    //dgExtruderC
+    var editIndexdgExtruderC = undefined;
+    function endEditingdgExtruderC() {
+        if (editIndexdgExtruderC == undefined) {
+            return true;
+        }
+        if ($('#dgExtruderC').datagrid('validateRow', editIndexdgExtruderC)) {
+            var ed = $('#dgExtruderC').datagrid('getEditor', { index: editIndexdgExtruderC, field: 'Id' });
+            $('#dgExtruderC').datagrid('endEdit', editIndexdgExtruderC);
+            editIndexdgExtruderC = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRowdgExtruderC(index) {
+        if (editIndexdgExtruderC != index) {
+            if (endEditingdgExtruderC()) {
+                $('#dgExtruderC').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndexdgExtruderC = index;
+            } else {
+                $('#dgExtruderC').datagrid('selectRow', editIndexdgExtruderC);
+            }
+        }
+    }
+    function appenddgExtruderC() {
+        if (endEditingdgExtruderC()) {
+            $('#dgExtruderC').datagrid('appendRow', { status: 'P' });
+            editIndexdgExtruderC = $('#dgExtruderC').datagrid('getRows').length - 1;
+            $('#dgExtruderC').datagrid('selectRow', editIndexdgExtruderC)
+                .datagrid('beginEdit', editIndexdgExtruderC);
+        }
+    }
+    function removeitdgExtruderC() {
+        if (editIndexdgExtruderC == undefined) {
+            return;
+        }
+        var row = $('#dgExtruderC').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPOFormulation/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dgExtruderC').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndexdgExtruderC = undefined;
+    }
+    function reloadGriddgExtruderC() {
+        $('#dgExtruderC').datagrid('load');
+    }
+    function acceptdgExtruderC() {
+        if (endEditingdgExtruderC()) {
+            $('#dgExtruderC').datagrid('acceptChanges');
+
+            var row = $('#dgExtruderC').datagrid('getSelected');
+            var formID = $('#formulationId').val();
+            var extruderID = 3;
+            if (row) {
+                $.ajax({
+                    url: '/TPOFormulation/AjaxTypeUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row), formulationID: formID, extruderID: extruderID },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dgExtruderC').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+    function rejectdgExtruderC() {
+        $('#dgExtruderC').datagrid('rejectChanges');
+        editIndexdgExtruderC = undefined;
+    }
+
+    //dgExtruderD
+    var editIndexdgExtruderD = undefined;
+    function endEditingdgExtruderD() {
+        if (editIndexdgExtruderD == undefined) {
+            return true;
+        }
+        if ($('#dgExtruderD').datagrid('validateRow', editIndexdgExtruderD)) {
+            var ed = $('#dgExtruderD').datagrid('getEditor', { index: editIndexdgExtruderD, field: 'Id' });
+            $('#dgExtruderD').datagrid('endEdit', editIndexdgExtruderD);
+            editIndexdgExtruderD = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRowdgExtruderD(index) {
+        if (editIndexdgExtruderD != index) {
+            if (endEditingdgExtruderD()) {
+                $('#dgExtruderD').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndexdgExtruderD = index;
+            } else {
+                $('#dgExtruderD').datagrid('selectRow', editIndexdgExtruderD);
+            }
+        }
+    }
+    function appenddgExtruderD() {
+        if (endEditingdgExtruderD()) {
+            $('#dgExtruderD').datagrid('appendRow', { status: 'P' });
+            editIndexdgExtruderD = $('#dgExtruderD').datagrid('getRows').length - 1;
+            $('#dgExtruderD').datagrid('selectRow', editIndexdgExtruderD)
+                .datagrid('beginEdit', editIndexdgExtruderD);
+        }
+    }
+    function removeitdgExtruderD() {
+        if (editIndexdgExtruderD == undefined) {
+            return;
+        }
+        var row = $('#dgExtruderD').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPOFormulation/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dgExtruderD').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndexdgExtruderD = undefined;
+    }
+    function reloadGriddgExtruderD() {
+        $('#dgExtruderD').datagrid('load');
+    }
+    function acceptdgExtruderD() {
+        if (endEditingdgExtruderD()) {
+            $('#dgExtruderD').datagrid('acceptChanges');
+
+            var row = $('#dgExtruderD').datagrid('getSelected');
+            var formID = $('#formulationId').val();
+            var extruderID = 4;
+            if (row) {
+                $.ajax({
+                    url: '/TPOFormulation/AjaxTypeUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row), formulationID: formID, extruderID: extruderID },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dgExtruderD').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+    function rejectdgExtruderD() {
+        $('#dgExtruderD').datagrid('rejectChanges');
+        editIndexdgExtruderD = undefined;
+    }
+
+</script>
+
+
+

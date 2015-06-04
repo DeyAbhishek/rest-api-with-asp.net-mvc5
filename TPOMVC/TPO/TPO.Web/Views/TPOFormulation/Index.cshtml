@@ -1,0 +1,759 @@
+﻿@model TPO.Web.Models.TPOFormulationModel
+@{
+    ViewBag.Title = "TPO Formulations";
+}
+
+<h2>TPO Formulations</h2>
+
+@using (Html.BeginForm("Index", "TPOFormulation", FormMethod.Post, new { id = "TPOFormulationForm" }))
+{
+    @Html.ValidationSummary(true);
+    @Html.HiddenFor(model => model.Id, new {@id = "onCreate"})
+    @Html.HiddenFor(model => model.PlantId)
+    <label for="formulationSelection">Formulation:</label>
+    <input name =@Html.NameFor(model => model.Id) id="formulationSelection" class="easyui-combogrid" style="width:100px" data-options="
+        panelWidth: 500,
+        idField: 'Id',
+        textField: 'Id',
+        value: '@Model.Id',
+        url: '/TPOFormulation/GetAllFormulationResult',
+        method: 'get',
+        columns: [[
+            {field:'ID',title:'Form #',width:60},
+            {field:'Description',title:'Formulation',width:100},
+            {field:'Extruders',title:'Extruder',width:60}
+        ]],
+        onSelect: formulationSelected,
+        fitColumns: true
+    ">
+    <span id="descriptionAndExtruder">
+        &nbsp;&nbsp;&nbsp;@Html.LabelFor(model => model.Description)
+        @Html.TextBoxFor(model => model.Description, new { @id="description", @class="textboxClass", style = "width:250px" })
+        &nbsp;&nbsp;&nbsp;@Html.LabelFor(model => model.Extruders)
+        <input name="@Html.NameFor(model => model.Extruders)" id="extruderSelection" class="easyui-combogrid" style="width:100px" data-options="
+            panelWidth: 150,
+            idField: 'Id',
+            textField: 'Id',
+            value: '@Model.Extruders',
+            url: '/TPOFormulation/GetAllExtruderResult',
+            method: 'get',
+            columns: [[
+            {field:'Id',title:'#',width:40}
+            ]],
+            onSelect: displayGrids,
+            fitColumns: true
+        ">
+    </span>
+    <br /><br />
+    
+    <span class="col col-lg-offset-2">
+        
+        <button id="addNewFormulation" class="btn btn-primary btn-shadow leftMar20px"
+                onclick="addNewForm()">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;Add New Formulation
+        </button>
+        
+        @if (Model.Id != 0)
+        {
+            <button class="btn btn-success btn-shadow leftMar20px"
+                onclick="$(this).parents('form:first').submit(); return false;">
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;&nbsp;&nbsp;Save
+            </button>
+            <button class="btn btn-default btn-shadow leftMar20px"
+                    onclick="window.location.href = '@Url.Action("Index", "TPOFormulation")';return false;">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Cancel
+            </button>
+        }
+
+    </span>
+}
+
+@if (Model.Id != 0)
+{
+    <button id="showExtruders" class="btn btn-default btn-shadow leftMar20px"
+        onclick="displayGrids()">
+        <span class="glyphicon glyphicon-circle-arrow-down"></span>&nbsp;&nbsp;&nbsp;Show Extruders
+    </button>
+}
+
+
+<br /><br />
+<table class="tableStyle" style="width:1000px">
+    <tr>
+        <td>
+            <div id="grid1">
+                <table id="dg1" class="easyui-datagrid" title="Extruder A" style="height: 300px;width: 300px"
+                       data-options="iconCls: 'icon-edit',
+           singleselect: true,
+           toolbar: '#tb1' ,
+           url: '/TPOFormulationRawMaterial/GetAllFormulationRawMaterialResult',
+           method: 'get',
+           onClickRow: onClickRowdg1,
+           pagination: true,
+           rownumbers: true,
+           fitColumns: true
+           ">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'FeedNumber',editor:'numberbox'">Feeder #</th>
+                            <th data-options="field:'RawMaterialID', width: 160,
+                        formatter:function(value,row){
+                            return row.RawMaterialCode;
+                        },
+                        editor:{
+                            type:'combogrid',
+                            options:{
+                                panelWidth: 200,
+                                idField: 'Id',
+                                textField: 'Code',
+                                url: '/RawMaterial/GetAllRawMaterialResult',
+                                method: 'get',
+                                columns: [[
+                                {field:'Code',title:'Code',width:60},
+                                {field:'Description',title:'Description',width:100}
+                                ]],
+                                fitColumns: true
+                            }
+                        }
+                            ">Component</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="tb1">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" appenddg1() ">Create New</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeitdg1() ">Delete</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" acceptdg1() ">Save Changes</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" rejectdg1() ">Undo</a>
+                </div>
+            </div>
+        </td>
+
+        <td>
+            <div id="grid2">
+                <table id="dg2" class="easyui-datagrid" title="Extruder B" style="height: 300px;width: 300px"
+                       data-options="iconCls: 'icon-edit',
+           singleselect: true,
+           toolbar: '#tb2' ,
+           url: '/TPOFormulationRawMaterial/GetAllFormulationRawMaterialResult',
+           method: 'get',
+           onClickRow: onClickRowdg2,
+           pagination: true,
+           rownumbers: true,
+           fitColumns: true
+           ">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'FeedNumber',editor:'numberbox'">Feeder #</th>
+                            <th data-options="field:'RawMaterialID', width: 160,
+                        formatter:function(value,row){
+                            return row.RawMaterialCode;
+                        },
+                        editor:{
+                            type:'combogrid',
+                            options:{
+                                panelWidth: 200,
+                                idField: 'Id',
+                                textField: 'Code',
+                                url: '/RawMaterial/GetAllRawMaterialResult',
+                                method: 'get',
+                                columns: [[
+                                {field:'Code',title:'Code',width:60},
+                                {field:'Description',title:'Description',width:100}
+                                ]],
+                                fitColumns: true
+                            }
+                        }
+                            ">Component</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="tb2">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" appenddg2() ">Create New</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitdg2() ">Delete</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" acceptdg2() ">Save Changes</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" rejectdg2() ">Undo</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div id="grid3">
+            <table id="dg3" class="easyui-datagrid" title="Extruder C" style="height: 300px;width: 300px"
+                   data-options="iconCls: 'icon-edit',
+           singleselect: true,
+           toolbar: '#tb3' ,
+           url: '/TPOFormulationRawMaterial/GetAllFormulationRawMaterialResult',
+           method: 'get',
+           onClickRow: onClickRowdg3,
+           pagination: true,
+           rownumbers: true,
+           fitColumns: true
+           ">
+                <thead>
+                    <tr>
+                        <th data-options="field:'FeedNumber',editor:'numberbox'">Feeder #</th>
+                        <th data-options="field:'RawMaterialID', width: 160,
+                        formatter:function(value,row){
+                            return row.RawMaterialCode;
+                        },
+                        editor:{
+                            type:'combogrid',
+                            options:{
+                                panelWidth: 200,
+                                idField: 'Id',
+                                textField: 'Code',
+                                url: '/RawMaterial/GetAllRawMaterialResult',
+                                method: 'get',
+                                columns: [[
+                                {field:'Code',title:'Code',width:60},
+                                {field:'Description',title:'Description',width:100}
+                                ]],
+                                fitColumns: true
+                            }
+                        }
+                            ">Component</th>
+                    </tr>
+                </thead>
+            </table>
+            <div id="tb3">
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" appenddg3() ">Create New</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeitdg3() ">Delete</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" acceptdg3() ">Save Changes</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" rejectdg3() ">Undo</a>
+            </div>
+            </div>
+        </td>
+
+        <td>
+            <div id="grid4">
+                <table id="dg4" class="easyui-datagrid" title="Extruder D" style="height: 300px;width: 300px"
+                       data-options="iconCls: 'icon-edit',
+           singleselect: true,
+           toolbar: '#tb4' ,
+           url: '/TPOFormulationRawMaterial/GetAllFormulationRawMaterialResult',
+           method: 'get',
+           onClickRow: onClickRowdg4,
+           pagination: true,
+           rownumbers: true,
+           fitColumns: true
+           ">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'FeedNumber',editor:'numberbox'">Feeder #</th>
+                            <th data-options="field:'RawMaterialID', width: 160,
+                        formatter:function(value,row){
+                            return row.RawMaterialCode;
+                        },
+                        editor:{
+                            type:'combogrid',
+                            options:{
+                                panelWidth: 200,
+                                idField: 'Id',
+                                textField: 'Code',
+                                url: '/RawMaterial/GetAllRawMaterialResult',
+                                method: 'get',
+                                columns: [[
+                                {field:'Code',title:'Code',width:60},
+                                {field:'Description',title:'Description',width:100}
+                                ]],
+                                fitColumns: true
+                            }
+                        }
+                            ">Component</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="tb4">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" appenddg4() ">Create New</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeitdg4() ">Delete</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" acceptdg4() ">Save Changes</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" rejectdg4() ">Undo</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        if (window.location.search.substr(1).split('?') == "") {
+            $("#grid1").hide();
+            $("#grid2").hide();
+            $("#grid3").hide();
+            $("#grid4").hide();
+        }
+
+        var val = $("#formulationSelection").combogrid('getValue');
+        if (val == 0) {
+            $("#formulationSelection").combogrid('setValue', '- - Select - -');
+            $("#descriptionAndExtruder").hide();
+        } else {
+            $("#descriptionAndExtruder").show();
+        }
+    });
+
+    function formulationSelected(record) {
+        //record is the row position that is returned as well if needed
+        var val = $("#formulationSelection").combogrid('getValue');
+        var url = "/TPOFormulation/Index/" + val;
+        window.location = url;
+    }
+
+    function displayGrids() {
+        var extruder = $("#extruderSelection").combogrid('getValue');
+        if (extruder == 1) {
+            $("#grid1").show();
+            $("#grid2").hide();
+            $("#grid3").hide();
+            $("#grid4").hide();
+        }
+        if (extruder == 2) {
+            $("#grid1").show();
+            $("#grid2").show();
+            $("#grid3").hide();
+            $("#grid4").hide();
+        }
+        if (extruder == 3) {
+            $("#grid1").show();
+            $("#grid2").show();
+            $("#grid3").show();
+            $("#grid4").hide();
+        }
+        if (extruder == 4) {
+            $("#grid1").show();
+            $("#grid2").show();
+            $("#grid3").show();
+            $("#grid4").show();
+        }
+
+        var val = "@Model.Id";
+        $('#dg1').datagrid({
+            queryParams: {
+                formulationId: val,
+                extruderId: 1
+            }
+        });
+        $('#dg2').datagrid({
+            queryParams: {
+                formulationId: val,
+                extruderId: 2
+            }
+        });
+        $('#dg3').datagrid({
+            queryParams: {
+                formulationId: val,
+                extruderId: 3
+            }
+        });
+        $('#dg4').datagrid({
+            queryParams: {
+                formulationId: val,
+                extruderId: 4
+            }
+        });
+
+        $("#showExtruders").text("Refresh Extruders");
+    }
+
+    function addNewForm() {
+        $("#grid1").hide();
+        $("#grid2").hide();
+        $("#grid3").hide();
+        $("#grid4").hide();
+        $("#showExtruders").hide();
+        $("#onCreate").val(0);
+        $("#description").val('New Formulation');
+        $("extruders").val(0);
+        $(this).parents('form:first').submit();
+    }
+
+
+    //dg1
+    var editIndexdg1 = undefined;
+    function endEditingdg1() {
+        if (editIndexdg1 == undefined) {
+            return true;
+        }
+        if ($('#dg1').datagrid('validateRow', editIndexdg1)) {
+            var ed = $('#dg1').datagrid('getEditor', { index: editIndexdg1, field: 'Id' });
+            $('#dg1').datagrid('endEdit', editIndexdg1);
+            editIndexdg1 = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRowdg1(index) {
+        if (editIndexdg1 != index) {
+            if (endEditingdg1()) {
+                $('#dg1').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndexdg1 = index;
+            } else {
+                $('#dg1').datagrid('selectRow', editIndexdg1);
+            }
+        }
+    }
+    function appenddg1() {
+        if (endEditingdg1()) {
+            $('#dg1').datagrid('appendRow', { status: 'P' });
+            editIndexdg1 = $('#dg1').datagrid('getRows').length - 1;
+            $('#dg1').datagrid('selectRow', editIndexdg1)
+                .datagrid('beginEdit', editIndexdg1);
+        }
+    }
+    function removeitdg1() {
+        if (editIndexdg1 == undefined) {
+            return;
+        }
+        var row = $('#dg1').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPOFormulation/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dg1').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndexdg1 = undefined;
+    }
+    function reloadGriddg1() {
+        $('#dg1').datagrid('load');
+    }
+    function acceptdg1() {
+        if (endEditingdg1()) {
+            $('#dg1').datagrid('acceptChanges');
+
+            var row = $('#dg1').datagrid('getSelected');
+            var formID = '@Model.Id';
+            var extruderID = 1;
+            if (row) {
+                $.ajax({
+                    url: '/TPOFormulation/AjaxTypeUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row), formulationID: formID, extruderID: extruderID },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dg1').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+    function rejectdg1() {
+        $('#dg1').datagrid('rejectChanges');
+        editIndexdg1 = undefined;
+    }
+
+    //dg2
+    var editIndexdg2 = undefined;
+    function endEditingdg2() {
+        if (editIndexdg2 == undefined) {
+            return true;
+        }
+        if ($('#dg2').datagrid('validateRow', editIndexdg2)) {
+            var ed = $('#dg2').datagrid('getEditor', { index: editIndexdg2, field: 'Id' });
+            $('#dg2').datagrid('endEdit', editIndexdg2);
+            editIndexdg2 = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRowdg2(index) {
+        if (editIndexdg2 != index) {
+            if (endEditingdg2()) {
+                $('#dg2').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndexdg2 = index;
+            } else {
+                $('#dg2').datagrid('selectRow', editIndexdg2);
+            }
+        }
+    }
+    function appenddg2() {
+        if (endEditingdg2()) {
+            $('#dg2').datagrid('appendRow', { status: 'P' });
+            editIndexdg2 = $('#dg2').datagrid('getRows').length - 1;
+            $('#dg2').datagrid('selectRow', editIndexdg2)
+                .datagrid('beginEdit', editIndexdg2);
+        }
+    }
+    function removeitdg2() {
+        if (editIndexdg2 == undefined) { return; }
+        var row = $('#dg2').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPOFormulation/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dg2').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndexdg2 = undefined;
+    }
+    function reloadGriddg2() {
+        $('#dg2').datagrid('load');
+    }
+    function acceptdg2() {
+        if (endEditingdg2()) {
+            $('#dg2').datagrid('acceptChanges');
+
+            var row = $('#dg2').datagrid('getSelected');
+            var formID = '@Model.Id';
+            var extruderID = 2;
+            if (row) {
+                $.ajax({
+                    url: '/TPOFormulation/AjaxTypeUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row), formulationID: formID, extruderID: extruderID },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dg2').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+    function rejectdg2() {
+        $('#dg2').datagrid('rejectChanges');
+        editIndexdg2 = undefined;
+    }
+
+    //dg3
+    var editIndexdg3 = undefined;
+    function endEditingdg3() {
+        if (editIndexdg3 == undefined) {
+            return true;
+        }
+        if ($('#dg3').datagrid('validateRow', editIndexdg3)) {
+            var ed = $('#dg3').datagrid('getEditor', { index: editIndexdg3, field: 'Id' });
+            $('#dg3').datagrid('endEdit', editIndexdg3);
+            editIndexdg3 = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRowdg3(index) {
+        if (editIndexdg3 != index) {
+            if (endEditingdg3()) {
+                $('#dg3').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndexdg3 = index;
+            } else {
+                $('#dg3').datagrid('selectRow', editIndexdg3);
+            }
+        }
+    }
+    function appenddg3() {
+        if (endEditingdg3()) {
+            $('#dg3').datagrid('appendRow', { status: 'P' });
+            editIndexdg3 = $('#dg3').datagrid('getRows').length - 1;
+            $('#dg3').datagrid('selectRow', editIndexdg3)
+                .datagrid('beginEdit', editIndexdg3);
+        }
+    }
+    function removeitdg3() {
+        if (editIndexdg3 == undefined) {
+            return;
+        }
+        var row = $('#dg3').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPOFormulation/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dg3').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndexdg3 = undefined;
+    }
+    function reloadGriddg3() {
+        $('#dg3').datagrid('load');
+    }
+    function acceptdg3() {
+        if (endEditingdg3()) {
+            $('#dg3').datagrid('acceptChanges');
+
+            var row = $('#dg3').datagrid('getSelected');
+            var formID = '@Model.Id';
+            var extruderID = 3;
+            if (row) {
+                $.ajax({
+                    url: '/TPOFormulation/AjaxTypeUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row), formulationID: formID, extruderID: extruderID },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dg3').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+    function rejectdg3() {
+        $('#dg3').datagrid('rejectChanges');
+        editIndexdg3 = undefined;
+    }
+
+    //dg4
+    var editIndexdg4 = undefined;
+    function endEditingdg4() {
+        if (editIndexdg4 == undefined) {
+            return true;
+        }
+        if ($('#dg4').datagrid('validateRow', editIndexdg4)) {
+            var ed = $('#dg4').datagrid('getEditor', { index: editIndexdg4, field: 'Id' });
+            $('#dg4').datagrid('endEdit', editIndexdg4);
+            editIndexdg4 = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRowdg4(index) {
+        if (editIndexdg4 != index) {
+            if (endEditingdg4()) {
+                $('#dg4').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndexdg4 = index;
+            } else {
+                $('#dg4').datagrid('selectRow', editIndexdg4);
+            }
+        }
+    }
+    function appenddg4() {
+        if (endEditingdg4()) {
+            $('#dg4').datagrid('appendRow', { status: 'P' });
+            editIndexdg4 = $('#dg4').datagrid('getRows').length - 1;
+            $('#dg4').datagrid('selectRow', editIndexdg4)
+                .datagrid('beginEdit', editIndexdg4);
+        }
+    }
+    function removeitdg4() {
+        if (editIndexdg4 == undefined) {
+            return;
+        }
+        var row = $('#dg4').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPOFormulation/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dg4').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndexdg4 = undefined;
+    }
+    function reloadGriddg4() {
+        $('#dg4').datagrid('load');
+    }
+    function acceptdg4() {
+        if (endEditingdg4()) {
+            $('#dg4').datagrid('acceptChanges');
+
+            var row = $('#dg4').datagrid('getSelected');
+            var formID = '@Model.Id';
+            var extruderID = 4;
+            if (row) {
+                $.ajax({
+                    url: '/TPOFormulation/AjaxTypeUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row), formulationID: formID, extruderID: extruderID },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dg4').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+    function rejectdg4() {
+        $('#dg4').datagrid('rejectChanges');
+        editIndexdg4 = undefined;
+    }
+</script>
+
+<style type="text/css">
+    .tableStyle {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+    }
+
+    td {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+
+    .textboxClass {
+        line-height: normal;
+        padding-bottom: 2.9px !important;
+    }
+</style>
+

@@ -1,0 +1,258 @@
+﻿@model IEnumerable<TPO.Web.Models.RawMaterialReceived>
+@{ViewBag.Title = "Raw Material Receipt Summary";}
+
+<h2>Raw Material Receipt Summary</h2>
+
+@using (Html.BeginForm("Index", "RawMaterialReceived", FormMethod.Post, new { id = "RawMaterialReceivedForm" }))
+{
+    <div class="col-md-6">
+        @Html.DisplayNameFor(model => model.RawMaterialId)
+        <input id="rawMaterialSelection" class="easyui-combogrid" style="width:250px" data-options="
+        panelWidth: 500,
+        loadMsg: 'Loading...',
+        idField: 'Id',
+        textField: 'Code',
+        url: '/RawMaterial/GetAllRawMaterialResult',
+        method: 'get',
+        columns: [[
+            {field:'Code',title:'Raw Material',width:60},
+            {field:'Description',title:'Description',width:100}
+        ]],
+        onSelect: rawMaterialSelected,
+        fitColumns: true
+    ">
+    </div>
+}   
+<br /><br />
+    <div id="dataGridHolder" style="display:none;">
+        <table id="dg" class="easyui-datagrid" title="Raw Materials"
+               data-options="iconCls: 'icon-edit',
+               singleselect: true,
+               toolbar: '#tb' ,
+               url: '/RawMaterialReceived/GetRawMatReceivedResult',
+               method: 'get',
+               pagination: true,
+               pageSize:15,
+               rownumbers: true,
+               onClickRow: onClickRow,
+               pageList:[15,25,50],
+               fitColumns: true,
+               sortName: 'LotNumber',
+               sortOrder: 'asc'
+               ">
+            <thead>
+                <tr>
+                    <th data-options="field:'ID', hidden:true">Material Receipt</th>
+                    <th data-options="field:'RawMaterialId', hidden:true">RawMaterialId</th>
+                    <th data-options="field:'LotNumber',editor:'text'">Material Lot No</th>
+                    <th data-options="field:'DateEntered',editor:'datebox',formatter:formatDate">Received Date</th>
+                    <th data-options="field:'EnteredBy',editor:'text'">Received By</th>
+                    <th data-options="field:'CoA',editor:'text'">C of A</th>
+                    <th data-options="field:'QuantityShipped',editor:'text'">Quantity Shipped</th>
+                    <th data-options="field:'QuantityReceived',editor:'text'">Quantity Received</th>
+                    <th data-options="field:'QuantityNotReceived',editor:'text'">Quantity Rejected</th>
+                    <th data-options="field:'UoMId',
+                        formatter:function(value,row){
+                            return row.UoMCode;
+                        },
+                        editor:{
+                            type:'combogrid',
+                            options:{
+                                panelWidth: 200,
+                                idField: 'Id',
+                                textField: 'Code',
+                                url: '/IMProduct/GetAllWeightUomResult',
+                                method: 'get',
+                                columns: [[
+                                {field:'Code',title:'Code',width:60},
+                                {field:'Description',title:'Description',width:100}
+                                ]],
+                                fitColumns: true
+                            }
+                        }">Raw Material UOM</th>
+                    <th data-options="field:'ReceivedSizeLimitId',
+                        formatter:function(value,row){
+                            return row.ReceivedSizeLimitCode;
+                        },
+                        editor:{
+                            type:'combogrid',
+                            options:{
+                                panelWidth: 400,
+                                loadMsg:'Loading',
+                                idField: 'Id',
+                                textField: 'Code',
+                                url: '/RawMaterialReceivedSizeLimit/GetVisibleReceiptContainerResult',
+                                method: 'get',
+                                columns: [[
+                                {field:'Code',title:'Container',width:150},
+                                {field:'LowLimit',title:'Low Limit',width:100},
+                                {field:'HighLimit',title:'High Limit',width:100}
+                                ]],
+                                fitColumns: true
+                            }
+                        }">Receipt Container</th>
+                    <th data-options="field:'LastModified',formatter:formatDate">Last Modified Date</th>
+                    <th data-options="field:'ModifiedBy'">Last Modified By</th>
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div id="tb">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" append() ">Create New</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeit() ">Delete</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" accept() ">Save Changes</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Undo</a>
+    </div>
+
+
+<script type ="text/javascript">
+    
+    $(document).ready(function () {
+        $("#rawMaterialSelection").combogrid('setValue', '- - - Select - - - ');
+    });
+
+    function rawMaterialSelected(record) {
+        editIndex = null;
+        //record is the row position that is returned as well if needed
+        var val = $("#rawMaterialSelection").combogrid('getValue');
+        $('#dataGridHolder').show();
+        //$('#dg').datagrid({loadFilter:pagerFilter,
+        //    queryParams: {
+        //        rawMatID: val
+        //    }
+        //});
+
+        $('#dg').datagrid({
+            queryParams: {
+                rawMatID: val
+            }
+        });
+ 
+    }
+
+    //function pagerFilter(data){
+    //    if (typeof data.length == 'number' && typeof data.splice == 'function'){    // is array
+    //        data = {
+    //            total: data.length,
+    //            rows: data
+    //        }
+    //    }
+    //    var dg = $(this);
+    //    var opts = dg.datagrid('options');
+    //    var pager = dg.datagrid('getPager');
+    //    pager.pagination({
+    //        onSelectPage:function(pageNum, pageSize){
+    //            opts.pageNumber = pageNum;
+    //            opts.pageSize = pageSize;
+    //            pager.pagination('refresh',{
+    //                pageNumber:pageNum,
+    //                pageSize:pageSize
+    //            });
+    //            dg.datagrid('loadData',data);
+    //        }
+    //    });
+    //    if (!data.originalRows){
+    //        data.originalRows = (data.rows);
+    //    }
+    //    var start = (opts.pageNumber-1)*parseInt(opts.pageSize);
+    //    var end = start + parseInt(opts.pageSize);
+    //    data.rows = (data.originalRows.slice(start, end));
+    //    return data;
+    //}
+
+
+    var editIndex = undefined;
+    function endEditing() {
+        if (editIndex == undefined) { return true;}
+        if ($('#dg').datagrid('validateRow', editIndex)) {
+            var ed = $('#dg').datagrid('getEditor', { index: editIndex, field: 'ID' });
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function onClickRow(index) {
+        //only allow editing of single row.
+        if (editIndex != undefined) {
+            return false;
+        }
+
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+
+    function append() {
+        if (endEditing()) {
+            $('#dg').datagrid('appendRow', { status: 'P' });
+            editIndex = $('#dg').datagrid('getRows').length - 1;
+            $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+        }
+    }
+
+    function removeit() {
+        if (editIndex == undefined) { return;}
+       
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/RawMaterialReceived/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                GetMessage("delete", true);
+                $('#dg').datagrid('reload');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                GetMessage("delete", false);
+                $('#dg').datagrid('reload');
+                }
+            });
+        }
+        editIndex = undefined;
+    }
+    //function reloadGrid() {
+    //    $('#dg').datagrid('load');
+    //}
+    function accept() {
+        if (endEditing()) {
+            $('#dg').datagrid('acceptChanges');
+
+            var val = $("#rawMaterialSelection").combogrid('getValue');
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+                $.ajax({
+                    url: '/RawMaterialReceived/AjaxTypeUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row), rawMaterialId: val },
+                    success: function (data, textStatus, jqXHR) {
+                    GetMessage("save", true);
+                    $('#dg').datagrid('reload');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        GetMessage("save", false);
+                        $('#dg').datagrid('reload');
+                    }
+                });
+            }
+        }
+    }
+    function reject() {
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+
+</script>

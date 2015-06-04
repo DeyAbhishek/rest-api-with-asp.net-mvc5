@@ -1,0 +1,669 @@
+﻿
+@{
+    ViewBag.Title = "Downtime Code Setup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal" style="margin-left:25px;">
+        <hr />
+        @Html.ValidationSummary(true)
+        <h2>Downtime Code Setup</h2>
+        <br />
+        <div class="form-group">
+            <b>Line:</b>&nbsp;
+            <input id="ddlLines" class="easyui-combogrid" style="width:120px;" data-options="
+               idField: 'ID',
+               textField: 'LineDesc',
+               loadMsg: 'Loading',
+               url: '/CurrentScrim/GetProductionLinesResult/',
+               method: 'get',
+               fitColumns: true,
+               columns: [[
+               {field:'LineDesc',title:'Line'}
+               ]],
+               onSelect: handleGrids
+               " />
+        </div>
+        <div class="form-group">
+            <b>Type:</b>&nbsp;
+            <input id="ddlTypes" class="easyui-combogrid" step="width:120px;" data-options="
+               idField: 'ID',
+               textField: 'Description',
+               loadMsg: 'Loading',
+               url: '/DownTimeCode/TypesResult',
+               method: 'get',
+               fitColumns: true,
+               columns: [[
+               { field:'Description', title:'Type', width:130 }
+               ]],
+               onSelect: handleGrids
+               " />
+        </div>
+
+        <div id="divGrids" class="form-group" style="display:none;">
+            <div id="divReasons" class="form-group col-md-2">
+                <table id="dgReasons" style="width:300px;" class="easyui-datagrid"></table>
+                <div id="reasonTb">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" newReason();">Create New</a>
+                </div>
+
+
+            </div>
+
+            <div id="divGroups">
+                <div class="form-group col-md-4">
+                    <table id="dgGroups" style="width:300px;" class="easyui-datagrid"></table>
+                    <div id="groupsTb">
+                        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" newGroup();">Create New</a>
+                    </div>
+                </div>
+
+                <div id="divEquipment" class="form-group col-md-4">
+                    <table id="dgEquipment" style="width:300px;" class="easyui-datagrid"></table>
+                    <div id="equipmentTb">
+                        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" newEquipment();">Create New</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<p />
+
+@section scripts
+{
+
+<script type="text/javascript">
+    $(function () {
+        createGrids();
+    })
+    function handleGrids() {
+        var equipmentValue = "Equipment";
+        var lineID = $("#ddlLines").combogrid('getValue');
+        var typeID = $("#ddlTypes").combogrid('getValue');
+        if (lineID && typeID) {
+            $("#divGrids").show();
+            var typeText = $("#ddlTypes").combogrid('getText');
+            if (typeText == equipmentValue) {
+                $("#divReasons").hide();
+                $("#divEquipment").hide();
+                $("#divGroups").show();
+
+                $("#dgGroups").datagrid('clearSelections');
+                $("#dgGroups").datagrid(
+                    {
+                        queryParams:
+                            {
+                                lineID: lineID,
+                                typeID: typeID
+                            }
+                    });
+
+            } else {
+                $("#divGroups").hide();
+                $("#divReasons").show();
+                $("#dgReasons").datagrid('clearSelections');
+                $("#dgReasons").datagrid(
+                    {
+                        queryParams:
+                            {
+                                lineID: lineID,
+                                typeID: typeID
+                            }
+                    });
+
+            }
+        }
+    }
+
+    //DownTimeReason grid functions
+    function createReasonGrid() {
+        $("#dgReasons").datagrid(
+            {
+                toolbar: '#reasonTb',
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                idField: 'Id',
+                url: '/DownTimeCode/ReasonsByLineAndTypeResult/',
+                method: 'get',
+                columns: [[
+                    { field: 'Id', hidden: true },
+                    { field: 'PlantId', hidden: true },
+                    { field: 'LineID', hidden: true },
+                    { field: 'DownTimeTypeID', hidden: true },
+                    { field: 'Description', editor: { type: 'text', required: true }, title: 'Reason', width: 215 },
+                    { field: 'Scheduled', hidden: true },
+                    { field: 'SortOrder', hidden: true },
+                    { field: 'EnteredBy', hidden: true },
+                    { field: 'DateEntered', hidden: true },
+                    { field: 'ModifiedBy', hidden: true },
+                    { field: 'LastModified', hidden: true },
+                    {
+                        field: 'Action', width: 80, align: 'center',
+                        formatter: function (value, row, index) {
+                            var gridID = 'dgReasons';
+                            if (row.editing) {
+                                var s = '<a href="#" onclick="saveReason(this)">Save</a> ';
+                                var c = '<a href="#" onclick="cancelEdit(\'dgReasons\', this)">Cancel</a>';
+                                return s + c;
+                            } else {
+                                var e = '<a href="#" onclick="editRow(\'dgReasons\', this)">Edit</a> ';
+                                var d = '<a href="#" onclick="deleteReason(this)">Delete</a>';
+                                return e + d;
+                            }
+                        }
+                    }
+                ]],
+                onBeforeEdit: function (index, row) {
+                    row.editing = true;
+                    updateActions('dgReasons', index);
+                },
+                onAfterEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgReasons', index);
+                },
+                onCancelEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgReasons', index);
+                }
+            });
+    }
+    function newReason() {
+        var row = $("#dgReasons").datagrid('getSelected');
+        var index = 0;
+        if (row) {
+            index = $("#dgReasons").datagrid('getRowIndex', row);
+        }
+        $("#dgReasons").datagrid('insertRow',
+            {
+                index: index,
+                row:
+                {
+                    Id: 0,
+                    PlantId: 0,
+                    EnteredBy: '',
+                    DateEntered: new Date().toJSON(),
+                    ModifiedBy: '',
+                    LastModified: new Date().toJSON()
+                }
+            });
+        $("#dgReasons").datagrid('selectRow', index);
+        $("#dgReasons").datagrid('beginEdit', index);
+    }
+    function saveReason(target) {
+        if (validateRow('dgReasons', target)) {
+            var index = getRowIndex(target);
+            endEdit('dgReasons', target);
+            var row = $('#dgReasons').datagrid('getRows')[index];
+
+            if (row) {
+                var lineID = $("#ddlLines").combogrid('getValue');
+                var typeID = $("#ddlTypes").combogrid('getValue');
+
+                var reason =
+                {
+                    "Id": row.Id,
+                    "PlantId": row.PlantId,
+                    "LineID": lineID,
+                    "DownTimeTypeID": typeID,
+                    "Description": row.Description,
+                    "Scheduled": row.Scheduled,
+                    "SortOrder": row.SortOrder,
+                    "EnteredBy": row.EnteredBy,
+                    "DateEntered": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.DateEntered.substr(6)))),
+                    "ModifiedBy": row.ModifiedBy,
+                    "LastModified": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.LastModified.substr(6))))
+                };
+
+                $("#dgReasons").datagrid('loading');
+                $.ajax({
+                    url: '/DownTimeCode/UpdateReasonResult/',
+                    type: 'POST',
+                    data: reason,
+                    async: false,
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ResponseMessage.ActionStatus == "ok") {
+                            $("#dgReasons").datagrid('updateRow', {
+                                index: index,
+                                row: {
+                                    Id: data.Id,
+                                    PlantId: data.PlantId,
+                                    EnteredBy: data.EnteredBy,
+                                    DateEntered: data.DateEntered,
+                                    ModifiedBy: data.ModifiedBy,
+                                    LastModified: data.LastModified
+                                }
+                            });
+                        }
+                        displayMessage(data.ResponseMessage.ActionType, data.ResponseMessage.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        $("#dgReasons").datagrid('loaded');
+
+                    }
+                });
+
+            }
+        }
+    }
+    function deleteReason(target) {
+        $.messager.confirm('Confirm', 'Delete this item?', function (r) {
+            if (r) {
+                var index = getRowIndex(target);
+                var row = $('#dgReasons').datagrid('getRows')[index];
+                if (row) {
+                    var id = row.Id;
+                    $("#dgReasons").datagrid('loading');
+                    $.ajax({
+                        url: '/DownTimeCode/DeleteReason/' + id,
+                        type: 'POST',
+                        async: false,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.ActionStatus == "ok") {
+                                $("#dgReasons").datagrid('deleteRow', index);
+                            }
+                            displayMessage(data.ActionType, data.ActionMessage);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        },
+                        complete: function (jqXHR, textStatus) {
+                            $("#dgReasons").datagrid('loaded');
+
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+
+    //DownTimeEquipmentGroup grid functions
+    function createGroupGrid() {
+        $("#dgGroups").datagrid(
+            {
+                toolbar: '#groupsTb',
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                idField: 'Id',
+                url: '/DownTimeCode/GroupsByLineResult/',
+                method: 'get',
+                onClickRow: groupSelected,
+                columns: [[
+                    { field: 'Id', hidden: true },
+                    { field: 'PlantId', hidden: true },
+                    { field: 'DownTimeTypeID', hidden: true },
+                    { field: 'LineID', hidden: true },
+                    { field: 'Code', editor: { type: 'text', required: true }, title: 'Section Of Line', width: 215 },
+                    { field: 'Description', hidden: true },
+                    { field: 'EnteredBy', hidden: true },
+                    { field: 'DateEntered', hidden: true },
+                    { field: 'ModifiedBy', hidden: true },
+                    { field: 'LastModified', hidden: true },
+                    {
+                        field: 'Action', width: 80, align: 'center',
+                        formatter: function (value, row, index) {
+                            if (row.editing) {
+                                var s = '<a href="#" onclick="saveGroup(this)">Save</a> ';
+                                var c = '<a href="#" onclick="cancelEdit(\'dgGroups\', this)">Cancel</a>';
+                                return s + c;
+                            } else {
+                                var e = '<a href="#" onclick="editRow(\'dgGroups\', this)">Edit</a> ';
+                                var d = '<a href="#" onclick="deleteGroup(this)">Delete</a>';
+                                return e + d;
+                            }
+                        }
+                    }
+                ]],
+                onBeforeEdit: function (index, row) {
+                    row.editing = true;
+                    updateActions('dgGroups', index);
+                },
+                onAfterEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgGroups', index);
+                },
+                onCancelEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgGroups', index);
+                }
+            });
+    }
+    function newGroup() {
+        var row = $("#dgGroups").datagrid('getSelected');
+        var index = 0;
+        if (row) {
+            index = $("#dgGroups").datagrid('getRowIndex', row);
+        }
+        $("#dgGroups").datagrid('insertRow',
+            {
+                index: index,
+                row:
+                {
+                    Id: 0,
+                    PlantId: 0,
+                    EnteredBy: '',
+                    DateEntered: new Date().toJSON(),
+                    ModifiedBy: '',
+                    LastModified: new Date().toJSON()
+                }
+            });
+        $("#dgGroups").datagrid('selectRow', index);
+        $("#dgGroups").datagrid('beginEdit', index);
+    }
+    function saveGroup(target) {
+        if (validateRow('dgGroups', target)) {
+            var index = getRowIndex(target);
+            endEdit('dgGroups', target);
+            var row = $('#dgGroups').datagrid('getRows')[index];
+
+            if (row) {
+                var lineID = $("#ddlLines").combogrid('getValue');
+                var typeID = $("#ddlTypes").combogrid('getValue');
+                var group =
+                {
+                    "Id": row.Id,
+                    "PlantId": row.PlantId,
+                    "LineID": lineID,
+                    "DownTimeTypeID": typeID,
+                    "Code": row.Code,
+                    "Description": row.Description,
+                    "EnteredBy": row.EnteredBy,
+                    "DateEntered": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.DateEntered.substr(6)))),
+                    "ModifiedBy": row.ModifiedBy,
+                    "LastModified": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.LastModified.substr(6))))
+                };
+
+                $("#dgGroups").datagrid('loading');
+                $.ajax({
+                    url: '/DownTimeCode/UpdateGroupResult/',
+                    type: 'POST',
+                    data: group,
+                    async: false,
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ResponseMessage.ActionStatus == "ok") {
+                            $("#dgGroups").datagrid('updateRow', {
+                                index: index,
+                                row: {
+                                    Id: data.Id,
+                                    PlantId: data.PlantId,
+                                    EnteredBy: data.EnteredBy,
+                                    DateEntered: data.DateEntered,
+                                    ModifiedBy: data.ModifiedBy,
+                                    LastModified: data.LastModified
+                                }
+                            });
+                        }
+                        displayMessage(data.ResponseMessage.ActionType, data.ResponseMessage.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        $("#dgGroups").datagrid('loaded');
+                    }
+                });
+
+            }
+        }
+    }
+    function deleteGroup(target) {
+        $.messager.confirm('Confirm', 'Delete this item?', function (r) {
+            if (r) {
+                var index = getRowIndex(target);
+                var row = $('#dgGroups').datagrid('getRows')[index];
+                if (row) {
+                    var id = row.ID;
+
+                    $("#dgGroups").datagrid('loading');
+                    $.ajax({
+                        url: '/DownTimeCode/DeleteGroup/' + id,
+                        type: 'POST',
+                        async: false,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.ActionStatus == "ok") {
+                                $('#dgGroups').datagrid('reload');
+                            }
+                            displayMessage(data.ActionType, data.ActionMessage);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        },
+                        complete: function (jqXHR, textStatus) {
+                            $("#dgGroups").datagrid('loaded');
+
+                        }
+
+                    });
+
+                }
+            }
+        });
+    }
+    function groupSelected(rowIndex, rowData) {
+        var id = rowData.Id;
+        $("#dgEquipment").datagrid(
+            {
+                queryParams:
+                    {
+                        groupID: id
+                    }
+            });
+        $("#divEquipment").show();
+    }
+
+    //DownTimeEquipment grid functions
+    function createEquipmentGrid() {
+        $("#dgEquipment").datagrid(
+            {
+                toolbar: '#equipmentTb',
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                idField: 'Id',
+                url: '/DownTimeCode/EquipmentByGroupResult/',
+                method: 'get',
+                columns: [[
+                    { field: 'Id', hidden: true },
+                    { field: 'PlantId', hidden: true },
+                    { field: 'DownTimeTypeID', hidden: true },
+                    { field: 'LineID', hidden: true },
+                    { field: 'DownTimeEquipmentGroupID', hidden: true },
+                    { field: 'Description', editor: { type: 'text', required: true }, title: 'Component', width: 215 },
+                    { field: 'EnteredBy', hidden: true },
+                    { field: 'DateEntered', hidden: true },
+                    { field: 'ModifiedBy', hidden: true },
+                    { field: 'LastModified', hidden: true },
+                    {
+                        field: 'Action', width: 80, align: 'center',
+                        formatter: function (value, row, index) {
+                            if (row.editing) {
+                                var s = '<a href="#" onclick="saveEquipment(this)">Save</a> ';
+                                var c = '<a href="#" onclick="cancelEdit(\'dgEquipment\', this)">Cancel</a>';
+                                return s + c;
+                            } else {
+                                var e = '<a href="#" onclick="editRow(\'dgEquipment\', this)">Edit</a> ';
+                                var d = '<a href="#" onclick="deleteEquipment(this)">Delete</a>';
+                                return e + d;
+                            }
+                        }
+                    }
+                ]],
+                onBeforeEdit: function (index, row) {
+                    row.editing = true;
+                    updateActions('dgEquipment', index);
+                },
+                onAfterEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgEquipment', index);
+                },
+                onCancelEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgEquipment', index);
+                }
+            });
+    }
+    function newEquipment() {
+        var row = $("#dgEquipment").datagrid('getSelected');
+        var index = 0;
+        if (row) {
+            index = $("#dgEquipment").datagrid('getRowIndex', row);
+        }
+        $("#dgEquipment").datagrid('insertRow',
+            {
+                index: index,
+                row:
+                {
+                    Id: 0,
+                    PlantId: 0,
+                    LineID: 0,
+                    DownTimeTypeID: 0,
+                    DownTimeEquipmentGroupID: 0,
+                    Description: '',
+                    EnteredBy: '',
+                    DateEntered: new Date().toJSON(),
+                    ModifiedBy: '',
+                    LastModified: new Date().toJSON()
+                }
+            });
+        $("#dgEquipment").datagrid('selectRow', index);
+        $("#dgEquipment").datagrid('beginEdit', index);
+    }
+    function saveEquipment(target) {
+        if (validateRow('dgEquipment', target)) {
+            var index = getRowIndex(target);
+            endEdit('dgEquipment', target);
+            var row = $('#dgEquipment').datagrid('getRows')[index];
+
+            if (row) {
+                var lineID = $("#ddlLines").combogrid('getValue');
+                var typeID = $("#ddlTypes").combogrid('getValue');
+                var group = $('#dgGroups').datagrid('getSelected');
+
+                var equipment =
+                {
+                    "Id": row.Id,
+                    "PlantId": row.PlantId,
+                    "LineID": lineID,
+                    "DownTimeTypeID": typeID,
+                    "DownTimeEquipmentGroupID": group.Id,
+                    "Description": row.Description,
+                    "EnteredBy": row.EnteredBy,
+                    "DateEntered": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.DateEntered.substr(6)))),
+                    "ModifiedBy": row.ModifiedBy,
+                    "LastModified": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.LastModified.substr(6))))
+                };
+
+                $("#dgEquipment").datagrid('loading');
+                $.ajax({
+                    url: '/DownTimeCode/UpdateEquipmentResult/',
+                    type: 'POST',
+                    data: equipment,
+                    async: false,
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ResponseMessage.ActionStatus == "ok") {
+                            $("#dgEquipment").datagrid('updateRow', {
+                                index: index,
+                                row: {
+                                    Id: data.Id,
+                                    PlantId: data.PlantId,
+                                    EnteredBy: data.EnteredBy,
+                                    DateEntered: data.DateEntered,
+                                    ModifiedBy: data.ModifiedBy,
+                                    LastModified: data.LastModified
+                                }
+                            });
+                        }
+                        displayMessage(data.ResponseMessage.ActionType, data.ResponseMessage.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    },
+                    complete: function (jqXHR, textStatus) {
+
+                        $("#dgEquipment").datagrid('loaded');
+
+                    }
+                });
+
+            }
+        }
+    }
+    function deleteEquipment(target)
+    {
+        $.messager.confirm('Confirm', 'Delete this item?', function (r) {
+            if (r) {
+                var index = getRowIndex(target);
+                var row = $('#dgEquipment').datagrid('getRows')[index];
+                if (row) {
+                    var id = row.Id;
+                    $("#dgEquipment").datagrid('loading');
+                    $.ajax({
+                        url: '/DownTimeCode/DeleteEquipment/' + id,
+                        type: 'POST',
+                        async: false,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.ActionStatus == "ok") {
+                                $("#dgEquipment").datagrid('deleteRow', index);
+                            }
+                            displayMessage(data.ActionType, data.ActionMessage);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        },
+                        complete: function (jqXHR, textStatus) {
+                            $("#dgEquipment").datagrid('loaded');
+
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+
+    //Shared functions
+    function createGrids()
+    {
+        createReasonGrid();
+        createGroupGrid();
+        createEquipmentGrid();
+    }
+    function getRowIndex(target) {
+        var tr = $(target).closest('tr.datagrid-row');
+        var index = parseInt(tr.attr('datagrid-row-index'));
+        return index;
+    }
+    function updateActions(gridID, index) {
+        $('#' + gridID).datagrid('updateRow', {
+            index: index,
+            row: {}
+        });
+    }
+    function editRow(gridID, target)
+    {
+        $("#" + gridID).datagrid('beginEdit', getRowIndex(target));
+    }
+    function cancelEdit(gridID, target)
+    {
+        $("#" + gridID).datagrid('cancelEdit', getRowIndex(target));
+        $("#" + gridID).datagrid('rejectChanges');
+    }
+    function endEdit(gridID, target)
+    {
+        $("#" + gridID).datagrid('endEdit', getRowIndex(target));
+    }
+    function validateRow(gridID, target)
+    {
+        return $("#" + gridID).datagrid('validateRow', getRowIndex(target));
+    }
+</script>
+}

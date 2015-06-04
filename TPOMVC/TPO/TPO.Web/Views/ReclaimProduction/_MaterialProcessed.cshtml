@@ -1,0 +1,320 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+
+<div id="processedGrid">
+    <table id="materialProcessedGrid" class="easyui-datagrid" title="Material Processed" style="height: 300px;width: 420px"
+           data-options="iconCls: 'icon-edit',
+           singleselect: true,
+           toolbar: '#processedTb' ,
+           method: 'get',
+           onDblClickRow: onDblClickProcessedRow,
+           pagination: true,
+           rownumbers: true,
+           fitColumns: true
+           ">
+        <thead>
+            <tr>
+                <th data-options="field:'ProductionDate', width: 160, formatter: formatDate">Production Date</th>
+                <th data-options="field:'ProductionShiftCode', width: 100">Shift</th>
+                <th data-options="field:'ActionAmount', width: 100">Material</th>
+                <th data-options="field:'CompAmount', width: 100">Compatiblizer</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="processedTb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" createNewProcessedEntry() ">Create New</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" deleteExistingProcessedEntry() ">Delete</a>
+    </div>
+</div>
+
+<div id="dialogBoxProcessed" class="easyui-dialog" title="Add/Update Material Processed Entry" data-options="iconCls:'icon-save'" style="width:300px;height:200px;padding:10px">
+    <table class="col-lg-offset-2">
+        @*<tr>
+                <td>
+                    <input id="idDT" type="number" hidden>
+                    <input id="plantIDDT" type="number" hidden>
+                    <input id="productIDDT" type="number" hidden>
+                    <input id="workOrderIDDT" type="number" hidden>
+                    <span id="dateEnter"><input id="dateEnteredDT" class="easyui-datebox"></span>
+                    <input id="enteredByDT" type="text" hidden>
+                </td>
+            </tr>*@
+        <tr id="productionDateProcessed">
+            <td>
+                <label>Production Date:</label>
+            </td>
+            <td>
+                <input id="prodDateProcessed" class="easyui-datebox" style="width:100px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Shift:</label>
+            </td>
+            <td>
+                <input id="shiftTypeProcessedSelection" class="easyui-combogrid" style="width:100px;" data-options="
+                    panelWidth: 500,
+                    loadMsg:'Loading',
+                    idField: 'Id',
+                    textField: 'Code',
+                    url: '/ProductionShiftType/GetAllShiftTypeResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Component',width:20},
+                    {field:'ShortDescription',title:'Component',width:150}
+                    ]],onSelect: shiftTypeProcessedSelected,
+                    fitColumns: true">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label id="materialProcessedLB">Processed:</label>
+            </td>
+            <td>
+                <input id="materialProcessed" type="number" class="easyui-numberbox" data-options="min:0,precision:0" style=" width:100px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label id="compatiblizerUsedLB">Compatiblizer:</label>
+            </td>
+            <td>
+                <input id="materialCompatiblizer" type="number" class="easyui-numberbox" data-options="min:0,precision:0" style="width:100px" />
+            </td>
+        </tr>
+        @*<tr>
+                <td>
+                    <label>Material Type:</label>
+                </td>
+                <td>
+                    <input id="materialTypeSelection" class="easyui-combogrid" style="width:120px;" data-options="
+                        loadMsg:'Loading',
+                        idField: 'ID',
+                        textField: 'Description',
+                        url: '/TPODownTimeEntry/GetAllDownTimeTypeResult',
+                        method: 'get',
+                        columns: [[
+                        {field:'Description',title:'Type',width:60}
+                        ]],onSelect: downTimeTypeSelected,
+                        fitColumns: true">
+                </td>
+            </tr>*@
+    </table>
+    <br />
+    <span class="col-lg-offset-3">
+        <button class="btn btn-success btn-shadow"
+                onclick="saveDownTimeEntry(); return false;">
+            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+        </button>
+        <button class="btn btn-default btn-shadow"
+                onclick="$('#dialogBoxProcessed').dialog('close'); return false;">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+        </button>
+    </span>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#dialogBoxProcessed").dialog({
+            autoOpen: false,
+            height: 200,
+            width: 400,
+            modal: true,
+            title: "Add/Update Material Processed Entry"
+        });
+        $("#dialogBoxProcessed").dialog("close");
+    });
+
+    //function downTimeTypeSelected(record) {
+    //    $("#sectionOfLine").show();
+    //    var type = $("#downTimeTypeSelection").combogrid('getValue');
+    //    if (type == 1) {
+    //        $("#sectionLabel").text("Section of Line:");
+    //        $("#sectionOfLineSelection").combogrid(
+    //        {
+    //            url: '/TPODownTimeEntry/GetEquimentGroupResult'
+    //        });
+    //        $('#sectionOfLineSelection').combogrid('setValue', ' - select - ');
+    //        $("#component").show();
+    //        $("#componentSelection").combogrid('disable');
+    //    }
+    //    else {
+    //        $("#component").hide();
+    //        $("#sectionLabel").text("Downtime Reason:");
+    //        $("#sectionOfLineSelection").combogrid(
+    //        {
+    //            url: '/TPODownTimeEntry/GetReasonsByTypeResult',
+    //            queryParams:
+    //            {
+    //                typeID: type
+    //            }
+    //        });
+    //        $('#sectionOfLineSelection').combogrid('setValue', ' - select - ');
+    //    }
+    //    $("#typeIDDT").val(type);
+    //}
+
+    //function sectionOfLineSelected(record) {
+    //    var group = $("#sectionOfLineSelection").combogrid('getValue');
+    //    $("#componentSelection").combogrid('enable');
+    //    $("#componentSelection").combogrid(
+    //        {
+    //            queryParams:
+    //            {
+    //                groupID: group
+    //            }
+    //        });
+    //    $('#componentSelection').combogrid('setValue', ' - select - ');
+
+    //    if ($("#typeIDDT").val() == 1) {
+    //        $("#equipmentGroupIDDT").val(group);
+    //        $("#reasonIDDT").val(null);
+    //    }
+    //    else {
+    //        $("#reasonIDDT").val(group);
+    //        $("#equipmentGroupIDDT").val(null);
+    //        $("#equipmentIDDT").val(null);
+    //    }
+    //}
+
+    //function componentSelected(record) {
+    //    var component = $("#componentSelection").combogrid('getValue');
+    //    $("#equipmentIDDT").val(component);
+    //}
+
+    function shiftTypeProcessedSelected(record) {
+        var shiftDT = $("#shiftTypeProcessedSelection").combogrid('getValue');
+        $("#shiftIDDT").val(shiftDT);
+    }
+
+    function onDblClickProcessedRow(rowIndex, rowData) {
+        $('#dialogBoxProcessed').dialog('open');
+        $('#productionDateProcessed').show();
+        //$('#dateEnter').hide();
+        //$("#idDT").val(rowData.ID);
+        //$("#shiftIDDT").val(rowData.ShiftID);
+        //$("#typeIDDT").val(rowData.TypeID);
+        //$("#equipmentIDDT").val(rowData.EquipmentID);
+        //$("#equipmentGroupIDDT").val(rowData.DownTimeEquipmentGroupID);
+        //$("#reasonIDDT").val(rowData.ReasonID);
+        //$("#productIDDT").val(rowData.ProductID);
+        //$("#workOrderIDDT").val(rowData.WorkOrderID);
+        //$("#plantIDDT").val(rowData.PlantID);
+        //$("#prodDateProcessed").datebox('setValue', formatDate(rowData.ProductionDate));
+        //$('#shiftTypeProcessedSelection').combogrid('setValue', rowData.ProductionShiftTypeCode)
+        //$("#materialProcessed").numberbox('setValue', rowData.DateOccurred);
+        //$('#downTimeTypeSelection').combogrid('setValue', rowData.DownTimeTypeDescription);
+        //$('#materialCompatiblizer').numberbox('setValue', rowData.DownTimeMinutes);
+        //if (rowData.TypeID == 1) {
+        //    $("#sectionOfLine").show();
+        //    $("#sectionLabel").text("Section of Line:");
+        //    $('#sectionOfLineSelection').combogrid('setValue', rowData.DownTimeEquipmentGroupDescription);
+        //    $("#component").show();
+        //    $("#componentSelection").combogrid('enable');
+        //    $('#componentSelection').combogrid('setValue', rowData.DownTimeEquipmentDescription);
+        //}
+        //else {
+        //    $("#component").hide();
+        //    $("#sectionOfLine").show();
+        //    $("#sectionLabel").text("Downtime Reason:");
+        //    $('#sectionOfLineSelection').combogrid('setValue', rowData.DownTimeReasonDescription);
+        //}
+        //$('#commentDT').text(rowData.Comment);
+        //$('#enteredByDT').val(rowData.EnteredBy);
+        //$('#dateEnteredDT').datebox('setValue', formatDate(rowData.DateEntered));
+    }
+
+    function createNewProcessedEntry() {
+        $('#dialogBoxProcessed').dialog('open');
+        $('#productionDateProcessed').hide();
+        $("#materialProcessedLB").text("Material Processed (lb):");
+        $("#compatiblizerUsedLB").text("Compatiblizer Used (lb):");
+        @*$('#dateEnter').hide();
+        $("#idDT").val(0);
+        $("#workOrderIDDT").val($("#WorkOrderId").val());
+        $("#plantIDDT").val('@Model.PlantId');
+        $("#prodDateProcessed").datebox('setValue', $("#ProductionDate").val());
+        $('#shiftTypeProcessedSelection').combogrid('setValue', ' - select - ')
+        $("#materialProcessed").numberbox('setValue', '');
+        $('#downTimeTypeSelection').combogrid('setValue', ' - select - ');
+        $('#materialCompatiblizer').numberbox('clear');
+        $('#commentDT').text('');
+        $("#sectionOfLine").hide();
+        $("#component").hide();*@
+        }
+
+    function saveDownTimeEntry() {
+        @*var entryDT =
+                    {
+                        "ID": $('#idDT').val(),
+                        "TypeID": $('#typeIDDT').val(),
+                        "ShiftID": $('#shiftIDDT').val(),
+                        "EquipmentID": $('#equipmentIDDT').val(),
+                        "DownTimeEquipmentGroupID": $('#equipmentGroupIDDT').val(),
+                        "ReasonID": $('#reasonIDDT').val(),
+                        "ProductID": $('#productIDDT').val(),
+                        "WorkOrderID": $('#workOrderIDDT').val(),
+                        "PlantID": $('#plantIDDT').val(),
+                        "LineID": '@Model.ProductionLineId',
+                        "DownTimeMinutes": $('#materialCompatiblizer').val(),
+                        "Comment": $('#commentDT').val(),
+                        "ProductionDate": $('#prodDateProcessed').datebox('getValue'),
+                        "DateOccurred": $('#materialProcessed').numberbox('getValue'),
+                        "EnteredBy": $('#enteredByDT').val(),
+                        "DateEntered": $('#dateEnteredDT').datebox('getValue')
+                    }
+        $.ajax({
+            url: '/TPODownTimeEntry/AjaxTypeUpdate',
+            type: 'POST',
+            data: entryDT,
+            success: function (data, textStatus, jqXHR) {
+                if (data.ActionStatus == "ok") {
+                    $('#downtimeGrid').datagrid('reload');
+                }
+                displayMessage(data.ActionType, data.ActionMessage);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+            }
+        });
+        $('#dialogBoxProcessed').dialog('close')*@
+        }
+
+    function deleteExistingProcessedEntry() {
+        @*var row = $('#downtimeGrid').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPODownTimeEntry/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: row,
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#downtimeGrid').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }*@
+        }
+
+    function loadMaterialProcessedDataGrid() {
+        $('#materialProcessedGrid').datagrid({
+            url: '/ReclaimProduction/GetMaterialProcessedByRCMaterial',
+            queryParams: { actionTypeCode: 'RP' }
+        });
+    }
+</script>
+
+<style type="text/css">
+    td {
+        padding-top: 0.35em;
+        padding-bottom: 0.35em;
+        padding: 5px;
+    }
+</style>
+
+

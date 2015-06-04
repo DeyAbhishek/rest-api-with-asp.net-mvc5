@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="37655bad314540fa9d2d3bbb32e6ca0f" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.Plant" Width="1.5" PointX="0.75" PointY="21.5" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProductionShift" Width="1.5" PointX="3" PointY="23.75" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProductionShiftType" Width="1.5" PointX="0.75" PointY="27.125" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterialAction" Width="1.5" PointX="8.25" PointY="35.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterialActionReason" Width="1.5" PointX="6" PointY="31.375" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterialActionType" Width="1.5" PointX="6" PointY="42.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterialQC" Width="1.5" PointX="5.25" PointY="35.625" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterialReceived" Width="1.5" PointX="3" PointY="19.625" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterialTest" Width="1.5" PointX="6" PointY="19.5" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ScrimActionReason" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ScrimActionType" Width="1.5" PointX="3" PointY="16" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ScrimType" Width="1.5" PointX="9" PointY="21.5" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TestLimitType" Width="1.5" PointX="3.75" PointY="28.75" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.UnitOfMeasure" Width="1.5" PointX="6.75" PointY="11.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.UnitOfMeasureType" Width="1.5" PointX="4.5" PointY="12.125" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.User" Width="1.5" PointX="3" PointY="52.375" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.WorkOrder" Width="1.5" PointX="3" PointY="47.5" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProductionShift_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialAction_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQC_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialReceived_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialTest_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimActionType_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimType_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_User_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_WorkOrder_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProductionShift_ProductionShiftType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialAction_ProductionShift" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialAction_RawMaterialActionReason" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialAction_RawMaterialActionType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialAction_User" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialAction_WorkOrder" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQC_QCTechUser" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialTest_ACLimitType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialTest_CBLimitType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialTest_ColorLimitType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialTest_MFLimitType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialTest_MoistLimitType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimType_LengthUnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimType_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimType_WidthUnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_UnitOfMeasure_UnitOfMeasureType" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.Role" Width="1.5" PointX="3" PointY="57.375" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RoleAssignment" Width="1.5" PointX="5.25" PointY="53.125" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ScrimAction" Width="1.5" PointX="13.5" PointY="24.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ScrimRoll" Width="1.5" PointX="11.25" PointY="15.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOCProductRoll" Width="1.5" PointX="9" PointY="28.75" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimAction_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimRoll_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCProductRoll_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimAction_ProductionShift" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCProductRoll_ProductionShift" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RoleAssignment_Role" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RoleAssignment_User" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimAction_ScrimActionReason" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimAction_ScrimActionType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimAction_ScrimRoll" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimAction_TPOCProductRoll" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimAction_User" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimAction_WorkOrder" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimRoll_LengthUnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimRoll_ScrimType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ScrimRoll_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCProductRoll_LengthUnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCProductRoll_MasterRollID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCProductRoll_WeightUnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCProductRoll_WorkOrder" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOCurrentScrim" Width="1.5" PointX="13.5" PointY="18.625" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCurrentScrim_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCurrentScrim_FleeceRoll" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCurrentScrim_Scrim1Roll" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCurrentScrim_Scrim2Roll" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCurrentScrim_FleeceType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCurrentScrim_Scrim1Type" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCurrentScrim_Scrim2Type" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.FailProperty" Width="1.5" PointX="9" PointY="49.125" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.QCRedHold" Width="1.5" PointX="14.25" PointY="34.5" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterialQCRedHold" Width="1.5" PointX="11.25" PointY="30.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterialSpecificGravity" Width="1.5" PointX="8.5" PointY="45" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterialSpecificGravityDetail" Width="1.5" PointX="10.75" PointY="45.125" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOCurrentRawMaterial" Width="1.5" PointX="9.125" PointY="17.5" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCRedHold_FailProperty" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQCRedHold_FailProperty" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCRedHold_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQCRedHold_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCurrentRawMaterial_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCRedHold_LeadOperatorID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCRedHold_ManagerID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCRedHold_QCTechID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCRedHold_SupervisorID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCRedHold_TPOCProductRoll" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialSpecificGravity_RawMaterialQC" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQCRedHold_LeadOperatorID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQCRedHold_ManagerID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQCRedHold_QCTechID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQCRedHold_RawMaterialReceived" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQCRedHold_SupervisorID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOCurrentRawMaterial_RawMaterialReceived" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialSpecificGravity_User" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialSpecificGravityDetail_RawMaterialSpecificGravity" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQCRedHold_RawMaterialQCID" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.IMProd" Width="1.5" PointX="19.5" PointY="28.25" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.IMProduct" Width="1.5" PointX="16.25" PointY="15.375" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.IMProductType" Width="1.5" PointX="14" PointY="1" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.IMQC" Width="1.5" PointX="21.5" PointY="17.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProdDteChng" Width="1.5" PointX="3" PointY="37.625" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProdLineRollConfig" Width="1.5" PointX="18" PointY="8.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProdLine" Width="1.5" PointX="20.25" PointY="9" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProdLinesPerform" Width="1.5" PointX="3" PointY="33.625" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProdLinesPerformProd" Width="1.5" PointX="22.5" PointY="23" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProdLineType" Width="1.5" PointX="18" PointY="11.375" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProdSupervisorOnShift" Width="1.5" PointX="11.25" PointY="24.625" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProductionBudget" Width="1.5" PointX="3" PointY="7.375" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProductionBudgetType" Width="1.5" PointX="0.75" PointY="7.625" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProductionLineSchedule" Width="1.5" PointX="20.25" PointY="40.375" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.ProductionShiftUse" Width="1.5" PointX="20.25" PointY="34.75" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.QCKickout" Width="1.5" PointX="17.25" PointY="36.375" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.QCPrintSpecification" Width="1.5" PointX="11" PointY="40.625" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.QCPrintSpecificationType" Width="1.5" PointX="8.75" PointY="56.625" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterial" Width="1.5" PointX="14" PointY="12.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.RawMaterialVendor" Width="1.5" PointX="11.75" PointY="12.25" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOExtruder" Width="1.5" PointX="15" PointY="4.375" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOFormulation" Width="1.5" PointX="17.25" PointY="3.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOFormulationLineProduct" Width="1.5" PointX="19.5" PointY="23.875" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOFormulationRawMaterial" Width="1.5" PointX="19.25" PointY="17.125" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOProductCapCoreDetail" Width="1.5" PointX="15" PointY="8" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOProductCEDetail" Width="1.5" PointX="9" PointY="12.125" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOProductDimDetail" Width="1.5" PointX="9" PointY="53" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOProductGrabDetail" Width="1.5" PointX="15" PointY="46.75" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOProductLabelDetail" Width="1.5" PointX="15" PointY="44" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOProduct" Width="1.5" PointX="17.25" PointY="22" />
+        <EntityTypeShape EntityType="TPOMVCApplicationModel.TPOProductStandardCost" Width="1.5" PointX="22.5" PointY="26.875" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProd_IMProducts" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProd_IMQC" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProd_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProd_ProdLines" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProd_UnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProd_WorkOrder" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProducts_IMProductType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProducts_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProducts_RawMaterials" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProducts_UnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMProducts_UnitOfMeasure1" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMQC_IMProducts" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMQC_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_IMQC_ProdLines" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdDteChng_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdLines_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdLinesPerform_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdLinesPerformProd_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdSupervisorOnShift_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProductionBudget_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProductionLineSchedule_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProductionShiftUse_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCKickout_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCPrintSpecification_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterials_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialVendor_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOFormLineProd_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOFormRawMaterials_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOFormulation_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProductStandartCost_Plant" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdLines_ProdLineRollConfig" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdLineType_ProdLineRollConfig" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdLines_ProdLineType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdLinesPerformProd_ProdLines" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialAction_ProdLines" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOFormLineProd_ProdLines" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdLinesPerformProd_TPOProducts" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdLineType_ProdLineType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProdSupervisorOnShift_ProductionShift" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProductionBudget_ProductionBudgetType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProductionLineSchedule_ProductionShift" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProductionShiftUse_ProductionShift" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCKickout_ProductionShift" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCKickout_LeadOperatorID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCKickout_QCTechID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCKickout_SupervisorID" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCKickout_TPOCProductRoll" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_QCPrintSpecification_QCPrintSpecificationType" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialAction_RawMaterials" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialQC_RawMaterialReceived" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialReceived_RawMaterials" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterials_RawMaterialVendor" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterials_UnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialTest_RawMaterials" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOFormRawMaterials_RawMaterials" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOFormRawMaterials_TPOExtruder" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOFormulation_TPOExtruder" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOFormLineProd_TPOFormulation" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOFormRawMaterials_TPOFormulation" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOFormLineProd_TPOProducts" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_ProductCapCoreDetail" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProductCEDetail_UnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_ProductCEDetail" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_ProductDimDetail_UnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_ProductDimDetail" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_ProductGrabDetail" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_ProductLabelDetail" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_UnitOfMeasure" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_UnitOfMeasure1" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_UnitOfMeasure2" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_UnitOfMeasure3" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_UnitOfMeasure4" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_UnitOfMeasure5" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_UnitOfMeasure6" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProducts_UnitOfMeasure7" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_TPOProductStandartCost_TPOProducts" />
+        <AssociationConnector Association="TPOMVCApplicationModel.FK_RawMaterialReceived_UnitOfMeasure" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

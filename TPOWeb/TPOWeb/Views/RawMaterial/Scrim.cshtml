@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Scrim";
+}
+
+<h2>Scrim</h2>
+
+@using (Html.BeginForm("index", "RawMaterialQC", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+<div class="col-md-6">
+    <h2>Raw Material QC Testing</h2><br />
+    <select id="RawMaterialQC" name="RawMaterialQC">
+        <option value="">Select RawMaterial</option>
+        @foreach (var item in ViewBag.RawMaterialReceived)
+        {
+            <option value="@item.RawMaterialCode">@item.RawMaterialCode | @item.RawMaterialName</option>
+        }
+    </select>
+    @*@Html.DropDownList("RawMaterialQC", "Select RawMaterial")*@
+
+    <br /><br /><br />
+
+
+
+</div>
+}

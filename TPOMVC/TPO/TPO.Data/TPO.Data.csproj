@@ -1,0 +1,427 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EBC7FA16-9DDB-426E-ACC7-EA3459887741}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TPO.Data</RootNamespace>
+    <AssemblyName>TPO.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV|AnyCPU'">
+    <OutputPath>bin\DEV\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV|x64'">
+    <OutputPath>bin\x64\DEV\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|AnyCPU'">
+    <OutputPath>bin\QA\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|x64'">
+    <OutputPath>bin\x64\QA\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationLog.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DownTime.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DownTimeEquipment.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DownTimeEquipmentGroup.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DownTimeReason.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DownTimeType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FailProperty.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMProd.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMProduct.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMProductType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IMQC.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Plant.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProdComment.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProdDateChange.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProdLine.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProdLineRollConfig.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProdLinesPerform.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProdLinesPerformProd.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProdLineType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProdSupervisorOnShift.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductionBudget.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductionBudgetType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductionLineSchedule.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductionShift.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductionShiftType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductionShiftUse.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QCKickout.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QCPrintSpecification.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QCPrintSpecificationType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QCRedHold.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QCUsersRetrieve_Result.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QCVisualInspectionType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterial.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialAction.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialActionReason.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialActionType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialQC.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialQCRedHold.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialReceived.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialReceivedSizeLimit.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialSpecificGravity.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialSpecificGravityDetail.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialTest.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RawMaterialVendor.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoleAssignment.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScrimAction.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScrimActionReason.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScrimActionType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScrimRoll.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScrimType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SecurityTask.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_get_QCUsers_Result.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupervisorOnShift.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TestLimitType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPO.Entity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TPO.Entity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPO.Entity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPO.Entity.Data.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TPO.Entity.Data.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="TPOBatch.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOCProductRoll.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOCurrentRawMaterial.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOCurrentScrim.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOExtruder.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOFormulation.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOFormulationLineProduct.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOFormulationRawMaterial.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOLineScrap.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOLineScrapCode.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOLineScrapCodeGroup.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOLineScrapType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOProduct.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOProductCapCoreDetail.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOProductCEDetail.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOProductDimDetail.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOProductGrabDetail.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOProductLabelDetail.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOProductStandardCost.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOReclaimAction.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOReclaimActionType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOReclaimWIP.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOReworkAction.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOReworkActionType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPOReworkRoll.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfMeasure.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfMeasureConversion.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfMeasureDefault.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfMeasureType.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserPlant.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="webpages_Membership.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="webpages_OAuthMembership.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="webpages_Roles.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrder.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrderShiftData.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrderShiftDataFormulation.cs">
+      <DependentUpon>TPO.Entity.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="TPO.Entity.Data.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TPO.Entity.Data.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+    <None Include="TPO.Entity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TPO.Entity.Data.edmx</DependentUpon>
+      <LastGenOutput>TPO.Entity.Context.cs</LastGenOutput>
+    </None>
+    <None Include="TPO.Entity.Data.edmx.diagram">
+      <DependentUpon>TPO.Entity.Data.edmx</DependentUpon>
+    </None>
+    <None Include="TPO.Entity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TPO.Entity.Data.edmx</DependentUpon>
+      <LastGenOutput>TPO.Entity.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

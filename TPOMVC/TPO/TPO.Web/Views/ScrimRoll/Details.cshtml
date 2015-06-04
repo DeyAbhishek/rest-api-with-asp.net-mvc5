@@ -1,0 +1,315 @@
+﻿@{ViewBag.Title = "Roll Receipt Details";}
+
+<h3>Roll Receipt Details</h3>
+
+@using (Html.BeginForm())
+{
+    <input id="scrimRollSelection" class="easyui-combogrid" style="width:250px" data-options="
+        panelWidth: 500,
+        loadMsg: 'Loading...',
+        idField: 'Id',
+        textField: 'Code',
+        url: '/ScrimRoll/GetScrimTypeResult',
+        method: 'get',
+        columns: [[
+            {field:'Code',title:'Code',width:60},
+            {field:'Description',title:'Description',width:100}
+        ]],
+        onSelect: scrimRollSelected,
+        fitColumns: true
+     " />
+
+    <br />
+    <br />
+    <div id="divScrimRolls" style="display:none;">
+        <table id="dg" class="easyui-datagrid" title="Scrim Rolls" style="width:1000px;"
+               data-options="iconCls: 'icon-edit',
+           singleSelect: true,
+           toolbar: '#tb',
+           url: '/ScrimRoll/ScrimRollGridByType',
+           method: 'get' ,
+           onClickRow: onClickRow,
+           pagination: true,
+           pageSize: 15,
+           pageList:[15,25,50],
+           rownumbers: true,
+           fitColumns: true
+           ">
+
+            @*<thead>
+                <tr>
+                    <th data-options="field:'Id',hidden: true">ID</th>
+                    <th data-options="field:'Code',editor:'text'">Roll #</th>
+                    <th data-options="field:'TypeID',hidden: true">Scrim Type ID</th>
+                    <th data-options="field:'DateReceived',formatter:formatDate,editor:'datebox'">Date Received</th>
+                    <th data-options="field:'Length',editor:'text'">Length</th>
+                    <th data-options="field:'Weight',editor:'text'">Weight</th>
+                    <th data-options="field:'TareWeight',editor:'text'">Tare Weight</th>
+                    <th data-options="field:'ReceivedWeight',editor:'text'">NetWeight</th>
+
+                </tr>
+            </thead>*@
+
+        </table>
+
+        <div id="tb">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" append() ">Create New</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" accept() ">Save Changes</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Undo</a>
+        </div>
+    </div>
+
+}
+<script type="text/javascript">
+
+    $('#dg').datagrid({
+        columns: [[
+			{ field: 'Id', hidden: true },
+			{ field: 'Code', title: 'Roll #', editor: 'text' },
+			{ field: 'TypeID', hidden: true },
+			{ field: 'DateReceived', title: 'Date Received', formatter:formatDate,editor:'datebox' },
+			{ field: 'ReceivedLength', title: 'Roll Length', editor: 'text' },
+            {
+                field: 'LengthUoMID', title: 'Length UoM', width: 120,
+                formatter: function (value, row, index) {
+                    return row.LengthUomText;
+                },
+                editor: {
+                    type: 'combobox',
+                    options: {
+                        valueField: 'Id',
+                        textField: 'Code',
+                        method: 'get',
+                        url: '../ScrimType/GetAllLengthUoMResult',
+                        required: true
+                    }
+                }
+            },
+            { field: 'Weight', title: 'Roll Weight', editor: 'text' },
+			{
+			    field: 'WeightUoMID', title: 'Weight UoM', width: 120,
+			    formatter: function (value, row, index) {
+			        return row.WeightUomText;
+			    },
+			    editor: {
+			        type: 'combobox',
+			        options: {
+			            valueField: 'Id',
+			            textField: 'Code',
+			            method: 'get',
+			            url: '../ScrimType/GetAllWeightUoMResult',
+			            required: true
+			        }
+			    }
+			},
+            { field: 'TareWeight', title: 'Tare Weight', editor: 'text' },
+            { field: 'WeightUomText' },
+			{ field: 'ReceivedWeight', title: 'Net Weight', width: 120 },
+            { field: 'WeightUomText' }
+        ]]
+    });
+
+    $(document).ready(function () {
+
+    });
+
+    var editIndex = undefined;
+
+    function endEditing() {
+        if (editIndex == undefined) {
+            return true;
+        }
+        if ($('#dg').datagrid('validateRow', editIndex)) {
+            var ed = $('#dg').datagrid('getEditor', { index: editIndex, field: 'Id' });
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function onClickRow(index) {
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+
+    function append() {
+        if (endEditing()) {
+            $('#dg').datagrid('appendRow', { status: 'P' });
+            editIndex = $('#dg').datagrid('getRows').length - 1;
+            $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+        }
+    }
+
+    function accept() {
+        if (endEditing()) {
+            $('#dg').datagrid('acceptChanges');
+
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+
+                var myJSONObject = {
+                    "Id": row.Id,
+                    "Code": row.Code,
+                    "TypeID": $("#scrimRollSelection").combogrid('getValue'),
+                    "DateReceived": row.DateReceived,
+                    "ReceivedLength": row.ReceivedLength,
+                    "LengthUoMID": row.LengthUoMID,
+                    //"ReceivedWeight": row.ReceivedWeight,
+                    "WeightUoMID": row.WeightUoMID,
+                    "TareWeight": row.TareWeight,
+                    "Weight" : row.Weight
+                };
+
+                $.ajax({
+                    url: '/ScrimRoll/ScrimRollAjaxCreate',
+                    type: 'POST',
+                    cache: false,
+                    data: { id: JSON.stringify(myJSONObject) },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dg').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+
+            }
+        }
+    }
+
+    function reject() {
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+
+    //function formatDate(val, row) {
+    //    if (val != undefined) {
+    //        var date = new Date(parseInt(val.substr(6)));
+    //        var day = date.getDate();
+    //        var month = date.getMonth();
+    //        var year = date.getFullYear();
+    //        var finalDate = day + '/' + month + '/' + year;
+    //        return finalDate;
+    //    } else {
+    //        return new Date();
+    //    }
+    //}
+
+    function scrimRollSelected(record) {
+        var val = $("#scrimRollSelection").combogrid('getValue');
+        //var url = "/ScrimRoll/Details/" + val;
+        //window.location = url;
+        $("#dg").datagrid(
+        {
+            //loadFilter: pagerFilter,
+            queryParams:
+            {
+                typeID: val
+            }
+        });
+        $("#divScrimRolls").show();
+    }
+
+
+    //function pagerFilter(data) {
+    //    if (typeof data.length == 'number' && typeof data.splice == 'function') {    // is array
+    //        data = {
+    //            total: data.length,
+    //            rows: data
+    //        }
+    //    }
+    //    var dg = $(this);
+    //    var opts = dg.datagrid('options');
+    //    var pager = dg.datagrid('getPager');
+    //    pager.pagination({
+    //        onSelectPage: function (pageNum, pageSize) {
+    //            opts.pageNumber = pageNum;
+    //            opts.pageSize = pageSize;
+    //            pager.pagination('refresh', {
+    //                pageNumber: pageNum,
+    //                pageSize: pageSize
+    //            });
+    //            dg.datagrid('loadData', data);
+    //        }
+    //    });
+    //    if (!data.originalRows) {
+    //        data.originalRows = (data.rows);
+    //    }
+    //    var start = (opts.pageNumber - 1) * parseInt(opts.pageSize);
+    //    var end = start + parseInt(opts.pageSize);
+    //    data.rows = (data.originalRows.slice(start, end));
+    //    return data;
+    //}
+
+
+</script>
+@*<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Code)
+        </th>
+        <th>
+                        @Html.DisplayNameFor(model => model.TypeID)
+                    </th>
+
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateReceived)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Length)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReceivedLength)
+                    </th>
+                    <th></th>
+                </tr>
+
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TypeID)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateReceived, "{0:MM/dd/yyyy}")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Length)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceivedLength)
+                        </td>
+                        <td>
+
+                            <button class="btn btn-default btn-shadow"
+                                    onclick="window.location.href = '@Url.Action("Edit", "ScrimRoll", new { id = item.ID })';return false;">
+                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+                            </button>
+
+
+                        </td>
+                    </tr>
+                }
+            </table>*@
+
+
+

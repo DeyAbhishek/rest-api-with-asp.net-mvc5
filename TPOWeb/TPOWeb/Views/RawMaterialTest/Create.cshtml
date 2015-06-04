@@ -1,0 +1,265 @@
+﻿@model TPO.DL.Models.RawMaterialTest
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>RawMaterialTest</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PlantID, "PlantID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PlantID", String.Empty)
+                @Html.ValidationMessageFor(model => model.PlantID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RawMaterialID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RawMaterialID)
+                @Html.ValidationMessageFor(model => model.RawMaterialID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UseColorTest, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UseColorTest)
+                @Html.ValidationMessageFor(model => model.UseColorTest)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ColorLimitTypeID, "ColorLimitTypeID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ColorLimitTypeID", String.Empty)
+                @Html.ValidationMessageFor(model => model.ColorLimitTypeID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ColorLimit1, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ColorLimit1)
+                @Html.ValidationMessageFor(model => model.ColorLimit1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ColorLimit2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ColorLimit2)
+                @Html.ValidationMessageFor(model => model.ColorLimit2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UseMFTest, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UseMFTest)
+                @Html.ValidationMessageFor(model => model.UseMFTest)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MFLimitTypeID, "MFLimitTypeID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("MFLimitTypeID", String.Empty)
+                @Html.ValidationMessageFor(model => model.MFLimitTypeID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MFLimit1, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MFLimit1)
+                @Html.ValidationMessageFor(model => model.MFLimit1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MFLimit2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MFLimit2)
+                @Html.ValidationMessageFor(model => model.MFLimit2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UseACTest, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UseACTest)
+                @Html.ValidationMessageFor(model => model.UseACTest)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ACLimitTypeID, "ACLimitTypeID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ACLimitTypeID", String.Empty)
+                @Html.ValidationMessageFor(model => model.ACLimitTypeID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ACLimit1, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ACLimit1)
+                @Html.ValidationMessageFor(model => model.ACLimit1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ACLimit2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ACLimit2)
+                @Html.ValidationMessageFor(model => model.ACLimit2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UseMoistTest, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UseMoistTest)
+                @Html.ValidationMessageFor(model => model.UseMoistTest)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoistLimitTypeID, "MoistLimitTypeID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("MoistLimitTypeID", String.Empty)
+                @Html.ValidationMessageFor(model => model.MoistLimitTypeID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoistLimit1, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MoistLimit1)
+                @Html.ValidationMessageFor(model => model.MoistLimit1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoistLimit2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MoistLimit2)
+                @Html.ValidationMessageFor(model => model.MoistLimit2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UseCBTest, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UseCBTest)
+                @Html.ValidationMessageFor(model => model.UseCBTest)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CBLimitTypeID, "CBLimitTypeID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CBLimitTypeID", String.Empty)
+                @Html.ValidationMessageFor(model => model.CBLimitTypeID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CBLimit1, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CBLimit1)
+                @Html.ValidationMessageFor(model => model.CBLimit1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CBLimit2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CBLimit2)
+                @Html.ValidationMessageFor(model => model.CBLimit2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UseSpecGrav, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UseSpecGrav)
+                @Html.ValidationMessageFor(model => model.UseSpecGrav)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UseVisual, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UseVisual)
+                @Html.ValidationMessageFor(model => model.UseVisual)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TestFrequency, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TestFrequency)
+                @Html.ValidationMessageFor(model => model.TestFrequency)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateEntered, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.DateEntered)*@
+                <input class="easyui-datebox" value="@Model.DateEntered" name="date">
+                @Html.ValidationMessageFor(model => model.DateEntered)</div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EnteredBy, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EnteredBy)
+                @Html.ValidationMessageFor(model => model.EnteredBy)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastModified, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.LastModified)*@
+                <input class="easyui-datebox" value="@Model.LastModified" name="lastmodified">
+                @Html.ValidationMessageFor(model => model.LastModified)</div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModifiedBy, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ModifiedBy)
+                @Html.ValidationMessageFor(model => model.ModifiedBy)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Cancel", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

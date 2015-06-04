@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - TPOWeb</title>
+
+    <link href="~/Content/sidr_dark.css" rel="Stylesheet" />
+    <link href="~/Content/tab-system.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryeasyui")
+    <script src="~/Scripts/jquery.sidr.js"></script>
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/jQueryeasyui/css")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.btn-navbar').sidr({
+                name: 'tpoNav',
+                source: '.nav-collapse',
+                renaming: false
+            });
+
+            $('.btn-navbar').hover(
+                function () {
+                    $.sidr("open", 'tpoNav');
+                }
+            );
+
+            $('.TPOsubmenu').click(function (e) {
+                if ($(this).children().next().is(":visible")) {
+                    $(this).children().next().slideToggle();
+                }
+                else {
+                    hideOtherMenus();
+                    $(this).children().next().slideToggle();
+                }
+
+            });
+        });
+
+        function hideOtherMenus() {
+            $('.submenu').hide();
+
+        }
+
+        function displayToggle(childElement, action) {
+            if (childElement.children().next().is(":visible") == true & action == 'close') {
+                childElement.children().next().slideToggle();
+            }
+            else if (childElement.children().next().is(":visible") == false & action == 'open') {
+                childElement.children().next().slideToggle();
+            }
+        }
+
+    </script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <style>
+        .ui-listview .ui-btn {
+            font-size: .7em;
+        }
+
+        .TPOsubmenu {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    @RenderSection("UnlockDialogReference", false)
+
+    <div data-role="page" data-theme="a">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div style="text-align: center; vertical-align: top; height:50px;">
+                <h2 class="brand" style="text-align:center;">@Html.ActionLink("TPO Web", "")</h2>
+                <button type="button" id="btnRespNav" class="btn btn-navbar" style="float: left; background-color: #040404; color:white; position:absolute; left:10px;top:20px; border-color:white;">
+                    <img src="~/Content/images/home-white.png" />
+                </button>
+            </div>
+
+            <div class="nav-collapse collapse">
+                <ul>
+                    <li><a href="#" id="closeTPOMenu" name="closeTPOMenu" onclick="$.sidr('close', 'tpoNav');">Close Menu</a></li>
+                    <li class="TPOsubmenu">
+                        <a href="#" class="submenu-button">Raw Material and Scrim</a>
+                        <ul class="submenu" style="display:none;">
+                            <li><b><u><a href="#">Raw Materials</a></u></b> </li>
+                            <li><a href="~/RawMaterialReceived/Index"><span style="padding-left:5px">Raw Material Receipts</span></a></li>
+                            <li><a href="~/RawMaterialQC/Index"><span style="padding-left:5px">Raw Material QC Testing</span></a></li>
+
+                            <li><b><u><a href="#">Scrim \ Release Liner</a></u></b> </li>
+                            <li><span style="padding-left:5px">@Html.ActionLink("New Receipt", "Create", "ScrimRoll")</span></li>
+                            <li><span style="padding-left:5px">@Html.ActionLink("View \\ Edit Receipts", "Edit", "ScrimRoll")</span></li>
+
+                            <li><b><u><a href="#">Set Current Line Materials</a></u></b> </li>
+                            @*<li><a href="~/RawMaterialCurrent/index"><span style="padding-left:5px">Set Raw Material Lots</span></a></li>*@
+                            <li><a href="~/CurrentScrim/Edit"><span style="padding-left:5px">Set Scrim \ Release Liner Rolls</span></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="TPOsubmenu">
+                        <a href="#">Production Scheduling</a>
+                        <ul class="submenu" style="display:none;">
+                            <li><b><u><a href="#">Future Sprints</a></u></b> </li>
+                        </ul>
+                    </li>
+                    <li class="TPOsubmenu">
+                        <a href="#">Operations</a>
+                        <ul class="submenu" style="display:none;">
+                            <li><b><u><a href="#">Future Sprints</a></u></b> </li>
+                        </ul>
+                    </li>
+                    <li class="TPOsubmenu">
+                        <a href="#">Quality Control</a>
+                        <ul class="submenu" style="display:none;">
+                            <li><b><u><a href="#">Future Sprints</a></u></b> </li>
+                        </ul>
+                    </li>
+                    <li class="TPOsubmenu">
+                        <a href="#">Accounting</a>
+                        <ul class="submenu" style="display:none;">
+                            <li><b><u><a href="#">Future Sprints</a></u></b> </li>
+                        </ul>
+                    </li>
+                    <li class="TPOsubmenu">
+                        <a href="#">Reporting</a>
+                        <ul class="submenu" style="display:none;">
+                            <li><b><u><a href="#">Future Sprints</a></u></b> </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+            <div style="vertical-align:top"></div>
+
+        </div>
+        <div id="mainpanel" data-role="panel" style="display:none;">
+            <h2>@Html.ActionLink("TPO Web", "../")</h2>
+            <div data-role="collapsible-set" data-mini="true">
+                @*Raw Materials and Scrim*@
+                <div data-role="collapsible">
+                    <h2>Raw Material and Scrim</h2>
+                    <ul data-role="listview" data-mini="true">
+                        <li data-role="list-divider">Raw Materials</li>
+                        <li><a href="~/RawMaterial/Index">Raw Material Receipts</a></li>
+                        <li><a href="~/RawMaterialQC/Index">Raw Material QC Testing</a></li>
+
+                        <li data-role="list-divider">Scrim \ Release Liner</li>
+                        <li>@Html.ActionLink("New Receipt", "Create", "ScrimRoll")</li>
+                        <li>@Html.ActionLink("View \\ Edit Receipts", "Edit", "ScrimRoll")</li>
+                        @*</ul>
+                            <ul data-role="listview" data-mini="true">*@
+                        <li data-role="list-divider">Set Line Materials</li>
+                        <li><a href="~/RawMaterialCurrent/index">Set Current Raw Material Lots</a></li>
+                        <li><a href="~/CurrentScrim/Edit">Set Current Scrim \<br />Release Liner Rolls</a></li>
+                    </ul>
+                </div>
+                <div data-role="collapsible">
+                    @*Production Scheduling*@
+                    <h2>Production Scheduling</h2>
+                </div>
+                <div data-role="collapsible">
+                    <h2>Operations</h2>
+                    @*Operations*@
+                </div>
+                <div data-role="collapsible">
+                    <h2>Quality Control</h2>
+                    @*Quality Control*@
+                </div>
+                <div data-role="collapsible">
+                    <h2>Accounting</h2>
+                    @*Accounting*@
+                </div>
+                <div data-role="collapsible">
+                    <h2>Reporting</h2>
+                    @*Reporting*@
+                </div>
+            </div>
+        </div>
+        <div data-role="header" data-theme="a">
+            <a href="#mainpanel" data-role="button" data-iconpos="notext" data-icon="bars"></a>
+            <div style="font-size:1em;">
+                <h3>&nbsp;</h3>
+            </div>
+        </div>
+        <div data-role="content" data-enhance="false">
+            @if (TempData["ActionMessage"] != null && TempData["ActionMessage"].ToString() != "")
+            {
+                <div id="alertDIV" class="alert @TempData["ActionMessageType"]">
+                    <p> @TempData["ActionMessage"] </p>
+                </div>
+            }
+            
+            <div id="alertDIV" class="alert" style="display: none;">
+                <p id="alertP" style="display: none;"></p>
+            </div>
+
+            <div data-enhance="false" style="text-shadow: none !important;">
+                @RenderBody()
+            </div>
+        </div>
+        <div data-role="footer">
+            <footer>
+                <p>&copy; @DateTime.Now.Year - TPO Web</p>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

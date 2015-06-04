@@ -1,0 +1,618 @@
+﻿@model TPO.Web.Models.TPOQCLimit
+
+@{
+    ViewBag.Title = "TPO QC Limits";
+}
+
+<style>
+    .limitTable td {
+        border: 1px solid black;
+        padding: 0;
+        white-space: nowrap;
+    }
+
+        .limitTable td:first-child 
+        {
+            padding: 3px 3px 5px 0;
+        }
+        .limitTable td input 
+        {
+            width: 100%;
+        }
+        .limitTable td select 
+        {
+            width: 100%;
+        }
+    .limitTable .headerCell {
+        padding: initial;
+        text-align: center;
+    }
+    .borderlessCell {
+        border: 0px none !important;
+    }
+    .disabledCell {
+        background-color:lightgray;
+    }
+    .uomCell 
+    {
+        padding:5px !important;
+        text-align:center;
+    }
+</style>
+
+<h2>TPO QC Limits</h2>
+<span>&nbsp;&nbsp;</span>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <b>Select Product:</b>&nbsp;
+        <input id="ddlProducts" name="@Html.NameFor(model => model.Id)" class="easyui-combogrid" style="width:240px;" data-options="
+               idField: 'ID',
+               textField: 'ProductCode',
+               value: '@Model.Id',
+               url: '/TPOQCLimit/AllProductsResult/',
+               method: 'get',
+               columns: [[
+               {field:'ProductCode',title:'Product'},
+               {field:'ProductDesc',title:'Description'}
+               ]],
+               onSelect: productSelected,
+               fitColumns: true
+               " />
+
+        <br />
+        <br />
+
+        @if (Model.Id > 0)
+        {
+        <div class="form-horizontal">
+            @Html.ValidationSummary(false)
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.PlantId)
+            @Html.HiddenFor(model => model.TPOProductCapCoreDetail.ID)
+            @Html.HiddenFor(model => model.TPOProductCEDetail.ID)
+            @Html.HiddenFor(model => model.TPOProductDimDetail.ID)
+            @Html.HiddenFor(model => model.TPOProductGrabDetail.ID)
+
+            <div>
+                <b>Product ID</b>&nbsp;
+                @Html.TextBoxFor(model => model.Code, new { @readonly = "true"}) &nbsp;
+                @Html.TextBoxFor(model => model.ProductDescription, new { @readonly = "true" })
+            </div>
+            <br />
+            
+
+            <table class="limitTable">
+                <tr>
+                    <td>
+                        <b>Thickness Tests UoM</b>
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.ThickTestUoM, (SelectList)ViewBag.thickUoM, new { id = "ddlthickUoM" })
+                    </td>
+                    <td class="borderlessCell">
+                        &nbsp;
+                    </td>
+                    <td class="borderlessCell">
+                        &nbsp;
+                    </td>
+                    <td rowspan="4" class="borderlessCell">
+                        <table class="limitTable">
+                            <tr>
+                                <td>
+                                    <b>Display Alternate Overall<br />Thickness Measurements</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DropDownListFor(model => model.UseSecThick, (SelectList)ViewBag.UseSecThick, new { id = "ddlSecThick", style = "width:100%;" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Alternate Thickness UoM</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DropDownListFor(model => model.ThickTestUoM2, (SelectList)ViewBag.thickUoM, new { id = "ddlThick2UoM", style = "width:100%;" })
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Width Tests UoM</b>
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.WidthTestUoM, (SelectList)ViewBag.thickUoM, new { id = "ddlwidthUoM" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Force Tests UoM</b>
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.ForceTestUoM, (SelectList)ViewBag.ForceUoM, new { id = "ddlForceUoM" })
+                    </td>
+                    <td class="borderlessCell">
+                        &nbsp;
+                    </td>
+                    <td class="borderlessCell">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>CE Force Tests UoM</b>
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.TPOProductCEDetail.CEForceTestUoM, (SelectList)ViewBag.ForceUoM, new { id = "ddlCEForceUoM" })
+                    </td>
+                    <td class="borderlessCell">
+                        &nbsp;
+                    </td>
+                    <td class="borderlessCell">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Puncture Tests UoM</b>
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.PunctUoM, (SelectList)ViewBag.WeightUoM, new { id = "ddlPunctUoM" })
+                    </td>
+                    <td class="borderlessCell">
+                        &nbsp;
+                    </td>
+                    <td class="borderlessCell">
+                        &nbsp;
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <b>Temperature UoM</b>
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.TPOProductDimDetail.DimStabTempUoM, (SelectList)ViewBag.TempUoM,  new { id = "ddlTempUoM" })
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="borderlessCell">
+                        <table class="limitTable" style="margin:5px;">
+                            <tr>
+                                <td class="borderlessCell"></td>
+                                <td class="headerCell">
+                                    <b>Min</b>
+                                </td>
+                                <td class="headerCell">
+                                    <b>Max</b>
+                                </td>
+                                <td class="headerCell">
+                                    <b>Avg</b>
+                                </td>
+                                <td class="borderlessCell"></td>
+                                <td class="borderlessCell" rowspan="4" colspan="2">
+                                    <table id="tblAltThickness" class="limitTable">
+                                        <tr>
+                                            <td>
+                                                <b>CE Avg<br />Thick<br />IND</b>
+                                            </td>
+                                            <td>
+                                                <b>CE Avg<br />Thick<br />Avg</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.TextBoxFor(model => model.ThickAvgMin)
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(model => model.ThickAvgMax)
+                                            </td>
+                                            <td class="uomCell thick2UoM"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Overall Width</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.WidthMin)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.WidthMax)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell widthUoM"></td>
+
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Overall Thickness</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.ThickMin)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.ThickMax)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.ThickAvg)
+                                </td>
+                                <td class="uomCell thickUoM"></td>
+                                
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Cap Thickness</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCapCoreDetail.CapThickMin)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCapCoreDetail.CapThickMax)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCapCoreDetail.CapThickAvg)
+                                </td>
+                                <td class="uomCell thickUoM"></td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Core Thickness</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCapCoreDetail.CoreThickMin)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCapCoreDetail.CoreThickMax)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCapCoreDetail.CoreThickAvg)
+                                </td>
+                                <td class="uomCell thickUoM"></td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Gum Edge Width</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.GEWidthMin)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.GEWidthMax)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell widthUoM"></td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Gum Edge Thickness</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.GEThicknessMin)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell thickUoM"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Ply Adhesion</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.PlyAdhMin)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.PlyAdhAvg)
+                                </td>
+                                <td class="uomCell forceUoM"></td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Cap Ash Content</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCapCoreDetail.CapAshMin)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCapCoreDetail.CapAshMax)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell">
+                                    %
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Core Ash Content</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCapCoreDetail.CoreAshMin)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCapCoreDetail.CoreAshMax)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell">
+                                    %
+                                </td>
+                                <td class="headerCell">
+                                    <b>CE Min</b>
+                                </td>
+                                <td class="headerCell">
+                                    <b>CE Max</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    <b>Tensile Strength MD</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductGrabDetail.GrabTensMinMD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell forceUoM"></td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCEDetail.CETensMinMD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell ceForceUoM"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Tensile Strength TD</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductGrabDetail.GrabTensMinTD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell forceUoM"></td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCEDetail.CETensMinTD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell ceForceUoM"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Elongation MD</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductGrabDetail.GrabElongMinMD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell">%</td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCEDetail.CEElongMinMD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell">
+                                    %
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Elongation TD</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductGrabDetail.GrabElongMinTD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell">%</td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCEDetail.CEElongMinTD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell">
+                                    %
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Tear Strength MD</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductGrabDetail.GrabTearMin)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell forceUoM"></td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCEDetail.CETearMinMD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell ceForceUoM"></td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Tear Strength TD</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductGrabDetail.GrabTearMinTD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell forceUoM"></td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductCEDetail.CETearMinTD)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell ceForceUoM"></td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Dimensional Stability</b>
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.DimStab)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell">%</td>
+                                <td class="disabledCell"></td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductDimDetail.DimStab80)
+                                </td>
+                                <td class="uomCell">%</td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Dim. Stab. Test Temp.</b>
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductDimDetail.DimStabTemp)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell tempUoM"></td>
+                                <td class="disabledCell"></td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.TPOProductDimDetail.DimStabTempCE)
+                                </td>
+                                <td class="uomCell tempUoM"></td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Weld Strength</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.WeldTestMin)
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.WeldTestMax)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell forceUoM"></td>
+                            </tr>
+                            <tr>
+                                <td  >
+                                    <b>Puncture</b>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.PunctMinTd)
+                                </td>
+                                <td class="disabledCell"></td>
+                                <td class="disabledCell"></td>
+                                <td class="uomCell punctUoM"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button class="btn btn-success btn-shadow"
+                            onclick="$(this).parents('form:first').submit(); return false;">
+                        <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                    </button> 
+                    <button class="btn btn-default btn-shadow"
+                            onclick="window.location.href = '@Url.Action("Edit", "TPOQCLimit", new { id = 0 })';return false;">
+                        <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        setUoMLabels();
+        setAlternateThickMeasureVisibility();
+        cleanupProductDefaultValue();
+        $("#ddlwidthUoM").change(setwidthUoMLabels);
+        $("#ddlthickUoM").change(setthickUoMLabels);
+        $("#ddlThick2UoM").change(setThick2UoMLabels);
+        $("#ddlTempUoM").change(setTempUoMLabels);
+        $("#ddlForceUoM").change(setForceUoMLabels);
+        $("#ddlCEForceUoM").change(setCEForceUoMLabels);
+        $("#ddlPunctUoM").change(setPunctUoMLabels);
+        $("#ddlSecThick").change(setAlternateThickMeasureVisibility);
+    });
+    
+    function productSelected(rowIndex, rowData)
+    {
+        var url = "/TPOQCLimit/Edit/" + rowData.ID;
+        window.location.href = url;
+    }
+    function setUoMLabels()
+    {
+        setwidthUoMLabels();
+        setthickUoMLabels();
+        setThick2UoMLabels();
+        setTempUoMLabels();
+        setForceUoMLabels();
+        setCEForceUoMLabels();
+        setPunctUoMLabels();
+    }
+    function setwidthUoMLabels()
+    {
+        var uom = $("#ddlwidthUoM option:selected").text();
+        $(".widthUoM").text(uom);
+    }
+    function setthickUoMLabels()
+    {
+        var uom = $("#ddlthickUoM option:selected").text();
+        $(".thickUoM").text(uom);
+    }
+    function setThick2UoMLabels() {
+        var uom = $("#ddlThick2UoM option:selected").text();
+        $(".thick2UoM").text(uom);
+    }
+    function setTempUoMLabels()
+    {
+        var uom = $("#ddlTempUoM option:selected").text();
+        $(".tempUoM").text(uom);
+    }
+    function setForceUoMLabels()
+    {
+        var uom = $("#ddlForceUoM option:selected").text();
+        $(".forceUoM").text(uom);
+    }
+    function setCEForceUoMLabels()
+    {
+        var uom = $("#ddlCEForceUoM option:selected").text();
+        $(".ceForceUoM").text(uom);
+    }
+    function setPunctUoMLabels()
+    {
+        var uom = $("#ddlPunctUoM option:selected").text();
+        $(".punctUoM").text(uom);
+    }
+    function setAlternateThickMeasureVisibility()
+    {
+        var selection = $("#ddlSecThick option:selected").text();
+        var display = selection == "Yes";
+        if (display) {
+            $("#tblAltThickness").show();
+        }
+        else
+        {
+            $("#tblAltThickness").hide();
+        }
+    }
+    function cleanupProductDefaultValue()
+    {
+        var productVal = $("#ddlProducts").combogrid('getValue');
+        if (productVal == 0)
+        {
+            $("#ddlProducts").combogrid('setValue', ' ');
+        }
+    }
+</script>

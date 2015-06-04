@@ -1,0 +1,82 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@model IEnumerable<TPO.Web.Models.ProductionLinesModel>
+
+@{
+    ViewBag.Title = "Production Line Report Order";
+}
+
+<h2>Production Line Report Order</h2>
+@using (Html.BeginForm(Html.BeginForm("Index", "ProductionLineReportOrder", FormMethod.Post, new { data_ajax = "false", @id = "form1" })))
+{
+        <input id="newOrder" type="hidden" name="newOrder" />
+        <input id="originalOrder" type="hidden" name="originalOrder" />
+
+        <table id="tblMain" border="1" style="width: 280px;">
+            <tr>
+                <th style="text-align:center; font-weight:bold;">Line Description</th>
+                <th style="text-align:center; font-weight:bold;">Report Order</th>
+            </tr>
+            
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td align="center" >
+                        @Html.DisplayFor(modelItem => item.LineDesc)  
+                    </td>
+                    <td align="center">
+                        <button class="btn btn-link" id="up @Html.ValueFor(modelItem => item.RepOrder)" onclick=" up(this) " @if (item.RepOrder == 1) {<text>disabled</text>}>
+                            <span class="glyphicon glyphicon-arrow-up" style="cursor: pointer;"></span>
+                        </button>
+                        <button class="btn btn-link" id="dn @Html.ValueFor(modelItem => item.RepOrder)" onclick=" down(this) " @if (item.RepOrder == Model.Count()) { <text> disabled</text>}>
+                            <span class="glyphicon glyphicon-arrow-down" style="cursor: pointer;"></span>
+                        </button>
+                    </td>
+
+                </tr>
+            }
+        </table>
+    <br />
+
+}
+
+
+<script type="text/javascript">
+    function down(r) {
+        var d = r.id;
+        var k = d.substring(3);
+        var m = parseInt(k);
+        $("#originalOrder").val(k);
+        var tbl = document.getElementById("tblMain");
+        if (tbl != null) {
+            if (m < (tbl.rows.length - 1)) {
+                var n = m + 1;
+              
+                $("#newOrder").val(n);
+                
+            } else {
+                $("#newOrder").val(k);
+            }
+            $("#form1").submit();
+
+        } else {
+            return false;
+        }
+}
+    function up(b) {
+        var p = b.id;
+        var q = p.substring(3);
+        var a = parseInt(q);
+        $("#originalOrder").val(q);
+        if (a > 1) {
+            var c = a - 1;
+            $("#newOrder").val(c);
+            
+        } else {
+            $("#newOrder").val(q);
+        }
+        $("#form1").submit();
+    }
+ </script>
+
+
+

@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "Scrim Stock Adjustment";
+}
+<script type="text/javascript" src="http://www.jeasyui.com/easyui/datagrid-detailview.js"></script>
+<script type="text/javascript" src="http://www.jeasyui.com/easyui/datagrid-filter.js"></script>
+<h2>@ViewBag.Title</h2>
+
+<table id="dg" class="easyui-datagrid" title="Scrim Types" style="width:960px;height:400px"
+       data-options="
+       iconcls: 'icon-edit' ,
+       singleselect: true,
+       toolbar: '#tb' ,
+       url: '../ScrimStockAdjustment/GetScrimTypeList' ,
+       method: 'get' ,
+       cache: false,
+       onClickRow: onClickRow
+       "></table>
+
+
+<br />
+<br />
+
+<div id="testDetails" hidden="true">
+</div>
+
+<div id="tb" style="height:auto">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">Save Changes</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">Undo</a>
+</div>
+
+<script type="text/javascript">
+
+    $('#dg').datagrid({
+        columns: [
+            [
+                { field: 'Id', title: 'Id', hidden: true },
+                { field: 'Code', title: 'Scrim Type', width: 120 },
+                { field: 'Description', title: 'Description', width: 460, editor: 'text' }
+            ]
+        ]
+    });
+    $('#dg').datagrid({
+        view: detailview,
+        detailFormatter: function (index, row) {
+            return '<div style="padding:2px"><table class="ddv" style="height:250px"></table></div>';
+        },
+        onExpandRow: function (index, row) {
+            var ddv = $(this).datagrid('getRowDetail', index).find('table.ddv');
+            console.log("row.Id = " + row.Id);
+            ddv.datagrid({
+                url: 'GetScrimRolls?typeId=' + row.Id,
+                method: 'get',
+                cache: false,
+                singleSelect: true,
+                loadMsg: '',
+                columns: [[
+                    { field: 'Code', title: 'Scrim Roll', width: 100 },
+                    { field: 'ReceivedLength', title: 'Received Length', width: 120 },
+                    { field: 'ReceivedWeight', title: 'Received Weight', width: 120 },
+                    { field: 'Length', title: 'Length', width: 120 },
+                    { field: 'Weight', title: 'Weight', width: 120 },
+                ]],
+                onResize: function () {
+                    $('#dg').datagrid('fixDetailRowHeight', index);
+                },
+                onClickRow: onClickChildRow,
+                onLoadSuccess: function () {
+                    setTimeout(function () {
+                        $('#dg').datagrid('fixDetailRowHeight', index);
+                    }, 0);
+                }
+            });
+            ddv.datagrid('enableFilter', [
+            {
+                field: 'ReceivedLength',
+                type: 'numberbox',
+                options: { precision: 1 },
+                op: ['equal', 'notequal', 'less', 'greater']
+            }]);
+            $('#dg').datagrid('fixDetailRowHeight', index);
+        }
+    });
+
+    var editIndex = undefined;
+    function endEditing() {
+        if (editIndex == undefined) { return true }
+        if ($('#dg').datagrid('validateRow', editIndex)) {
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickChildRow(index, row) {
+        alert(row.Id);
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+    function onClickRow(index, row) {
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+        //var td = document.getElementById('testDetails');
+        //td.style.display = 'block';
+        //$.ajax({
+        //    type: 'GET',
+        //    url: '../ScrimStockAdjustment/GetScrimRolls?typeId=' + row.Id,
+        //    success: function (data, status) {
+        //        td.innerHTML = data;
+        //    },
+        //    error: function (jqXHR, textStatus, errorThrown) {
+        //        alert(textStatus);
+        //        alert(errorThrown);
+        //    }
+        //});
+    }
+
+    function reloadGrid() {
+        $('#dg').datagrid('load');
+    }
+    function accept() {
+        if (endEditing()) {
+            $('#dg').datagrid('acceptChanges');
+
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+                $.ajax({
+                    url: '../ScrimStockAdjustment/AjaxTestUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row) },
+                    success: function (data, textStatus, jqXHR) {
+                        $('#dg').datagrid('reload');
+
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+    function reject() {
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+    function getChanges() {
+        var rows = $('#dg').datagrid('getChanges');
+        alert(rows.length + ' rows are changed!');
+    }
+
+</script>

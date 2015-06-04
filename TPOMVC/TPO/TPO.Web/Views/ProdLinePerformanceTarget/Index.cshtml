@@ -1,0 +1,236 @@
+﻿@model TPO.Web.Models.ProdLinePerformanceTargetModel
+@{
+    ViewBag.Title = "Production Line Performance Targets";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<style>
+    .numberField {
+        text-align: right;
+        width: 50px;
+    }
+</style>
+
+<p>
+    <label>Select Line: </label>
+    <select id="prodLine" class="easyui-combobox" style="width:150px"
+            data-options="
+        valueField: 'Id',
+        textField: 'LineDesc',
+        url: '../ProdLinePerformanceTarget/GetLines',
+        method: 'get',
+        panelHeight: 'auto',
+        onSelect: onSelectProdLine
+        "></select>
+</p>
+<script type="text/javascript">
+    function onSelectProdLine(row) {
+        window.location.href = "/ProdLinePerformanceTarget?lineId=" + row.Id;
+    }
+</script>
+<p>To remove a target value from the reports, enter a target value of 0.</p>
+@if (Model.CanShow)
+{
+    string gridVisible = "visible";
+    string throughputDisplay = "none";
+        if (Model.TPTUse == "L")
+        {
+            gridVisible = "hidden";
+            throughputDisplay = "block";
+        }
+
+    <script type="text/javascript">
+        
+        $(document).ready(function() {
+            $('#prodLine').combobox('setValue', @Model.ProdLineID);
+        })
+    </script>
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <table style="width:960px" id="tblAll">
+            <tr>
+                <td style="width:400px">
+                    <div class="form-horizontal" style="width:400px">
+                        <hr />
+
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.LocID)
+                        @Html.HiddenFor(model => model.ProdLineID)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Uptime, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(model => model.Uptime, new { @class = "numberField" })
+                                @Html.ValidationMessageFor(model => model.Uptime)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Yield, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(model => model.Yield, new { @class = "numberField" })
+                                @Html.ValidationMessageFor(model => model.Yield)
+                            </div>
+                        </div>
+                        @if (Model.ProdLineDescCode == "TPO")
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.TPTUse, new {@class = "control-label col-md-5"})
+                                <div class="col-md-7">
+                                    @Html.DropDownListFor(m => m.TPTUse, Model.TPList, new { id = "throughputBy", onchange = "throughputBy_OnChange(this.value);" })
+                                </div>
+                            </div>
+                        }
+                        @if (Model.ProdLineDescCode != "Month")
+                        {
+                            <div class="form-group" id="throughputTarget" style="display: @throughputDisplay">
+                                @Html.LabelFor(model => model.Throughput, new {@class = "control-label col-md-5"})
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.Throughput, new {@class = "numberField"})
+                                    @Html.ValidationMessageFor(model => model.Throughput)
+                                    @Html.DropDownListFor(m => m.ThroughputUoMID, Model.UomList)
+                                    /hr
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.OEE, new { @class = "control-label col-md-5" })
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.OEE, new { @class = "numberField" })
+                                    @Html.ValidationMessageFor(model => model.OEE)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SchedFactor, new { @class = "control-label col-md-5" })
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(model => model.SchedFactor, new { @class = "numberField" })
+                                    @Html.ValidationMessageFor(model => model.SchedFactor)
+                                </div>
+                            </div>
+                        }
+                        
+                        <button class="btn btn-success btn-shadow"
+                                onclick="$(this).parents('form:first').submit(); return false;">
+                            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                        </button>
+                        <button class="btn btn-default btn-shadow"
+                                onclick="window.location.href = '@Url.Action("Index")';return false;">
+                            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                        </button>
+
+                    </div>
+                </td>
+                @if (Model.ProdLineDescCode == "TPO")
+                {                        
+                    <td style="vertical-align: top">
+                        <div id="productGrid" style="visibility: @gridVisible">
+                            <hr/>
+                            <table id="dg" class="easyui-datagrid" style="width: 320px; height: auto"
+                                   data-options="
+                                       iconcls: 'icon-edit' ,
+                                       singleselect: true,
+                                       toolbar: '#tb' ,
+                                       url: '../ProdLinePerformanceTarget/GetProdLinePerformanceProd?prodLineId=@Model.ProdLineID' ,
+                                       method: 'get' ,
+                                       cache: false,
+                                       onClickRow: onClickGridRow
+                                       "></table>
+
+                            <div id="tb" style="height: auto">
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" accept() ">Save Changes</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Undo</a>
+                            </div>
+                        </div>
+                    </td>
+                }
+            </tr>
+        </table>
+    }
+}
+
+<script type="text/javascript">
+    $('#dg').datagrid({
+        columns: [[
+            { field: 'Id', title: 'ID', hidden: true },
+            { field: 'LocID', title: 'LocID', hidden: true },
+            { field: 'ProdLineID', title: 'ProdLineID', hidden: true },
+            { field: 'ProductID', title: 'ProductID', hidden: true },
+            { field: 'ProductName', title: 'Product', width: 150},
+            { field: 'Throughput', title: 'Throughput', width: 150, editor: 'numberbox' },
+            { field: 'DateChange', title: 'DateChange', hidden: true }
+        ]]
+    });
+    var editIndex = undefined;
+    function endEditing() {
+        if (editIndex == undefined) { return true }
+        if ($('#dg').datagrid('validateRow', editIndex)) {
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickGridRow(index) {
+        console.log("EditIndex = " + editIndex);
+        console.log("Index = " + index);
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+
+    function reloadGrid() {
+        $('#dg').datagrid('load');
+    }
+
+    function accept() {
+        if (endEditing()) {
+            $('#dg').datagrid('acceptChanges');
+
+            console.log("Accepting changes");
+
+            var row = $('#dg').datagrid('getSelected');
+            console.log(row);
+            if (row) {
+                $.ajax({
+                    url: '../ProdLinePerformanceTarget/AjaxProductUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row) },
+                    success: function (data, textStatus, jqXHR) {
+                        GetMessage("save", true);
+                        $('#dg').datagrid('reload');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        GetMessage("save", false);
+                        $('#dg').datagrid('reload');
+                    }
+                });
+            }
+        }
+    }
+    function reject() {
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+    function getChanges() {
+        var rows = $('#dg').datagrid('getChanges');
+        alert(rows.length + ' rows are changed!');
+    }
+
+    function throughputBy_OnChange(selectedValue) {
+        if (selectedValue == 'L') {
+            document.getElementById('productGrid').style.visibility = 'hidden';
+            document.getElementById('throughputTarget').style.visibility = 'visible';
+        } else {
+            document.getElementById('productGrid').style.visibility = 'visible';
+            document.getElementById('throughputTarget').style.visibility = 'hidden';
+        }
+    }
+</script>

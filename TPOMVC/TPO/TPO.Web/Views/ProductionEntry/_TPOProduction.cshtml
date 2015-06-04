@@ -1,0 +1,80 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+
+<div id="divTabs" class="easyui-tabs" style="margin-bottom: 30px;" data-options="
+     onSelect: tabSelected
+     ">
+    <div title="Enter Production" id="tab-enter-production" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EnterProduction.cshtml", Model)
+    </div>
+    <div title="Enter Line Scrap" id="tab-enter-line-scrap" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EnterLineScrap.cshtml", Model)
+    </div>
+    <div title="Enter Downtime" id="tab-enter-downtime" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EnterDowntime.cshtml", Model)
+    </div>
+    <div title="End Of Shift Data / End Of Work Order" id="tab-end-of" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EndOf.cshtml", Model)
+    </div>
+</div>
+
+<script type="text/javascript">
+    function tabSelected(title, index) {
+        switch (title) {
+            case "Enter Production":
+                {
+                    refreshEnterProduction();
+                } break;
+            case "Enter Line Scrap":
+                {
+                    refreshEnterLineScrap();
+                } break;
+            case "Enter Downtime":
+                {
+                    refreshEnterDowntime();
+                } break;
+            case "End Of Shift Data / End Of Work Order":
+                {
+                    refreshEndOfShift();
+                } break;
+        }
+    }
+
+    function refreshTabs() {
+        var tabPanel = $('#divTabs').tabs('getSelected');
+        var tabOptions = tabPanel.panel('options');
+        var title = tabOptions.title;
+        switch (title) {
+            case "Enter Production":
+                {
+                    refreshEnterProduction();
+                } break;
+            case "Enter Line Scrap":
+                {
+                    refreshEnterLineScrap();
+                } break;
+            case "Enter Downtime":
+                {
+                    refreshEnterDowntime();
+                } break;
+            case "End Of Shift Data / End Of Work Order":
+                {
+                    refreshEndOfShift();
+                } break;
+        }
+    }
+
+    function refreshEnterProduction() {
+        loadEnterProduction();
+    }
+    function refreshEnterLineScrap() {
+        loadEnterLineScrap();
+    }
+    function refreshEnterDowntime() {
+        loadDownTimeDataGrid();
+    }
+    function refreshEndOfShift() {
+        CheckForValues();
+    }
+</script>
+
+

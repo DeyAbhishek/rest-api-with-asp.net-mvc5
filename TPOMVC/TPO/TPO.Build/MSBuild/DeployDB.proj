@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="BuildDevCI">
+  <Import Project="$(MSBuildExtensionsPath)\ExtensionPack\4.0\MSBuild.ExtensionPack.tasks" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <PropertyGroup>
+    <SQLServerName></SQLServerName>
+    <DatabaseName></DatabaseName>
+    <BackupLocation></BackupLocation>
+    <Version></Version>
+    <RootFolder></RootFolder>
+    <Profile></Profile>
+    <SqlCommand>
+      ALTER DATABASE $(DatabaseName) set offline with rollback immediate
+      ALTER DATABASE  $(DatabaseName) set online
+      RESTORE DATABASE $(DatabaseName) FROM DISK='$(BackupLocation)'
+      WITH REPLACE
+    </SqlCommand>
+    <DatabaseConnection>Database=$(DatabaseName); Server=$(SQLServerName); Integrated Security=True</DatabaseConnection>
+  </PropertyGroup>
+  <ItemGroup>
+    <DbProjectToBuild Include="$(RootFolder)\TPO.Database\TPO.Database.sqlproj" />
+    <ForReleasePre Include="$(RootFolder)\TPO.Build\SQL\ForRelease\$(Version)\Pre\*.sql" />
+    <ForReleasePost Include="$(RootFolder)\TPO.Build\SQL\ForRelease\$(Version)\Post\*.sql" />
+  </ItemGroup>
+  <Target Name="BuildDevCI"  DependsOnTargets="ExecuteForReleasePre; BuildDatabase; ExecuteForReleasePost;" >
+    <Message Text="Completed: BuildDevCI"></Message>
+  </Target>
+   
+  <Target Name="ExecuteForReleasePre" >
+    
+    <Message Text="Starting: ExecuteForReleasePre Source: $(RootFolder)\TPO.Build\SQL\ForRelease\$(Version)\Pre\ "></Message>
+    <MSBuild.ExtensionPack.SqlServer.SqlExecute TaskAction="Execute" Retry="false" UseTransaction="true" Files="@(ForReleasePre)" ConnectionString="Data Source=$(SQLServerName);Initial Catalog=$(DatabaseName);Integrated Security=True" CommandTimeout="0" />
+    <Message Text="Completed: ExecuteForReleasePre"></Message>
+  </Target>
+
+  <Target Name="BuildDatabase" >
+    <Message Text="Starting BuildDatabase" />
+    <MSBuild Projects="@(DbProjectToBuild)" Targets="Build;Publish" Properties="SqlPublishProfilePath=$(RootFolder)\TPO.Build\Profiles\$(Profile)" />
+    <Message Text="Completed BuildDatabase" />
+  </Target>
+  
+  <Target Name="ExecuteForReleasePost" Inputs="None" Outputs="None" >
+    <Message Text="Starting: ExecuteForReleasePost Source: $(RootFolder)\TPO.Build\SQL\ForRelease\$(Version)\Post\ "></Message>
+    <MSBuild.ExtensionPack.SqlServer.SqlExecute TaskAction="Execute" Retry="false" UseTransaction="true" Files="@(ForReleasePost)" ConnectionString="Data Source=$(SQLServerName);Initial Catalog=$(DatabaseName);Integrated Security=True" CommandTimeout="0" />
+    <Message Text="Completed: ExecuteForReleasePost"></Message>
+  </Target>
+  
+  <Target Name="RestoreDatabase" Inputs="None" Outputs="None">
+    <Message Text="Starting DB Restore" />
+    <MSBuild.ExtensionPack.SqlServer.SqlExecute TaskAction="Execute" Sql="$(SqlCommand)" ConnectionString="$(DatabaseConnection)" CommandTimeout="0"/>
+    <Message Text="Completed DB Restore" />
+  </Target>
+
+</Project>

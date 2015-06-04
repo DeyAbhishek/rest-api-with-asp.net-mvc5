@@ -1,0 +1,346 @@
+﻿@model TPO.Web.Models.RawMaterialTestModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="width:900px;font-size: x-small">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+        
+        
+        <div style="width:300px; float:left; padding: 10px;">
+            @{
+                object htmlColorAttributes;
+                object htmlColorDropDownAttributes;
+                if (Model.UseColorTest)
+                {
+                    htmlColorAttributes = new {@class = "colorTest"};
+                    htmlColorDropDownAttributes = new {@class = "colorTestDropDown"};
+                }
+                else
+                {
+                    htmlColorAttributes = new { @class = "colorTest", disabled = "disabled", @readonly = "readonly" };
+                    htmlColorDropDownAttributes = new { @class = "colorTestDropDown", disabled = "disabled" };
+                }
+            }
+            <fieldset>
+                <legend>Color Test</legend>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            @Html.CheckBoxFor(model => model.UseColorTest, new { id="colorTestCheckBox", onclick = "colorTest_OnClick(this.checked);" })
+                            @Html.ValidationMessageFor(model => model.UseColorTest)
+                        </td><td>
+                                 @Html.LabelFor(model => model.UseColorTest)
+                             </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.ColorLimitTypeID)
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.ColorLimitTypeID, Model.TestLimitTypes, htmlColorDropDownAttributes)
+                            @Html.ValidationMessageFor(model => model.ColorLimitTypeID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.ColorLimit1)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.ColorLimit1, new { htmlAttributes = htmlColorAttributes })
+                            @Html.ValidationMessageFor(model => model.ColorLimit1)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.ColorLimit2)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.ColorLimit2, new { htmlAttributes = htmlColorAttributes })
+                            @Html.ValidationMessageFor(model => model.ColorLimit2)
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        
+        <div style="width:300px; float:left; padding: 10px;">
+            @{
+                object htmlMeltFlowAttributes;
+                object htmlMeltFlowDropDownAttributes;
+                if (Model.UseMFTest)
+                {
+                    htmlMeltFlowAttributes = new { @class = "meltFlowTest" };
+                    htmlMeltFlowDropDownAttributes = new { @class = "meltFlowTestDropDown" };
+                }
+                else
+                {
+                    htmlMeltFlowAttributes = new { @class = "meltFlowTest", disabled = "disabled", @readonly = "readonly" };
+                    htmlMeltFlowDropDownAttributes = new { @class = "meltFlowTestDropDown", disabled = "disabled" };
+                }
+            }
+            <fieldset>
+                <legend>Melt Flow Test</legend>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            @Html.CheckBoxFor(model => model.UseMFTest, new { id="meltFlowTestCheckBox", onclick = "meltFlowTest_OnClick(this.checked);" })
+                            @Html.ValidationMessageFor(model => model.UseMFTest)
+                        </td>
+                        <td>
+                            @Html.LabelFor(model => model.UseMFTest)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.MFLimitTypeID)
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.MFLimitTypeID, Model.TestLimitTypes, htmlMeltFlowDropDownAttributes)
+                            @Html.ValidationMessageFor(model => model.MFLimitTypeID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.MFLimit1)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.MFLimit1, new { htmlAttributes = htmlMeltFlowAttributes })
+                            @Html.ValidationMessageFor(model => model.MFLimit1)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.MFLimit2)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.MFLimit2, new { htmlAttributes = htmlMeltFlowAttributes })
+                            @Html.ValidationMessageFor(model => model.MFLimit2)
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        
+        <div style="width:300px; float:left; padding: 10px;">
+            @{
+                object htmlAshContentAttributes;
+                object htmlAshContentDropDownAttributes;
+                if (Model.UseACTest)
+                {
+                    htmlAshContentAttributes = new { @class = "ashContentTest" };
+                    htmlAshContentDropDownAttributes = new { @class = "ashContentTestDropDown" };
+                }
+                else
+                {
+                    htmlAshContentAttributes = new { @class = "ashContentTest", disabled = "disabled", @readonly = "readonly" };
+                    htmlAshContentDropDownAttributes = new { @class = "ashContentTestDropDown", disabled = "disabled" };
+                }
+            }
+            <fieldset>
+                <legend>Ash Content Test</legend>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            @Html.CheckBoxFor(model => model.UseACTest, new { id = "ashContentTestCheckBox", onclick = "ashContentTest_OnClick(this.checked);" })
+                            @Html.ValidationMessageFor(model => model.UseACTest)
+                        </td>
+                        <td>
+                            @Html.LabelFor(model => model.UseACTest)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.ACLimitTypeID)
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.ACLimitTypeID, Model.TestLimitTypes, htmlAshContentDropDownAttributes)
+                            @Html.ValidationMessageFor(model => model.ACLimitTypeID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.ACLimit1)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.ACLimit1, new { htmlAttributes = htmlAshContentAttributes })
+                            @Html.ValidationMessageFor(model => model.ACLimit1)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.ACLimit2)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.ACLimit2, new { htmlAttributes = htmlAshContentAttributes })
+                            @Html.ValidationMessageFor(model => model.ACLimit2)
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+
+        <div style="width:300px; float:left; padding: 10px;">
+            @{
+                object htmlMoistureAttributes;
+                object htmlMoistureDropDownAttributes;
+                if (Model.UseMoistTest)
+                {
+                    htmlMoistureAttributes = new { @class = "moistureTest" };
+                    htmlMoistureDropDownAttributes = new { @class = "moistureTestDropDown" };
+                }
+                else
+                {
+                    htmlMoistureAttributes = new { @class = "moistureTest", disabled = "disabled", @readonly = "readonly" };
+                    htmlMoistureDropDownAttributes = new { @class = "moistureTestDropDown", disabled = "disabled" };
+                }
+            }
+            <fieldset>
+                <legend>Moisture Test</legend>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            @Html.CheckBoxFor(model => model.UseMoistTest, new { id = "moistureTestCheckBox", onclick = "moistureTest_OnClick(this.checked);" })
+                            @Html.ValidationMessageFor(model => model.UseMoistTest)
+                        </td>
+                        <td>
+                            @Html.LabelFor(model => model.UseMoistTest)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.MoistLimitTypeID)
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.MoistLimitTypeID, Model.TestLimitTypes, htmlMoistureDropDownAttributes)
+                            @Html.ValidationMessageFor(model => model.MoistLimitTypeID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.MoistLimit1)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.MoistLimit1, new { htmlAttributes = htmlMoistureAttributes })
+                            @Html.ValidationMessageFor(model => model.MoistLimit1)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.MoistLimit2)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.MoistLimit2, new { htmlAttributes = htmlMoistureAttributes })
+                            @Html.ValidationMessageFor(model => model.MoistLimit2)
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        
+        <div style="width:300px; float:left; padding: 10px;">
+            @{
+                object htmlCarbonBlackAttributes;
+                object htmlCarbonBlackDropDownAttributes;
+                if (Model.UseCBTest)
+                {
+                    htmlCarbonBlackAttributes = new { @class = "carbonBlackTest" };
+                    htmlCarbonBlackDropDownAttributes = new { @class = "carbonBlackTestDropDown" };
+                }
+                else
+                {
+                    htmlCarbonBlackAttributes = new { @class = "carbonBlackTest", disabled = "disabled", @readonly = "readonly" };
+                    htmlCarbonBlackDropDownAttributes = new { @class = "carbonBlackTestDropDown", disabled = "disabled" };
+                }
+            }
+            <fieldset>
+                <legend>Carbon Black Test</legend>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            @Html.CheckBoxFor(model => model.UseCBTest, new { id = "carbonBlackTestCheckBox", onclick = "carbonBlackTest_OnClick(this.checked);" })
+                            @Html.ValidationMessageFor(model => model.UseCBTest)
+                        </td>
+                        <td>
+                            @Html.LabelFor(model => model.UseCBTest)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.CBLimitTypeID)
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.CBLimitTypeID, Model.TestLimitTypes, htmlCarbonBlackDropDownAttributes)
+                            @Html.ValidationMessageFor(model => model.CBLimitTypeID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.CBLimit1)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.CBLimit1, new { htmlAttributes = htmlCarbonBlackAttributes })
+                            @Html.ValidationMessageFor(model => model.CBLimit1)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.CBLimit2)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.CBLimit2, new { htmlAttributes = htmlCarbonBlackAttributes })
+                            @Html.ValidationMessageFor(model => model.CBLimit2)
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+
+        <div style="width:300px; float:left; padding: 10px;">
+            <fieldset>
+                <legend>Other</legend>
+                <table>
+                    <tr>
+                        <td>
+                            @Html.EditorFor(model => model.UseSpecGrav)
+                            @Html.ValidationMessageFor(model => model.UseSpecGrav)
+                        </td>
+                        <td>
+                            @Html.LabelFor(model => model.UseSpecGrav)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.EditorFor(model => model.UseVisual)
+                            @Html.ValidationMessageFor(model => model.UseVisual)
+                        </td>
+                        <td>
+                            @Html.LabelFor(model => model.UseVisual)
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        
+        <div style="width:900px; float:left; font-size: small; padding: 10px">
+            @Html.LabelFor(model => model.TestFrequency)
+            @Html.EditorFor(model => model.TestFrequency)
+            @Html.ValidationMessageFor(model => model.TestFrequency)
+            <br/>
+            <br/>
+            <button class="btn btn-success btn-shadow"
+                    onclick="$(this).parents('form:first').submit(); return false;">
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+            </button>
+            <button class="btn btn-default btn-shadow"
+                    onclick="window.location.href = '@Url.Action("Index")';return false;">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+            </button>
+        </div>
+
+    </div>
+
+}
+

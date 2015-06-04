@@ -1,0 +1,85 @@
+﻿@model IEnumerable<TPO.DL.Models.RawMaterialSpecificGravityDetail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>RawMaterialSpecificGravityDetail</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    
+</p>
+<table class="table">
+    <tr>
+
+        <th valign="middle">
+            @Html.DisplayNameFor(model => model.Submerged)
+        </th>
+
+        <th valign="middle">
+            @Html.DisplayNameFor(model => model.RawMaterialSpecificGravity.DenIso)
+        </th>
+        <th valign="middle">
+            @Html.DisplayNameFor(model => model.RawMaterialSpecGravID)
+        </th>
+
+        <th valign="middle">
+            @Html.DisplayNameFor(model => model.Order)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Value)
+        </th>
+
+
+     
+
+
+
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td align="center" width="1%">
+                @Html.DisplayFor(modelItem => item.Submerged)
+            </td>
+
+            <td style="background-color:lightgrey" align="center" width="1%">
+
+                @Html.DisplayFor(modelItem => item.RawMaterialSpecificGravity.DenIso)
+            </td>
+            <td style="background-color:yellow" align="center" width="1%">
+
+                @Html.DisplayFor(modelItem => item.RawMaterialSpecGravID)
+            </td>
+
+            <td style="background-color:yellow" align="center" width="1%">
+                @Html.DisplayFor(modelItem => item.Order)
+            </td>
+
+            <td style="background-color:yellow" align="center" width="1%">
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+
+
+           
+
+
+            <td>
+                @Html.ActionLink("Edits", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+<p>
+<h4>@Html.ActionLink("Back to RawMaterialSpecificGravity Page", "index", "RawMaterialQCForm")</h4>
+</p>

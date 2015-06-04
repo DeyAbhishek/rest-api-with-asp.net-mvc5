@@ -1,0 +1,85 @@
+﻿@model TPOWeb.Models.CurrentRawMaterialViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h3>Current Raw Material Details</h3>
+
+<div>
+    
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LineId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LineId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateEntered)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnteredBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RawMaterialReceivedCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RawMaterialReceivedCode)
+        </dd>
+        
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LotId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LotId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Close", "Index")*@
+
+    <button class="btn btn-default btn-shadow"
+            onclick="window.location.href = '@Url.Action("Edit",new{id=Model.Id})'; return false;">
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+    </button>
+    <button class="btn btn-default btn-shadow"
+            onclick="window.location.href = '@Url.Action("Index","RawMaterialCurrent",new{lineId=Model.LineId})';return false;">
+        <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+    </button>
+</p>

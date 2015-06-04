@@ -1,0 +1,58 @@
+﻿@model TPO.Web.Models.RawMaterialReceived
+
+@{
+    ViewBag.Title = "Edit Raw Material Receipt";
+}
+
+@using (Html.BeginForm("Edit", "RawMaterialReceived", FormMethod.Post, new {@id="TheForm", @class = "form-horizontal", role = "form", data_ajax = "false" }))
+{
+
+    <div class="form-group">
+
+        <div class="col-md-6">
+            <h2>Edit Raw Material Receipt</h2><br />
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.PlantId)
+            @Html.LabelFor(m => m.RawMaterialId, new { @class = "col-md-4 control-label" })
+            @Html.DropDownListFor(m => m.RawMaterialId, Model.ProductionLines, new { @class = "form-control" })
+            <br /> <br />
+            @Html.LabelFor(m => m.DateEntered, new { @class = "col-md-4 control-label" })
+            @Html.TextBoxFor(m => m.DateEntered, "{0:MM/dd/yyyy}", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.DateEntered)
+
+            <br /> <br />
+            @Html.LabelFor(m => m.LotNumber, new { @class = "col-md-4 control-label" })
+            @Html.TextBoxFor(m => m.LotNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.LotNumber)
+
+            <br /> <br />
+            @Html.LabelFor(m => m.EnteredBy, new { @class = "col-md-4 control-label" })
+            @Html.TextBoxFor(m => m.EnteredBy, Model.EnteredBy, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.EnteredBy)
+
+            <br /><br /><br />
+            <div class="col-md-12">
+                <button class="btn btn-success btn-shadow"
+                        onclick="$(this).parents('form:first').submit(); return false;">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                </button>
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Index", "RawMaterialReceived")';return false;">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+}
+
+
+
+

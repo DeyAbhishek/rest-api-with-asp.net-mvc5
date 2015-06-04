@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[TPOCurrentScrim] (
+    [ID]           INT            IDENTITY (1, 1) NOT NULL,
+    [PlantID]      INT            NOT NULL,
+    [Scrim1RollID] INT            NULL,
+    [Scrim1TypeID] INT            NULL,
+    [Scrim2RollID] INT            NULL,
+    [Scrim2TypeID] INT            NULL,
+    [FleeceRollID] INT            NULL,
+    [FleeceTypeID] INT            NULL,
+    [ScrimPos]     NVARCHAR (2)   NOT NULL,
+    [DateEntered]  DATETIME       NOT NULL,
+    [EnteredBy]    NVARCHAR (100) NOT NULL,
+    [LastModified] DATETIME       NOT NULL,
+    [ModifiedBy]   NVARCHAR (100) NOT NULL,
+    [ProdLineID]   INT            NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_TPOCurrentScrim_FleeceRoll] FOREIGN KEY ([FleeceRollID]) REFERENCES [dbo].[ScrimRoll] ([ID]),
+    CONSTRAINT [FK_TPOCurrentScrim_FleeceType] FOREIGN KEY ([FleeceTypeID]) REFERENCES [dbo].[ScrimType] ([ID]),
+    CONSTRAINT [FK_TPOCurrentScrim_Plant] FOREIGN KEY ([PlantID]) REFERENCES [dbo].[Plant] ([ID]),
+    CONSTRAINT [FK_TPOCurrentScrim_ProdLine] FOREIGN KEY ([ProdLineID]) REFERENCES [dbo].[ProdLines] ([ID]),
+    CONSTRAINT [FK_TPOCurrentScrim_Scrim1Roll] FOREIGN KEY ([Scrim1RollID]) REFERENCES [dbo].[ScrimRoll] ([ID]),
+    CONSTRAINT [FK_TPOCurrentScrim_Scrim1Type] FOREIGN KEY ([Scrim1TypeID]) REFERENCES [dbo].[ScrimType] ([ID]),
+    CONSTRAINT [FK_TPOCurrentScrim_Scrim2Roll] FOREIGN KEY ([Scrim2RollID]) REFERENCES [dbo].[ScrimRoll] ([ID]),
+    CONSTRAINT [FK_TPOCurrentScrim_Scrim2Type] FOREIGN KEY ([Scrim2TypeID]) REFERENCES [dbo].[ScrimType] ([ID])
+);
+

@@ -1,0 +1,467 @@
+﻿@model IEnumerable<TPO.Web.Models.TPOLineScrapCodeGroup>
+@{
+    ViewBag.Title = "Line Scrap Codes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Line Scrap Codes</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal" style="clear:both;">
+        <table>
+            <tr>
+                <td>
+                    <div class="form-group col-md-3">
+                        <table id="dgCodeGroups" class="easyui-datagrid" style="width:300px;"></table>
+                        <div id="groupTb">
+                            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" appendGroupRow();">Create New</a>
+                            @*<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeGroup() ">Delete</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" addGroup() ">Save Changes</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" rejectGroupChanges() ">Undo</a>*@
+                        </div>
+                    </div>
+                </td>
+                <td style="vertical-align:top;">
+                    <div id="divCodes" class="form-group col-md-2" style="display:none;">
+                        <table id="dgCodes" class="easyui-datagrid" style="width:300px;"></table>
+                        <div id="codesTb">
+                            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" insertCodeRow();">Create New</a>
+                            @*<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeCode() ">Delete</a>
+                            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" addCode() ">Save Changes</a>
+                            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" rejectCodeChanges() ">Undo</a>*@
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <p />
+}
+
+@section scripts
+{
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(window).keydown(function (event) {
+            if ((event.keyCode == 13)) {
+                event.preventDefault();
+                return false;
+            }
+        });
+        createGroupsGrid();
+        createCodesGrid();
+    });
+
+    //Group functions
+    function createGroupsGrid() {
+        $("#dgCodeGroups").datagrid(
+            {
+                title: 'Scrap Code Groups',
+                toolbar: '#groupTb',
+                onClickRow: onClickGroupRow,
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                idField: 'Id',
+                url: '/TPOLineScrapCodeGroup/GetScrapCodeGroupResult/',
+                method: 'get',
+                cache: false,
+                columns: [[
+                    { field: 'Id', title: 'ID', hidden: true },
+                    { field: 'PlantId', title: 'Plant', hidden: true },
+                    { field: 'Code', editor: { type: 'text', required: true }, title: 'Scrap Group', width: 175 },
+                    {
+                        field: 'View', title: 'View', align: 'center', editor:
+                            {
+                                type: 'workingcheckbox',
+                                required: true
+                            }, formatter: function (value, row, index) {
+                                if (value == true) {
+                                    return "Yes";
+                                } else { return "No"; }
+                            }
+                    },
+                    { field: 'EnteredBy', title: 'Entered By', hidden: true },
+                    { field: 'DateEntered', title: 'Date Entered', hidden: true },
+                    { field: 'ModifiedBy', title: 'Modified By', hidden: true },
+                    { field: 'LastModified', title: 'Last Modified', hidden: true },
+                    {
+                        field: 'Action', width: 80, align: 'center',
+                        formatter: function (value, row, index) {
+                            if (row.editing) {
+                                var s = '<a href="#" onclick="saveGroupRow(this)">Save</a> ';
+                                var c = '<a href="#" onclick="cancelGroupRow(this)">Undo</a>';
+                                return s + c;
+                            } else {
+                                var e = '<a href="#" onclick="editGroupRow(this)">Edit</a> ';
+                                var d = '<a href="#" onclick="deleteGroupRow(this)">Delete</a>';
+                                return e + d;
+                            }
+                        }
+                    }
+                ]],
+                onBeforeEdit: function (index, row) {
+                    row.editing = true;
+                    updateActions('dgCodeGroups', index);
+                },
+                onAfterEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgCodeGroups', index);
+                },
+                onCancelEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgCodeGroups', index);
+                }
+            });
+    }
+    function insertGroupRow() {
+        var row = $("#dgCodeGroups").datagrid('getSelected');
+        var index = 0;
+        if (row) {
+            index = $("#dgCodeGroups").datagrid('getRowIndex', row);
+        }
+        $("#dgCodeGroups").datagrid('insertRow',
+            {
+                index: index,
+                row:
+                {
+                    Id: 0,
+                    PlantId: 0,
+                    Code: '',
+                    View: false,
+                    EnteredBy: '',
+                    DateEntered: new Date().toJSON(),
+                    ModifiedBy: '',
+                    LastModified: new Date().toJSON()
+                }
+            });
+        $("#dgCodeGroups").datagrid('selectRow', index);
+        $("#dgCodeGroups").datagrid('beginEdit', index);
+    }
+    function appendGroupRow() {
+        $("#dgCodeGroups").datagrid('appendRow',
+            {
+                Id: 0,
+                PlantId: 0,
+                Code: '',
+                View: false,
+                EnteredBy: '',
+                DateEntered: new Date().toJSON(),
+                ModifiedBy: '',
+                LastModified: new Date().toJSON()
+            });
+        var editIndex = $("#dgCodeGroups").datagrid('getRows').length - 1;
+        $("#dgCodeGroups").datagrid('selectRow', editIndex);
+        $("#dgCodeGroups").datagrid('beginEdit', editIndex);
+    }
+    function editGroupRow(target) {
+        $("#dgCodeGroups").datagrid('beginEdit', getRowIndex(target));
+    }
+    function cancelGroupRow(target) {
+        $("#dgCodeGroups").datagrid('cancelEdit', getRowIndex(target));
+        $("#dgCodeGroups").datagrid('rejectChanges');
+    }
+    function saveGroupRow(target) {
+        if (validateGroupRow(target)) {
+            var index = getRowIndex(target);
+
+            endGroupEditing(target);
+            var row = $('#dgCodeGroups').datagrid('getRows')[index];
+            if (row) {
+                var group =
+                {
+                    "Id": row.Id,
+                    "PlantId": row.PlantId,
+                    "Code": row.Code,
+                    "View": row.View,
+                    "EnteredBy": row.EnteredBy,
+                    "DateEntered": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.DateEntered.substr(6)))),
+                    "ModifiedBy": row.ModifiedBy,
+                    "LastModified": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.LastModified.substr(6))))
+                };
+
+                $("#dgCodeGroups").datagrid('loading');
+                $.ajax({
+                    url: '/TPOLineScrapCodeGroup/UpdateCodeGroupResult/',
+                    type: 'POST',
+                    data: group,
+                    async: false,
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ResponseMessage.ActionStatus == "ok") {
+                            $("#dgCodeGroups").datagrid('updateRow', {
+                                index: index,
+                                row: {
+                                    Id: data.Id,
+                                    PlantId: data.PlantId,
+                                    View: data.View,
+                                    EnteredBy: data.EnteredBy,
+                                    DateEntered: data.DateEntered,
+                                    ModifiedBy: data.ModifiedBy,
+                                    LastModified: data.LastModified
+                                }
+                            });
+                        }
+                        displayMessage(data.ResponseMessage.ActionType, data.ResponseMessage.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        $("#dgCodeGroups").datagrid('loaded');
+                    }
+                });
+
+            }
+        }
+    }
+    function deleteGroupRow(target) {
+        $.messager.confirm('Confirm', 'Delete this group?', function (r) {
+            if (r) {
+                var index = getRowIndex(target);
+                var row = $('#dgCodeGroups').datagrid('getRows')[index];
+                if (row) {
+                    var id = row.Id;
+                    $("#dgCodeGroups").datagrid('loading');
+                    $.ajax({
+                        url: '/TPOLineScrapCodeGroup/DeleteCodeGroup/' + id,
+                        type: 'POST',
+                        async: false,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.ActionStatus == "ok") {
+                                $("#dgCodeGroups").datagrid('deleteRow', index);
+                                $("#divCodes").hide();
+                            }
+                            displayMessage(data.ActionType, data.ActionMessage);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        },
+                        complete: function (jqXHR, textStatus) {
+                            $("#dgCodeGroups").datagrid('loaded');
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+    function validateGroupRow(target) {
+        return $("#dgCodeGroups").datagrid('validateRow', getRowIndex(target));
+    }
+    function endGroupEditing(target) {
+        $("#dgCodeGroups").datagrid('endEdit', getRowIndex(target));
+    }
+    function onClickGroupRow(rowIndex, rowData) {
+        var id = rowData.Id;
+        $("#dgCodes").datagrid({
+            queryParams:
+            {
+                groupId: id
+            }
+        });
+        $("#divCodes").show();
+    }
+
+    //Code functions
+    function createCodesGrid() {
+        $("#dgCodes").datagrid(
+            {
+                title: 'Scrap Codes',
+                toolbar: '#codesTb',
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                idField: 'Id',
+                url: '/TPOLineScrapCodeGroup/GetScrapCodesResult/',
+                columns: [[
+                    { field: 'Id', hidden: true },
+                    { field: 'GroupId', hidden: true },
+                    { field: 'Code', editor: { type: 'text', required: true }, title: 'Scrap Code', width: 150 },
+                    {
+                        field: 'View', title: 'View', align: 'center', editor:
+                            {
+                                type: 'workingcheckbox',
+                                required: true
+                            }, formatter: function (value, row, index) {
+                                if (value == true) {
+                                    return "Yes";
+                                } else { return "No"; }
+                            }
+                    },
+                    { field: 'EnteredBy', hidden: true },
+                    { field: 'DateEntered', hidden: true },
+                    { field: 'ModifiedBy', hidden: true },
+                    { field: 'LastModified', hidden: true },
+                    {
+                        field: 'Action', width: 80, align: 'center',
+                        formatter: function (value, row, index) {
+                            if (row.editing) {
+                                var s = '<a href="#" onclick="saveCodeRow(this);">Save</a> ';
+                                var c = '<a href="#" onclick="cancelCodeRow(this);">Undo</a>';
+                                return s + c;
+                            } else {
+                                var e = '<a href="#" onclick="editCodeRow(this);">Edit</a> ';
+                                var d = '<a href="#" onclick="deleteCodeRow(this);">Delete</a>';
+                                return e + d;
+                            }
+                        }
+                    }
+                ]],
+                onBeforeEdit: function (index, row) {
+                    row.editing = true;
+                    updateActions('dgCodes', index);
+                },
+                onAfterEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgCodes', index);
+                },
+                onCancelEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgCodes', index);
+                }
+            });
+    }
+    function insertCodeRow() {
+        var row = $("#dgCodes").datagrid('getSelected');
+        var index = 0;
+        if (row) {
+            index = $("#dgCodes").datagrid('getRowIndex', row);
+        }
+        $("#dgCodes").datagrid('insertRow',
+            {
+                index: index,
+                row:
+                    {
+                        Id: 0,
+                        GroupId: 0,
+                        Code: '',
+                        View: false,
+                        EnteredBy: '',
+                        DateEntered: new Date().toJSON(),
+                        ModifiedBy: '',
+                        LastModified: new Date().toJSON()
+                    }
+            });
+        $("#dgCodes").datagrid('selectRow', index);
+        $("#dgCodes").datagrid('beginEdit', index);
+    }
+    function editCodeRow(target) {
+        $("#dgCodes").datagrid('beginEdit', getRowIndex(target));
+    }
+    function cancelCodeRow(target) {
+        $("#dgCodes").datagrid('cancelEdit', getRowIndex(target));
+        $("#dgCodes").datagrid('rejectChanges');
+    }
+
+    function saveCodeRow(target) {
+        if (validateCodeRow(target)) {
+
+            var index = getRowIndex(target);
+            endCodeEditing(target);
+
+            var row = $('#dgCodes').datagrid('getRows')[index];
+            var group = $('#dgCodeGroups').datagrid('getSelected');
+
+            if (row) {
+                var code =
+                {
+                    "Id": row.Id,
+                    "GroupId": group.Id,
+                    "Code": row.Code,
+                    "View": row.View,
+                    "EnteredBy": row.EnteredBy,
+                    "DateEntered": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.DateEntered.substr(6)))),
+                    "ModifiedBy": row.ModifiedBy,
+                    "LastModified": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.LastModified.substr(6))))
+                };
+
+                $("#dgCodes").datagrid('loading');
+
+                $.ajax({
+                    url: '/TPOLineScrapCodeGroup/UpdateCodeResult/',
+                    type: 'POST',
+                    data: code,
+                    async: false,
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ResponseMessage.ActionStatus == "ok") {
+                            $("#dgCodes").datagrid('updateRow', {
+                                index: index,
+                                row: {
+                                    Id: data.Id,
+                                    View: data.View,
+                                    PlantId: data.PlantId,
+                                    EnteredBy: data.EnteredBy,
+                                    DateEntered: data.DateEntered,
+                                    ModifiedBy: data.ModifiedBy,
+                                    LastModified: data.LastModified
+                                }
+                            });
+                        }
+                        displayMessage(data.ResponseMessage.ActionType, data.ResponseMessage.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        $("#dgCodes").datagrid('loaded');
+                    }
+                });
+
+            }
+        }
+    }
+    function deleteCodeRow(target) {
+        $.messager.confirm('Confirm', 'Delete this code?', function (r) {
+            if (r) {
+
+                var index = getRowIndex(target);
+                var row = $('#dgCodes').datagrid('getRows')[index];
+                if (row) {
+                    var id = row.Id;
+
+                    $("#dgCodes").datagrid('loading');
+                    $.ajax({
+                        url: '/TPOLineScrapCodeGroup/DeleteCode/' + id,
+                        type: 'POST',
+                        async: false,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.ActionStatus == "ok") {
+                                $("#dgCodes").datagrid('deleteRow', index);
+                            }
+                            displayMessage(data.ActionType, data.ActionMessage);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        },
+                        complete: function (jqXHR, textStatus) {
+                            $("#dgCodes").datagrid('loaded');
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+    function validateCodeRow(target) {
+        return $("#dgCodes").datagrid('validateRow', getRowIndex(target));
+    }
+    function endCodeEditing(target) {
+        $("#dgCodes").datagrid('endEdit', getRowIndex(target));
+    }
+
+    //shared functions
+    function getRowIndex(target)
+    {
+        var tr = $(target).closest('tr.datagrid-row');
+        var index = parseInt(tr.attr('datagrid-row-index'));
+        return index;
+    }
+    function updateActions(gridID, index) {
+        $('#' + gridID).datagrid('updateRow', {
+            index: index,
+            row: {}
+        });
+    }
+
+</script>
+}

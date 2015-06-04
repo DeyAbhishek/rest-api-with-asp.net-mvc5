@@ -1,0 +1,20 @@
+﻿@using TPO.Web.Models
+@model List<TPO.Web.Models.ScrimRollModel>
+
+@{
+    foreach (ScrimRollModel item in Model)
+    {
+        <h2>@item.Code</h2>
+    }
+}
+
+<table id="dg" class="easyui-datagrid" title="Scrim Types" style="width:960px;height:auto"
+       data-options="
+       iconcls: 'icon-edit' ,
+       singleselect: true,
+       toolbar: '#tb' ,
+       url: '../ScrimStockAdjustment/GetScrimTypeList' ,
+       method: 'get' ,
+       cache: false,
+       onClickRow: onClickRow
+       "></table>

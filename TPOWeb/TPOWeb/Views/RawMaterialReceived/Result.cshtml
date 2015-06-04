@@ -1,0 +1,140 @@
+﻿@model IEnumerable<TPO.DL.Models.RawMaterialReceived>
+
+@using TPOWeb.Helpers
+
+
+@*<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>*@
+
+
+@{
+    ViewBag.Title = "RawMaterialReceipt Summary";
+
+
+}
+
+<h2>RawMaterialReceipt Summary</h2><br />
+
+
+@using (Html.BeginForm("Result", "RawMaterial", FormMethod.Post, new { id = "TheForm" }))
+{
+    @Html.DisplayNameFor(model => model.RawMaterialID) <p></p>
+    @Html.DropDownList(
+     "ID",
+    (SelectList)ViewBag.RawMaterial,
+    "--Select One--",
+    new
+    {
+        onchange = "document.getElementById('TheForm').submit();"
+    })
+
+    @*@ <select id="Code" name="Code">
+            <option value="">Select RawMaterial</option>
+            @foreach (var item in ViewBag.RawMaterialQCList)
+            {
+                <option value="@item.Value">@item.Value | @item.Value</option>
+            }
+     </select>*@
+<br /><br /><br /><br />
+
+
+
+}
+    <button class="btn btn-success btn-shadow leftMar20px"
+            onclick="window.location.href = '@Url.Action("Create", "RawMaterialReceived")';return false;">
+        <span class="glyphicon glyphicon-plus"></span>&nbsp;Create New
+    </button>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RawMaterialID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LotID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastModified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </th>
+        <th>
+          
+        </th>
+        <th></th>
+    </tr>
+
+   @{
+    int i = 0;
+    string rowColor;}
+
+
+    @foreach (var item in Model)
+{
+
+    i = i + 1;
+
+    if (i % 2 == 0)
+    {
+        rowColor = "yellow";
+    }
+    else
+    {
+        rowColor = "generalRow";
+    }
+
+        <tr>
+
+            <td style="background-color:@rowColor">
+                @Html.DisplayFor(modelItem => item.RawMaterialID)
+            </td>
+            <td style="background-color:@rowColor">
+                @Html.DisplayFor(modelItem => item.LotID)
+            </td>
+            <td style="background-color:@rowColor">
+                @Html.DisplayFor(modelItem => item.DateEntered)
+            </td>
+            <td style="background-color:@rowColor">
+                @Html.DisplayFor(modelItem => item.EnteredBy)
+            </td>
+            <td style="background-color:@rowColor">
+                @Html.DisplayFor(modelItem => item.LastModified)
+            </td>
+            <td style="background-color:@rowColor">
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td> 
+            <td style="background-color:@rowColor">
+                @Html.DisplayFor(modelItem => item.Plant.Code)
+            </td>
+            <td style="background-color:@rowColor">
+
+                @*@Html.ActionLink("Create New", "index")|
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+               
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Edit", "RawMaterialReceived")';return false;">
+                    <span class="glyphicon glyphicon-eye-open"></span>&nbsp;Edit
+                </button>
+                <button class="btn btn-danger btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Delete", "RawMaterialReceived")';return false;">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+                </button>
+
+            </td>
+        </tr>
+}
+
+</table>

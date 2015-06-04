@@ -1,0 +1,289 @@
+﻿@model TPO.Web.Models.IMProduct
+@{
+    ViewBag.Title = "Injection Molding Products";
+}
+<h2>Injection Molding Products</h2>
+
+
+@using (Html.BeginForm("Edit", "IMProduct", FormMethod.Post, new { id = "IMProductForm" }))
+{
+    @Html.HiddenFor(model => model.Id,new {@id="onCreate"})
+    @Html.HiddenFor(model => model.PlantId)
+    <table id="details" class ="col-lg-offset-1">
+        <tr>
+            <td>
+                <span id ="combogridLabel">
+                    <label for="productSelection">Select Product to Edit:</label>
+                    @Html.LabelFor(model => model.ID)
+                </span>
+            </td>
+            <td>
+                <span id="combogridBox">
+                    <input id="productSelection" class="easyui-combogrid" style="width: 250px" data-options="
+                    panelWidth: 500,
+                    loadMsg: 'Loading',
+                    idField: 'ID',
+                    textField: 'Code',
+                    value: '@Model.Code',
+                    url: '/IMProduct/GetAllProductResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Code',width:60},
+                    {field:'Description',title:'Description',width:100}
+                    ]],
+                    onSelect: productSelected,
+                    fitColumns: true
+                ">
+                </span>
+            </td>
+            <td>
+                <button id="addNewProduct" class="btn btn-primary btn-shadow">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp;Enter New Product
+                </button>
+                <button id="copyProduct" class="btn btn-default btn-shadow">
+                    <span class="glyphicon glyphicon-download"></span>&nbsp;Copy Selected Product
+                </button>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Code)</td>
+            <td>@Html.TextBoxFor(model => model.Code, new { @id= "productCode", @class = "textboxClass", style = "width:150px" })</td>
+            <td>@Html.ValidationMessageFor(model => model.Code)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Description)</td>
+            <td>@Html.TextBoxFor(model => model.Description, new { @id= "productDesc", @class = "textboxClass", style = "width:250px" })</td>
+            <td>@Html.ValidationMessageFor(model => model.Description)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Active)</td>
+            <td><select id="active" name="@Html.NameFor(model => model.Active)" class="easyui-combobox" style="width:100px;">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select></td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.IMProductTypeID)</td>
+            <td>
+                <input name="@Html.NameFor(model => model.IMProductTypeID)" id="productTypeSelection" class="easyui-combogrid" style="width: 100px" data-options="
+                    panelWidth: 500,
+                    idField: 'ID',
+                    textField: 'Description',
+                    value: '@Model.IMProductTypeID',
+                    url: '/IMProductType/GetAllProductTypeResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Code',width:60},
+                    {field:'Description',title:'Description',width:100}
+                    ]],
+                    fitColumns: true
+                ">
+            @Html.ValidationMessageFor(model => model.IMProductTypeID)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.PartsPerCarton)</td>
+            <td>@Html.TextBoxFor(model => model.PartsPerCarton, new { @id = "partsPerCartoon", @class = "textboxClass", style = "width:100px" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.CartonsPerLot)</td>
+            <td>@Html.TextBoxFor(model => model.CartonsPerLot, new { @id = "cartoonPerLot", @class = "textboxClass", style = "width:100px" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.RawMaterialID)</td>
+            <td>
+                <input name="@Html.NameFor(model => model.RawMaterialID)" id="rawMaterialSelection" class="easyui-combogrid" style="width:250px" data-options="
+                    panelWidth: 500,
+                    idField: 'Id',
+                    textField: 'Code',
+                    value: '@Model.RawMaterialID',
+                    url: '/RawMaterial/GetAllRawMaterialResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Raw Material',width:60},
+                    {field:'Description',title:'Description',width:100}
+                    ]],
+                    fitColumns: true
+                    ">
+            @Html.ValidationMessageFor(model => model.RawMaterialID)
+            </td>
+        </tr>
+        <tr><td></td></tr>
+        <tr>
+        <tr>
+            <td></td>
+            <td>&nbsp;&nbsp;<b>Measurement<span class="getSpace">UoM</span></b></td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.MinimumThick)</td>
+            <td>@Html.TextBoxFor(model => model.MinimumThick, new { @id = "minimumThickness", @class = "textboxClass", style = "width:100px" })
+                <span class="textSpace">
+                    <input name="@Html.NameFor(model => model.ThickUOM)" id="thicknessSelection" class="easyui-combogrid" style="width:100px" data-options="
+                    panelWidth: 200,
+                    idField: 'ID',
+                    textField: 'Code',
+                    value: '@Model.ThickUOM', 
+                    url: '/IMProduct/GetAllThicknessUomResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Code',width:60},
+                    {field:'Description',title:'Description',width:100}
+                    ]],
+                    fitColumns: true
+                    ">
+                </span>
+                @Html.ValidationMessageFor(model => model.ThickUOM)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.MinimumWeight)</td>
+            <td>@Html.TextBoxFor(model => model.MinimumWeight, new { @id = "minimumWeight", @class = "textboxClass", style = "width:100px" })
+                <span class="textSpace">
+                    <input name="@Html.NameFor(model => model.WeightUOM)" id="weightSelection" class="easyui-combogrid" style="width:100px" data-options="
+                    panelWidth: 200,
+                    idField: 'ID',
+                    textField: 'Code',
+                    value: '@Model.WeightUOM',
+                    url: '/IMProduct/GetAllWeightUomResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Code',width:60},
+                    {field:'Description',title:'Description',width:100}
+                    ]],
+                    fitColumns: true
+                    ">
+                </span>
+                @Html.ValidationMessageFor(model => model.WeightUOM)
+            </td>
+        </tr>
+        <tr><td></td></tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Label2)</td>
+            <td>@Html.TextBoxFor(model => model.Label2, new { @id = "label", @class = "textboxClass", style = "width:250px" })</td>
+        </tr>
+    </table>
+    <p class="col-lg-offset-1"><small>&nbsp;&nbsp;*A carton label will contain 3 lines, line 1 is the carton number, line 2 will contain<br />&nbsp;&nbsp;in the product type and the info entered into this field, line 3 will be the production date.</small></p>
+    <br />
+    <span class="col-lg-offset-2">
+        <button class="btn btn-success btn-shadow"
+                onclick="$(this).parents('form:first').submit(); return false;">
+            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+        </button>
+        <button class="btn btn-default btn-shadow"
+                onclick="window.location.href = '@Url.Action("Edit", "IMProduct")';return false;">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+        </button>
+    </span>
+
+
+    <div id="MyDialog">
+    <table>
+        <tr><td></td></tr>
+        <tr>
+            <td>Enter New Product Code</td>
+            <td><input id="newProduct" class="text" type="text" name="Code" /></td>
+        </tr>
+    </table>
+    <br /><br />
+    <span class="col-lg-offset-2">
+        <button class="btn btn-default btn-shadow" onclick="updateProduct()">
+            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;OK
+        </button>
+        <button class="btn btn-default btn-shadow"
+                onclick="closeDialog()">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+        </button>
+    </span>
+</div>
+}
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        var val = $("#productSelection").combogrid('getValue');
+        if(val == 0)
+        {
+            $("#productSelection").combogrid('setValue', '- - - Select - - - ');
+            $("#productTypeSelection").combogrid('setValue', '- - Select - -');
+            $("#rawMaterialSelection").combogrid('setValue', '- - Select - -');
+            $("#thicknessSelection").combogrid('setValue', '- - Select - -');
+            $("#weightSelection").combogrid('setValue', '- - Select - -');
+        }
+    });
+    
+    $(function() {
+        $("#MyDialog").dialog({
+            autoOpen: false,
+            height: 150,
+            width: 400,
+            modal: true,
+            title: "Add Product"
+        });
+        $("#MyDialog").dialog("close");
+        $("#addNewProduct").click(function(e) {
+            $("#MyDialog").dialog("open");
+            e.preventDefault();
+            $("#combogridLabel").hide();
+            $("#combogridBox").hide();
+            $("#productTypeSelection").combogrid('setValue', '- - Select - -');
+            $("#rawMaterialSelection").combogrid('setValue', '- - Select - -');
+            $("#thicknessSelection").combogrid('setValue', '- - Select - -');
+            $("#weightSelection").combogrid('setValue', '- - Select - -');
+            $("#partsPerCartoon").val(0);
+            $("#cartoonPerLot").val(0);
+            $("#minimumThickness").val(0.000);
+            $("#minimumWeight").val(0.000);
+            $("#productCode").val('');
+            $("#productDesc").val('');
+            $("#label").val('');
+        });
+        $("#MyDialog").dialog("close");
+        $("#copyProduct").click(function (e) {
+            $("#MyDialog").dialog("open");
+            e.preventDefault();
+            $("#combogridLabel").hide();
+            $("#combogridBox").hide();
+        });
+    });
+
+    function updateProduct() {
+        var product = $("#newProduct").val();
+        $("#productCode").val(product);
+        $("#onCreate").val(0);
+        $("#MyDialog").dialog("close");
+    }
+
+    function closeDialog() {
+        $("#combogridLabel").show();
+        $("#combogridBox").show();
+        $("#MyDialog").dialog("close");
+    }
+
+    function productSelected(record) {
+        //record is the row position that is returned as well if needed
+        var val = $("#productSelection").combogrid('getValue');
+        window.location = "/IMProduct/Edit/" + val;
+    }
+</script>
+
+<style type="text/css">
+    td {
+         padding-top: 0.35em;
+         padding-bottom: 0.35em;
+         padding: 5px;
+     }
+
+    .getSpace {
+        padding-left: 4em;
+    }
+
+    .textSpace {
+        padding-left: 2em;
+    }
+
+    .textboxClass {
+        line-height: normal;
+        padding-bottom: 2.9px !important;
+    }
+</style>

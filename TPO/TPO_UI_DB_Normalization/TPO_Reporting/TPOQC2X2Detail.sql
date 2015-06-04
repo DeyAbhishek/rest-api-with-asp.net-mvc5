@@ -1,0 +1,16 @@
+﻿CREATE TABLE [dbo].[TPOQC2X2Detail]
+(
+	[TPOQCID] INT NOT NULL PRIMARY KEY, 
+	[WeightUoMID] INT NOT NULL,
+    [2X2Weight1] FLOAT NULL, 
+    [2X2Weight2] FLOAT NULL, 
+    [2X2Weight3] FLOAT NULL, 
+    [2X2Weight4] FLOAT NULL, 
+    [2X2Weight5] FLOAT NULL, 
+    [DateEntered] DATETIME NOT NULL, 
+    [EnteredBy] NVARCHAR(100) NOT NULL, 
+    [LastModified] DATETIME NOT NULL, 
+    [ModifiedBy] NVARCHAR(100) NOT NULL, 
+    CONSTRAINT [FK_TPOQC2X2Detail_TPOQC] FOREIGN KEY ([TPOQCID]) REFERENCES [TPOQC]([ID]),
+	CONSTRAINT [FK_TPOQC2X2Detail_WeightUnitOfMeasure] FOREIGN KEY ([WeightUoMID]) REFERENCES [UnitOfMeasure]([ID])
+)

@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>TPO.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{d2e7874b-d240-4bbd-9d91-1a15e2b0aa3d}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>TPO.Database</RootNamespace>
+    <AssemblyName>TPO.Database</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'QA|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'QA|x64' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Functions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="TPO.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\WorkOrderShiftDataFormulation.sql" />
+    <Build Include="dbo\Tables\WorkOrderShiftData.sql" />
+    <Build Include="dbo\Tables\WorkOrder.sql" />
+    <Build Include="dbo\Tables\webpages_UsersInRoles.sql" />
+    <Build Include="dbo\Tables\webpages_RolesSecurityTasks.sql" />
+    <Build Include="dbo\Tables\webpages_Roles.sql" />
+    <Build Include="dbo\Tables\webpages_OAuthMembership.sql" />
+    <Build Include="dbo\Tables\webpages_Membership.sql" />
+    <Build Include="dbo\Tables\UserPlant.sql" />
+    <Build Include="dbo\Tables\User.sql" />
+    <Build Include="dbo\Tables\UnitOfMeasureType.sql" />
+    <Build Include="dbo\Tables\UnitOfMeasureDefault.sql" />
+    <Build Include="dbo\Tables\UnitOfMeasureConversion.sql" />
+    <Build Include="dbo\Tables\UnitOfMeasure.sql" />
+    <Build Include="dbo\Tables\TPOReworkRoll.sql" />
+    <Build Include="dbo\Tables\TPOReclaimWIP.sql" />
+    <Build Include="dbo\Tables\TPOReclaimActionType.sql" />
+    <Build Include="dbo\Tables\TPOReclaimAction.sql" />
+    <Build Include="dbo\Tables\TPOProductStandardCost.sql" />
+    <Build Include="dbo\Tables\TPOProducts.sql" />
+    <Build Include="dbo\Tables\TPOProductLabelDetail.sql" />
+    <Build Include="dbo\Tables\TPOProductGrabDetail.sql" />
+    <Build Include="dbo\Tables\TPOProductDimDetail.sql" />
+    <Build Include="dbo\Tables\TPOProductCEDetail.sql" />
+    <Build Include="dbo\Tables\TPOProductCapCoreDetail.sql" />
+    <Build Include="dbo\Tables\TPOLineScrapType.sql" />
+    <Build Include="dbo\Tables\TPOLineScrapCodeGroup.sql" />
+    <Build Include="dbo\Tables\TPOLineScrapCode.sql" />
+    <Build Include="dbo\Tables\TPOLineScrap.sql" />
+    <Build Include="dbo\Tables\TPOFormulationRawMaterials.sql" />
+    <Build Include="dbo\Tables\TPOFormulationLineProduct.sql" />
+    <Build Include="dbo\Tables\TPOFormulation.sql" />
+    <Build Include="dbo\Tables\TPOExtruder.sql" />
+    <Build Include="dbo\Tables\TPOCurrentScrim.sql" />
+    <Build Include="dbo\Tables\TPOCurrentRawMaterial.sql" />
+    <Build Include="dbo\Tables\TPOCProductRoll.sql" />
+    <Build Include="dbo\Tables\TPOBatch.sql" />
+    <Build Include="dbo\Tables\TestLimitType.sql" />
+    <Build Include="dbo\Tables\SecurityTask.sql" />
+    <Build Include="dbo\Tables\ScrimType.sql" />
+    <Build Include="dbo\Tables\ScrimRoll.sql" />
+    <Build Include="dbo\Tables\ScrimActionType.sql" />
+    <Build Include="dbo\Tables\ScrimActionReason.sql" />
+    <Build Include="dbo\Tables\ScrimAction.sql" />
+    <Build Include="dbo\Tables\RoleAssignment.sql" />
+    <Build Include="dbo\Tables\Role.sql" />
+    <Build Include="dbo\Tables\RawMaterialVendor.sql" />
+    <Build Include="dbo\Tables\RawMaterialTest.sql" />
+    <Build Include="dbo\Tables\RawMaterialSpecificGravityDetail.sql" />
+    <Build Include="dbo\Tables\RawMaterialSpecificGravity.sql" />
+    <Build Include="dbo\Tables\RawMaterials.sql" />
+    <Build Include="dbo\Tables\RawMaterialReceivedSizeLimit.sql" />
+    <Build Include="dbo\Tables\RawMaterialReceived.sql" />
+    <Build Include="dbo\Tables\RawMaterialQCRedHold.sql" />
+    <Build Include="dbo\Tables\RawMaterialQC.sql" />
+    <Build Include="dbo\Tables\RawMaterialActionType.sql" />
+    <Build Include="dbo\Tables\RawMaterialActionReason.sql" />
+    <Build Include="dbo\Tables\RawMaterialAction.sql" />
+    <Build Include="dbo\Tables\QCVisualInspectionType.sql" />
+    <Build Include="dbo\Tables\QCRedHold.sql" />
+    <Build Include="dbo\Tables\QCPrintSpecificationType.sql" />
+    <Build Include="dbo\Tables\QCPrintSpecification.sql" />
+    <Build Include="dbo\Tables\QCKickout.sql" />
+    <Build Include="dbo\Tables\ProductionShiftUse.sql" />
+    <Build Include="dbo\Tables\ProductionShiftType.sql" />
+    <Build Include="dbo\Tables\ProductionShift.sql" />
+    <Build Include="dbo\Tables\ProductionLineSchedule.sql" />
+    <Build Include="dbo\Tables\ProductionBudgetType.sql" />
+    <Build Include="dbo\Tables\ProductionBudget.sql" />
+    <Build Include="dbo\Tables\ProdSupervisorOnShift.sql" />
+    <Build Include="dbo\Tables\ProdLineType.sql" />
+    <Build Include="dbo\Tables\ProdLinesPerformProd.sql" />
+    <Build Include="dbo\Tables\ProdLinesPerform.sql" />
+    <Build Include="dbo\Tables\ProdLines.sql" />
+    <Build Include="dbo\Tables\ProdLineRollConfig.sql" />
+    <Build Include="dbo\Tables\ProdDateChange.sql" />
+    <Build Include="dbo\Tables\ProdComments.sql" />
+    <Build Include="dbo\Tables\Plant.sql" />
+    <Build Include="dbo\Tables\IMQC.sql" />
+    <Build Include="dbo\Tables\IMProductType.sql" />
+    <Build Include="dbo\Tables\IMProducts.sql" />
+    <Build Include="dbo\Tables\IMProd.sql" />
+    <Build Include="dbo\Tables\FailProperty.sql" />
+    <Build Include="dbo\Tables\DownTimeType.sql" />
+    <Build Include="dbo\Tables\DownTimeReason.sql" />
+    <Build Include="dbo\Tables\DownTimeEquipmentGroup.sql" />
+    <Build Include="dbo\Tables\DownTimeEquipment.sql" />
+    <Build Include="dbo\Tables\DownTime.sql" />
+    <Build Include="dbo\Tables\ApplicationLog.sql" />
+    <Build Include="dbo\Functions\FetchRawMaterialsStock.sql" />
+    <Build Include="dbo\Tables\SupervisorOnShift.sql" />
+    <Build Include="dbo\Tables\TPOReworkActionType.sql" />
+    <Build Include="dbo\Tables\TPOReworkAction.sql" />
+  </ItemGroup>
+</Project>

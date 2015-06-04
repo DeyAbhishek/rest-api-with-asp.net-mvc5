@@ -1,0 +1,237 @@
+﻿@{  
+    ViewBag.Title = "Scrim Stock Adjustment";
+}
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <label>Select Scrim Type: </label>
+    <select id="scrimType" class="easyui-combogrid" style="width:250px"
+            data-options="
+        panelWidth: 500,
+        loadMsg: 'Loading',
+        idField: 'Id',
+        textField: 'Code',
+        url: '../ScrimStockAdjustment/GetScrimTypeList' ,
+        method: 'get',
+        columns: [[
+                { field: 'Id', title: 'Id', hidden: true },
+                { field: 'Code', title: 'Scrim Type', width: 120 },
+                { field: 'Description', title: 'Description', width: 200 }
+        ]],
+        fitColumns: true,
+        onClickRow: onClickTypeRow
+        ">
+    </select>
+</p>
+
+<p>
+    <label>Select Scrim Roll: </label>&nbsp;
+    <select id="scrimRoll" class="easyui-combogrid" style="width:250px;"
+            data-options="
+                panelWidth: 500,
+                loadMsg: 'Loading',
+                idField: 'Id',
+                textField: 'Code',
+                method: 'get',
+                columns: [[
+                    { field: 'Id', title: 'ID', hidden: true },
+                    { field: 'Code', title: 'Scrim Roll', width: 100 },
+                    { field: 'ReceivedLength', title: 'Original Length', width: 120 },
+                    { field: 'ReceivedWeight', title: 'Original Weight', width: 120 },
+                    { field: 'Length', title: 'Remaining Length', width: 120 },
+                    { field: 'Weight', title: 'Remaining Weight', width: 120 },
+                ]],
+                fitColumns: true,
+                onClickRow: onClickRollRow
+        "></select>
+</p>
+
+<table id="details" style="visibility: hidden; padding: 2px; margin-left: 10px;">
+    <tr>
+        <td><label></label></td>
+        <td><label>Length</label></td>
+        <td><label></label></td>
+        <td><label>Area</label></td>
+        <td><label></label></td>
+        <td><label>Weight</label></td>
+        <td><label></label></td>
+    </tr>
+    <tr>
+        <td><label>Original</label></td>
+        <td><input class="easyui-numberbox" id="originalLength" precision="0" disabled="true"  style="text-align:right"></td>
+        <td class="lengthUoM"></td>
+        <td><input class="easyui-numberbox" id="originalArea" precision="0" disabled="true"  style="text-align:right"></td>
+        <td class="areaUoM"></td>
+        <td><input class="easyui-numberbox" id="originalWeight" precision="0" disabled="true"  style="text-align:right"></td>
+        <td class="weightUoM"></td>
+    </tr>
+    <tr>
+        <td><label>Used</label></td>
+        <td><input class="easyui-numberbox" id="usedLength" precision="0" disabled="true"  style="text-align:right"></td>
+        <td class="lengthUoM"></td>
+        <td><input class="easyui-numberbox" id="usedArea" precision="0" disabled="true"  style="text-align:right"></td>
+        <td class="areaUoM"></td>
+        <td><input class="easyui-numberbox" id="usedWeight" precision="0" disabled="true"  style="text-align:right"></td>
+        <td class="weightUoM"></td>
+    </tr>
+    <tr>
+        <td><label>Remaining</label></td>
+        <td><input class="easyui-numberbox" id="Length" precision="0" disabled="true"  style="text-align:right"></td>
+        <td class="lengthUoM"></td>
+        <td><input class="easyui-numberbox" id="Area" precision="0" disabled="true"  style="text-align:right"></td>
+        <td class="areaUoM"></td>
+        <td><input class="easyui-numberbox" id="Weight" precision="0" disabled="true"  style="text-align:right"></td>
+        <td class="weightUoM"></td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+        <td colspan="7">
+            <select id="scrimActionType" class="easyui-combobox"  style="width:150px"
+                    data-options="
+                    valueField: 'Id',
+                    textField: 'Description',
+                    url: '../ScrimStockAdjustment/GetScrimActionTypeList' ,
+                    method: 'get',
+                                panelHeight: 'auto',
+                    onSelect: onSelectActionType
+                    ">
+            </select>
+            <input class="easyui-numberbox" id="scrimActionAdjustment" style="text-align:right">
+            <select id="scrimActionUom" class="easyui-combobox" style="width:50px"
+                    data-options="valueField: 'Id', textField: 'Code', method: 'get',
+                                url: '../ScrimStockAdjustment/GetUomsByType?type=W',
+                    panelHeight: 'auto'"></select>
+            <span id="scrimActionAdjustmentValidator" class="field-validation-error" data-valmsg-replace="true" data-valmsg-for="scrimActionAdjustment"><span></span>
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="7"><label>Adjustment Reason:</label><br/></td>
+    </tr>
+    <tr>
+        <td colspan="7">
+            <textarea id="scrimActionReason" style="width:300px;height:100px"></textarea>
+            <br/>
+        </td>
+    </tr>
+    <tr>
+        <td><br/>
+            <button class="btn btn-success btn-shadow"
+                    onclick="save();return false;">
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+            </button>
+            <button class="btn btn-default btn-shadow"
+                    onclick="window.location.href = '@Url.Action("Index")';return false;">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+            </button>
+        </td>
+    </tr>
+
+</table>
+<br/>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#scrimRoll').combogrid('disable');
+        $("#scrimActionType").combobox('setValue', 'Adjust Roll Weight By');
+        $("#scrimActionAdjustment").val("0");
+        $("#scrimActionUom").combobox('setValue', 'kg');
+    });
+
+    function onClickTypeRow(index, row) {
+        $('#scrimRoll').combogrid('enable');
+        $('#scrimRoll').combogrid({ url: '../ScrimStockAdjustment/GetScrimRolls?typeId=' + row.Id });
+    }
+
+    var scrimRoll;
+    var scrimRollDetail;
+    function onClickRollRow(index, row) {
+        document.getElementById('details').style.visibility = 'visible';
+        scrimRoll = row;
+        $.ajax({
+            type: 'GET',
+            url: '../ScrimStockAdjustment/GetScrimRollDetails?scrimRollId=' + row.Id,
+            success: function (data, status) {
+                FillData(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+            }
+        });
+    }
+
+    function FillData(data) {
+        scrimRollDetail = data;
+        $('.lengthUoM').each(function (index) {
+            $(this)[0].innerText = scrimRoll.LengthUomText + '  ';
+        });
+        $('.weightUoM').each(function (index) {
+            $(this)[0].innerText = scrimRoll.WeightUomText + '  ';
+        });
+        $('.areaUoM').each(function (index) {
+            $(this)[0].innerText = scrimRollDetail.AreaUomText + '  ';
+        });
+        $('#originalLength').val(Math.round(scrimRoll.ReceivedLength * 1000) / 1000);
+        $('#originalArea').val(Math.round(scrimRollDetail.ReceivedArea * 1000) / 1000);
+        $('#originalWeight').val(Math.round(scrimRoll.ReceivedWeight * 1000) / 1000);
+        $('#usedLength').val(Math.round(scrimRoll.LengthUsed * 1000) / 1000);
+        $('#usedArea').val(Math.round(scrimRollDetail.AreaUsed * 1000) / 1000);
+        $('#usedWeight').val(Math.round(scrimRoll.WeightUsed * 1000) / 1000);
+        $('#Length').val(Math.round(scrimRoll.Length * 1000) / 1000);
+        $('#Area').val(Math.round(scrimRollDetail.Area * 1000) / 1000);
+        $('#Weight').val(Math.round(scrimRoll.Weight * 1000) / 1000);
+    }
+
+    function onSelectActionType(row) {
+        if (row.Description.indexOf("eight") > -1) {
+            $('#scrimActionUom').combobox('reload', '../ScrimStockAdjustment/GetUomsByType?type=W');
+        } else {
+            $('#scrimActionUom').combobox('reload', '../ScrimStockAdjustment/GetUomsByType?type=L');
+        }
+    }
+
+    function save() {
+
+        if ($('#scrimActionType').combobox('getText').substring(0, 5) == 'Set R') {
+            if ($('#scrimActionAdjustment').val() < 0) {
+                $('#scrimActionAdjustmentValidator')[0].innerHTML = "<span>When doing a 'Set...To', adjustment value must be greater than or equal to zero.</span>";
+                return false;
+            }
+        }
+        $('#scrimActionAdjustmentValidator').innerHTML = "<span></span>";
+        var actionTypeId = $('#scrimActionType').combobox('getValue');
+        if (isNaN(parseInt(actionTypeId))) {
+            actionTypeId = $('#scrimActionType').combobox('getData')[0].Id;
+        }
+
+        var uomId = $('#scrimActionUom').combobox('getValue');
+        if (isNaN(parseInt(uomId))) {
+            uomId = $('#scrimActionUom').combobox('getData')[0].Id;
+        }
+
+        $.ajax({
+            url: '../ScrimStockAdjustment/SaveAdjustment',
+            type: 'POST',
+            data: {
+                scrimRollId: scrimRoll.Id,
+                actionTypeId: actionTypeId,
+                adjustment: $('#scrimActionAdjustment').val(),
+                uomId: uomId,
+                adjustmentReason: $('#scrimActionReason').val()
+            },
+            success: function (data, textStatus, jqXHR) {
+                if (data.ActionStatus == "ok") {
+                    $('#scrimType').combobox('setText', '');
+                    $('#scrimRoll').combogrid('setText', '');
+                    $('#scrimRoll').combogrid('disable');
+                    document.getElementById('details').style.visibility = 'hidden';
+                }
+                displayMessage(data.ActionType, data.ActionMessage);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+            }
+        });
+    }
+
+</script>

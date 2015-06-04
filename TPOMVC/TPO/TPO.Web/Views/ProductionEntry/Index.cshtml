@@ -1,0 +1,480 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+
+@{
+    ViewBag.Title = "Production Entry";
+}
+
+<style>
+    .control-label::after {
+        content: ": ";
+        margin-left: 1px;
+        margin-right:2px;
+    }
+
+    .displayTable td {
+        text-align: left;
+    }
+
+        .displayTable td:nth-child(even) {
+            padding-right: 15px;
+        }
+</style>
+
+@Html.HiddenFor(m => m.ProductionLineId)
+@Html.HiddenFor(m => m.WorkOrderId)
+@Html.HiddenFor(m => m.ProductionDate)
+@Html.HiddenFor(m => m.ShiftId)
+@Html.HiddenFor(m => m.MasterRollId)
+
+<table class="displayTable">
+    <tr>
+        <td>
+            <label class="control-label">Production Line</label>
+        </td>
+        <td>
+            <select id="prodLineId" name="prodLineId" class="easyui-combobox" style="width:150px" data-options="
+                    valueField: 'ID',
+                    textField: 'LineDesc',
+                    url: '/ProductionEntry/FetchProductionLines',
+                    method: 'get',
+                    panelHeight: 'auto',
+                    onSelect: prodLineSelected,
+                    value: @Model.ProductionLineId
+                "></select>
+        </td>
+        @if (Model.ProductionLineId > 0)
+        {
+            <td>
+                <label class="control-label">Production Date</label>
+            </td>
+            <td>
+                <input id="prodDate" class="easyui-datebox" style="width:100px;" data-options="
+                       onSelect: prodDateSelected
+                       " />
+            </td>
+            <td rowspan="3">
+                <label class="control-label">Work Order Completion</label>&nbsp;<span id="WorkOrderCompletion"></span><br />
+                <label class="control-label">Shift Scrap Weight</label>&nbsp;<span id="ScrapWeight"></span><br />
+                <label class="control-label">Shift Scrap Rate</label>&nbsp;<span id="ScrapRate"></span>
+            </td>
+        }
+    </tr>
+    @if (Model.ProductionLineId > 0)
+    {
+        <tr>
+            <td>
+                <label class="control-label">Production Shift</label>
+            </td>
+            <td>
+                <select id="prodShiftId" name="prodShiftId" class="easyui-combobox" style="width:150px" data-options="
+                    valueField: 'ID',
+                    textField: 'Code',
+                    url: '/ProductionEntry/FetchProductionShifts',
+                    method: 'get',
+                    panelHeight: 'auto',
+                    onSelect: prodShiftSelected
+                    "></select>
+            </td>
+            @if (Model.ProductionLineTypeCode == "TPO" || Model.ProductionLineTypeCode == "CO" || Model.ProductionLineTypeCode == "IM" )
+            {
+            <td>
+                <label class="control-label">Current Work Order</label>
+
+            </td>
+            <td>
+                <select id="workOrderId" name="workOrderId" class="easyui-combogrid" style="width:150px" data-options="
+                   prompt:'--- Select Work Order ---',
+                   loadMsg: 'Loading ...',
+                   idField: 'Id',
+                   textField: 'Code',
+                   panelWidth: '425',
+                   columns: [[
+                        {field:'Id',title:'ID', hidden: true},
+                        {field:'Code',title:'Work Order',width:100},
+                        {field:'ProductName', title:'Product',width:100 },
+                        {field:'ProductDescription', title:'Description',width:200}
+                        ]],
+                   onSelect: workOrderSelected
+                   "></select>
+            </td>
+            }
+        </tr>
+        if (Model.ProductionLineTypeCode == "TPO")
+        {
+            <tr>
+                <td></td>
+                <td></td>
+                <td colspan="2"><a href="#" id="showWorkOrderStatus">View Work Orders Status</a></td>
+            </tr>
+        }
+        <tr>
+            @if (Model.ProductionLineTypeCode == "TPO" || Model.ProductionLineTypeCode == "CO" )
+            { 
+            <td colspan="2">
+                <label class="control-label">Product</label>&nbsp;<span id="ProductName"></span>
+            </td>            
+            <td colspan="3">
+                &nbsp;&nbsp;<label class="control-label">Work Order Notes</label>&nbsp;<span id="WorkOrderComment"></span>
+            </td>
+            }
+            @if (Model.ProductionLineTypeCode == "CO")
+            {
+               
+            }
+            @if (Model.ProductionLineTypeCode == "RC")
+            {
+            <td>
+                <label class="control-label">Reclaim Material:</label>
+            </td>
+            <td>
+                <select id="reclaimMaterial" class="easyui-combogrid" style="width:150px" data-options="
+                   prompt:'--- Select ---',
+                   loadMsg: 'Loading ...',
+                   idField: 'ProductCode',
+                   textField: 'ProductDesc',
+                   panelWidth: '150',
+                   method: 'get',
+                   url: '/ReclaimProduction/GetReclaimMaterialResult',
+                   columns: [[
+                        {field:'ProductDesc',title:'Product'}
+                        ]]
+                   "></select>
+            </td>
+            }
+        </tr>
+    }
+</table>
+
+    @if (Model.ProductionLineTypeCode == "TPO")
+    {
+        @Html.Partial("_TPOProduction", Model)
+    }
+    else if (Model.ProductionLineTypeCode == "RW")
+    {
+        @Html.Partial("_ReworkProduction", Model)
+    }
+    else if (Model.ProductionLineTypeCode == "RC")
+    {
+        @Html.Partial("_ReclaimProduction", Model)
+    }
+    else if (Model.ProductionLineTypeCode == "CO")
+    {
+        @Html.Partial("_CoatingProduction", Model)
+    }
+    else if (Model.ProductionLineTypeCode == "IM")
+    {
+        @Html.Partial("_IMProduction", Model)
+    }
+
+
+@if (Model.ProductionLineId > 0)
+{
+    <table class="displayTable">
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.SupervisorId, new { @class = "control-label" })
+            </td>
+            <td>
+                <select id="SupervisorName" name="SupervisorName" class="easyui-combobox" style="width:150px" data-options="
+                    valueField: 'Username',
+                    textField: 'Username',
+                    url: '/ProductionEntry/FetchSupervisors',
+                    method: 'get',
+                    panelHeight: 'auto',
+                    onSelect: supervisorSelected
+                    "></select>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;">
+                @Html.LabelFor(model => model.ShiftComments, new { @class = "control-label" })
+            </td>
+            <td style="width:600px;">
+                @Html.TextAreaFor(model => model.ShiftComments, new { @class = "form-control", @rows = 5, @onchange = "commentChanged()", @style = "max-width:500px;" })
+            </td>
+        </tr>
+    </table>
+    
+    if (Model.ProductionLineTypeCode == "TPO")
+        {
+        @*
+            <div id="workOrderDialogBox" class="easyui-dialog" title="Work Order Status" style="width:400px;height:600px;">
+                <table id="WorkOrderStatusGrid" class="easyui-datagrid" title="Work Order Status"
+                       data-options="
+                            url:'/TPOProductEntry/FetchWorkOrderStatus',
+                        method: 'get',
+                        fitColumns: true
+                    ">
+                <thead>
+                    <tr>
+                        <th data-options="field:">Work Order</th>
+                        <th data-options="field:">Product</th>
+                        <th data-options="field:">Scheduled Sqft</th>
+                        <th data-options="field:">Prime Sqft</th>
+                        <th data-options="field:">Remaining Sqft</th>
+                        <th data-options="field:">Rolls Required</th>
+                        <th data-options="field:">Rolls Produced</th>
+                        <th data-options="field:">Rolls Remaining</th>
+                        <th data-options="field:">Hours to Run</th>
+                        <th data-options="field:">Rework LB</th>
+                        <th data-options="field:">Reclaim LB</th>
+                        <th data-options="field:">Landfill LB</th>
+                        <th data-options="field:">FPY</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        *@
+        }
+        }
+        <p></p>
+
+        <script type="text/javascript">
+    $(document).ready( function() {
+        setProdDateDefaultValue();
+        setWorkOrderParams();
+        createWorkOrderDialog();
+    });
+
+    function setProdDateDefaultValue()
+    {
+        var today = new Date();
+        var todayString = (today.getMonth + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+        $("#prodDate").datebox('setValue', todayString);
+    }
+    function setWorkOrderParams()
+    {
+        if ($('#workOrderId'))
+        {
+            $("#workOrderId").combogrid({
+                method:'get',
+                url: '/ProductionEntry/FetchWorkOrders',
+                queryParams: { productionLineId: @Model.ProductionLineId }
+            });
+        }
+    }
+    function createWorkOrderDialog() {
+        return;
+        /*
+        $("#workOrderDialogBox").dialog({
+            autoOpen: false,
+            height: 250,
+            width: 400,
+            modal: true,
+            title: "Work Order Status"
+        });
+        $("#workOrderDialogBox").dialog("close");
+
+        $("#showWorkOrderStatus").click(function () {
+            $("#workOrderDialogBox").dialog("open");
+            return false;
+        });
+        */
+    }
+    function prodLineSelected() {
+        var lineID = $("#prodLineId").combogrid('getValue');
+        window.location.href = '/ProductionEntry/Index/' + lineID;
+        refreshSupervisorOnShift();
+    }
+    function prodShiftSelected() {
+        $("#ShiftId").val($("#prodShiftId").combogrid('getValue'));
+        refreshProductionEntryData();
+        refreshSupervisorOnShift();
+    }
+    function prodDateSelected(date) {
+        $("#ProductionDate").val(date);
+        refreshProductionEntryData();
+        refreshSupervisorOnShift();
+    }
+    function workOrderSelected() {
+        var workOrderID = $("#workOrderId").combogrid('getValue');
+        $("#WorkOrderId").val(workOrderID);
+        $.ajax(
+            {
+                url: '/ProductionEntry/FetchWorkOrder',
+                type: 'get',
+                data: { workOrderId: workOrderID },
+                success: function (data, textStatus, jqXHR) {
+                    $("#ProductName").text(data.ProductName + " - " + data.ProductDescription);
+                    if (data.Comment == "") {
+                        $("#WorkOrderComment").text("[NO COMMENTS ENTERED]");
+                    } else {
+                        $("#WorkOrderComment").text(data.Comment);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $("#ProductName").text("");
+                    $("#WorkOrderComment").text("");
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        refreshProductionEntryData();
+    }
+
+    function supervisorSelected()
+    {
+        var prodLineId = $("#ProductionLineId").val();
+        var shiftId = $("#ShiftId").val();
+        var workOrderId = $("#WorkOrderId").val();
+        var prodDate = $("#ProductionDate").val();
+        var supervisorName = $("#SupervisorName").combogrid('getValue');
+
+        if ( prodLineId > 0 && shiftId > 0 && prodDate != undefined ) {
+
+            var data = {
+                productionLineId: prodLineId,
+                shiftId: shiftId,
+                workOrderId: workOrderId,
+                productionDate: prodDate,
+                supervisor: supervisorName
+            }
+
+            var options = {
+                url: '/ProductionEntry/SaveSupervisorOnShift',
+                type: 'post',
+                data: data
+            }
+            $.ajax(options)
+                .success(function (data, textStatus, jqXHR) {
+                    $("#SupervisorName").combobox('setValue', data.SupervisorName);
+                })
+                .error(function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                });
+        }
+
+    }
+    function commentChanged() {
+        var prodLineId = $("#ProductionLineId").val();
+        var shiftId = $("#ShiftId").val();
+        var workOrderId = $("#WorkOrderId").val();
+        var prodDate = $("#ProductionDate").val();
+        var commentText = $("#ShiftComments").val();
+
+
+
+        var data = {
+            productionLineId: prodLineId,
+            shiftId: shiftId,
+            workOrderId: workOrderId,
+            productionDate: prodDate,
+            comment: commentText
+        }
+        var options = {
+            url: '/ProductionEntry/SaveProdComment',
+            type: 'post',
+            data: data
+        }
+        $.ajax(options)
+            .success(function (data, textStatus, jqXHR) {
+                $("#ShiftComments").val(data.Comment);
+            })
+            .error(function (jqXHR, textStatus, errorThrown) {
+                displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+            });
+    }
+
+    function refreshProductionEntryData() {
+        refreshProductionEntryTabs();
+        refreshComment();
+        refreshProductionMetrics();
+    }
+    function refreshProductionEntryTabs() {
+        if (typeof(refreshTabs) == typeof(Function)) {
+            refreshTabs();
+        }
+    }
+    function refreshComment() {
+        var prodLineId = $("#ProductionLineId").val();
+        var shiftId = $("#ShiftId").val();
+        var workOrderId = $("#WorkOrderId").val();
+        var prodDate = $("#ProductionDate").val();
+
+
+        var data = {
+            productionLineId: prodLineId,
+            shiftId: shiftId,
+            workOrderId: workOrderId,
+            productionDate: prodDate
+        }
+        var options = {
+            url: '/ProductionEntry/FetchProductionComment',
+            type: 'get',
+            data: data
+        }
+
+        $.ajax(options)
+            .success(function (data, textStatus, jqXHR) {
+                $("#ShiftComments").val(data.Comment);
+            })
+            .error(function (jqXHR, textStatus, errorThrown) {
+                displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+            });
+    }
+    function refreshProductionMetrics() {
+        var prodLineId = $("#ProductionLineId").val();
+        var shiftId = $("#ShiftId").val();
+        var workOrderId = $("#WorkOrderId").val();
+        var prodDate = $("#ProductionDate").val();
+
+
+        if (prodLineId > 0 && shiftId > 0 && workOrderId > 0 && prodDate != undefined && prodDate != "") {
+            var data = {
+                productionLineId: prodLineId,
+                shiftId: shiftId,
+                workOrderId: workOrderId,
+                productionDate: prodDate
+            }
+            var options = {
+                url: '/ProductionEntry/FetchProductionMetrics',
+                type: 'get',
+                data: data
+            }
+
+            $.ajax(options)
+                .success(function (data, textStatus, jqXHR) {
+                    $("#WorkOrderCompletion").text(data.CompletionPercentage + "%");
+                    $("#ScrapWeight").text(data.ScrapWeight + " " + data.ScrapWeightUoM);
+                    $("#ScrapRate").text(data.ScrapPercentage + "%");
+                })
+                .error(function (jqXHR, textStatus, errorThrown) {
+                    $("#WorkOrderCompletion").text("");
+                    $("#ScrapWeight").text("");
+                    $("#ScrapRate").text("");
+
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: Unable to calculate Metrics' + ' Status: ' + jqXHR.status);
+                });
+        }
+    }
+
+    function refreshSupervisorOnShift()
+    {
+        var prodLineId = $("#ProductionLineId").val();
+        var shiftId = $("#ShiftId").val();
+        var prodDate = $("#ProductionDate").val();
+
+        if (prodLineId > 0 && shiftId > 0 && prodDate != undefined && prodDate != "") {
+            var data = {
+                productionLineId: prodLineId,
+                shiftId: shiftId,
+                productionDate: prodDate
+            }
+            var options = {
+                url: '/ProductionEntry/FetchSupervisorOnShift',
+                type: 'get',
+                data: data
+            }
+
+            $.ajax(options)
+                .success(function (data, textStatus, jqXHR) {
+                    $("#SupervisorName").combobox('setValue', data.SupervisorName);
+                })
+                .error(function (jqXHR, textStatus, errorThrown) {
+                    $("#SupervisorName").combobox('clear');
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: Unable to refresh supervisor' + ' Status: ' + jqXHR.status);
+                });
+        }
+
+    }
+        </script>
+

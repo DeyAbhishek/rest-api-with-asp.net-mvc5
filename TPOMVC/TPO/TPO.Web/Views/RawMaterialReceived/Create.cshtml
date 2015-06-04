@@ -1,0 +1,107 @@
+﻿@model TPO.Web.Models.RawMaterialReceived
+@{
+    ViewBag.Title = "Create Raw Material Receipt";
+}
+@using (Html.BeginForm("create", "RawMaterialReceived", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="UrlReferrer" value="@Model.UrlReferrer" />
+            <hr />
+            @Html.ValidationSummary(true)
+            <h2>Create Raw Material Receipt</h2><br />
+            @Html.HiddenFor(m => m.PlantId, new { @Value = ViewBag.PlantId })
+            @Html.LabelFor(m => m.RawMaterialId, new { @class = "col-md-4 control-label" })
+            <input name="@Html.NameFor(model => model.Id)" id="rawMaterialSelection" class="easyui-combogrid" style="width:250px" data-options="
+                panelWidth: 500,
+                idField: 'Id',
+                textField: 'Code',
+                value: '@Model.Id',
+                url: '/RawMaterial/GetAllRawMaterialResult',
+                method: 'get',
+                columns: [[
+                {field:'Code',title:'Raw Material',width:60},
+                {field:'Description',title:'Description',width:100}
+                ]],
+                fitColumns: true
+                ">
+            <br /><br />
+            @Html.LabelFor(m => m.DateEntered, new { @class = "col-md-4 control-label" })
+            @*@Html.TextBoxFor(m => m.DateEntered, "{0:MM/dd/yyyy}", new { @class = "form-control" })*@
+            <input class="easyui-datebox" value="@Model.DateEntered" name="date" name="dateentered">
+            @Html.ValidationMessageFor(m => m.DateEntered)<br />
+            <br />
+            @Html.LabelFor(m => m.EnteredBy, new { @class = "col-md-4 control-label" })
+            @Html.TextBoxFor(m => m.EnteredBy, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.EnteredBy)
+            <br />
+            @Html.LabelFor(m => m.LotNumber, new { @class = "col-md-4 control-label" })
+            @Html.TextBoxFor(m => m.LotNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.LotNumber)
+            <br />
+            @Html.LabelFor(m => m.QuantityShipped, new { @class = "col-md-4 control-label" })
+            @Html.TextBoxFor(m => m.QuantityShipped, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.QuantityShipped)
+            <br />
+            @Html.LabelFor(m => m.QuantityReceived, new { @class = "col-md-4 control-label" })
+            @Html.TextBoxFor(m => m.QuantityReceived, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.QuantityReceived)
+            <br />
+            @Html.LabelFor(m => m.QuantityNotReceived, new { @class = "col-md-4 control-label" })
+            @Html.TextBoxFor(m => m.QuantityNotReceived, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.QuantityNotReceived)
+            <br />
+            @Html.LabelFor(m => m.UoMCode, new { @class = "col-md-4 control-label" })
+            <input id="measureSelection" class="easyui-combogrid" style="width:250px" data-options="
+                panelWidth: 200,
+                idField: 'ID',
+                textField: 'Code',
+                url: '/IMProduct/GetAllWeightUomResult',
+                method: 'get',
+                columns: [[
+                {field:'Code',title:'Code',width:60},
+                {field:'Description',title:'Description',width:100}
+                ]],
+                fitColumns: true
+                ">
+            <br /><br />
+            @Html.LabelFor(m => m.ReceivedSizeLimitId, new { @class = "col-md-4 control-label" })
+            <input id="containerSelection" class="easyui-combogrid" style="width:250px" data-options="
+                panelWidth: 400,
+                idField: 'ID',
+                textField: 'Code',
+                url: '/RawMaterialReceivedSizeLimit/GetAllReceiptContainerResult',
+                method: 'get',
+                columns: [[
+                {field:'Code',title:'Container',width:150},
+                {field:'LowLimit',title:'Low Limit',width:100},
+                {field:'HighLimit',title:'High Limit',width:100}
+                ]],
+                fitColumns: true
+                ">
+            <br /><br />
+            @Html.LabelFor(m => m.CoA, new { @class = "col-md-4 control-label" })
+            @Html.TextBoxFor(m => m.CoA, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CoA)
+            <br /><br />
+            <div class="col-md-12">
+                @*<input type="submit" value="Save" name="Action" class="btn btn-default" />
+                <input type="submit" value="Cancel" name="Action" class="btn btn-default cancel" formnovalidate="formnovalidate" />*@
+                <button class="btn btn-default btn-shadow"
+                        onclick="$(this).parents('form:first').submit(); return false;">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                </button>
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Index", "RawMaterialReceived")';return false;">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

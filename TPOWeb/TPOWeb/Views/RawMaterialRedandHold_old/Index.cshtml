@@ -1,0 +1,95 @@
+﻿@model IEnumerable<TPO.DL.Models.RawMaterialQC>
+
+@{
+    ViewBag.Title = "RawMaterialQC";
+}
+
+<h3>RawMaterialQC</h3>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RawMaterialID)
+        </th>
+
+        <th>
+          
+            @Html.DisplayNameFor(model => model.Plant.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RawMaterialLotID)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.VisualInspection)
+        </th>
+     
+        <th>
+            @Html.DisplayNameFor(model => model.BoxCarTested)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </th>
+       
+     
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td style="background-color:yellow" align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.RawMaterialID)
+
+            <p></p> @Html.ActionLink("[Red Form]", "RedFormEdit", new { id = item.ID })
+                   @Html.ActionLink("[Hold Form]", "HoldFormEdit", new { id = item.ID })
+        </td>
+
+
+        <td style="background-color:lightgrey" align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.Plant.Code)
+        </td>
+
+        <td align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.RawMaterialLotID)
+        </td>
+
+
+        <td align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.User.Username)
+        </td>
+
+        <td align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.VisualInspection)
+        </td>
+        
+       
+        <td align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.BoxCarTested)
+        </td>
+        <td align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+        <td align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.DateEntered)
+        </td>      
+       
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID })|           
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

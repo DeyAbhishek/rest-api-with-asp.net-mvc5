@@ -1,0 +1,166 @@
+﻿@model IEnumerable<TPO.Model.Scrim.ScrimRollModel>
+@{ViewBag.Title = "Roll Receipt Details";}
+
+<h3>Roll Receipt Details</h3>
+
+@using (Html.BeginForm("Details", "ScrimRoll", FormMethod.Post, new { id = "TheForm" }))
+{
+    @Html.DisplayNameFor(model => model.ScrimRollTypeID)
+    <input id="scrimRollSelection" class="easyui-combogrid" style="width:250px" data-options="
+        panelWidth: 500,
+        idField: 'ID',
+        textField: 'Code',
+        url: '/ScrimRoll/GetScrimRollResult',
+        method: 'get',
+        columns: [[
+            {field:'Code',title:'Code',width:60},
+            {field:'Description',title:'Description',width:100}
+        ]],
+        onSelect: scrimRollSelected,
+        fitColumns: true
+     ">
+    @*<button class="btn btn-success btn-shadow leftMar20px"
+            onclick="window.location.href = '@Url.Action("Create", "ScrimRoll")';return false;">
+        <span class="glyphicon glyphicon-plus"></span>&nbsp;Create New
+    </button>*@
+}
+<br />
+
+@if (Model.Any())
+{
+    <table id="dg" class="easyui-datagrid" title="Scrim Rolls" style="height: 250px;"
+           data-options="iconCls: 'icon-edit',
+                                    singleSelect: true,
+                                    toolbar: '#tb',
+                                    url: '/ScrimRoll/ScrimRollGridByType',
+                                    method: 'get',
+                                    onClickRow: onClickRow,
+                                    pagination: true,
+                                    fitColumns: true,
+                                    rownumbers: true,
+                                    queryParams: {typeID: '@Model.FirstOrDefault().ScrimRollTypeID'}">
+        <thead>
+            <tr>
+                <th data-options="field:'ID'">ID</th>
+                <th data-options="field:'ScrimRollCode',editor:'text'">ScrimRollCode</th>
+                <th data-options="field:'ScrimRollTypeID',editor:'text'">ScrimRollTypeID</th>
+                <th data-options="field:'DateReceived',formatter:formatDate,editor:'datebox'">DateReceived</th>
+                <th data-options="field:'Length',editor:'text'">Length</th>
+                <th data-options="field:'Weight',editor:'text'">Weight</th>
+                <th data-options="field:'TareWeight',editor:'text'">TareWeight</th>
+                <th data-options="field:'ReceivedWeight',editor:'text'">NetWeight</th>
+              
+            </tr>
+        </thead>
+
+    </table>
+
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" append() ">Create New</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" accept() ">Save Changes</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Cancel</a>
+    </div>
+}
+else
+{
+    <h1>No Records Present.</h1>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+
+    var editIndex = undefined;
+    function endEditing(){
+        if (editIndex == undefined){return true}
+        if ($('#dg').datagrid('validateRow', editIndex)){
+            var ed = $('#dg').datagrid('getEditor', {index:editIndex,field:'ID'});
+            //var productname = $(ed.target).combobox('getText');
+            //$('#dg').datagrid('getRows')[editIndex]['productname'] = productname;
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRow(index){
+        if (editIndex != index){
+            if (endEditing()){
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+    function append(){
+        if (endEditing()){
+            $('#dg').datagrid('appendRow',{status:'P'});
+            editIndex = $('#dg').datagrid('getRows').length-1;
+            $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+        }
+    }
+    function accept(){
+        if (endEditing()){
+            $('#dg').datagrid('acceptChanges');
+
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+
+                var myJSONObject = {
+                    "ID": row.ID,
+                    "ScrimRollCode": row.ScrimRollCode,
+                    "ScrimRollTypeID": row.ScrimRollTypeID,
+                    "DateReceived": row.DateReceived,
+                    "Length": row.Length,
+                    "ReceivedLength": row.ReceivedLength
+                };
+
+                $.ajax({
+                    url: '/ScrimRoll/ScrimRollAjaxCreate',
+                    type: 'POST',
+                    data: { id: JSON.stringify(myJSONObject) },
+                    success: function (data, textStatus, jqXHR) {
+                        $("#alertDIV").css("display","block").addClass('alert-success');
+                        $("#alertP").css("display","block").text("The item was saved.");
+                        $('#dg').datagrid('reload');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#alertDIV").css("display", "block").addClass('alert-danger');
+                        $("#alertP").css("display", "block").text("The item could not be saved.");
+                        $('#dg').datagrid('reload');
+                    }
+                });
+
+            }
+        }
+    }
+    function reject(){
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+    function formatDate(val, row) {
+        if (val != undefined) {
+            var date = new Date(parseInt(val.substr(6)));
+            var day = date.getDate();
+            var month = date.getMonth();
+            var year = date.getFullYear();
+            var finalDate = day + '/' + month + '/' + year;
+            return finalDate;
+        } else {
+            return new Date();
+        }
+    }
+
+    function scrimRollSelected(record) {
+        //record is the row position that is returned as well if needed
+        var val = $("#scrimRollSelection").combogrid('getValue');
+        var url = "/ScrimRoll/Details/" + val;
+        window.location = url;
+    }
+
+</script>

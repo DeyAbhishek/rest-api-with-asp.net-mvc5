@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - TPO.Web</title>
+    
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/easyuijs")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/sidr")
+    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/scripts/jquery-easyui-1.3.6/jquery.easyui.min.js")
+    @Scripts.Render("~/bundles/editors")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Scripts/jquery-easyui-1.3.6/themes/default/easyui.css",
+                      "~/Scripts/jquery-easyui-1.3.6/themes/icon.css")
+    
+    <script type="text/javascript">
+        var ignoreClick = false;
+        $(document).ready(function () {
+            $('.btn-navbar').sidr({
+                name: 'tpoNav',
+                source: '.nav-collapse',
+                renaming: false
+            });
+            
+            $('.TPOsubmenu').click(function (e) {
+                if ($(this).children().next().is(":visible")) {
+                    $(this).children().next().slideToggle();
+                    
+                }
+                else {
+                    hideOtherMenus(".submenu");
+                    $("#tpoNav").width(260);
+                    $(this).children().next().slideToggle();
+                }
+                
+            });
+
+
+            $('.TPOsubmenuWide').click(function (e) {
+                if (ignoreClick) {ignoreClick=false; return;}
+                if ($(this).children().next().is(":visible")) {
+                    $(this).children().next().slideToggle();
+                    $("#tpoNav").width(260);
+                }
+                else {
+                    hideOtherMenus(".submenu");
+                    $("#tpoNav").width(350);
+                    $(this).children().next().slideToggle();
+                }
+        });
+
+
+            $('.TPOsubmenu2').click(function (e) {
+                ignoreClick = true;
+                if ($(this).children().next().is(":visible")) {
+                    $(this).children().next().slideToggle();
+                }
+                else {
+                    $(this).children().next().slideToggle();
+                }
+
+            });
+        });
+
+        function hideOtherMenus(classToHide)
+        {
+            $(classToHide).hide();
+
+        }
+
+        function displayToggle(childElement, action)
+        {
+            if (childElement.children().next().is(":visible") == true & action == 'close')
+            {
+                childElement.children().next().slideToggle();
+            }
+            else if (childElement.children().next().is(":visible") == false & action == 'open') {
+                childElement.children().next().slideToggle();
+            }
+        }
+
+    </script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    
+    <style>
+        .ui-listview .ui-btn {
+            font-size: .7em;
+        }
+        .TPOsubmenu {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    @RenderSection("UnlockDialogReference", false)
+    
+    <div data-role="page" data-theme="a">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div style="text-align: center; vertical-align: top; height:50px;">
+                @*<h2 class="brand" style="text-align:center;">@Html.ActionLink("TPO Web", "../")</h2>*@
+                <button type="button" id="btnRespNav" class="btn btn-navbar" style="float: left; background-color: #040404; color:white; position:absolute; left:10px;top:10px; border-color:white;">
+                    <img src="~/Content/images/home-white.png" />
+                </button>
+                @Html.Partial("_LoginPartial")
+            </div>
+                <div class="nav-collapse collapse">
+                    <ul>
+                        <li><a href="#" id="closeTPOMenu" name="closeTPOMenu" onclick="$.sidr('close', 'tpoNav');">Close Menu</a></li>
+                        <li class="TPOsubmenu">
+                            <a href="#" class="submenu-button">Raw Material and Scrim</a>
+                            <ul class="submenu" style="display:none;">
+                                <li><b><u><a href="#">Raw Materials</a></u></b> </li>
+                                <li><a href="~/RawMaterialReceived/Index"><span style="padding-left:5px">Raw Material Receipts</span></a></li>
+                                <li><a href="~/RawMaterialQC/Index"><span style="padding-left:5px">Raw Material QC Testing</span></a></li>
+
+                                <li><b><u><a href="#">Scrim \ Release Liner</a></u></b> </li>
+                                <li><span style="padding-left:5px">@Html.ActionLink(@"Roll Receipts", "Edit", "ScrimRoll")</span></li>
+                                
+                                <li><b><u><a href="#">Set Current Line Materials</a></u></b> </li>
+                                @*<li><span style="padding-left:5px">@Html.ActionLink("Set Raw Material Lots", "Index", "RawMaterialCurrent")</span></li>*@
+                                <li><span style="padding-left:5px">@Html.ActionLink(@"Set Scrim \ Release Liner Rolls", "Edit", "CurrentScrim")</span></li>
+                            </ul>
+                        </li>
+
+                        <li class="TPOsubmenu">
+                            <a href="#">Production Scheduling</a>
+                            <ul class="submenu" style="display:none;">
+                                <li><span style="padding-left:5px">@Html.ActionLink("Equipment Run Time", "Index", "EquipmentRunTime")</span></li>
+                                <li><span style="padding-left:5px">@Html.ActionLink("Work Orders", "Index", "WorkOrder")</span></li>
+                                <li><span style="padding-left:5px">@Html.ActionLink("TPO Monthly Production Budget", "Index", "TPOMonthlyProductionBudget")</span></li>
+                                 </ul>
+                        </li>
+                        <li class="TPOsubmenu">
+                            <a href="#">Operations</a>
+                            <ul class="submenu" style="display:none;">
+                                <li><span style="padding-left:5px">@Html.ActionLink("Production Entry", "Index", "ProductionEntry")</span></li>
+                            </ul>
+                        </li>
+                        <li class="TPOsubmenu">
+                            <a href="#">Quality Control</a>
+                            <ul class="submenu" style="display:none;">
+                                <li><b><u><a href="#">Future Sprints</a></u></b> </li>
+                            </ul>
+                        </li>
+                        <li class="TPOsubmenu">
+                            <a href="#">Accounting</a>
+                            <ul class="submenu" style="display:none;">
+                                <li><span style="padding-left:5px">@Html.ActionLink("Product Standard Cost", "Index", "TPOProductStandardCost")</span></li>
+                            </ul>
+                        </li>
+                        <li class="TPOsubmenu">
+                            <a href="#">Reporting</a>
+                            <ul class="submenu" style="display:none;">
+                                <li><b><u><a href="#">Future Sprints</a></u></b> </li>
+                            </ul>
+                        </li>
+                        <li class="TPOsubmenuWide">
+                            <a href="#">Administration</a>
+                            <ul class="submenu" style="display:none;">
+                                <li class="TPOsubmenu2">
+                                    <a href="#" class="submenuHeader">Raw Material and Rolls</a>
+                                    <ul class="submenu2" style="display:none;">
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Edit Raw Materials", "Index", "RawMaterial")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Raw Material Stock Adjustment", "Index", "RawMaterialStockAdjustment")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Scrim Stock Adjustment", "Index", "ScrimStockAdjustment")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Raw Material Vendor List", "Index", "RawMaterialVendor")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Reclaim WIP Adjustment", "Index", "WipAdjustment")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Edit Scrim Types", "Index", "ScrimType")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Edit Release Liner Types", "Index", "ReleaseLinerType")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Downtime Codes Setup", "Index", "DownTimeCode")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Scrap Codes Setup", "Index", "TPOLineScrapCodeGroup")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Size / Limit Setup", "Index", "RawMaterialReceivedSizeLimit")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Raw Material QC Tests", "Index", "RawMaterialQCTests")</span></li>
+                                    </ul>
+                                </li>
+                                <li class="TPOsubmenu2">
+                                    <a href="#" class="submenuHeader">Products, Formulations and QC Limits</a>
+                                    <ul class="submenu2" style="display:none;">
+                                <li><span style="padding-left:5px">@Html.ActionLink("TPO Products", "Edit", "TPOProduct")</span></li>
+                                <li><span style="padding-left:5px">@Html.ActionLink("TPO Formulations", "Index", "TPOFormulation")</span></li>
+                                <li><span style="padding-left:5px">@Html.ActionLink("TPO QC Limits", "Edit", "TPOQCLimit")</span></li>
+                                <li><span style="padding-left:5px">@Html.ActionLink("Injection Molding Products", "Edit", "IMProduct")</span></li>
+                                    </ul>
+                                </li>
+                                <li class="TPOsubmenu2">
+                                    <a href="#" class="submenuHeader">Production Lines</a>
+                                    <ul class="submenu2" style="display:none;">
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Production Line Management", "Index", "ProdLineManagement")</span></li>
+                                <li><span style="padding-left:5px">@Html.ActionLink("Production Lines Performance Targets", "Index", "ProdLinePerformanceTarget")</span></li>
+                                        <li><span style="padding-left:5px">@Html.ActionLink("Production Line Report Ordering", "Index", "ProductionLineReportOrder")</span></li>
+                                    </ul>
+                                </li>
+                                <li class="TPOsubmenu2">
+                                     <a href="#" class="submenuHeader">System Setup</a>
+                                     <ul class="submenu2" style="display:none;">
+                                         <li><span style="padding-left:5px">@Html.ActionLink("Set Default UoM", "EditDefault", "UnitOfMeasure")</span></li>
+                                             <li class="TPOsubmenu2">
+                                                 <a href="#" class="submenuHeader">Set Production Shifts</a>
+                                                 <ul class="submenu2">
+                                                     <li><span style="padding-left:5px">@Html.ActionLink("Production Shifts", "Index", "ProductionShift")</span></li>
+                                                     <li><span style="padding-left:5px">@Html.ActionLink("Production Shift Types", "Edit", "ProductionShiftType")</span></li>
+                                                     <li><span style="padding-left:5px">@Html.ActionLink("Production Shift Defaults", "Index", "ProductionShiftDefault")</span></li>
+                                                 </ul>
+                                              </li>
+                                     </ul>
+                                </li>
+
+                                @if (Roles.IsUserInRole(WebSecurity.CurrentUserName, "System Administrator"))
+                                { 
+                                    <li><b><u><a href="#">Users and Roles</a></u></b></li>
+                                    <li><a href="~/Security/Index"><span style="padding-left:5px">Users</span></a></li>
+                                }
+                            </ul>
+
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            <div style="vertical-align:top"></div>
+
+        </div>
+        <div id="mainpanel" data-role="panel" style="display:none;" >
+            @*<h2>@Html.ActionLink("TPO Web", "../")</h2>*@
+            <div data-role="collapsible-set" data-mini="true">
+                @*Raw Materials and Scrim*@
+                <div data-role="collapsible">
+                    <h2>Raw Material and Scrim</h2>
+                    <ul data-role="listview" data-mini="true">
+                        <li data-role="list-divider">Raw Materials</li>
+                        <li><a href="~/RawMaterial/Index">Raw Material Receipts</a></li>
+                        <li><a href="~/RawMaterialQC/Index">Raw Material QC Testing</a></li>
+
+                        <li data-role="list-divider">Scrim \ Release Liner</li>
+                        @*<li>@Html.ActionLink("New Receipt", "Create", "ScrimRoll")</li>
+                        <li>@Html.ActionLink("View \\ Edit Receipts", "Edit", "ScrimRoll")</li>*@
+                        @*</ul>
+                            <ul data-role="listview" data-mini="true">*@
+                        <li data-role="list-divider">Set Line Materials</li>
+                        <li><a href="~/RawMaterialCurrent/index">Set Current Raw Material Lots</a></li>
+                        <li><a href="~/CurrentScrim/Edit">Set Current Scrim \<br/>Release Liner Rolls</a></li>
+                    </ul>
+                </div>
+                <div data-role="collapsible">
+                    @*Production Scheduling*@
+                    <h2>Production Scheduling</h2>
+                </div>
+                <div data-role="collapsible">
+                    <h2>Operations</h2>
+                    @*Operations*@
+                </div>
+                <div data-role="collapsible">
+                    <h2>Quality Control</h2>
+                    @*Quality Control*@
+                </div>
+                <div data-role="collapsible">
+                    <h2>Accounting</h2>
+                    @*Accounting*@
+                </div>
+                <div data-role="collapsible">
+                    <h2>Reporting</h2>
+                    @*Reporting*@
+                </div>
+            </div>
+        </div>
+        <div data-role="header" data-theme="a">
+            <a href="#mainpanel" data-role="button" data-iconpos="notext" data-icon="bars"></a>
+            <div style="font-size:1em;">
+                <h3>&nbsp;</h3>
+            </div>
+        </div>
+        <div data-role="content" data-enhance="false">
+            @if (TempData["ActionMessage"] != null && TempData["ActionMessage"].ToString() != "")
+            {
+                <div class="alert @TempData["ActionMessageType"]">
+                    <p> @TempData["ActionMessage"] </p>
+                </div>
+            }
+            
+            <div id="alertDIV" class="alert" style="display: none;">
+                <p id="alertP" style="display: none;"></p>
+            </div>
+
+            <div data-enhance="false" style="text-shadow: none !important;">
+                @RenderBody()
+            </div>
+        </div>
+        <div data-role="footer">
+            <footer>
+                <p>&copy; @DateTime.Now.Year - TPO Web</p>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

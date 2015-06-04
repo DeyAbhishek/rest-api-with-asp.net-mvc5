@@ -1,0 +1,77 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+
+<div id="divTabs" class="easyui-tabs" style="margin-bottom: 30px;" data-options="
+     onSelect: tabSelected
+     ">
+    <div title="Enter Production" id="tab-enter-production" style="padding:20px;">
+        @Html.Partial("/Views/ReworkProduction/_EnterProduction.cshtml", Model)
+    </div>
+    <div title="Previous Entries" id="tab-previous-entries" style="padding:20px;">
+        @Html.Partial("/Views/ReworkProduction/_PrevEntries.cshtml", Model)
+    </div>
+    <div title="Enter Downtime" id="tab-enter-downtime" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EnterDowntime.cshtml", Model)
+    </div>
+    <div title="End Of Shift Data" id="tab-end-of" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EndOf.cshtml", Model)
+    </div>
+</div>
+
+<script type="text/javascript">
+    function tabSelected(title, index) {
+        switch (title) {
+            case "Enter Production":
+                {
+                    refreshEnterProduction();
+                } break;
+            case "Previous Entries":
+                {
+                    refreshPreviousEntries();
+                } break;
+            case "Enter Downtime":
+                {
+                    refreshEnterDowntime();
+                } break;
+            case "End Of Shift Data":
+                {
+                    refreshEndOfShift();
+                } break;
+        }
+    }
+
+    function refreshTabs() {
+        var tabPanel = $('#divTabs').tabs('getSelected');
+        var tabOptions = tabPanel.panel('options');
+        var title = tabOptions.title;
+        switch (title) {
+            case "Enter Production":
+                {
+                    refreshEnterProduction();
+                } break;
+            case "Enter Downtime":
+                {
+                    refreshEnterDowntime();
+                } break;
+            case "End Of Shift Data / End Of Work Order":
+                {
+                    refreshEndOfShift();
+                } break;
+        }
+    }
+
+    function refreshEnterProduction() {
+        loadEnterProduction();
+    }
+    function refreshPreviousEntries()
+    {
+        refreshRwPrevEntriesTabs();
+    }
+    function refreshEnterDowntime() {
+        loadDownTimeDataGrid();
+    }
+    function refreshEndOfShift() {
+        CheckForValues();
+    }
+</script>
+
+

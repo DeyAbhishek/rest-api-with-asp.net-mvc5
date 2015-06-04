@@ -1,0 +1,14 @@
+﻿@model TPO.Model.Security.FormUnlockModel
+
+<div id="frmUnlock">
+    <div>
+        @Html.LabelFor(model => model.Password)
+        @Html.EditorFor(m => m.Password, new { @id = "inPassword" })
+    </div>
+
+    
+</div>
+
+<p id="frmUnlockWarning">
+
+</p>

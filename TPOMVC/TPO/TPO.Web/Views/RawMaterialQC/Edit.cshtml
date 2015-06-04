@@ -1,0 +1,181 @@
+﻿@model TPO.Web.Models.RawMaterialQc
+@using TPO.Web.Helpers
+
+@{
+    string[] userRoles = Roles.GetRolesForUser();
+    bool unlocked = userRoles.Contains(TPO.Common.Constants.Roles.SystemAdministrator)
+                    || userRoles.Contains(TPO.Common.Constants.Roles.QcLabTechnician);
+}
+
+@{
+    ViewBag.Title = "Raw Material QC Testing";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Cancel").click(function () {
+            var url = "/RawMaterialQC/Index";
+            window.location.href = url;
+        });
+    });
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.PlantId);
+    @Html.HiddenFor(model => model.RawMaterialReceivedID)
+    @Html.HiddenFor(model => model.EnteredBy)
+    @Html.HiddenFor(model => model.DateEntered)
+
+    <div class="form-horizontal">
+        <h2>Raw Material QC Testing</h2><br />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RawMaterialCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.RawMaterialCode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LotID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.LotID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.DateEntered, new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2" for="DateEntered">Test Date and Time:</label>
+            <div class="col-md-10">
+                @if (unlocked)
+                {
+                    <input id="dt" class="easyui-datetimebox" data-options="required:true,showSeconds:false" value="@Model.DateEntered" name="lastmodified">
+                    @Html.ValidationMessageFor(model => model.DateEntered)
+                }
+                else
+                {
+                    @Html.Display(string.Format("{0} {1}", Model.DateEntered.ToShortDateString(), Model.DateEntered.ToShortTimeString()))
+                }
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BoxCarTested, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.TextBoxFor(model => model.BoxCarTested, new { @class = "form-control" })*@
+                @Html.ConditionallyEnabledTextBoxFor(m => m.BoxCarTested, unlocked, "", "form-control")
+                @Html.ValidationMessageFor(model => model.BoxCarTested)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QCTechUserID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownListFor(model => model.QCTechUserID, (SelectList)ViewBag.QCTech, "--Select Tech--", new { @class = "form-control" })*@
+                @Html.ConditionallyEnabledDropDownListFor(m => m.QCTechUserID, (SelectList)ViewBag.QCTech, unlocked, "--Select Tech--", "form-control")
+                @Html.ValidationMessageFor(model => model.QCTechUserID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comments, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.TextAreaFor(model => model.Comments, new { @class = "form-control" })*@
+                @Html.ConditionallyEnabledTextAreaFor(m => m.Comments, unlocked, "form-control")
+                @Html.ValidationMessageFor(model => model.Comments)
+            </div>
+        </div>
+        <div id="QCForm">
+            @Html.Partial("/Views/RawMaterialQC/_QCDetail.cshtml", Model)
+            <script type="text/javascript">
+                if ($.validator != null) {
+                    $.validator.unobtrusive.parse('form');
+                }
+            </script>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <!--TODO:
+                        check to see if red\hold exists
+                        if TRUE
+                            swap link to /Edit/RedHoldID
+                        ELSE
+                            use /Create/QCID for reference
+                -->
+                @*@Html.ActionLink("Red \\ Hold Form", "Create","RawMaterialQCRedHold", new { ID = Model.ID }, new { @class = "btn btn-default" })
+                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="button" value="Return" id="Cancel" class="btn btn-default" />*@
+                @if (unlocked)
+                {
+                    <button class="btn btn-default btn-shadow btn-redhold"
+                            onclick="window.location.href = '@Url.Action("Create", "RawMaterialQCRedHold", new { qcID = Model.Id })';return false;">
+                        <span class="glyphicon glyphicon-eye-open"></span>&nbsp;Red &amp; Hold Form
+                    </button>
+                    <button id="saveButton" class="btn btn-success btn-shadow"
+                            onclick="$(this).parents('form:first').submit(); return false;">
+                        <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                    </button>
+                }
+
+
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Index", "RawMaterialQC")';return false;">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(function () {
+        var dt = new Date(new Date().toString());
+    })
+    $('#dt').datetimebox({
+        formatter: function (date) {
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            if (month < 10)
+                month = "0" + month;
+            if (day < 10)
+                day = "0" + day;
+            var s1 = [month, day, date.getFullYear()].join('/');
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+            var amPm = 'AM';
+            if (hour > 12) {
+                amPm = 'PM';
+                hour = hour - 12;
+            }
+            if (hour < 10)
+                hour = "0" + hour;
+            if (minute < 10)
+                minute = "0" + minute;
+            var s2 = [hour, minute].join(':');
+            return s1 + ' ' + s2 + ' ' + amPm;
+        },
+        parser: function (s) {
+            if (!s) { return new Date(); }
+            var dt = s.split(' ');
+            var dateFormat = dt[0].split('/');
+            var timeFormat = dt[1].split(':');
+            var date = new Date(dateFormat[2], dateFormat[0] - 1, dateFormat[1]);
+            if (dt.length > 1) {
+                date.setHours(timeFormat[0]);
+                date.setMinutes(timeFormat[1]);
+            }
+            if (dt.length > 2) {
+                if (dt[2] == 'PM') {
+                    date.setHours(date.getHours() + 12);
+                }
+            }
+            return date;
+        }
+    })
+</script>

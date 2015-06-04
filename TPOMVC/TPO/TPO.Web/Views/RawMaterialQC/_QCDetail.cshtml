@@ -1,0 +1,257 @@
+﻿@model TPO.Web.Models.RawMaterialQc
+@using TPO.Web.Helpers
+
+@{
+    string[] userRoles = Roles.GetRolesForUser();
+    bool unlocked = userRoles.Contains(TPO.Common.Constants.Roles.SystemAdministrator)
+                    || userRoles.Contains(TPO.Common.Constants.Roles.QcLabTechnician);
+}
+
+<script type="text/javascript" src="@Url.Content("/Scripts/qcdetailvalidation.js")"></script>
+
+@if (this.ViewContext.FormContext == null)
+{
+    this.ViewContext.FormContext = new FormContext();
+}
+
+<style type="text/css">
+    #visualTestBlurb {
+        font-weight: normal;
+    }
+</style>
+
+<script type="text/javascript">
+
+    function unlockFields()
+    {
+        var model = @Html.Raw(Json.Encode(Model));
+
+        if (model.DisplayColorTest)
+        {
+            $("#inColorCoA").prop('disabled', false);
+            $("#inColorFS").prop('disabled', false);
+        }
+        if (model.DisplayMeltFlowTest)
+        {
+            $("#inMFCoA").prop('disabled', false);
+            $("#inMFFS").prop('disabled', false);
+        }
+        if (model.DisplayAshContentTest)
+        {
+            $("#inACCoA").prop('disabled', false);
+            $("#inACFS").prop('disabled', false);
+        }
+        if (model.DisplayMoistureTest)
+        {
+            $("#inMoistCoA").prop('disabled', false);
+            $("#inMoistFS").prop('disabled', false);
+        }
+        if (model.DisplayCarbonBlackTest)
+        {
+            $("#inCBCoA").prop('disabled', false);
+            $("#inCBFS").prop('disabled', false);
+        }
+        if (model.DisplayVisualInspectionTest)
+        {
+            $("#inVisual").prop('disabled', false);
+        }
+        highlightAll();
+    }
+</script>
+
+<div>
+    @if (@Model.DisplayColorTest)
+    {
+        <div class="rm-qc-test">
+            <div class="rm-qc-test-header">
+                Color, YI
+            </div>
+            <div class="rm-qc-value">
+                CoA:
+                @Html.ConditionallyEnabledTextBoxFor(m => m.ColorCoA, unlocked, "inColorCoA")
+                <span id="inColorCoA_val" class="qc-validation-error" style="display:none;"></span>
+                @*@Html.ValidationMessageFor(m => m.ColorTestCoA, "*", new { @class = "qc-validation-error" })*@
+            </div>
+            <div class="rm-qc-value">
+                FSBP:
+                @Html.ConditionallyEnabledTextBoxFor(m => m.ColorFS, unlocked, "inColorFS")
+                <span id="inColorFS_val" class="qc-validation-error" style="display:none;"></span>
+                @*@Html.ValidationMessageFor(m => m.ColorTestFS, "*", new { @class = "qc-validation-error" })*@
+            </div>
+            <div class="rm-qc-spec">
+                Color Spec<br />
+                Min: @Html.DisplayTextFor(m => m.ColorTestMinimum)<br />
+                Max: @Html.DisplayTextFor(m => m.ColorTestMaximum)
+                @Html.HiddenFor(m => m.ColorTestMinimum, new { id = "ColorTestMinimum" })
+                @Html.HiddenFor(m => m.ColorTestMaximum, new { id = "ColorTestMaximum" })
+            </div>
+        </div>
+    }
+    @if (@Model.DisplayMeltFlowTest)
+    {
+        <div class="rm-qc-test">
+            <div class="rm-qc-test-header">
+                Melt Flow
+            </div>
+            <div class="rm-qc-value">
+                CoA:
+                @Html.ConditionallyEnabledTextBoxFor(m => m.MFCoA, unlocked, "inMFCoA")
+                <span id="inMFCoA_val" class="qc-validation-error" style="display:none;"></span>
+                @*@Html.ValidationMessageFor(m => m.MeltFlowTestCoA, "*", new { @class = "qc-validation-error" })*@
+            </div>
+            <div class="rm-qc-value">
+                FSBP:
+                @Html.ConditionallyEnabledTextBoxFor(m => m.MFFS, unlocked, "inMFFS")
+                <span id="inMFFS_val" class="qc-validation-error" style="display:none;"></span>
+                @*@Html.ValidationMessageFor(m => m.MeltFlowTestFS, "*", new { @class = "qc-validation-error" })*@
+            </div>
+            <div class="rm-qc-spec">
+                Melt Flow Spec<br />
+                Min: @Model.MeltFlowTestMinimum<br />
+                Max: @Model.MeltFlowTestMaximum
+                @Html.HiddenFor(m => m.MeltFlowTestMinimum, new { id = "MeltFlowTestMinimum" })
+                @Html.HiddenFor(m => m.MeltFlowTestMaximum, new { id = "MeltFlowTestMaximum" })
+            </div>
+        </div>
+    }
+    @if (@Model.DisplayAshContentTest)
+    {
+        <div class="rm-qc-test">
+            <div class="rm-qc-test-header">
+                Ash Content
+            </div>
+            <div class="rm-qc-value">
+                CoA:
+                @Html.ConditionallyEnabledTextBoxFor(m => m.ACCoA, unlocked, "inACCoA")
+                <span id="inACCoA_val" class="qc-validation-error" style="display:none;"></span>
+                @*@Html.ValidationMessageFor(m => m.AshContentTestCoA, "*", new { @class = "qc-validation-error" })*@
+            </div>
+            <div class="rm-qc-value">
+                FSBP:
+                @Html.ConditionallyEnabledTextBoxFor(m => m.ACFS, unlocked, "inACFS")
+                <span id="inACFS_val" class="qc-validation-error" style="display:none;"></span>
+                @*@Html.ValidationMessageFor(m => m.AshContentTestFS, "*", new { @class = "qc-validation-error" })*@
+            </div>
+            <div class="rm-qc-spec">
+                Ash Content Spec<br />
+                Min: @Model.AshContentTestMinimum<br />
+                Max: @Model.AshContentTestMaximum
+                @Html.HiddenFor(m => m.AshContentTestMinimum, new { id = "AshContentTestMinimum" })
+                @Html.HiddenFor(m => m.AshContentTestMaximum, new { id = "AshContentTestMaximum" })
+            </div>
+        </div>
+    }
+    @if (@Model.DisplayMoistureTest)
+    {
+        <div class="rm-qc-test">
+            <div class="rm-qc-test-header">
+                Moisture
+            </div>
+            <div class="rm-qc-value">
+                CoA:
+                @Html.ConditionallyEnabledTextBoxFor(m => m.MoistCoA, unlocked, "inMoistCoA")
+                <span id="inMoistCoA_val" class="qc-validation-error" style="display:none;"></span>
+                @*@Html.ValidationMessageFor(m => m.MoistureTestCoA, "*", new { @class = "qc-validation-error" })*@
+            </div>
+            <div class="rm-qc-value">
+                FSBP:
+                @Html.ConditionallyEnabledTextBoxFor(m => m.MoistFS, unlocked, "inMoistFS")
+                <span id="inMoistFS_val" class="qc-validation-error" style="display:none;"></span>
+                @*@Html.ValidationMessageFor(m => m.MoistureTestFS, "*", new { @class = "qc-validation-error" })*@
+            </div>
+            <div class="rm-qc-spec">
+                Moisture Spec<br />
+                Min: @Model.MoistureTestMinimum<br />
+                Max: @Model.MoistureTestMaximum
+                @Html.HiddenFor(m => m.MoistureTestMinimum, new { id = "MoistureTestMinimum" })
+                @Html.HiddenFor(m => m.MoistureTestMaximum, new { id = "MoistureTestMaximum" })
+            </div>
+        </div>
+    }
+    @if (@Model.DisplayCarbonBlackTest)
+    {
+        <div class="rm-qc-test">
+            <div class="rm-qc-test-header">
+                Carbon Black
+            </div>
+            <div class="rm-qc-value">
+                CoA:
+                @Html.ConditionallyEnabledTextBoxFor(m => m.CBCoA, unlocked, "inCBCoA")
+                <span id="inCBCoA_val" class="qc-validation-error" style="display:none;"></span>
+                @*@Html.ValidationMessageFor(m => m.CarbonBlackTestCoA, "*", new { @class = "qc-validation-error" })*@
+            </div>
+            <div class="rm-qc-value">
+                FSBP:
+                @Html.ConditionallyEnabledTextBoxFor(m => m.CBFS, unlocked, "inCBFS")
+                <span id="inCBFS_val" class="qc-validation-error" style="display:none;"></span>
+                @*@Html.ValidationMessageFor(m => m.CarbonBlackTestFS, "*", new { @class = "qc-validation-error" })*@
+            </div>
+            <div class="rm-qc-spec">
+                Carbon Black Spec<br />
+                Min: @Model.CarbonBlackTestMinimum<br />
+                Max: @Model.CarbonBlackTestMaximum
+                @Html.HiddenFor(m => m.CarbonBlackTestMinimum, new { id = "CarbonBlackTestMinimum" })
+                @Html.HiddenFor(m => m.CarbonBlackTestMaximum, new { id = "CarbonBlackTestMaximum" })
+            </div>
+        </div>
+    }
+    @if (@Model.DisplaySpecificGravityTest)
+    {
+        <div class="rm-qc-test">
+            <div class="rm-qc-test-header">
+                Specific Gravity
+            </div>
+            <div class="rm-qc-value">
+                FSBP:
+                @Html.DisplayTextFor(m => m.SpecGrav)
+            </div>
+            @if (unlocked) 
+            {
+                <div style="text-align:center;padding:5px;">
+                @*@Html.ActionLink("Specific Gravity Form", "GravityDetail", "RawMaterialQCSpecificGravity", new { id = Model.ID }, new { @class = "btn btn-default btn-shadow" })*@
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("SpecificGravityDetail", "RawMaterialQCSpecGrav", new { id = Model.Id })';return false;">
+                    <span class="glyphicon glyphicon-eye-open"></span>&nbsp;Specific Gravity Form
+                </button>
+
+            </div>
+            }
+        </div>
+    }
+    @if (@Model.DisplayVisualInspectionTest)
+    {
+        <div class="rm-qc-test">
+            <div class="rm-qc-test-header">
+                Visual Inspection
+            </div>
+            <div class="rm-qc-value">&nbsp;&nbsp;&nbsp;
+
+                <input name="@Html.NameFor(model => model.QCVisualInspectionID)" id="rawMaterialSelection" class="easyui-combogrid" style="width:150px" data-options="
+                     panelWidth: 150,
+                     loadMsg: 'Loading...',
+                     idField: 'Id',
+                     textField: 'Type',
+                     value: '@Model.QCVisualInspectionID',
+                     url: '/RawMaterialQC/GetAllQCVisualInspectionResult',
+                     method: 'get',
+                     columns: [[
+                     {field:'Type',title:'Type',width:40}
+                     ]],
+                     fitColumns: true,
+                     @if (unlocked)
+                     {
+                         <text>disabled: false</text>
+                     }
+                     else 
+                     {
+                         <text>disabled: true</text>
+                     }
+                     ">
+            <br /><br />
+                 <small style="text-align: center"><span id="visualTestBlurb" style="color: red">
+                    If raw material does not pass visual inspection, note reason why in Comments field.
+                </span></small>
+            </div>
+        </div>
+    }
+</div>

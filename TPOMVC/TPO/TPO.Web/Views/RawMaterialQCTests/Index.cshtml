@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Raw Materials QC Tests";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<script type="text/javascript" src="http://www.jeasyui.com/easyui/datagrid-detailview.js"></script>
+<div style="margin:20px 0;"></div>
+
+<div>
+    <label for="rawMaterialSelect">Raw Material:</label>
+    <input id="rawMaterialSelect" name="rawMaterialSelect" class="easyui-combogrid" data-options=" 
+        panelWidth: 500,
+        loadMsg: 'Loading...',
+        idField: 'Id',
+        textField: 'Code',
+        url: '../RawMaterialQCTests/GetRawMaterialList',
+        method: 'get',
+        columns: [[
+            {field:'Code',title:'Raw Material',width:60},
+            {field:'Description',title:'Description',width:100}
+        ]],
+        onSelect: rawMaterialSelected,
+        fitColumns: true    
+           "/>
+</div>
+<br/>
+<br/>
+<div id="testDetails" hidden="hidden" style="display:block;float:left;clear:both;width:100%;">
+</div>
+
+@section scripts
+{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dgDetail').datagrid({
+            columns: [[
+                { field: 'Id', title: 'Id', hidden: true },
+                { field: 'Code', title: 'Raw Material', width: 120 },
+                { field: 'Description', title: 'Description', width: 160, editor: 'text' }
+            ]]
+        });
+    });
+
+    function rawMaterialSelected(record) {
+        var val = $("#rawMaterialSelect").combogrid('getValue');
+        showTest(val);
+    }
+    function showTest(id)
+    {
+        if (id == undefined) {
+            $("#testDetails").attr("hidden", "hidden");
+        }
+        else {
+            var td = document.getElementById('testDetails');
+            td.style.display = 'block';
+            $.ajax({
+                type: 'GET',
+                url: '../RawMaterialQCTests/RawMaterialTest?rawMaterialId=' + id,
+                success: function (data, status) {
+                    td.innerHTML = data;
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+    }
+
+    function colorTest_OnClick(isChecked) {
+        if (isChecked) {
+            $('.colorTest').attr("readonly", false);
+            $('.colorTest').attr("disabled", false);
+            $('.colorTestDropDown').attr("disabled", false);
+        } else {
+            $('.colorTest').attr("readonly", true);
+            $('.colorTest').attr("disabled", true);
+            $('.colorTestDropDown').attr("disabled", true);
+        }
+    }
+    function meltFlowTest_OnClick(isChecked) {
+        if (isChecked) {
+            $('.meltFlowTest').attr("readonly", false);
+            $('.meltFlowTest').attr("disabled", false);
+            $('.meltFlowTestDropDown').attr("disabled", false);
+        } else {
+            $('.meltFlowTest').attr("readonly", true);
+            $('.meltFlowTest').attr("disabled", true);
+            $('.meltFlowTestDropDown').attr("disabled", true);
+        }
+    }
+    function ashContentTest_OnClick(isChecked) {
+        if (isChecked) {
+            $('.ashContentTest').attr("readonly", false);
+            $('.ashContentTest').attr("disabled", false);
+            $('.ashContentTestDropDown').attr("disabled", false);
+        } else {
+            $('.ashContentTest').attr("readonly", true);
+            $('.ashContentTest').attr("disabled", true);
+            $('.ashContentTestDropDown').attr("disabled", true);
+        }
+    }
+    function moistureTest_OnClick(isChecked) {
+        if (isChecked) {
+            $('.moistureTest').attr("readonly", false);
+            $('.moistureTest').attr("disabled", false);
+            $('.moistureTestDropDown').attr("disabled", false);
+        } else {
+            $('.moistureTest').attr("readonly", true);
+            $('.moistureTest').attr("disabled", true);
+            $('.moistureTestDropDown').attr("disabled", true);
+        }
+    }
+    function carbonBlackTest_OnClick(isChecked) {
+        if (isChecked) {
+            $('.carbonBlackTest').attr("readonly", false);
+            $('.carbonBlackTest').attr("disabled", false);
+            $('.carbonBlackTestDropDown').attr("disabled", false);
+        } else {
+            $('.carbonBlackTest').attr("readonly", true);
+            $('.carbonBlackTest').attr("disabled", true);
+            $('.carbonBlackTestDropDown').attr("disabled", true);
+        }
+    }
+
+</script>
+}            

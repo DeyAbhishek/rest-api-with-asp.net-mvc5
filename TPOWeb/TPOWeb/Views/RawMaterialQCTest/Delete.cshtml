@@ -1,0 +1,200 @@
+﻿@model TPO.DL.Models.RawMaterialQC
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to DELETE this?</h3>
+<div>
+    <h4>RawMaterialQC</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RawMaterialID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RawMaterialID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RawMaterialLotID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RawMaterialLotID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VisualInspection)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VisualInspection)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpecGrav)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpecGrav)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ColorCoA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColorCoA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ColorFS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColorFS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MFCoA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MFCoA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MFFS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MFFS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ACCoA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACCoA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ACFS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACFS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoistCoA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoistCoA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoistFS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoistFS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CBCoA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CBCoA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CBFS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CBFS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BoxCarTested)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoxCarTested)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateEntered)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnteredBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Plant.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plant.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Username)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Cancel", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,76 @@
+﻿@model TPO.Model.RawMaterials.RawMaterialQCModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RawMaterialCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Model.RawMaterialCode
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LotCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Model.LotCode
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BoxCar, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BoxCar)
+                @Html.ValidationMessageFor(model => model.BoxCar)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QCTechID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.QCTechID, (SelectList)ViewBag.QCTech)
+                @Html.ValidationMessageFor(model => model.QCTechID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comments, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Comments)
+                @Html.ValidationMessageFor(model => model.Comments)
+            </div>
+        </div>
+
+        @Html.Partial("/Views/RawMaterialQC/_QCDetail.cshtml", Model)
+        <script type="text/javascript">
+            if ($.validator != null) {
+                $.validator.unobtrusive.parse('form');
+            }
+        </script>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-success btn-shadow"
+                        onclick="$(this).parents('form:first').submit(); return false;">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                </button>
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Index", "RawMaterialQC")';return false;">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("Cancel", "Index")
+</div>*@

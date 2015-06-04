@@ -1,0 +1,440 @@
+﻿@model TPOWeb.Models.ConsolidatedCurrentRawMaterialsAndRollsViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Set Current Raw Material List</h2>
+<h2>Set Scrim \ Release Liner Rolls</h2>
+
+@Html.DisplayNameFor(model => model.CurrentRawMaterial.LineId)
+<span>&nbsp;&nbsp;</span>
+
+<input id="ProductionLine" class="easyui-combogrid" style="width:120px;" data-options="
+   idField: 'Code',
+   textField: 'Code',
+   value: '@Model.LineID',
+   url: '/CurrentScrim/GetProductionLinesResult',
+   method: 'get',
+   columns: [[
+   {field:'Code',title:'Line',width:60}
+   ]],onSelect: productionLine,
+   fitColumns: true
+   ">
+<br />
+<br />
+<hr />
+
+<div id="tabs-container">
+    <ul class="tabs-menu">
+        <li class="current"><a href="#tab-raw-materials">Set Raw Material Lots</a></li>
+        <li class=""><a href="#tab-set-scrim">Set Scrim / Release Liner Rolls</a></li>
+    </ul>
+    <div class="tab">
+        <div id="tab-raw-materials" class="tab-content">
+            @using (@Html.BeginForm("Edit", "CurrentScrim", FormMethod.Post, FormMethod.Post, new { id = "TheForm" }))
+            {
+
+                    if (Model.CurrentRawMaterialList.Any())
+                    {
+                        <table id="dg" class="easyui-datagrid" title="Current Scrim Rolls" style="height: 250px; width: 1200em;"
+                               data-options="iconCls: 'icon-edit', 
+                                    singleSelect: true,
+                                    toolbar: '#tb',
+                                    url: '/CurrentScrim/GridByType',
+                                    method: 'get',
+                                    fitColumns: true,
+                                    pagination: true,
+                                    rownumbers: true,
+                                    onClickRow: onClickRow,
+                                    queryParams: {lineID:'@Model.LineID'}">
+                            <thead>
+                                <tr>
+                                    <th data-options="field:'RawMaterialReceivedCode',editor:'text'">Raw Material ID</th>
+                                    <th data-options="field:'LotId',editor:'text'">Lot No</th>
+                                    <th data-options="field:'DateEntered',formatter:formatDate,editor:'datebox'">Date Received</th>
+                                    <th data-options="field:'QuantityAvailable',editor:'text'">Available Qty</th>
+                                    <th data-options="field:'QuantityReceived',editor:'text'">Receipt Qty</th>
+                                    <th data-options="field:'QuantityUsed',editor:'text'">Used Qty</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+
+                        <div id="tb">
+                            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" append() ">Create New</a>
+                            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeit() ">Delete</a>
+                            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" accept() ">Save Changes</a>
+                            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Cancel</a>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <h1>No Records</h1>
+                    }
+            }
+        </div>
+    </div>
+    <div class="tab">
+        <div id="tab-set-scrim" class="tab-content">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model => model.TPOCurrentScrim.ID)
+                @Html.HiddenFor(model => model.TPOCurrentScrim.LineID)
+
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true)
+
+                    @if (TempData["CurrentScrimSaveMessage"] != null && !string.IsNullOrEmpty(TempData["CurrentScrimSaveMessage"].ToString()))
+                    {
+                        <div style="color:red;font-family:'Courier New';font-size:16px;">
+                            <p>@TempData["CurrentScrimSaveMessage"]</p>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(@Model.LineID))
+                    {
+                        <div class="form-group">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            Scrim 1
+                                        </td>
+                                        <td>
+                                            Scrim 2
+                                        </td>
+                                        <td>
+                                            Fleece
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Current Roll Type:
+                                        </td>
+                                        <td>
+                                            @*@Html.DropDownListFor(model => model.TPOCurrentScrim.Scrim1TypeID, (SelectList)ViewBag.ScrimType, new { @id = "ddlScrim1Type", @style = "font-family: Courier New;" })*@
+                                            <input name="@Html.NameFor(model => model.TPOCurrentScrim.Scrim1TypeID)" id="DDLScrim1Type" class="easyui-combogrid" style="width:250px" data-options="
+                                                panelWidth: 500,
+                                                idField: 'ID',
+                                                textField: 'Code',
+                                                value: '@Model.TPOCurrentScrim.Scrim1TypeID',
+                                                url: '/ScrimRoll/GetScrimRollResult',
+                                                method: 'get',
+                                                columns: [[
+                                                {field:'Code',title:'Scrim Type',width:60},
+                                                {field:'Description',title:'Description',width:100}
+                                                ]],onSelect: ddlScrim1Type,
+                                                fitColumns: true
+                                            ">
+                                        </td>
+                                        <td>
+                                            @*@Html.DropDownListFor(model => model.TPOCurrentScrim.Scrim2TypeID, (SelectList)ViewBag.ScrimType, new { @id = "ddlScrim2Type", @style = "font-family: Courier New;" })*@
+                                            <input name="@Html.NameFor(model => model.TPOCurrentScrim.Scrim2TypeID)" id="DDLScrim2Type" class="easyui-combogrid" style="width:250px" data-options="
+                                                panelWidth: 500,
+                                                idField: 'ID',
+                                                textField: 'Code',
+                                                value: '@Model.TPOCurrentScrim.Scrim2TypeID',
+                                                url: '/ScrimRoll/GetScrimRollResult',
+                                                method: 'get',
+                                                columns: [[
+                                                {field:'Code',title:'Scrim Type',width:60},
+                                                {field:'Description',title:'Description',width:100}
+                                                ]],onSelect: ddlScrim2Type,
+                                                fitColumns: true
+                                            ">
+                                        </td>
+                                        <td>
+                                            @*@Html.DropDownListFor(model => model.TPOCurrentScrim.FleeceTypeID, (SelectList)ViewBag.ScrimType, new { @id = "ddlFleeceType", @style = "font-family: Courier New;" })*@
+                                            <input name="@Html.NameFor(model => model.TPOCurrentScrim.FleeceTypeID)" id="DDLFleeceType" class="easyui-combogrid" style="width:250px" data-options="
+                                                panelWidth: 500,
+                                                idField: 'ID',
+                                                textField: 'Code',
+                                                value: '@Model.TPOCurrentScrim.FleeceTypeID',
+                                                url: '/ScrimRoll/GetScrimRollResult',
+                                                method: 'get',
+                                                columns: [[
+                                                {field:'Code',title:'Scrim Type',width:60},
+                                                {field:'Description',title:'Description',width:100}
+                                                ]],onSelect: ddlFleeceType,
+                                                fitColumns: true
+                                            ">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Current Roll No:
+                                        </td>
+                                        <td>
+                                            @*@Html.DropDownListFor(model => model.TPOCurrentScrim.Scrim1RollID, (SelectList)ViewBag.ScrimRoll, new { @id = "ddlScrim1Roll" })*@
+                                            <input name="@Html.NameFor(model => model.TPOCurrentScrim.Scrim1RollID)" id="DDLScrim1Roll" class="easyui-combogrid" style="width:120px" data-options="
+                                                panelWidth: 250,
+                                                idField: 'ID',
+                                                textField: 'ScrimRollCode',
+                                                value: '@Model.TPOCurrentScrim.Scrim1RollID',
+                                                url: '/ScrimRoll/ListByType',
+                                                method: 'get',
+                                                columns: [[
+                                                {field:'ScrimRollCode',title:'Roll No',width:70},
+                                                {field:'LengthDisplay',title:'Length',width:60},
+                                                {field:'Area',title:'Area',width:60},
+                                                {field:'WeightDisplay',title:'Weight',width:60}
+                                                ]],
+                                                fitColumns: true
+                                            ">
+                                        </td>
+                                        <td>
+                                            @*@Html.DropDownListFor(model => model.TPOCurrentScrim.Scrim2RollID, (SelectList)ViewBag.ScrimRoll, new { @id = "ddlScrim2Roll" })*@
+                                            <input name="@Html.NameFor(model => model.TPOCurrentScrim.Scrim2RollID)" id="DDLScrim2Roll" class="easyui-combogrid" style="width:120px" data-options="
+                                                panelWidth: 250,
+                                                idField: 'ID',
+                                                textField: 'ScrimRollCode',
+                                                value: '@Model.TPOCurrentScrim.Scrim2RollID',
+                                                url: '/ScrimRoll/ListByType',
+                                                method: 'get',
+                                                columns: [[
+                                                {field:'ScrimRollCode',title:'Roll No',width:70},
+                                                {field:'LengthDisplay',title:'Length',width:60},
+                                                {field:'Area',title:'Area',width:60},
+                                                {field:'WeightDisplay',title:'Weight',width:60}
+                                                ]],
+                                                fitColumns: true
+                                            ">
+                                        </td>
+                                        <td>
+                                            @*@Html.DropDownListFor(model => model.TPOCurrentScrim.FleeceRollID, (SelectList)ViewBag.ScrimRoll, new { @id = "ddlFleeceRoll" })*@
+                                            <input name="@Html.NameFor(model => model.TPOCurrentScrim.FleeceRollID)" id="DDLFleeceRoll" class="easyui-combogrid" style="width:120px" data-options="
+                                                panelWidth: 250,
+                                                idField: 'ID',
+                                                textField: 'ScrimRollCode',
+                                                value: '@Model.TPOCurrentScrim.FleeceRollID',
+                                                url: '/ScrimRoll/ListByType',
+                                                method: 'get',
+                                                columns: [[
+                                                {field:'ScrimRollCode',title:'Roll No',width:70},
+                                                {field:'LengthDisplay',title:'Length',width:60},
+                                                {field:'Area',title:'Area',width:60},
+                                                {field:'WeightDisplay',title:'Weight',width:60}
+                                                ]],
+                                                fitColumns: true
+                                            ">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-success btn-shadow"
+                                        onclick="$(this).parents('form:first').submit(); return false;">
+                                    <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var editIndex = undefined;
+    function endEditing(){
+        if (editIndex == undefined){return true}
+        if ($('#dg').datagrid('validateRow', editIndex)){
+            var ed = $('#dg').datagrid('getEditor', {index:editIndex,field:'ID'});
+            //var productname = $(ed.target).combobox('getText');
+            //$('#dg').datagrid('getRows')[editIndex]['productname'] = productname;
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRow(index){
+        if (editIndex != index){
+            if (endEditing()){
+                $('#dg').datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+    function append(){
+        if (endEditing()){
+            $('#dg').datagrid('appendRow',{status:'P'});
+            editIndex = $('#dg').datagrid('getRows').length-1;
+            $('#dg').datagrid('selectRow', editIndex)
+                    .datagrid('beginEdit', editIndex);
+        }
+    }
+    function removeit(){
+        if (editIndex == undefined){return}
+        $('#dg').datagrid('cancelEdit', editIndex)
+                .datagrid('deleteRow', editIndex);
+        editIndex = undefined;
+    }
+
+
+
+
+
+
+
+
+
+    function accept(){
+        if (endEditing()){
+            $('#dg').datagrid('acceptChanges');
+
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+
+                var myJSONObject = {
+                    "RawMaterialReceivedCode": row.RawMaterialReceivedCode,
+                    "LotId": row.LotId,
+                    "DateEntered": row.DateEntered,
+                    "QuantityAvailable": row.QuantityAvailable,
+                    "QuantityReceived": row.QuantityReceived,
+                    "QuantityUsed": row.QuantityUsed
+                };
+
+                $.ajax({
+                    url: '/CurrentScrim/CurrentScrimAjaxCreate',
+                    type: 'POST',
+                    data: { id: JSON.stringify(myJSONObject) },
+                    success: function (data, textStatus, jqXHR) {
+                        //alert(row.RawMaterialReceivedCode);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //alert('it did not work');
+                    }
+                });
+
+            }
+
+
+
+
+
+
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+    function reject(){
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+
+    function productionLine(record) {
+        var val = $("#ProductionLine").combogrid('getValue');
+        window.location.href = "/CurrentScrim/Edit/?lineID=" + val;
+    }
+
+    function ddlScrim1Type(record) {
+        var val = $("#DDLScrim1Type").combogrid('getValue');
+        $('#DDLScrim1Roll').combogrid({
+            queryParams: {
+                typeID: val
+            }
+        });
+    }
+
+    function ddlScrim2Type(record) {
+        var val = $("#DDLScrim2Type").combogrid('getValue');
+        $('#DDLScrim2Roll').combogrid({
+            queryParams: {
+                typeID: val
+            }
+        });
+    }
+
+    function ddlFleeceType(record) {
+        var val = $("#DDLFleeceType").combogrid('getValue');
+        $('#DDLFleeceRoll').combogrid({
+            queryParams: {
+                typeID: val
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        //jQuery to run tabs
+        $(".tabs-menu a").click(function (event) {
+            //prevent url change
+            event.preventDefault();
+            //add css to current tab for style
+            $(this).parent().addClass("current");
+            //remove style from any other tab
+            $(this).parent().siblings().removeClass("current");
+            //get tab id from href of menu link
+            var currentTabID = $(this).attr("href");
+            //hide all other tabs
+            $(".tab-content").not(currentTabID).css("display", "none");
+            //display current tab
+            $(currentTabID).fadeIn();
+        });
+
+        var model = @Html.Raw(Json.Encode(Model.TPOCurrentScrim));
+
+        $("#ddlLineID").change(function() {
+            var lineID = $(this).val();
+            window.location.href = "/CurrentScrim/Edit/?lineID=" + lineID;
+        });
+
+        if (model.LineID != '' && model.LineID != '1') {
+            ddlScrim1Type(null);
+            ddlScrim2Type(null);
+            ddlFleeceType(null);
+        }
+    });
+
+
+    function loadRollsIntoSelect(select, rolls) {
+        var defVal = '<option value="-1">N/A</option>';
+        $(select).append(defVal);
+
+        for (var i = 0; i < rolls.length; i++) {
+            var roll = rolls[i];
+            var selectVal = '<option value="' + roll.ID + '">' + roll.ScrimRollCode + '</option>';
+            $(select).append(selectVal);
+        }
+    }
+
+    function formatDate(val,row) {
+        if (val != undefined) {
+            var date = new Date(parseInt(val.substr(6)));
+            var day = date.getDate();
+            var month = date.getMonth();
+            var year = date.getFullYear();
+            var finalDate = day + '/' + month + '/' + year;
+            return finalDate;
+        } else {
+            return new Date();
+        }
+    }
+
+</script>

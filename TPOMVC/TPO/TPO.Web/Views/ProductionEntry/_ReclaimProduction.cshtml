@@ -1,0 +1,82 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+
+<div id="divTabs" class="easyui-tabs" style="margin-bottom: 30px;" data-options="
+     onSelect: tabSelected
+     ">
+    <div title="Enter Production" id="tab-enter-production" style="padding:20px;">
+        <table id="tableStyle">
+            <tr>
+                <td>
+                    @Html.Partial("/Views/ReclaimProduction/_MaterialProcessed.cshtml", Model)
+                </td>
+                <td>
+                    @Html.Partial("/Views/ReclaimProduction/_PurgeScrap.cshtml", Model)
+                </td>
+            </tr>
+        </table>
+    </div>
+    @*<div title="Enter Downtime" id="tab-enter-downtime" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EnterDowntime.cshtml", Model)
+    </div>
+    <div title="End Of Shift Data" id="tab-end-of" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EndOf.cshtml", Model)
+    </div>*@
+</div>
+
+<script type="text/javascript">
+    function tabSelected(title, index) {
+        switch (title) {
+            case "Enter Production":
+                {
+                    refreshEnterProduction();
+                } break;
+            case "Enter Downtime":
+                {
+                    refreshEnterDowntime();
+                } break;
+            case "End Of Shift Data":
+                {
+                    refreshEndOfShift();
+                } break;
+        }
+    }
+
+    function refreshTabs() {
+        var tab = $("#divTabs").tabs('getSelected');
+        switch (tab.title) {
+            case "Enter Production":
+                {
+                    refreshEnterProduction();
+                } break;
+            case "Enter Downtime":
+                {
+                    refreshEnterDowntime();
+                } break;
+            case "End Of Shift Data / End Of Work Order":
+                {
+                    refreshEndOfShift();
+                } break;
+        }
+    }
+
+    function refreshEnterProduction() {
+        loadMaterialProcessedDataGrid();
+        loadPurgeDataGrid();
+    }
+
+    function refreshEnterDowntime() {
+        loadDownTimeDataGrid();
+    }
+    function refreshEndOfShift() {
+        CheckForValues();
+    }
+</script>
+
+<style type="text/css">
+    .tableStyle {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+    }
+</style>

@@ -1,0 +1,143 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+<table class="displayTable">
+    <tr>
+        <td>
+            <label class="control-label">Master Roll Number</label>
+        </td>
+        <td>
+            <select id="masterRollId" name="masterRollId" class="easyui-combogrid" style="width:150px" data-options="
+                   prompt:'--- Select Master Roll ---',
+                   loadMsg: 'Loading ...',
+                   idField: 'Id',
+                   textField: 'Code',
+                   panelWidth: '600',
+                   columns: [[
+                        {field:'Id',title:'ID', hidden: true},
+                        {field:'Code',title:'Roll',width:100},
+                        {field:'ProductCode',title:'Product',width:100},
+                        {field:'LengthDisplay', title:'Length',width:100 },
+                        {field:'WidthDisplay', title:'Width',width:100 },
+                        {field:'ThicknessDisplay', title:'Thickness',width:100 },
+                        {field:'WeightDisplay', title:'Weight',width:100 }
+                        ]],
+                   onSelect: rollSelected
+                   "></select><br />
+        </td>
+        <td colspan="3">
+            <label class="control-label">Master Roll Notes</label>&nbsp;<span id="MasterRollComment"></span>
+        </td>
+    </tr>
+
+</table>
+
+<div id="divTabs" class="easyui-tabs" style="margin-bottom: 30px;" data-options="
+     onSelect: tabSelected
+     ">
+    <div title="Enter Production" id="tab-enter-production" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EnterProduction.cshtml", Model)
+    </div>
+    <div title="Enter Line Scrap" id="tab-enter-line-scrap" style="padding:20px;">
+        
+    </div>
+    <div title="Enter Downtime" id="tab-enter-downtime" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EnterDowntime.cshtml", Model)
+    </div>
+    <div title="End Of Shift Data / End Of Work Order" id="tab-end-of" style="padding:20px;">
+        @Html.Partial("/Views/TPOProductionEntry/EndOf.cshtml", Model)
+    </div>
+</div>
+
+<script type="text/javascript">
+    function tabSelected(title, index) {
+        switch (title) {
+            case "Enter Production":
+                {
+                    refreshEnterProduction();
+                } break;
+            case "Enter Line Scrap":
+                {
+                    refreshEnterLineScrap();
+                } break;
+            case "Enter Downtime":
+                {
+                    refreshEnterDowntime();
+                } break;
+            case "End Of Shift Data / End Of Work Order":
+                {
+                    refreshEndOfShift();
+                } break;
+        }
+    }
+
+    function refreshTabs() {
+        refreshRollList();
+        
+        var tabPanel = $('#divTabs').tabs('getSelected');
+        var tabOptions = tabPanel.panel('options');
+        var title = tabOptions.title;
+        switch (title) {
+            case "Enter Production":
+                {
+                    refreshEnterProduction();
+                } break;
+            case "Enter Line Scrap":
+                {
+                    refreshEnterLineScrap();
+                } break;
+            case "Enter Downtime":
+                {
+                    refreshEnterDowntime();
+                } break;
+            case "End Of Shift Data / End Of Work Order":
+                {
+                    refreshEndOfShift();
+                } break;
+        }
+    }
+
+    function refreshEnterProduction() {
+        loadEnterProduction();
+    }
+    function refreshEnterLineScrap() {
+        loadEnterLineScrap();
+    }
+    function refreshEnterDowntime() {
+        $('#downtimeGrid').datagrid({
+            url: '/TPODownTimeEntry/GetDownTimeByLineResult',
+            queryParams: { lineID: '@Model.ProductionLineId' }
+        });
+        $('#downtimeGrid').datagrid('load');
+    }
+    function refreshEndOfShift() {
+        CheckForValues();
+    }
+
+    function refreshRollList(){
+        
+        if ( document.getElementById("masterRollId") == null || document.getElementById("masterRollId") == undefined  )
+            return;
+
+        var prodLineId = $("#ProductionLineId").val();
+        var shiftId = $("#ShiftId").val();
+        var workOrderId = $("#WorkOrderId").val();
+        var prodDate = $("#ProductionDate").val();
+
+        $("#masterRollId").combogrid({
+            method: 'get',
+            url: '/ProductionEntry/FetchMasterRolls',
+            queryParams: 
+                {   productionLineId: @Model.ProductionLineId,
+                    shiftId: shiftId,
+                    productionDate: prodDate,
+                    workOrderId: workOrderId
+                } 
+        });
+    }
+    function rollSelected()
+    {
+        var masterRollId = $('#masterRollId').combogrid('getValue');
+        $('#MasterRollId').val(masterRollId);
+    }
+
+</script>
+

@@ -1,0 +1,393 @@
+﻿@model TPO.Web.Models.ProductionLinesModel
+@using System.Web.UI.WebControls
+
+@{
+    ViewBag.Title = "Production Shift Defaults";
+}
+
+<h2>@ViewBag.Title</h2>
+<label>Production Line:</label>
+
+<select id="prodLine" class="easyui-combobox" style="width:150px"
+        data-options="
+        valueField: 'Id',
+        textField: 'LineDesc',
+        url: '../ProductionShiftDefault/GetLines',
+        method: 'get',
+        panelHeight: 'auto',
+        onSelect: onSelectProdLine
+        "></select>
+
+
+<script type="text/javascript">
+    function onSelectProdLine(row) {
+        window.location.href = "/ProductionShiftDefault?lineId=" + row.Id;
+    }
+</script>
+    @if (Model.Id > 0)
+    {
+        <script>
+            $(document).ready(function() {
+
+                $('#prodLine').combobox('setValue', @Model.Id);
+            });
+        </script>
+        <table style="width:540px">
+            <tr>
+                <td>
+                    The schedule below will be used as a default for setting the scheduled run time for the selected production line.  Select which shifts are to be used for the line and for each day of the week what the amount of run time, in minutes, will be for each shift.  A default schedule is needed for each production line.
+                </td>
+            </tr>
+        </table>
+        <table id="dg" class="easyui-datagrid" title="Production Shifts" style="width:540px;height:350px"
+               data-options="
+           iconCls: 'icon-edit' ,
+           singleSelect: true,
+           toolbar: '#tb' ,
+           url: '../ProductionShiftDefault/GetAllProductionShiftDefaults?lineId=@Model.Id' ,
+           method: 'get' ,
+           onClickRow: onClickRow,
+           pagination: true,
+           pagesize:10,
+           pagelist:[10,20,50]
+           "></table>
+
+    <div>
+        <button class="btn btn-success btn-shadow"
+                onclick="save();return false;">
+            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+        </button>
+        <button class="btn btn-default btn-shadow"
+                onclick="window.location.href = '@Url.Action("Index", new { lineId=Model.Id})';return false;">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+        </button>
+    </div>
+
+        
+        
+        
+        
+        <br/>
+    <button class="btn btn-default btn-shadow" id="btnreset">Reset Default Shift Settings</button>
+    <button class="btn btn-default btn-shadow" id="btnCur" >Set Current Schedule Starting With</button>
+        <input id="curDate" class="easyui-datebox" style="width:100px">
+
+        <br/>
+        
+        
+        
+        <div id="MyDialogReset">
+            <table>
+                <tr><td></td></tr>
+                <tr>
+                    <td>Reset Default Settings for All Lines or Selected Lines ? </td>
+            
+                </tr>
+            </table>
+            <br /><br />
+            <span class="col-lg-offset-2">
+                <button class="btn btn-default btn-shadow" id="btnResetAll">
+                    All Lines
+                </button>
+                <button class="btn btn-default btn-shadow" id="btnResetLine">
+                    Selected Lines
+                </button>
+                <br/>
+                @*<button class="btn btn-default btn-shadow"
+                        onclick="closeDialogReset()">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>*@
+            </span>
+        </div>
+        
+        
+                
+        
+         <div id="MyDialogCurrent">
+    <table>
+        <tr><td></td></tr>
+        <tr>
+            <td>Set production line schedule 
+            running times to match default settings from entered date forward for
+             All Lines or Selected Lines ? </td>
+            
+        </tr>
+    </table>
+    <br />
+    <span class="col-lg-offset-2">
+        <button class="btn btn-default btn-shadow" id="btnSetAll">
+            All Lines
+        </button>
+        <button class="btn btn-default btn-shadow" id="btnSetLine">
+            Selected Lines
+        </button>
+        <br/>
+        @*<button class="btn btn-default btn-shadow"
+                onclick="closeDialogCur()">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+        </button>*@
+    </span>
+</div>
+
+
+   
+
+    }
+
+
+
+<script type="text/javascript">
+    var currentDate = new Date();
+    var day = currentDate.getDate();
+    var month = currentDate.getMonth() + 1;
+    var year = currentDate.getFullYear();
+    var display = month + "/" + day + "/" + year;
+    $('#curDate').val(display);
+
+
+    $('#dg').datagrid({
+        columns: [
+            [
+                { field: 'Id', title: 'ID', hidden: true },
+                { field: 'PlantId', hidden: true },
+                { field: 'ShiftID', hidden: true },
+                { field: 'ShiftCode', title: 'Shift' },
+                {
+                    field: 'UseShift',
+                    title: 'Use Shift',
+                    formatter: function(value) {
+                        if (value == 'True') {
+                            return '<input type="checkbox" checked>';
+                        } else {
+                            return '<input type="checkbox" >';
+                        }
+                    }
+                },
+                { field: 'Day1Minutes', title: 'Sunday', editor: 'numberbox' },
+                { field: 'Day2Minutes', title: 'Monday', editor: 'numberbox' },
+                { field: 'Day3Minutes', title: 'Tuesday', editor: 'numberbox' },
+                { field: 'Day4Minutes', title: 'Wednesday', editor: 'numberbox' },
+                { field: 'Day5Minutes', title: 'Thursday', editor: 'numberbox' },
+                { field: 'Day6Minutes', title: 'Friday', editor: 'numberbox' },
+                { field: 'Day7Minutes', title: 'Saturday', editor: 'numberbox' },
+                { field: 'EnteredBy', hidden: true },
+                { field: 'DateEntered', hidden: true },
+            ]
+        ]
+    });
+    var editIndex = undefined;
+
+    function endEditing() {
+        if (editIndex == undefined) {
+            return true;
+        }
+        if ($('#dg').datagrid('validateRow', editIndex)) {
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function onClickRow(index) {
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+
+
+    function append() {
+        if (endEditing()) {
+            $('#dg').datagrid('appendRow', {
+
+            });
+            editIndex = $('#dg').datagrid('getRows').length - 1;
+            $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+        }
+    }
+
+
+    function reloadGrid() {
+        $('#dg').datagrid('load');
+    }
+
+    function save() {
+        if (endEditing()) {
+            processRows();
+        }
+    }
+
+    function processRows() {
+        rows = $('#dg').datagrid('getChanges');
+        if (rows.length > 0) {
+            var i, len;
+            for (i = 0, len = rows.length; i < len; i++) {
+                var row = rows[i];
+                if (row) {
+                    $.ajax({
+                        url: '/ProductionShiftDefault/UpdateRow',
+                        type: 'POST',
+                        cache: false,
+                        data: { row: JSON.stringify(row) },
+                        success: function(data, textStatus, jqXHR) {
+                            if (data.ResponseMessage.ActionStatus == "ok") {
+                                reloadGrid();
+                            }
+                            displayMessage(data.ResponseMessage.ActionType, data.ResponseMessage.ActionMessage);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        }
+                    });
+                }
+            }
+        }
+
+    }
+
+
+    function displayProcessing() {
+        $.messager.progress({
+            title: 'Save in Progress',
+            text: 'Processing...'
+        });
+    }
+
+    function closeProcessing() {
+        $.messager.progress('close');
+    }
+
+    function ajaxSuccess(data, textStatus, jqXHR) {
+        if (data.ActionStatus == "ok") {
+            $("#dgReasons").datagrid('deleteRow', index);
+        }
+        displayMessage(data.ActionType, data.ActionMessage);
+        closeProcessing();
+        reloadGrid();
+    }
+
+    function ajaxFail(jqXHR, textStatus, errorThrown) {
+        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+        closeProcessing();
+        reloadGrid();
+    }
+
+    $(function() {
+        $("#MyDialogCurrent").dialog({
+            autoOpen: false,
+            height: 150,
+            width: 400,
+            modal: true,
+            title: "Set Current Schedules"
+        });
+        $("#MyDialogReset").dialog({
+            autoOpen: false,
+            height: 150,
+            width: 400,
+            modal: true,
+            title: "Reset Default Shift Settings"
+        });
+        $("#MyDialogCurrent").dialog("close");
+
+        $("#MyDialogReset").dialog("close");
+
+        $("#btnCur").click(function(e) {
+            $("#MyDialogCurrent").dialog("open");
+            e.preventDefault();
+            //$("#combogridLabel").hide();
+            //$("#combogridBox").hide();
+        });
+        $("#MyDialogCurrent").dialog("close");
+
+        $("#btnreset").click(function(e) {
+            $("#MyDialogReset").dialog("open");
+            e.preventDefault();
+            //$("#combogridLabel").hide();
+            //$("#combogridBox").hide();
+        });
+        $("#MyDialogReset").dialog("close");
+
+        $('#btnResetAll').click(function(e) {
+            displayProcessing();
+            $.ajax({
+                url: '/ProductionShiftDefault/ResetAllDefaultShift',
+                type: 'POST',
+                cache: false,
+                success: ajaxSuccess,
+                error: ajaxFail
+            });
+            $("#MyDialogReset").dialog("close");
+        });
+
+        $('#btnResetLine').click(function(e) {
+            displayProcessing();
+            $.ajax({
+                url: '/ProductionShiftDefault/ResetDefaultShift',
+                type: 'POST',
+                cache: false,
+                data: { lineId: @Model.Id },
+                success: ajaxSuccess,
+                error: ajaxFail
+            });
+            $("#MyDialogReset").dialog("close");
+        });
+
+        $('#btnSetAll').click(function(e) {
+            displayProcessing();
+            $.ajax({
+                url: '/ProductionShiftDefault/SetAllproductionLineSchedule',
+                type: 'POST',
+                cache: false,
+                data: { startDate: $('#curDate').datebox('getValue') },
+                success: ajaxSuccess,
+                error: ajaxFail
+            });
+            $("#MyDialogCurrent").dialog("close");
+        });
+
+        $('#btnSetLine').click(function(e) {
+            displayProcessing();
+            $.ajax({
+                url: '/ProductionShiftDefault/SetProductionLineSchedule',
+                type: 'POST',
+                cache: false,
+                data: { lineId: @Model.Id, startDate: $('#curDate').datebox('getValue') },
+                success: ajaxSuccess,
+                error: ajaxFail
+            });
+            $("#MyDialogCurrent").dialog("close");
+        });
+    });
+</script>
+
+
+
+<style type="text/css">
+    td {
+        padding-top: 0.35em;
+        padding-bottom: 0.35em;
+        padding: 5px;
+    }
+
+    .getSpace {
+        padding-left: 4em;
+    }
+
+    .textSpace {
+        padding-left: 2em;
+    }
+
+    .textboxClass {
+        line-height: normal;
+        padding-bottom: 2.9px !important;
+    }
+</style>
+

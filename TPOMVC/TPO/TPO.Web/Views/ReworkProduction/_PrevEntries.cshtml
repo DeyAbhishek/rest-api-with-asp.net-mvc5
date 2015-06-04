@@ -1,0 +1,45 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+
+<div id="divRwPrevEntriesTabs" class="easyui-tabs" style="margin-top:10px;" data-options="
+     onSelect: onRwPrevEntriesTabSelected
+     ">
+    <div title="Products" id="tab-rw-products" style="padding:20px;">
+        @Html.Partial("/Views/ReworkProduction/_PrevProdEntries.cshtml", Model)
+    </div>
+    <div title="Scrap" id="tab-rw-scrap" style="padding:20px;">
+        @Html.Partial("/Views/ReworkProduction/_PrevScrapEntries.cshtml", Model)
+    </div>
+</div>
+
+<script type="text/javascript">
+    function onRwPrevEntriesTabSelected(title, index)
+    {
+        refreshRwPrevEntriesTabs();
+    }
+    function refreshRwPrevEntriesTabs()
+    {
+        var tabPanel = $('#divRwPrevEntriesTabs').tabs('getSelected');
+        var tabOptions = tabPanel.panel('options');
+        var title = tabOptions.title;
+        switch (title)
+        {
+            case "Products":
+                {
+                    refreshRwProducts();
+                } break;
+            case "Scrap":
+                {
+                    refreshRwScraps();
+                } break;
+        }
+    }
+
+    function refreshRwProducts()
+    {
+        setRwProdUrl();
+    }
+    function refreshRwScraps()
+    {
+        setRwScrapUrl();
+    }
+</script>

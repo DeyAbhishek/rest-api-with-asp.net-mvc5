@@ -1,0 +1,14 @@
+﻿<span style="float: right;color: white; margin: 15px; white-space:nowrap; ">
+    @if (Request.IsAuthenticated)
+    {
+        <text>
+            User: @User.Identity.Name | @Html.ActionLink("Logout", "Logout", "Security", null, new {style = "color:white"})
+        </text>
+    }
+    else
+    {
+        <text>
+            @Html.ActionLink("Login", "Login", "Security", null, new {style = "color:white"})
+        </text>
+    }
+</span>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="dc18c62e-1296-44a2-b535-9c4d0fbd84e4" ChangeDateTime="08/06/2014 04:48:43">
+    <Property Name="ElementName" Value="[dbo].[ProdDteChng].[LineCode]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ProdDteChng]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LineID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9471e056-1de2-4dce-b5a6-ef72d94a5d88" ChangeDateTime="08/07/2014 04:04:02">
+    <Property Name="ElementName" Value="[dbo].[TPOProductStandardCost].[StandartCost]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TPOProductStandardCost]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="StandardCost" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9e0acfb3-7bbe-4d0f-a5af-3e23b0bb3a75" ChangeDateTime="08/11/2014 19:21:19">
+    <Property Name="ElementName" Value="[dbo].[WorkOrder].[ProductID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WorkOrder]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TPOProductID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0cd26768-66a4-4e0a-8001-9bce8f16b9a9" ChangeDateTime="08/15/2014 18:48:01">
+    <Property Name="ElementName" Value="[dbo].[ProdLines].[LocID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ProdLines]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PlantID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d911234a-febe-4b3d-a794-d760f002052f" ChangeDateTime="08/23/2014 02:44:30">
+    <Property Name="ElementName" Value="[dbo].[TPOLineScrap].[LenghtUoMID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TPOLineScrap]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LengthUoMID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d371f0a2-527f-477f-8ab3-089d6f0b9db4" ChangeDateTime="08/23/2014 02:54:14">
+    <Property Name="ElementName" Value="[dbo].[TPOReworkRoll].[ProductID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TPOReworkRoll]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TPOProductID" />
+  </Operation>
+</Operations>

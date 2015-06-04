@@ -1,0 +1,271 @@
+﻿@model TPO.Web.Models.ProductionShiftModel
+@{
+    ViewBag.Title = "Edit Production Shifts";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@*<input id="ss" value="11:00 AM" >*@
+
+<script type="text/javascript">
+    $('#ss').spinner({
+        required: true,
+        editable: true,
+        spin: function(down) {
+            console.log('down = ' + down);
+            var spinner = $('#ss').spinner('getValue');
+            console.log('spinner = ' + spinner);
+            var time = spinner.split(':');
+            console.log('time = ' + time);
+            var hour = time[0];
+            console.log('hour = ' + hour);
+            var time2 = time[1].split(' ');
+            console.log('time2 = ' + time2);
+            var minute = time2[0];
+            console.log('minute = ' + minute);
+            var amPm = time2[1];
+            console.log('amPm = ' + amPm);
+            hour++;
+            hour--;
+            minute++;
+            if (minute > 59) {
+                minute = 0;
+                hour++;
+                if (hour > 12) {
+                    hour = 1;
+                }
+                if (hour > 11) {
+                    if (amPm == 'AM') {
+                        amPm = 'PM';
+                    } else {
+                        amPm = 'AM';
+                    }
+                }
+            }
+            if (minute < 10) {
+                minute = '0' + minute;
+            }
+            if (hour < 10) {
+                hour = '0' + hour;
+            }
+
+            time = [hour, minute].join(':');
+            spinner = [time, amPm].join(' ');
+            $('#ss').spinner('setValue', spinner);
+        }
+    });
+</script>
+<br/>
+
+<table id="dg" class="easyui-datagrid" title="Production Shifts" style="width:300px;height:350px"
+       data-options="
+       iconCls: 'icon-edit' ,
+       singleSelect: true,
+       toolbar: '#tb' ,
+       url: '../ProductionShift/GetAllProductionShifts' ,
+       method: 'get' ,
+       onClickRow: onClickRow,
+       pagination: true,
+       pagesize:10,
+       pagelist:[10,20,50]
+       "></table>
+
+<div id="tb" style="height:auto">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">Create New</a>
+    @*<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">Delete</a>*@
+</div>
+<br /><br />
+<div>
+    <button class="btn btn-success btn-shadow"
+            onclick="save();return false;">
+        <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+    </button>
+    <button class="btn btn-default btn-shadow"
+            onclick="window.location.href = '@Url.Action("Index")';return false;">
+        <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+    </button>
+</div>
+
+<script type="text/javascript">
+    $('#dg').datagrid({
+        columns: [
+            [
+                { field: 'Id', title: 'ID', hidden: true },
+                { field: 'PlantId', hidden: true },
+                {
+                    field: 'TypeID', title: 'Shift', width: 75,
+                    formatter: function (value, row, index) {
+                        return row.TypeCode;
+                    },
+                    editor: {
+                        type: 'combobox',
+                        options: {
+                            valueField: 'Id',
+                            textField: 'Code',
+                            method: 'get',
+                            url: '../ProductionShift/GetAllProductionShiftTypes',
+                            required: true
+                        }
+                    }
+                },
+                {
+                    field: 'StartTimeStr', title: 'Shift Start', width: 80,
+                    editor: {
+                        type: 'timespinner',
+                    }
+                },
+                {
+                    field: 'EndTimeStr', title: 'Shift End', width: 80,
+                    editor: {
+                        type: 'timespinner',
+                    }
+                },
+                { field: 'EnteredBy', hidden: true },
+                { field: 'DateEntered', hidden: true },
+                { field: 'Code', hidden: true }
+            ]
+        ]
+    });
+    var editIndex = undefined;
+
+    function formatTime(time) {
+        console.log(time);
+        var date = eval("new " + time.slice(1, -1));
+        console.log(date);
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var amPm = 'AM';
+        if (hour > 12) {
+            amPm = 'PM';
+            hour = hour - 12;
+        }
+        if (hour < 10)
+            hour = "0" + hour;
+        if (minute < 10)
+            minute = "0" + minute;
+        var s2 = [hour, minute].join(':');
+        return s2 + ' ' + amPm;
+    }
+    function endEditing() {
+        if (editIndex == undefined) {
+            return true;
+        }
+        if ($('#dg').datagrid('validateRow', editIndex)) {
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function onClickRow(index) {
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+
+    //$.fn.timespinner.defaults.formatter = function (date) {
+    //    if (!date) { return ''; }
+    //    var opts = $(this).timespinner('options');
+    //    var amPm = 'AM';
+    //    var hours = date.getHours();
+
+    //    if (hours >= 12) {
+    //        amPm = 'PM';
+    //        if (hours > 12) {
+    //            hours = hours - 12;
+    //        }
+    //    }
+    //    var tt = [formatN(hours), formatN(date.getMinutes())];
+    //    if (opts.showSeconds) {
+    //        tt.push(formatN(date.getSeconds()));
+    //    }
+    //    return tt.join(opts.separator) + ' ' + amPm;
+
+    //    function formatN(value) {
+    //        return (value < 10 ? '0' : '') + value;
+    //    }
+    //}
+
+    
+
+
+    function append() {
+        if (endEditing()) {
+            $('#dg').datagrid('appendRow', {
+                TypeCode: '@Model.DefaultProductionShiftType.Code',
+                TypeID: @Model.DefaultProductionShiftType.Id,
+                StartTimeStr: '0:00',
+                EndTimeStr: '0:00'
+            });
+            editIndex = $('#dg').datagrid('getRows').length - 1;
+            $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+        }
+    }
+
+    var rowsToRemove = [];
+    var rowsToRemoveIndex = 0;
+    function removeit() {
+        console.log('removing');
+        if (editIndex == undefined) return;
+
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            rowsToRemove[rowsToRemoveIndex++] = row.Id;
+            $('#dg').datagrid('deleteRow', editIndex);
+        }
+        editIndex = undefined;
+        console.log('removed');
+    }
+
+    function reloadGrid() {
+        $('#dg').datagrid('load');
+    }
+
+    function save() {
+        if (endEditing()) {
+            processRows('/ProductionShift/InsertShift', 'inserted');
+            processRows('/ProductionShift/UpdateShift', 'updated');
+            processRows('/ProductionShift/DeleteShift', 'deleted');
+        }
+    }
+
+    function processRows(url, type) {
+        rows = $('#dg').datagrid('getChanges', type);
+        if (rows.length > 0) {
+            var i, len;
+            for (i = 0, len = rows.length; i < len; i++)
+            {
+                var row = rows[i];
+                row.StartTime = null;
+                row.EndTime = null;
+                if (row) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        cache: false,
+                        data: { row: JSON.stringify(row) },
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.ResponseMessage.ActionStatus == "ok") {
+                                reloadGrid();
+                            }
+                            displayMessage(data.ResponseMessage.ActionType, data.ResponseMessage.ActionMessage);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        }
+                    });
+                }
+            }
+        }
+
+    }
+</script>

@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "EditDefault";
+}
+
+<h2>Unit of Measure Default Settings</h2>
+
+<div id="ddlDiv" style="display: block;">
+    <table id="dg" class="easyui-datagrid" title="Unit Of Measure Defaults" style="width:400px;height:auto"
+           data-options="
+                iconcls: 'icon-edit' ,
+                singleSelect: true,
+                toolbar: '#tb' ,
+                url: '../UnitOfMeasure/GetAllUnitOfMeasureDefaults' ,
+                method: 'get' ,
+                cache: false,
+           pagination: true,
+           pageSize: 10,
+           pageList: [10,20,50],
+                onClickRow: onClickRow,
+                ">
+    </table>
+        
+    <div id="tb" style="height:auto">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">Save Changes</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">Undo</a>
+    </div>
+        
+    <script type="text/javascript">
+        $('#dg').datagrid({
+            columns: [[
+                { field: 'Id', title: 'ID', hidden: true },
+                { field: 'PlantId', title: 'PlantID', hidden: true },
+                { field: 'UoMTypeID', title: 'UoMTypeID', hidden: true },
+                { field: 'UoMTypeDescription', title: 'Measurement', width: 120 },
+                {
+                    field: 'UoMID', title: 'Default UoM', width: 120,
+                    formatter: function(value, row, index) {
+                        return row.UoMCode;
+                    },
+                    editor: {
+                        type: 'combobox',
+                        options: {
+                            valueField: 'Id',
+                            textField: 'Code',
+                            method: 'get',
+                            url: '../UnitOfMeasure/GetUoMsByType',
+                            required: true,
+                            panelHeight: 'auto',
+                            onBeforeLoad: function (param) {
+                                var tr = $(this).closest('tr.datagrid-row');
+                                var index = parseInt(tr.attr('datagrid-row-index'));  // the row index
+                                var row = $('#dg').datagrid('getRows')[index];  // the row data
+                                param.typeId = row.UoMTypeID;
+                            }
+                        }
+                    }
+                }
+            ]]
+        });
+        var editIndex = undefined;
+        function endEditing() {
+            if (editIndex == undefined) { return true }
+            if ($('#dg').datagrid('validateRow', editIndex)) {
+                $('#dg').datagrid('endEdit', editIndex);
+                editIndex = undefined;
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function onClickRow(index) {
+            if (editIndex != index) {
+                if (endEditing()) {
+                    $('#dg').datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                    editIndex = index;
+                } else {
+                    $('#dg').datagrid('selectRow', editIndex);
+                }
+            }
+        }
+
+        function onBeginEdit(rowIndex, rowData) {
+
+        }
+        function reloadGrid() {
+            $('#dg').datagrid('load');
+        }
+        function accept() {
+            if (endEditing()) {
+                $('#dg').datagrid('acceptChanges');
+
+                var row = $('#dg').datagrid('getSelected');
+                if (row) {
+                    $.ajax({
+                        url: '/UnitOfMeasure/AjaxDefaultUpdate',
+                        type: 'POST',
+                        cache: false,
+                        data: { row: JSON.stringify(row) },
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.ActionStatus == "ok") {
+                                $('#dg').datagrid('reload');
+                            }
+                            displayMessage(data.ActionType, data.ActionMessage);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        }
+                    });
+                }
+            }
+        }
+        function reject() {
+            $('#dg').datagrid('rejectChanges');
+            editIndex = undefined;
+        }
+        function getChanges() {
+            var rows = $('#dg').datagrid('getChanges');
+            alert(rows.length + ' rows are changed!');
+        }
+    </script>
+</div>

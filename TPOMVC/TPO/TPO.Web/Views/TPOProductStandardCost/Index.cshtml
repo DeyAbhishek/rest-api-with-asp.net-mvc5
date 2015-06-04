@@ -1,0 +1,247 @@
+﻿
+
+@{
+    ViewBag.Title = "Product Standard Cost";
+}
+
+<script type="text/javascript" src="/Scripts/common.js"></script>
+
+<h2>Product Standard Cost</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <input id="ddlProducts" class="easyui-combogrid" style="width:130px;" data-options="
+               idField: 'ID',
+               textField: 'ProductCode',
+               url: '/TPOQCLimit/AllProductsResult/',
+               method: 'get',
+               panelWidth: 300,
+               columns: [[
+               {field:'ProductCode',title:'Product',width:125},
+               {field:'ProductDesc',title:'Description',width:170}
+               ]],
+               onSelect: productSelected,
+               fitColumns: true
+               " />
+    </div>
+    
+    <div id="divStandardCost" class="form-group" style="display:none;">
+        <table id="dgStandardCost" class="easyui-datagrid"></table>
+        <div id="standardCostTb">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" insertRow() ">Create New</a>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(function () {
+        var productID = $("#ddlProducts").combogrid('getValue');
+        if (productID <= 0) {
+            $("#ddlProducts").combogrid('setValue', 'Select Product:');
+        }
+        createGrid();
+    })
+    function productSelected(product) {
+        var id = $("#ddlProducts").combogrid('getValue');
+        $("#divStandardCost").show();
+        $("#dgStandardCost").datagrid(
+            {
+                queryParams:
+                    {
+                        id: id
+                    }
+            });
+    }
+    function createGrid() {
+        $("#dgStandardCost").datagrid(
+            {
+                title: 'Product Standard Cost',
+                toolbar: '#standardCostTb',
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                idField: 'Id',
+                url: '/TPOProductStandardCost/GetByProductIDResult/',
+                method: 'get',
+                columns: [[
+                    { field: 'Id', hidden: true },
+                    { field: 'PlantId', hidden: true },
+                    { field: 'TPOProductID', hidden: true },
+                    { field: 'StartDate', editor: { type: 'datebox', required: true }, title: 'Start Date', width: 100, formatter: formatDate },
+                    { field: 'EndDate', editor: { type: 'datebox', required: true }, title: 'End Date', align: 'center', width: 100, formatter: formatDate },
+                    { field: 'StandardCost', editor: { type: 'numberbox', required: true, options: { precision: 4 } }, title: 'Standard Cost', width: 100 },
+                    { field: 'StandardWeightPerArea', editor: { type: 'numberbox', required: true, options: { precision: 4 } }, title: 'Weight per Area', width: 100 },
+                    { field: 'EnteredBy', hidden: true },
+                    { field: 'DateEntered', hidden: true },
+                    { field: 'ModifiedBy', hidden: true },
+                    { field: 'LastModified', hidden: true },
+                    {
+                        field: 'Action', align: 'center', width: 80,
+                        formatter: function (value, row, index) {
+                            if (row.editing) {
+                                var s = '<a href="#" onclick="saveRow(this)">Save</a> ';
+                                var c = '<a href="#" onclick="cancelRow(this)">Undo</a>';
+                                return s + c;
+                            } else {
+                                var e = '<a href="#" onclick="editRow(this)">Edit</a> ';
+                                var d = '<a href="#" onclick="deleteRow(this)">Delete</a>';
+                                return e + d;
+                            }
+                        }
+                    }
+                ]],
+                onBeforeEdit: function (index, row) {
+                    row.editing = true;
+                    updateActions('dgStandardCost', index);
+                },
+                onAfterEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgStandardCost', index);
+                },
+                onCancelEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions('dgStandardCost', index);
+                }
+            });
+    }
+    function getRowIndex(target) {
+        var tr = $(target).closest('tr.datagrid-row');
+        return parseInt(tr.attr('datagrid-row-index'));
+    }
+    function updateActions(gridID, index) {
+        $('#' + gridID).datagrid('updateRow', {
+            index: index,
+            row: {}
+        });
+    }
+    function insertRow() {
+        var row = $("#dgStandardCost").datagrid('getSelected');
+        var index = 0;
+        if (row) {
+            index = $("#dgStandardCost").datagrid('getRowIndex', row);
+        }
+        $("#dgStandardCost").datagrid('insertRow',
+            {
+                index: index,
+                row:
+                {
+                    Id: 0,
+                    PlantId: 0,
+                    TPOProductID: 0,
+                    StandardCost: 0,
+                    StandardWeightPerArea: 0,
+                    StartDate: new Date().toJSON(),
+                    EndDate: new Date().toJSON(),
+                    EnteredBy: '',
+                    DateEntered: new Date().toJSON(),
+                    ModifiedBy: '',
+                    LastModified: new Date().toJSON()
+                }
+            });
+        $("#dgStandardCost").datagrid('selectRow', index);
+        $("#dgStandardCost").datagrid('beginEdit', index);
+    }
+    function editRow(target) {
+        $("#dgStandardCost").datagrid('beginEdit', getRowIndex(target));
+    }
+    function cancelRow(target) {
+        $("#dgStandardCost").datagrid('cancelEdit', getRowIndex(target));
+        $("#dgStandardCost").datagrid('rejectChanges');
+    }
+    function saveRow(target) {
+        if (validateRow(target)) {
+            var index = getRowIndex(target);
+            endEditing(target);
+            var row = $('#dgStandardCost').datagrid('getRows')[index];
+            var productID = $("#ddlProducts").combogrid('getValue');
+            if (row) {
+                var cost =
+                {
+                    "Id": row.Id,
+                    "PlantId": row.PlantId,
+                    "TPOProductID": productID,
+                    "Code": row.Code,
+                    "View": row.View,
+                    "StartDate": row.StartDate,
+                    "EndDate": row.EndDate,
+                    "StandardCost": row.StandardCost,
+                    "StandardWeightPerArea": row.StandardWeightPerArea,
+                    "EnteredBy": row.EnteredBy,
+                    "DateEntered": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.DateEntered.substr(6)))),
+                    "ModifiedBy": row.ModifiedBy,
+                    "LastModified": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.LastModified.substr(6))))
+                };
+
+                $("#dgStandardCost").datagrid('loading');
+                $.ajax({
+                    url: '/TPOProductStandardCost/UpdateStandardCostResult/',
+                    type: 'POST',
+                    data: cost,
+                    async: false,
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ResponseMessage.ActionStatus == "ok") {
+                            $("#dgStandardCost").datagrid('updateRow', {
+                                index: index,
+                                row: {
+                                    Id: data.Id,
+                                    PlantId: data.PlantId,
+                                    StartDate: data.StartDate,
+                                    EndDate: data.EndDate,
+                                    EnteredBy: data.EnteredBy,
+                                    DateEntered: data.DateEntered,
+                                    ModifiedBy: data.ModifiedBy,
+                                    LastModified: data.LastModified
+                                }
+                            });
+                        }
+                        displayMessage(data.ResponseMessage.ActionType, data.ResponseMessage.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        $("#dgStandardCost").datagrid('loaded');
+                    }
+                });
+
+            }
+        }
+    }
+    function deleteRow(target) {
+        $.messager.confirm('Confirm', 'Delete this item?', function (r) {
+            if (r) {
+                var index = getRowIndex(target);
+                var row = $('#dgStandardCost').datagrid('getRows')[index];
+                if (row) {
+                    var id = row.Id;
+                    $("#dgStandardCost").datagrid('loading');
+                    $.ajax({
+                        url: '/TPOProductStandardCost/DeleteStandardCost/' + id,
+                        type: 'POST',
+                        async: false,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.ActionStatus == "ok") {
+                                $("#dgStandardCost").datagrid('deleteRow', index);
+                            }
+                            displayMessage(data.ActionType, data.ActionMessage);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        },
+                        complete: function (jqXHR, textStatus) {
+                            $("#dgStandardCost").datagrid('loaded');
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+    function validateRow(target) {
+        return $("#dgStandardCost").datagrid('validateRow', getRowIndex(target));
+    }
+    function endEditing(target) {
+        $("#dgStandardCost").datagrid('endEdit', getRowIndex(target));
+    }
+</script>
+

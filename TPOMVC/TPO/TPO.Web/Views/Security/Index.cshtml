@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Application Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>User List</h2>
+
+<table id="dg" class="easyui-datagrid" title="User List" style="height:250px;"
+       data-options="iconCls: 'icon-edit',
+                singleselect: true,
+                toolbar: '#tb',
+                url: '/Security/FetchUsers',
+                method: 'get',
+                pagination: false,
+                rownumbers: true,
+                fitColumns: true,
+                onClickRow: onClickRow,
+                onDblClickRow: onDblClickRow
+           ">
+    <thead>
+        <tr>
+            <th data-options="field:'Id', hidden:true">User ID</th>
+            <th data-options="field:'FullName', editor:'text', width:250">Full Name</th>
+            <th data-options="field:'Username', editor:'text', width:250">User Name</th>
+            <th data-options="field:'PlantName', editor:'text', width:250">Default Plant</th>
+            <th data-options="field:'DateEntered', formatter: formatDate">Created On</th>
+            <th data-options="field:'EnteredBy'">Created By</th>
+            <th data-options="field:'LastModified', formatter: formatDate">Last Changed On</th>
+            <th data-options="field:'ModifiedBy'">Last Changed By</th>
+        </tr>
+    </thead>
+</table>
+<div id="tb">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" append() ">Create New</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeit() ">Delete</a>
+    @*        
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" accept() ">Save Changes</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Undo</a>
+    *@
+</div>
+@section scripts {
+    <script type="text/javascript">
+    var editIndex = undefined;
+
+    function append() {
+        window.location.href = '@Url.Action("Add","Security")';
+    }
+
+    function getChanges() {
+        $("#dg").datagrid('reload');
+    }
+    function onClickRow(index) {
+
+        if (editIndex != index) {
+            $('#dg').datagrid('unselectAll');
+            editIndex = index;
+        }
+        $('#dg').datagrid('selectRow', editIndex);
+
+    }
+    function onDblClickRow(rowIndex, record) {
+        if (record)
+            window.location.href = '@Url.Action("Edit","Security")' + '/' + record.Id;
+        }
+        function removeit( index, record ) {
+            if (!confirm("Are you sure you want to DELETE this user?")) { return; }
+            if (editIndex == undefined) { return }
+
+            var record = $("#dg").datagrid("getSelected");
+            if (record) {
+                var values = {
+                    "id": record.Id,
+                };
+                var options = {
+                    url: '/Security/Remove',
+                    type: 'post',
+                    data: values
+                };
+                $.ajax(options)
+                    .success(function (data, textStatus, jqXHR) {
+                        if (data.Status == "ok") {
+                            $('#dg').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    })
+                    .error(function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    });
+            }
+            $('#dg').datagrid('cancelEdit', editIndex)
+                .datagrid('deleteRow', editIndex);
+            editIndex = undefined;
+        }
+
+        function ShowSuccess() {
+            $("#alertDIV").css("display", "block").addClass('alert-success');
+            $("#alertP").css("display", "block").text("The item was saved.");
+            $('#dg').datagrid('reload');
+        }
+        function ShowError(errMessage) {
+            $("#alertDIV").css("display", "block").addClass('alert-danger');
+            $("#alertP").css("display", "block").text("The item could not be saved. Error:" + errMessage);
+            $('#dg').datagrid('reload');
+        }
+    </script>
+    }
+

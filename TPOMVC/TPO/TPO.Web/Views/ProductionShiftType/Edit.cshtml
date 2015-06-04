@@ -1,0 +1,160 @@
+﻿@model TPO.Web.Models.ProdDateChangeModel
+@{
+    ViewBag.Title = "Production Shift Types";
+}
+
+<h2>Production Shift Types</h2>
+
+@using (Html.BeginForm("Edit", "ProductionShiftType", FormMethod.Post, new {id = "ShiftTypeForm"}))
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.PlantId)
+    @Html.HiddenFor(model => model.LastModified)
+    @Html.HiddenFor(model => model.DateEntered)
+    @Html.HiddenFor(model => model.EnteredBy)
+    @Html.HiddenFor(model => model.ModifiedBy)
+    
+    @*@Html.HiddenFor(model => model.ResponseMessage, new { @id = "responseMessage" })
+    @Html.HiddenFor(model => model.ResponseStatus, new { @id = "responseStatus" })*@
+
+    <label>Production Line:</label>
+    <span>&nbsp;&nbsp;</span>
+
+    <input name="@Html.NameFor(model => model.LineID)" id="productionLineSelection" class="easyui-combogrid" style="width: 150px;" data-options="
+        idField: 'LineID',
+        textField: 'ProdLineLineDesc',
+        value:'@Model.LineID',
+        url: '/ProductionShiftType/GetAllProductionLineResult',
+        method: 'get',
+        columns: [[
+        {field:'ProdLineLineDesc',title:'Line',width:60}
+        ]],onSelect: productionLineSelected,
+        fitColumns: true">
+    <br /><br />
+    <span id="onProductionLineSelection">
+        @Html.LabelFor(model => model.ShiftTypeID)
+        <input name="@Html.NameFor(model => model.ShiftTypeID)" id="shiftTypeSelection" class="easyui-combogrid" style="width: 100px;" data-options="
+        panelWidth: 500,
+        idField: 'ID',
+        textField: 'Code',
+        value: '@Model.ShiftTypeID',
+        url: '/ProductionShiftType/GetAllShiftTypeResult',
+        method: 'get',
+        columns: [[
+        {field:'Code',title:'Code',width:20},
+        {field:'ShortDescription',title:'Description',width:150}
+        ]],
+        onSelect: ShiftTypeSelected,
+        fitColumns: true">
+    
+        <span class="col-md-offset-1">
+            @Html.LabelFor(model => model.DateChange)
+            @{
+                string time = Model.DateChange.Hour.ToString("00");
+                time = time + ":" + Model.DateChange.Minute.ToString("00");
+                
+            }
+            <input name="@Html.NameFor(model => model.DateChange)" id="timeChange" class="easyui-timespinner" value='@time' style="width:80px">
+        </span>
+    
+        <span class="col-md-offset-1">
+            @Html.LabelFor(model => model.RotationStart)
+            <input name="@Html.NameFor(model => model.RotationStart)" id="rotationDate" class="easyui-datebox" value='@Model.RotationStart' style="width:100px">
+        </span>
+        <br /><br /><br />
+        <span class="col-md-offset-5">
+            <button class="btn btn-success btn-shadow"
+                    onclick="$(this).parents('form:first').submit(); return false;">
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+            </button>
+            <button class="btn btn-default btn-shadow"
+                    onclick="window.location.href = '@Url.Action("edit", "ProductionShiftType" )';return false;">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+            </button>
+        </span>
+    </span>
+}
+<br /><br /><br />
+
+<div class="col-lg-offset-0" id="grid">
+    <table id="dg" class="easyui-datagrid" title="Production Shift Type" style="height: 290px;width: 1300px"
+           data-options="iconCls: 'icon-edit',
+           singleselect: true,
+           url: '/ProductionShiftType/GetAllShiftTypeResult',
+           method: 'get',
+           fitColumns: true
+           ">
+        <thead>
+            <tr>
+                <th data-options="field:'Code',width: 50">Shift Schedule Type</th>
+                <th data-options="field:'Description',width: 400,formatter:formatDescription">Description</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var val = $("#productionLineSelection").combogrid('getValue');
+        if (val == 0) {
+            $("#productionLineSelection").combogrid('setValue', '- - - Select - - - ');
+            $("#onProductionLineSelection").hide();
+        } else {
+            $("#onProductionLineSelection").show();
+            shiftTypeSelectionEffect();
+        }
+
+        //if ($("#responseStatus").val() === "ok") {
+        //    alert($("#responseStatus").val());
+        //} else {
+        //    alert('it works');
+        //}
+    });
+
+    function productionLineSelected(record) {
+        var val = $("#productionLineSelection").combogrid('getValue');
+        window.location = "/ProductionShiftType/Edit/" + val;
+    }
+
+    function ShiftTypeSelected(record) {
+        shiftTypeSelectionEffect();
+    }
+
+    function formatDescription(val, row) {
+        if (val.length < 130) {
+            return val;
+        }
+        else if (val.length > 130 && val.length < 290) {
+            var firstLine = val.substring(0, val.lastIndexOf(". ")) + ".";
+            var secondLine = val.substring(val.lastIndexOf(". ")+1);
+            return firstLine + '<br />' + secondLine;
+        } else {
+            var firstLine = val.substring(0, val.indexOf(". "))+".";
+            var rest = val.substring(val.indexOf(". ") + 1);
+            firstLine += rest.substring(0, rest.indexOf(". ")) + ".";
+            rest = rest.substring(rest.indexOf(". ") + 1);
+            firstLine += rest.substring(0, rest.indexOf(". ")) + ".";
+            rest = rest.substring(rest.indexOf(". ") + 1);
+            var secondLine = rest.substring(0, rest.indexOf(". ")) + ".";
+            rest = rest.substring(rest.indexOf(". ") + 1);
+            secondLine += rest.substring(0);
+            return firstLine + '<br />' + secondLine;
+        }
+    }
+
+    function shiftTypeSelectionEffect() {
+        var shiftType = $("#shiftTypeSelection").combogrid('getValue');
+        if (shiftType == 1) {
+            $("#timeChange").timespinner('disable');
+            $("#rotationDate").datebox('disable');
+        }
+        else if (shiftType == 2 || shiftType == 3 ) {
+            $("#timeChange").timespinner('enable');
+            $("#rotationDate").datebox('disable');
+        } else {
+            $("#timeChange").timespinner('enable');
+            $("#rotationDate").datebox('enable');
+        }
+    }
+</script>

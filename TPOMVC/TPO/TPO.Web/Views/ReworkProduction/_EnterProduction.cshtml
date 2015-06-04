@@ -1,0 +1,1016 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+
+@if (Model.ProductionLineId > 0)
+{
+    <style>
+        .rework-container {
+            border: 1px solid black;
+        }
+
+        .uom-control {
+            width: 50px;
+        }
+    </style>
+    <span>
+        <label>Rework Type</label>
+        <select id="reworkType" onchange="reworkTypeChanged();">
+            <option value="1" class="rwOptScrap">Cut rework roll to a new size</option>
+            <option value="2" class="rwOptScrap">Splice 2 rolls together</option>
+            <option value="3" class="rwOptMaster">Process Master Roll</option>
+        </select>
+    </span><br /><br />
+    <div>
+        <div id="rwRollDiv">
+            <table class="rework-container">
+                <tr>
+                    <td>
+                        <label id="rwRollLabel">Rework Roll ID</label><br />
+                        <input id="rwRoll1ID" class="easyui-combogrid" data-options="
+                               url: '/ProductionEntry/StartingRollsByPlant',
+                               method: 'get',
+                               idField: 'Id',
+                               textField: 'Code',
+                               columns: [[
+                               {field:'Code',title:'Scrap ID'},
+                               {field:'ProductCode',title:'Product'},
+                               {field:'ThicknessDisplay',title:'Thickness'},
+                               {field:'WidthDisplay',title:'Width'},
+                               {field:'LengthDisplay',title:'Length'},
+                               {field:'WeightDisplay',title:'Weight'}
+                               ]],
+                               panelWidth: 200
+                               " />&nbsp;&nbsp;
+                        <button onclick="roll1NotInList(); return false;"><span>Roll Not In List</span></button>&nbsp;&nbsp;
+                        <button id="btnUpdateRoll" onclick="updateRolls(); return false;"><span id="btnRwText">Edit Starting Roll Measurements</span></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <table>
+                            <tr>
+                                <td>
+                                    <label id="rwProductLabel">Product</label><br />
+                                    <input id="rwRoll1TPOProductID" class="easyui-combogrid" data-options="
+                                           url: '/TPOProduct/GetByPlantResult',
+                                           method: 'get',
+                                           showHeader: false,
+                                           idField: 'Id',
+                                           textField: 'ProductCode',
+                                           columns: [[
+                                            {field:'ProductCode'},
+                                            {field:'ProductDesc'}
+                                           ]]
+                                           " />
+                                </td>
+                                <td>
+                                    <label>Length</label><br />
+                                    <input id="rwRoll1ProductLength" />
+                                    <input id="rwRoll1ProductLengthUoM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetLengthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                                <td>
+                                    <label>Width</label><br />
+                                    <input id="rwRoll1ProductWidth" />
+                                    <input id="rwRoll1ProductWidthUoM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWidthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                                <td>
+                                    <label>Weight</label><br />
+                                    <input id="rwRoll1ProductWeight" />
+                                    <input id="rwRoll1ProductWeightUoM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWeightUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label>Original Rework Reason</label><br />
+                                    <label id="rwRoll1Reason"></label>
+                                </td>
+                                <td colspan="2">
+                                    <label>Starting Roll Comments</label><br />
+                                    <textarea id="rwRoll1Comment" disabled="disabled" style="width:100%;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label>Starting Roll Remaining Area / Weight:</label><br />
+                                    <label id="rwRoll1Remaining"></label>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="rwRoll2Row" style="display:none;border-top:1px solid black;">
+                    <td>
+                        <label>Second Scrap Roll</label><br />
+                        <input id="rwRoll2ID" class="easyui-combogrid" data-options="
+                               url: '/ProductionEntry/StartingRollsByPlant',
+                               method: 'get',
+                               idField: 'Id',
+                               textField: 'Code',
+                               columns: [[
+                               {field:'Code',title:'Scrap ID'},
+                               {field:'ProductCode',title:'Product'},
+                               {field:'ThicknessDisplay',title:'Thickness'},
+                               {field:'WidthDisplay',title:'Width'},
+                               {field:'LengthDisplay',title:'Length'},
+                               {field:'WeightDisplay',title:'Weight'}
+                               ]],
+                               panelWidth: 200
+                               " />&nbsp;&nbsp;
+                        <button onclick="roll2NotInList(); return false;"><span>Roll Not In List</span></button>
+                    </td>
+                </tr>
+                <tr class="rwRoll2Row" style="display:none;">
+                    <td colspan="4">
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Product</label><br />
+                                    <input id="rwRoll2TPOProductID" class="easyui-combogrid" data-options="
+                                           url: '/TPOProduct/GetByPlantResult',
+                                           method: 'get',
+                                           showHeader: false,
+                                           idField: 'Id',
+                                           textField: 'ProductCode',
+                                           columns: [[
+                                            {field:'ProductCode'},
+                                            {field:'ProductDesc'}
+                                           ]]
+                                           " />
+                                </td>
+                                <td>
+                                    <label>Length</label><br />
+                                    <input id="rwRoll2ProductLength" />
+                                    <input id="rwRoll2ProductLengthUoM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetLengthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                                <td>
+                                    <label>Width</label><br />
+                                    <input id="rwRoll2ProductWidth" />
+                                    <input id="rwRoll2ProductWidthUoM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWidthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                                <td>
+                                    <label>Weight</label><br />
+                                    <input id="rwRoll2ProductWeight" />
+                                    <input id="rwRoll2ProductWeightUoM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWeightUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label>Original Rework Reason</label><br />
+                                    <label id="rwRoll2Reason"></label>
+                                </td>
+                                <td colspan="2">
+                                    <label>Starting Roll Comments</label><br />
+                                    <textarea id="rwRoll2Comment" disabled="disabled" style="width:100%;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label>Starting Roll Remaining Area / Weight:</label><br />
+                                    <label id="rwRoll2Remaining"></label>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div><br /><br />
+        <table id="reworkControls" class="rework-container">
+            <thead>
+                <tr>
+                    <td style="text-align:center;border-bottom:1px solid black;border-right:1px solid black;"><label>Rework Product</label></td>
+                    <td style="text-align:center;border-bottom:1px solid black;"><label>Scrap</label></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="rework-table">
+                            <tr>
+                                <td>
+                                    <label>Product</label><br />
+                                    <input id="reworkProductID" class="easyui-combogrid prime-control" data-options="
+                                           url: '/TPOProduct/GetReworkProducts',
+                                           idField: 'Id',
+                                           textField: 'ProductCode',
+                                           showHeader: false,
+                                           columns: [[
+                                            {field:'ProductCode'},
+                                            {field:'ProductDesc'}
+                                           ]]
+                                           " />&nbsp;
+                                    <label for="chkShowAllPrime">Show All</label>
+                                    <input id="chkShowAllPrime" type="checkbox" />
+                                </td>
+                                <td>
+                                    <label>Width</label><br />
+                                    <input id="reworkProductWidth" class="prime-control" type="number" />
+                                    <input id="reworkProductWidthUoMID" class="easyui-combobox prime-control uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWidthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Length</label><br />
+                                    <input id="reworkProductLength" class="prime-control" type="number" />
+                                    <input id="reworkProductLengthUoMID" class="easyui-combobox prime-control uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetLengthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                                <td>
+                                    <label>Weight</label><br />
+                                    <input id="reworkProductWeight" class="prime-control" type="number" />
+                                    <input id="reworkProductWeightUoMID" class="easyui-combobox prime-control uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWidthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label>Comment</label><br />
+                                    <textarea id="reworkProductComment" class="prime-control" style="width:100%;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button id="reworkEnterPrime" class="prime-control" onclick="enterPrime(); return false;"><span>Enter Prime</span></button>
+                                </td>
+                                <td>
+                                    <button id="reworkCancelPrime" class="prime-control" onclick="cancelPrime(); return false;"><span>Cancel</span></button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Scrap Type</label><br />
+                                    <input id="reworkScrapTypeID" class="easyui-combobox scrap-control" data-options="
+                                           url: '/EnterLineScrap/GetDispositionResult',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                                <td>
+                                    <label>Width</label><br />
+                                    <input id="reworkScrapWidth" class="scrap-control" type="number" />
+                                    <input id="reworkScrapWidthUoMID" class="easyui-combobox scrap-control uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWidthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Length</label><br />
+                                    <input id="reworkScrapLength" class="scrap-control" type="number" />
+                                    <input id="reworkSrapLengthUoMID" class="easyui-combobox scrap-control uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetLengthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                                <td>
+                                    <label>Weight</label><br />
+                                    <input id="reworkScrapWeight" class="scrap-control" type="number" />
+                                    <input id="reworkScrapWeightUoMID" class="easyui-combobox scrap-control uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWeightUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label>Comment</label><br />
+                                    <textarea id="reworkScrapComment" class="scrap-control" style="width:100%;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button id="reworkEnterScrap" class="scrap-control" onclick="enterScrap(); return false;"><span>Enter Scrap</span></button>
+                                </td>
+                                <td>
+                                    <button id="cancelEnterScrap" class="scrap-control" onclick="cancelScrap(); return false;"><span>Cancel</span></button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    
+  
+  <div id="dialogBox01" class="easyui-dialog" data-options="iconCls:'icon-save'"
+         style="width:400px;height:200px;padding:10px">
+        <form id="dialog1form">
+
+            <table>
+                <tr>
+                    <td>
+                        <label>Rework Roll ID:</label>
+                    </td>
+                    <td>
+                        <input id="dialog1ID" class="easyui-combogrid" data-options="
+                               url: '/ProductionEntry/StartingRollsByPlant',
+                               method: 'get',
+                               idField: 'Id',
+                               textField: 'Code',
+                               columns: [[
+                               {field:'Code',title:'Scrap ID'},
+                               {field:'ProductCode',title:'Product'},
+                               {field:'ThicknessDisplay',title:'Thickness'},
+                               {field:'WidthDisplay',title:'Width'},
+                               {field:'LengthDisplay',title:'Length'},
+                               {field:'WeightDisplay',title:'Weight'}
+                               ]],
+                               panelWidth: 200
+                               " />&nbsp;&nbsp;
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Product :</label>
+                    </td>
+                    <td>
+                        <input id="dialog1ProductID" class="easyui-combogrid" data-options="
+                                           url: '/TPOProduct/GetByPlantResult',
+                                           method: 'get',
+                                           showHeader: false,
+                                           idField: 'Id',
+                                           textField: 'ProductCode',
+                                           columns: [[
+                                            {field:'ProductCode'},
+                                            {field:'ProductDesc'}
+                                           ]]
+                                           " />
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Length :</label>
+                    </td>
+                    <td>
+                        <input type="text" id="dialog1ScrapLength" data-options="min:0,precision:0" />
+                    </td>
+                    <td>
+                        <input id="dialog1lUOM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetLengthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Width :</label>
+                    </td>
+                    <td>
+                        <input type="text" id="dialog1Width" data-options="min:0,precision:0" />
+                    </td>
+                    <td>
+                        <input id="dialog1wUoM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWidthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Weight :</label>
+                    </td>
+                    <td>
+                        <input type="text" id="dialog1Weight" data-options="min:0,precision:0" />
+                    </td>
+                    <td>
+                        <input id="dialog1wtUoM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWeightUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Original Rework Reason:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="dialog1Reason" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Starting Roll Comments :</label>
+                    </td>
+                    <td>
+                        <textarea id="dialogRoll1Comments" ></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button class="btn btn-success btn-shadow" onclick="saveScrap1(); return false;">
+                            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                        </button>
+                        <button class="btn btn-default btn-shadow"
+                                onclick="  $('#dialogBox01').dialog('close'); return false;">
+                            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                        </button>
+
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+
+
+
+        <div id="dialogBox02" class="easyui-dialog"  data-options="iconCls:'icon-save'"
+         style="width:400px;height:200px;padding:10px">
+        <form id="enterLineScrap">
+            <table>
+
+                <tr>
+                    <td>
+                        <label>Second Scrap Roll :</label>
+                    </td>
+                    <td>
+                        <input id="dialog2ID" class="easyui-combogrid" data-options="
+                               url: '/ProductionEntry/StartingRollsByPlant',
+                               method: 'get',
+                               idField: 'Id',
+                               textField: 'Code',
+                               columns: [[
+                               {field:'Code',title:'Scrap ID'},
+                               {field:'ProductCode',title:'Product'},
+                               {field:'ThicknessDisplay',title:'Thickness'},
+                               {field:'WidthDisplay',title:'Width'},
+                               {field:'LengthDisplay',title:'Length'},
+                               {field:'WeightDisplay',title:'Weight'}
+                               ]],
+                               panelWidth: 200
+                               " />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Product :</label>
+                    </td>
+                    <td>
+                        <input id="dialog2ProductID" class="easyui-combogrid" data-options="
+                                           url: '/TPOProduct/GetByPlantResult',
+                                           method: 'get',
+                                           showHeader: false,
+                                           idField: 'Id',
+                                           textField: 'ProductCode',
+                                           columns: [[
+                                            {field:'ProductCode'},
+                                            {field:'ProductDesc'}
+                                           ]]
+                                           " />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Length :</label>
+                    </td>
+                    <td>
+                        <input type="text" id="dialog2Length" data-options="min:0,precision:0" />
+                    </td>
+                    <td>
+                        <input id="dialog2lUOM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetLengthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Width :</label>
+                    </td>
+                    <td>
+                        <input type="text" id="dialog2Width" data-options="min:0,precision:0" />
+                    </td>
+                    <td>
+                        <input id="rwRoll1ProductWidthUoM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWidthUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Weight :</label>
+                    </td>
+                    <td>
+                        <input type="text" id="dialog2Weight" data-options="min:0,precision:0" />
+                    </td>
+                    <td>
+                        <input id="dialog2wtUoM" class="easyui-combobox uom-control" data-options="
+                                           url: '/UnitOfMeasure/GetWeightUoMs',
+                                           method: 'get',
+                                           valueField: 'Id',
+                                           textField: 'Code'
+                                           " />
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Original Rework Reason:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="dialog2Reason" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Starting Roll Comments :</label>
+                    </td>
+                    <td>
+                        <textarea id="dialog2Comments"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button class="btn btn-success btn-shadow" onclick="saveScrap2(); return false;">
+                            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                        </button>
+                        <button class="btn btn-default btn-shadow"
+                                onclick="  $('#dialogBox02').dialog('close'); return false;">
+                            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                        </button>
+
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        var rollsEnabled = false;
+        var roll2Visible = false;
+        //$(document).ready(function () {
+        //    //checkReworkTypes();
+        //    //checkPrimeScrapControls();
+        //});
+
+
+        function roll1NotInList() {
+            $("#dialogBox01").dialog("open");
+        }
+
+        function roll2NotInList() {
+            $("#dialogBox02").dialog("open");
+        }
+
+
+
+        $(document).ready(function () {
+            checkReworkTypes();
+            checkPrimeScrapControls();
+
+            $(function () {
+                $("#dialogBox01").dialog({
+                    autoOpen: false,
+                    height: 350,
+                    width: 500,
+                    modal: true,
+                    title: "Rework Entry - Enter Production"
+                });
+                $("#dialogBox01").dialog("close");
+            });
+            $(function () {
+                $("#dialogBox02").dialog({
+                    autoOpen: false,
+                    height: 350,
+                    width: 500,
+                    modal: true,
+                    title: "Splice 2 Rolls Together - Second Scrap Roll"
+                });
+                $("#dialogBox02").dialog("close");
+            });
+
+        })
+        function checkReworkTypes() {
+            var mOrC = '@Model.TPOMOrC';
+            if (mOrC === 'M') {
+                $('.rwOptMaster').show();
+                $('#reworkType').val(3);
+                $('.rwOptScrap').hide();
+            } else {
+                $('.rwOptScrap').show();
+                $('#reworkType').val(1);
+                $('.rwOptMaster').hide();
+            }
+            reworkTypeChanged();
+        }
+        function updateRolls() {
+            if (!rollsEnabled) {
+                enableRwRoll1();
+                if (roll2Visible) {
+                    enableRwRoll2();
+                }
+                rollsEnabled = true;
+            } else {
+                saveRwRolls();
+            }
+            updateRwEditButton();
+        }
+        function reworkTypeChanged() {
+            disableRwRoll1();
+            disableRwRoll2();
+            clearPrime();
+            clearScrap();
+
+            var type = $('#reworkType').val();
+            switch (type) {
+                case '1':
+                    {
+                        roll2Visible = false;
+                        $(".rwRoll2Row").hide();
+                        $('#rwRollLabel').html('Rework Roll ID');
+                        $('#rwProductLabel').html('Product');
+                    } break;
+                case '2':
+                    {
+                        roll2Visible = true;
+                        $(".rwRoll2Row").show();
+                    } break;
+                case '3':
+                    {
+                        roll2Visible = false;
+                        $(".rwRoll2Row").hide();
+                        $('#rwRollLabel').html('Master Roll ID');
+                        $('#rwProductLabel').html('Prime Product');
+                    } break;
+            }
+            checkPrimeScrapControls();
+        }
+
+
+        function rwRoll1Selected() {
+            loadRwRoll1();
+            rollsEnabled = false;
+            updateRolls();
+            updateRwEditButton();
+            checkPrimeScrapControls();
+        }
+        function rwRoll2Selected() {
+            loadRwRoll2();
+            rollsEnabled = false;
+            updateRolls();
+            updateRwEditButton();
+        }
+
+        function bindRwRoll1(roll) {
+            $('#rwRoll1TPOProductID').combogrid('setValue', roll.TPOProductID);
+            $('#rwRoll1ProductLength').val(roll.Length);
+            $('#rwRoll1ProductLengthUoM').combobox('setValue', roll.LengthUoMID);
+            $('#rwRoll1ProductWidth').val(roll.Width);
+            $('#rwRoll1ProductWidthUoM').combobox('setValue', roll.WidthUoMID);
+            $('#rwRoll1ProductWeight').val(roll.Weight);
+            $('#rwRoll1ProductWeightUoM').combobox('setValue', roll.WeightUoMID);
+            $('#rwRoll1Reason').val(roll.ScrapDescription);
+            $('#rwRoll1Comment').val(roll.ScrapComment);
+        }
+        function bindRwRoll2(roll) {
+            $('#rwRoll2TPOProductID').combogrid('setValue', roll.TPOProductID);
+            $('#rwRoll2ProductLength').val(roll.Length);
+            $('#rwRoll2ProductLengthUoM').combobox('setValue', roll.LengthUoMID);
+            $('#rwRoll2ProductWidth').val(roll.Width);
+            $('#rwRoll2ProductWidthUoM').combobox('setValue', roll.WidthUoMID);
+            $('#rwRoll2ProductWeight').val(roll.Weight);
+            $('#rwRoll2ProductWeightUoM').combobox('setValue', roll.WeightUoMID);
+            $('#rwRoll2Reason').val(roll.ScrapDescription);
+            $('#rwRoll2Comment').val(roll.ScrapComment);
+        }
+        function getRwRoll1() {
+            var roll =
+                {
+                    "Id": $('#rwRoll1ID').combogrid('getValue'),
+                    "TPOProductID": $('rwRoll1TPOProductID').combogrid('getValue'),
+                    "Length": $('#rwRoll1ProductLength').val(),
+                    "LengthUoMID": $('#rwRoll1ProductLengthUoM').combobox('getValue'),
+                    "Width": $('#rwRoll1ProductWidth').val(),
+                    "WidthUoMID": $('#rwRoll1ProductWidthUoM').combobox('getValue'),
+                    "Weight": $('#rwRoll1ProductWeight').val(),
+                    "WeightUoMID": $('#rwRoll1ProductWeightUoM').combobox('getValue')
+                }
+            return roll;
+        }
+        function getRwRoll2() {
+            var roll =
+                {
+                    "Id": $('#rwRoll2ID').combogrid('getValue'),
+                    "TPOProductID": $('rwRoll2TPOProductID').combogrid('getValue'),
+                    "Length": $('#rwRoll2ProductLength').val(),
+                    "LengthUoMID": $('#rwRoll2ProductLengthUoM').combobox('getValue'),
+                    "Width": $('#rwRoll2ProductWidth').val(),
+                    "WidthUoMID": $('#rwRoll2ProductWidthUoM').combobox('getValue'),
+                    "Weight": $('#rwRoll2ProductWeight').val(),
+                    "WeightUoMID": $('#rwRoll2ProductWeightUoM').combobox('getValue')
+                }
+            return roll;
+        }
+        function saveRwRolls() {
+            showLoadingDialog();
+            var rolls =
+                {
+                    roll1: getRwRoll1
+                };
+            if (roll2Visible) {
+                rolls =
+                    {
+                        roll2: getRwRoll2
+                    };
+            }
+            $.ajax(
+                {
+                    url: '/ReworkProduction/UpdateRoll',
+                    data: rolls,
+                    method: 'post',
+                    success: function (data) {
+                        GetMessage(data.ActionType, data.ActionMessage);
+                        disableRwRoll1();
+                        if (roll2Visible) {
+                            disableRwRoll1();
+                        }
+                        rollsEnabled = false;
+                    },
+                    error: function () { },
+                    complete: function () {
+                        closeLoadingDialog();
+                    }
+                });
+        }
+
+        function loadRwRoll1() {
+            var grid = $("#rwRoll1ID").combogrid('grid');
+            var roll1 = $(grid).datagrid('getSelected');
+            bindRwRoll1(roll1);
+        }
+        function enableRwRoll1() {
+            toggleRwRoll1(false);
+        }
+        function disableRwRoll1() {
+            toggleRwRoll1(true);
+        }
+        function toggleRwRoll1(disabled) {
+            $('#rwRoll1TPOProductID').prop('disabled', disabled);
+            $('#rwRoll1ProductLength').prop('disabled', disabled);
+            $('#rwRoll1ProductLengthUoM').prop('disabled', disabled);
+            $('#rwRoll1ProductWidth').prop('disabled', disabled);
+            $('#rwRoll1ProductWidthUoM').prop('disabled', disabled);
+            $('#rwRoll1ProductWeight').prop('disabled', disabled);
+            $('#rwRoll1ProductWeightUoM').prop('disabled', disabled);
+        }
+
+        function loadRwRoll2() {
+            var grid = $("#rwRoll2ID").combogrid('grid');
+            var roll2 = $(grid).datagrid('getSelected');
+            bindRwRoll2(roll2);
+        }
+        function enableRwRoll2() {
+            toggleRwRoll2(false);
+        }
+        function disableRwRoll2() {
+            toggleRwRoll2(true);
+        }
+        function toggleRwRoll2(disabled) {
+            $('#rwRoll2TPOProductID').prop('disabled', disabled);
+            $('#rwRoll2ProductLength').prop('disabled', disabled);
+            $('#rwRoll2ProductLengthUoM').prop('disabled', disabled);
+            $('#rwRoll2ProductWidth').prop('disabled', disabled);
+            $('#rwRoll2ProductWidthUoM').prop('disabled', disabled);
+            $('#rwRoll2ProductWeight').prop('disabled', disabled);
+            $('#rwRoll2ProductWeightUoM').prop('disabled', disabled);
+        }
+
+        function updateRwEditButton() {
+            if (rollsEnabled) {
+                $('#btnRwText').html('Save Starting Roll');
+            } else {
+                $('#btnRwText').html('Edit Starting Roll Measurements');
+            }
+        }
+
+        function loadPrimeProducts() {
+            if ($('#chkShowAllPrime').prop('checked')) {
+                $('#reworkProductID').combogrid(
+                    {
+                        url: '/TPOProduct/GetByPlantResult',
+                        queryParams:
+                            {
+
+                            }
+                    });
+            } else {
+                var id = $('#rwRoll1TPOProductID').combogrid('getValue');
+                $('#reworkProductID').combogrid(
+                    {
+                        url: '/TPOProduct/GetReworkProducts',
+                        queryParams:
+                            {
+                                productInID: id
+                            }
+                    });
+            }
+
+        }
+
+        function checkPrimeScrapControls() {
+            var rollID = $('#rwRoll1ID').combogrid('getValue');
+            var disabled = rollID <= 0;
+            togglePrimeControls(disabled);
+            toggleScrapControls(disabled);
+        }
+        function togglePrimeControls(disabled) {
+            $('#reworkProductID').prop('disabled', disabled);
+            $('#chkShowAllPrime').prop('disabled', disabled);
+            $('#reworkProductWidth').prop('disabled', disabled);
+            $('#reworkProductWidthUoMID').prop('disabled', disabled);
+            $('#reworkProductLength').prop('disabled', disabled);
+            $('#reworkProductLengthUoMID').prop('disabled', disabled);
+            $('#reworkProductWeight').prop('disabled', disabled);
+            $('#reworkProductWeightUoMID').prop('disabled', disabled);
+            $('#reworkProductComment').prop('disabled', disabled);
+            $('#reworkEnterPrime').prop('disabled', disabled);
+            $('#reworkCancelPrime').prop('disabled', disabled);
+        }
+        function enterPrime() {
+            showLoadingDialog();
+            var model =
+                {
+                    ProductInID: $('#reworkProductID').combogrid('getValue'),
+                    Width: $('#reworkProductWith').val(),
+                    WidthUoMID: $('#reworkProductWidthUoMID').combobox('getValue'),
+                    Length: $('#reworkProductLength').val(),
+                    LengthUoMID: $('#reworkProductLengthUoMID').combobox('getValue'),
+                    Weight: $('#reworkProductWeight').val(),
+                    WeightUoMID: $('#reworkProductWeightUoMID').combobox('getValue'),
+                    Comment: $('#reworkProductComment').val()
+                };
+
+            $.ajax(
+                {
+                    url: '/ReworkProduction/EnterPrimeScrap',
+                    method: 'post',
+                    data: model,
+                    success: function (data) {
+                        GetMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function () {
+
+                    },
+                    complete: function () {
+                        closeLoadingDialog();
+                    }
+                });
+        }
+        function cancelPrime() {
+            clearPrime();
+        }
+        function clearPrime() {
+            $('#reworkProductID').combogrid('setValue', ' ');
+            $('#reworkProductWidth').val(0);
+            $('#reworkProductWidthUoMID').combobox('setValue', ' ');
+            $('#reworkProductLength').val(0);
+            $('#reworkProductLengthUoMID').combobox('setValue', ' ');
+            $('#reworkProductWeight').val(0);
+            $('#reworkProductWeightUoMID').combobox('setValue', ' ');
+            $('#reworkProductComment').val('');
+        }
+
+        function toggleScrapControls(disabled) {
+            $('#reworkScrapTypeID').prop('disabled', disabled);
+            $('#reworkScrapWidth').prop('disabled', disabled);
+            $('#reworkScrapWidthUoMID').prop('disabled', disabled);
+            $('#reworkScrapLength').prop('disabled', disabled);
+            $('#reworkScrapLengthUoMID').prop('disabled', disabled);
+            $('#reworkScrapWeight').prop('disabled', disabled);
+            $('#reworkScrapWeightUoMID').prop('disabled', disabled);
+            $('#reworkScrapComment').prop('disabled', disabled);
+            $('#reworkEnterScrap').prop('disabled', disabled);
+            $('#cancelEnterScrap').prop('disabled', disabled);
+        }
+        function enterScrap() {
+            showLoadingDialog();
+            var model =
+                {
+                    ScrapTypeID: $('#reworkScrapTypeID').combobox('getValue'),
+                    Width: $('#reworkScrapWidth').val(),
+                    WidthUoMID: $('#reworkScrapWidthUoMID').combobox('getValue'),
+                    Length: $('#reworkScrapLength').val(),
+                    LengthUoMID: $('#reworkSrapLengthUoMID').combobox('getValue'),
+                    Weight: $('#reworkScrapWeight').val(),
+                    WeightUoMID: $('#reworkScrapWeightUoMID').combobox('getValue'),
+                    Comment: $('reworkScrapComment').val()
+                };
+            $.ajax(
+                {
+                    url: '/ReworkProduction/EnterScrap',
+                    method: 'post',
+                    data: model,
+                    success: function (data) {
+                        GetMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function () {
+
+                    },
+                    complete: function () {
+                        closeLoadingDialog();
+                    }
+                });
+
+        }
+        function cancelScrap() {
+            clearScrap();
+        }
+        function clearScrap() {
+            $('#reworkScrapTypeID').combobox('setValue', ' ');
+            $('#reworkScrapWidth').val(0);
+            $('#reworkScrapWidthUoMID').combobox('setValue', ' ');
+            $('#reworkScrapLength').val(0);
+            $('#reworkSrapLengthUoMID').combobox('setValue', ' ');
+            $('#reworkScrapWeight').val(0);
+            $('#reworkScrapWeightUoMID').combobox('setValue', ' ');
+            $('#reworkScrapComment').val(' ');
+        }
+    </script>
+}

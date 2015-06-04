@@ -1,0 +1,109 @@
+﻿@model TPO.Model.RawMaterials.RawMaterialQCModel
+
+@{
+    ViewBag.Title = "Raw Material QC Testing";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Cancel").click(function () {
+            var url = "/RawMaterialQC/Index";
+            window.location.href = url;
+        });
+    });
+</script>
+
+@using (Html.BeginForm(new { id = "RawMaterialQC" }))
+{
+    @Html.AntiForgeryToken()
+    
+    @Html.HiddenFor(model => model.ID)
+    
+    <div class="form-horizontal">
+        <h2>Raw Material QC Testing</h2><br />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RawMaterialCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.RawMaterialCode)
+                @Html.HiddenFor(model => model.RawMaterialCode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LotCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.LotCode)
+                @Html.HiddenFor(model => model.LotCode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastModified, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.TextBoxFor(model => model.LastModified, null, new { @class = "form-control" })*@
+                <input class="easyui-datebox" value="@Model.LastModified" name="lastmodified">
+                @Html.ValidationMessageFor(model => model.LastModified)</div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BoxCar, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.BoxCar, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BoxCar)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QCTechID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.QCTechID, (SelectList)ViewBag.QCTech, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.QCTechID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comments, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Comments)
+            </div>
+        </div>
+        <div id="QCForm">
+        @Html.Partial("/Views/RawMaterialQC/_QCDetail.cshtml", Model)
+        <script type="text/javascript">
+                if ($.validator != null) {
+                    $.validator.unobtrusive.parse('form');
+                }
+        </script>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <!--TODO: 
+                        check to see if red\hold exists
+                        if TRUE 
+                            swap link to /Edit/RedHoldID
+                        ELSE
+                            use /Create/QCID for reference
+                -->
+                @*@Html.ActionLink("Red \\ Hold Form", "Create","RawMaterialQCRedHold", new { ID = Model.ID }, new { @class = "btn btn-default" })
+                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="button" value="Return" id="Cancel" class="btn btn-default" />*@ 
+                <button class="btn btn-default btn-shadow btn-redhold"
+                        onclick="window.location.href = '@Url.Action("Create", "RawMaterialQCRedHold", new { ID = Model.ID })';return false;">
+                    <span class="glyphicon glyphicon-eye-open"></span>&nbsp;Red &amp; Hold Form
+                </button>
+                <button class="btn btn-success btn-shadow"
+                        onclick="$(this).parents('form:first').submit(); return false;">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                </button>
+
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Index", "RawMaterialQC")';return false;">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+}

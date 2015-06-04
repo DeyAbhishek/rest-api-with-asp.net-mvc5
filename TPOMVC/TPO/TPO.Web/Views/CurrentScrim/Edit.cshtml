@@ -1,0 +1,604 @@
+﻿@{
+    ViewBag.Title = "Set Current Raw Material List";
+}
+
+<h2>Set Current Raw Material List</h2>
+
+<label>Production Line:</label>
+<span>&nbsp;&nbsp;</span>
+
+<input id="ddlLines" class="easyui-combogrid" style="width:120px;" data-options="
+   idField: 'ID',
+   textField: 'LineDesc',
+   url: '/CurrentScrim/GetProductionLinesResult',
+   method: 'get',
+   columns: [[
+   {field:'LineDesc',title:'Line',width:60}
+   ]],onSelect: productionLineSelected,
+   fitColumns: true">
+<br />
+<br />
+<hr />
+<div id="divTabs" class="easyui-tabs">
+    <div title="Set Raw Material Lots" id="tab-raw-materials" style="padding:20px;">
+        <table id="dg" class="easyui-datagrid" title="Raw Material Lots"
+               data-options="iconCls: 'icon-edit',
+                           singleSelect: true,
+                           toolbar: '#tb' ,
+                           fitColumns: true,
+                           url: '/CurrentScrim/GridByType' ,
+                           method: 'get' ,
+                           pagination: true,
+                           pageSize: 15,
+                           rownumbers: true,
+                           pageList: [ 15,25,50 ],
+                           onClickRow: onClickRow"></table>
+        <div id="tb">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" append() ">Create New</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeit() ">Delete</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" accept() ">Save Changes</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Undo</a>
+        </div>
+    </div>
+    <div title="Set Scrim / Release Liner Rolls" style="padding:20px;">
+
+        <input id="hiddenScrimID" type="hidden" />
+        <input id="hiddenDateEntered" type="hidden" />
+        <input id="hiddenEnteredBy" type="hidden" />
+        <input id="hiddenLastModified" type="hidden" />
+        <input id="hiddenModifiedBy" type="hidden" />
+
+        <div class="form-horizontal">
+            <hr />
+
+            <div class="form-group">
+                <table class="table">
+                    <tr>
+                        <td style="width:250px;"><label></label></td>
+                        <td><label>Scrim 1</label></td>
+                        <td><label>Scrim 2</label></td>
+                        <td><label>Fleece</label></td>
+                    </tr>
+                    <tr>
+                        <td style="width:250px;">Current Roll Type</td>
+                        <td>
+                            <input id="Scrim1TypeID" class="easyui-combogrid" style="width:250px" data-options="
+                                               panelWidth: 500,
+                                               idField: 'Id',
+                                               textField: 'Code',
+                                               loadMsg: 'Loading',
+                                               url: '/ScrimRoll/GetScrimTypeResult' ,
+                                               method: 'get' ,
+                                               columns: [[
+                                               {field:'Code',title:'Scrim type',width:60},
+                                               {field:'Description',title:'Description',width:100}
+                                               ]],onSelect: ddlScrim1TypeSelected,
+                                               fitColumns: true">
+                        </td>
+                        <td>
+                            <input id="Scrim2TypeID" class="easyui-combogrid" style="width:250px" data-options="
+                                               panelWidth: 500,
+                                               idField: 'Id',
+                                               textField: 'Code',
+                                               loadMsg: 'Loading',
+                                               url: '/ScrimRoll/GetScrimTypeResult',
+                                               method: 'get' ,
+                                               columns: [[
+                                               {field:'Code',title:'Scrim Type',width:60},
+                                               {field:'Description',title:'Description',width:100}
+                                               ]],onSelect: ddlScrim2TypeSelected,
+                                               fitColumns: true">
+                        </td>
+                        <td>
+                            <input id="FleeceTypeID" class="easyui-combogrid" style="width:250px" data-options="
+                                               panelWidth: 500,
+                                               idField: 'Id' ,
+                                               textField: 'Code' ,
+                                               loadMsg: 'Loading',
+                                               url: '/ScrimRoll/GetScrimTypeResult' ,
+                                               method: 'get' ,
+                                               columns: [[
+                                               {field:'Code',title:'Scrim Type',width:60},
+                                               {field:'Description',title:'Description',width:100}
+                                               ]],onSelect: ddlFleeceTypeSelected,
+                                               fitColumns: true">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:250px;">Current Roll No</td>
+                        <td>
+                            <input id="Scrim1RollID" class="easyui-combogrid" style="width:120px" data-options="
+                                               panelWidth: 600,
+                                               idField: 'Id' ,
+                                               textField: 'Code' ,
+                                               loadMsg: 'Loading',
+                                               url: '/CurrentScrim/ScrimRollsByTypeResult' ,
+                                               method: 'get' ,
+                                               columns: [[
+                                               {field:'Code',title:'Code',width:70},
+                                               {field: 'LengthDisplay' , title: 'Remaining Length' },
+                                               {field: 'AreaDisplay' , title: 'Remaining Area' },
+                                               {field: 'WeightDisplay' , title: 'Remaining Weight' }
+                                               ]],
+                                               fitColumns: true,
+                                               onLoadSuccess: comboGridLoaded">
+                        </td>
+                        <td>
+                            <input id="Scrim2RollID" class="easyui-combogrid" style="width:120px" data-options="
+                                               panelWidth: 600,
+                                               idField: 'Id' ,
+                                               textField: 'Code' ,
+                                               loadMsg: 'Loading',
+                                               url: '/CurrentScrim/ScrimRollsByTypeResult' ,
+                                               method: 'get' ,
+                                               columns: [[
+                                               {field:'Code',title:'Code',width:70},
+                                               {field: 'LengthDisplay' , title: 'Remaining Length' },
+                                               {field: 'AreaDisplay' , title: 'Remaining Area' },
+                                               {field: 'WeightDisplay' , title: 'Remaining Weight' }
+                                               ]],
+                                               fitColumns: true,
+                                               onLoadSuccess: comboGridLoaded">
+                        </td>
+                        <td>
+                            <input id="FleeceRollID" class="easyui-combogrid" style="width:120px" data-options="
+                                               panelWidth: 600,
+                                               idField: 'Id' ,
+                                               textField: 'Code' ,
+                                               loadMsg: 'Loading',
+                                               url: '/CurrentScrim/ScrimRollsByTypeResult' ,
+                                               method: 'get' ,
+                                               columns: [[
+                                               {field:'Code',title:'Code',width:70},
+                                               {field:'LengthDisplay',title:'Remaining Length' },
+                                               {field: 'AreaDisplay' , title:'Remaining Area'},
+                                               {field: 'WeightDisplay' ,title:'Remaining Weight' }
+                                               ]],
+                                               fitColumns: true,
+                                               onLoadSuccess: comboGridLoaded">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button id="btnUseScrim1" class="btn btn-primary btn-shadow" onclick="markScrim1AsUsed(); return false;"><span class="glyphicon glyphicon-check">Mark Roll As Used</span></button><br /><br />
+                            <button id="btnClearScrim1" class="btn btn-primary btn-shadow" onclick="doNotUseScrim1(); return false;"><span class="glyphicon glyphicon-remove">&nbsp;Do Not Use</span></button>
+                        </td>
+                        <td>
+                            <button id="btnUseScrim2" class="btn btn-primary btn-shadow" onclick="markScrim2AsUsed(); return false;"><span class="glyphicon glyphicon-check">Mark Roll As Used</span></button><br /><br />
+                            <button id="btnClearScrim2" class="btn btn-primary btn-shadow" onclick="doNotUseScrim2(); return false;"><span class="glyphicon glyphicon-remove">&nbsp;Do Not Use</span></button>
+                        </td>
+                        <td>
+                            <button id="btnUseFleece" class="btn btn-primary btn-shadow" onclick="markFleeceAsUsed(); return false;"><span class="glyphicon glyphicon-check">Mark Roll As Used</span></button><br /><br />
+                            <button id="btnClearFleece" class="btn btn-primary btn-shadow" onclick="doNotUseFleece(); return false;"><span class="glyphicon glyphicon-remove">&nbsp;Do Not Use</span></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button class="btn btn-success btn-shadow"
+                            onclick="submitCurrentScrim(); return false;">
+                        <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                    </button>
+                    <button class="btn btn-default btn-shadow"
+                            onclick="window.location.href = '@Url.Action("Edit", "CurrentScrim")';return false;">
+                        <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+@*Shared Functions*@
+<script type="text/javascript">
+    function productionLineSelected(record) {
+        var lineID = $("#ddlLines").combogrid('getValue');
+        if (lineID > 0) {
+            $("#divTabs").show();
+        } else {
+            $("#divTabs").hide();
+        }
+        loadGrid();
+        loadCurrentScrim();
+    }
+</script>
+
+@*Raw Materials Functions*@
+<script type="text/javascript">
+    var editIndex = undefined;
+    function loadGrid()
+    {
+        var lineID = $("#ddlLines").combogrid('getValue');
+        $("#dg").datagrid(
+            {
+                queryParams:
+                    {
+                        lineID: lineID
+                    },
+                columns:[[
+                    {field:'Id',title:'Id',hidden: true},
+                    {field:'PlantID',title:'PlantID',hidden: true},
+                    {field:'LineID',title:'LineID',hidden: true},
+                    {field:'RawMaterialCode',title:'Raw Material Received Code',editor: {
+                        type:'combogrid',
+                        options:{
+                            panelWidth: 200,
+                            idField: 'Id',
+                            textField: 'Code',
+                            url: '/CurrentScrim/GetRawMaterialCodeDropDown',
+                            method: 'get',
+                            onSelect: onSelectFunction,
+                            columns: [[
+                            {field:'Id',title:'Id'},
+                            {field:'Code',title:'Code'},
+                            {field:'Description',title:'Description'}
+                            ]],
+                            fitColumns: true}}},
+                    {field:'LotNumber',title:'Lot Number',editor: {
+                        type:'combogrid',
+                        options:{
+                            panelWidth: 200,
+                            idField: 'Id',
+                            textField: 'LotNumber',
+                            columns: [[
+                            {field:'Id',title:'Id'},
+                            {field:'LotNumber',title:'LotNumber'}
+                            ]],
+                            fitColumns: true}}},
+                    {field:'DateEntered',title:'Entered Date',formatter:formatDate},
+                    {field:'EnteredBy',title:'Entered By'},
+                    {field:'LastModified',title:'Last Modified Date',formatter:formatDate},
+                    {field:'ModifiedBy',title:'Last Modified By'}
+                ]]
+            });
+    }
+    function endEditing(){
+        if (editIndex == undefined){return true}
+        if ($('#dg').datagrid('validateRow', editIndex)){
+            var ed = $('#dg').datagrid('getEditor', {index:editIndex,field:'Id'});
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function onSelectFunction(rowIndex, rowData) {
+        var temp = $('#dg').datagrid('getEditor', {index:editIndex,field:'RawMaterialCode'});
+        var x = $(temp.target).combogrid('getText');
+
+        var combo2Items = {};
+        $.ajax(
+        {
+            url: '/CurrentScrim/GetCodeDropDown',
+            method: 'get',
+            cache: false,
+            async: false,
+            data: { id: x },
+            success: function (data, textStatus, jqXHR)
+            {
+                combo2Items = data;
+            }
+        });
+
+        var comboGrid2 = $('#dg').datagrid('getEditor', {index: editIndex, field: 'LotNumber' });
+        var grid = $(comboGrid2.target).combogrid('grid');
+        grid.datagrid({
+            data: combo2Items
+        });
+    }
+
+
+    function onClickRow(index){
+        if (editIndex != index){
+            if (endEditing()){
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+    function append(){
+        if (endEditing()){
+            $('#dg').datagrid('appendRow',{status:'P'});
+            editIndex = $('#dg').datagrid('getRows').length-1;
+            $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+        }
+    }
+    function removeit(){
+        if (editIndex == undefined){return}
+
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+
+            var myJSONObject = {
+                "Id": row.Id
+            };
+
+            $.ajax({
+                url: '/CurrentScrim/RawMaterialAjaxDelete',
+                type: 'POST',
+                data: { id: JSON.stringify(myJSONObject) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dg').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+
+        $('#dg').datagrid('cancelEdit', editIndex)
+            .datagrid('deleteRow', editIndex);
+        editIndex = undefined;
+    }
+    function accept(){
+        if (endEditing()){
+            $('#dg').datagrid('acceptChanges');
+
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+
+                var myJSONObject = {
+                    "Id": row.Id,
+                    "PlantID": row.PlantID,
+                    "LineID": row.LineID,
+                    "RawMaterialCode": row.RawMaterialCode,
+                    "LotNumber": row.LotNumber,
+                    "DateEntered": row.DateEntered,
+                    "EnteredBy": row.EnteredBy,
+                    "LastModified": row.LastModified,
+                    "ModifiedBy": row.ModifiedBy
+                };
+
+                $.ajax({
+                    url: '/CurrentScrim/CurrentScrimAjaxCreate',
+                    type: 'POST',
+                    data: { id: JSON.stringify(myJSONObject), lineId: $("#ddlLines").combogrid('getValue') },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dg').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+                }
+            }
+        }
+        function reject() {
+            $('#dg').datagrid('rejectChanges');
+            editIndex = undefined;
+        }
+        function formatDate(val, row) {
+            if (val != undefined) {
+                var date = new Date(parseInt(val.substr(6)));
+                var day = date.getDate();
+                var month = date.getMonth();
+                var year = date.getFullYear();
+                var finalDate = day + '/' + month + '/' + year;
+                return finalDate;
+            } else {
+                return new Date();
+            }
+        }
+
+</script>
+
+@*Current Scrim Functions*@
+<script type="text/javascript">
+    function loadCurrentScrim() {
+        var lineID = $("#ddlLines").combogrid('getValue');
+        showLoadingDialog();
+        $.ajax(
+            {
+                url: '/CurrentScrim/CurrentScrimByLineResult/',
+                method: 'get',
+                data: { lineID: lineID },
+                success: function (data, textStatus, jqXHR) {
+                    bindCurrentScrim(data);
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }, complete: function (jqXHR, textStatus) {
+                    closeLoadingDialog();
+                }
+            });
+    }
+    function bindCurrentScrim(currentScrim) {
+        $("#hiddenScrimID").val(currentScrim.Id);
+        $("#hiddenDateEntered").val(currentScrim.DateEntered);
+        $("#hiddenEnteredBy").val(currentScrim.EnteredBy);
+        $("#hiddenLastModified").val(currentScrim.LastModified);
+        $("#hiddenModifiedBy").val(currentScrim.ModifiedBy);
+        $("#Scrim1TypeID").combogrid('setValue', currentScrim.Scrim1TypeID);
+        if (currentScrim.Scrim1TypeID == 0) {
+            $("#Scrim1TypeID").combogrid('setText', 'N/A');
+        }
+        $("#Scrim2TypeID").combogrid('setValue', currentScrim.Scrim2TypeID);
+        if (currentScrim.Scrim2TypeID <= 0) {
+            $("#Scrim2TypeID").combogrid('setText', 'N/A');
+        }
+        $("#FleeceTypeID").combogrid('setValue', currentScrim.FleeceTypeID);
+        if (currentScrim.FleeceTypeID <= 0) {
+            $("#FleeceTypeID").combogrid('setText', 'N/A');
+        }
+        ddlScrim1TypeSelected();
+        ddlScrim2TypeSelected();
+        ddlFleeceTypeSelected();
+        $("#Scrim1RollID").combogrid('setValue', currentScrim.Scrim1RollID);
+        $("#Scrim2RollID").combogrid('setValue', currentScrim.Scrim2RollID);
+        $("#FleeceRollID").combogrid('setValue', currentScrim.FleeceRollID);
+    }
+    function submitCurrentScrim() {
+        showLoadingDialog();
+        var currentScrim = {
+            Id: $("#hiddenScrimID").val(),
+            ProdLineID: $("#ddlLines").combogrid('getValue'),
+            Scrim1TypeID: $("#Scrim1TypeID").combogrid('getValue'),
+            Scrim2TypeID: $("#Scrim2TypeID").combogrid('getValue'),
+            FleeceTypeID: $("#FleeceTypeID").combogrid('getValue'),
+            Scrim1RollID: $("#Scrim1RollID").combogrid('getValue'),
+            Scrim2RollID: $("#Scrim2RollID").combogrid('getValue'),
+            FleeceRollID: $("#FleeceRollID").combogrid('getValue'),
+            DateEntered: $.datepicker.formatDate('mm/dd/yy', new Date(parseInt($("#hiddenDateEntered").val().substr(6)))),
+            EnteredBy: $("#hiddenEnteredBy").val(),
+            LastModified: $.datepicker.formatDate('mm/dd/yy', new Date(parseInt($("#hiddenLastModified").val().substr(6)))),
+            ModifiedBy: $("#hiddenModifiedBy").val()
+        };
+
+        $.ajax(
+            {
+                url: '/CurrentScrim/SaveCurrentScrimResult/',
+                method: 'post',
+                data: currentScrim,
+                success: function (data, textStatus, jqXHR) {
+                    displayMessage(data.ActionType, data.ActionMessage);
+                    bindCurrentScrim(data);
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }, complete: function (jqXHR, textStatus) {
+                    closeLoadingDialog();
+                }
+            });
+    }
+    function ddlScrim1TypeSelected() {
+        var val = $("#Scrim1TypeID").combogrid('getValue');
+        $('#Scrim1RollID').combogrid({
+            queryParams: {
+                typeID: val
+            }
+        });
+    }
+    function ddlScrim2TypeSelected() {
+        var val = $("#Scrim2TypeID").combogrid('getValue');
+        $('#Scrim2RollID').combogrid({
+            queryParams: {
+                typeID: val
+            }
+        });
+    }
+    function ddlFleeceTypeSelected() {
+        var val = $("#FleeceTypeID").combogrid('getValue');
+        $('#FleeceRollID').combogrid({
+            queryParams: {
+                typeID: val
+            }
+        });
+    }
+    function markScrim1AsUsed() {
+        var lineID = $("#ddlLines").combogrid('getValue');
+        var scrimRollID = $("#Scrim1RollID").combogrid('getValue');
+        showLoadingDialog();
+        $.ajax(
+            {
+                url: '/ScrimRoll/MarkRollAsUsed',
+                method: 'post',
+                data: { scrimRollID: scrimRollID, lineID: lineID },
+                success: function (data, textStatus, jqXHR) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeSuccess', 'Scrim roll marked as used.');
+                    bindCurrentScrim(data);
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }, complete: function (jqXHR, textStatus) {
+                    closeLoadingDialog();
+                }
+            });
+    }
+    function markScrim2AsUsed()
+    {
+        var lineID = $("#ddlLines").combogrid('getValue');
+        var scrimRollID = $("#Scrim2RollID").combogrid('getValue');
+        showLoadingDialog();
+        $.ajax(
+            {
+                url: '/ScrimRoll/MarkRollAsUsed',
+                method: 'post',
+                data: { scrimRollID: scrimRollID, lineID: lineID },
+                success: function (data, textStatus, jqXHR) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeSuccess', 'Scrim roll marked as used.');
+                    bindCurrentScrim(data);
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }, complete: function (jqXHR, textStatus) {
+                    closeLoadingDialog();
+                }
+            });
+    }
+    function markFleeceAsUsed()
+    {
+        var lineID = $("#ddlLines").combogrid('getValue');
+        var scrimRollID = $("#FleeceRollID").combogrid('getValue');
+        showLoadingDialog();
+        $.ajax(
+            {
+                url: '/ScrimRoll/MarkRollAsUsed',
+                method: 'post',
+                data: { scrimRollID: scrimRollID, lineID: lineID },
+                success: function (data, textStatus, jqXHR) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeSuccess', 'Scrim roll marked as used.');
+                    bindCurrentScrim(data);
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }, complete: function (jqXHR, textStatus) {
+                    closeLoadingDialog();
+                }
+            });
+    }
+    function doNotUseScrim1() {
+
+        $("#Scrim1TypeID").combogrid('setValue', 0);
+        $("#Scrim1TypeID").combogrid('setText', 'N/A');
+        ddlScrim1TypeSelected();
+        $("#Scrim1RollID").combogrid('setValue', 0);
+        $("#Scrim1RollID").combogrid('setText', 'N/A');
+    }
+    function doNotUseScrim2() {
+        $("#Scrim2TypeID").combogrid('setValue', 0);
+        $("#Scrim2TypeID").combogrid('setText', 'N/A');
+        ddlScrim2TypeSelected();
+        $("#Scrim2RollID").combogrid('setValue', 0);
+        $("#Scrim2RollID").combogrid('setText', 'N/A');
+
+    }
+    function doNotUseFleece() {
+        $("#FleeceTypeID").combogrid('setValue', 0);
+        $("#FleeceTypeID").combogrid('setText', 'N/A');
+        ddlFleeceTypeSelected();
+        $("#FleeceRollID").combogrid('setValue', 0);
+        $("#FleeceRollID").combogrid('setText', 'N/A');
+
+    }
+    function comboGridLoaded(data) {
+
+        if ($("#Scrim1RollID").combogrid('getValue') <= 0) {
+            $("#Scrim1RollID").combogrid('setText', 'N/A');
+        }
+        if ($("#Scrim2RollID").combogrid('getValue') <= 0) {
+            $("#Scrim2RollID").combogrid('setText', 'N/A');
+        }
+        if ($("#FleeceRollID").combogrid('getValue') <= 0) {
+            $("#FleeceRollID").combogrid('setText', 'N/A');
+        }
+    }
+</script>
+
+
+
+
+
+

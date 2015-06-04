@@ -1,0 +1,91 @@
+﻿@model IEnumerable<TPO.DL.Models.FailProperty>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+    <button
+           class="btn btn-default btn-shadow leftMar20px"
+           onclick="javascript: window.location.href = '@Url.Action("Create")';">
+        <span class="glyphicon glyphicon-plus"></span>&nbsp;Create New
+    </button>
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SortOrder)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastModified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SortOrder)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateEntered)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EnteredBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastModified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedBy)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
+            <button
+                   class="btn btn-default btn-shadow"
+                   onclick="javascript: window.location.href = '@Url.Action("Edit",new{id=item.ID})'; return false;">
+                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+            </button>
+            <button
+                   value="Details"
+                   class="btn btn-default btn-shadow"
+                   onclick="window.location.href = '@Url.Action("Details",new{id=item.ID})';return false;" >
+                <span class="glyphicon glyphicon-eye-open"></span>&nbsp;Details
+            </button>
+            <button
+                   class="btn btn-default btn-shadow btn-delete"
+                   onclick="window.location.href = '@Url.Action("Delete",new{id=item.ID})';return false;" >
+                <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+            </button>
+            @*@Html.ActionLink("Details", "Details", new { id=item.ID }) |*@
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+        </td>
+    </tr>
+}
+
+</table>

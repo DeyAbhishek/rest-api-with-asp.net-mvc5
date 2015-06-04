@@ -1,0 +1,37 @@
+﻿@model TPOWeb.Models.RawMaterialQCSpecificGravityViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>RawMaterialSpecificGravity</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div id="QCForm">
+            @Html.Partial("/Views/RawMaterialQCSpecificGravity/GravityDetail.cshtml", Model)
+            <script type="text/javascript">
+                if ($.validator != null) {
+                    $.validator.unobtrusive.parse('form');
+                }
+            </script>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Cancel", "Index")
+</div>

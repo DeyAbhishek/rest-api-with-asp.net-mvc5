@@ -1,0 +1,272 @@
+﻿@using TPOWeb.Models
+@model TPOWeb.Models.RawMaterialQCSpecificGravityViewModel
+
+@{
+    ViewBag.Title = "GravityDetail";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <script type="text/javascript">
+        //Start common functions, suggest moving to common location
+        function commaFormatted(amount) {
+            var delimiter = ",";
+            var a = amount.split('.', 2)
+            var d = a[1];
+            var i = parseInt(a[0]);
+            if (isNaN(i)) { return ''; }
+            var minus = '';
+            if (i < 0) { minus = '-'; }
+            i = Math.abs(i);
+            var n = new String(i);
+            var a = [];
+            while (n.length > 3) {
+                var nn = n.substr(n.length - 3);
+                a.unshift(nn);
+                n = n.substr(0, n.length - 3);
+            }
+            if (n.length > 0) { a.unshift(n); }
+            n = a.join(delimiter);
+            if (d.length < 1) { amount = n; }
+            else { amount = n + '.' + d; }
+            amount = minus + amount;
+            return amount;
+        }
+        function getCleanNumber(controlId) {
+            tmpValue = Number(String($(controlId).val()).replace(",", ""));
+            if ($.isNumeric(tmpValue)) {
+                return tmpValue;
+            }
+            else {
+                return 0;
+            }
+        }
+        //End common functions
+
+        $(document).ready(function () {           
+            for (var rowIndex = 1; rowIndex < 6; rowIndex++) {
+                $("#dryWeight" + rowIndex.toString()).focusout(
+                                    function () {
+                                        fieldUpdater(this.id)
+                                    });
+                //fieldUpdater($("#dryWeight" + rowIndex.toString()).id);
+                $("#subWeight" + rowIndex.toString()).focusout(
+                                    function () {
+                                        fieldUpdater(this.id)
+                                    });
+                //fieldUpdater($("#subWeight" + rowIndex.toString()).id);
+            }
+            $("#DenIso").focusout(
+                    function () {
+                        isoUpdated();
+                    });
+            //Force inital update of form based on on-screen values
+            isoUpdated();
+        });
+
+        function isoUpdated() {
+            $("#DenIso").val(commaFormatted(Number(getCleanNumber("#DenIso")).toFixed(4)));
+
+            for (var rowPosition = 1; rowPosition < 6; rowPosition++)
+            {
+                specGrav = Number(0);
+                drySub = getCleanNumber("#dryWeight" + rowPosition) - getCleanNumber("#subWeight" + rowPosition);
+                specGrav = getCleanNumber("#dryWeight" + rowPosition) / drySub * getCleanNumber("#DenIso");
+                if (!$.isNumeric(specGrav)) { specGrav = 0; }
+                $("#specGrav" + rowPosition.toString()).val(commaFormatted(Number(specGrav).toFixed(3)));
+                $("#drySub" + rowPosition.toString()).val(commaFormatted(Number(drySub).toFixed(4)));
+            }
+
+            updateAverage();
+        }
+
+        function fieldUpdater(controlId)
+        {
+            rowPosition = controlId.substring(controlId.length - 1, controlId.length);
+            newValue = getCleanNumber("#" + controlId)
+            if ($.isNumeric(newValue)) {
+                $("#" + controlId).val(commaFormatted(Number(newValue).toFixed(4)));
+            }
+            else {
+                num = 0;
+                $("#" + controlId).val(num.toFixed(4));
+            }
+
+            drySub = Number(0);
+            specGrav = Number(0);
+            avgSpecGrav = Number(0);
+
+            drySub = getCleanNumber("#dryWeight" + rowPosition) - getCleanNumber("#subWeight" + rowPosition);
+            specGrav = getCleanNumber("#dryWeight" + rowPosition) / drySub * getCleanNumber("#DenIso");
+            if (!$.isNumeric(drySub)) { drySub = 0; }
+            if (!$.isNumeric(specGrav)) { specGrav = 0; }
+            
+            $("#drySub" + rowPosition.toString()).val(commaFormatted(Number(drySub).toFixed(4)));
+            $("#specGrav" + rowPosition.toString()).val(commaFormatted(Number(specGrav).toFixed(3)));
+            
+            updateAverage();
+        }
+        function updateAverage()
+        {
+            avgSpecGrav = (getCleanNumber("#specGrav1") + getCleanNumber("#specGrav2") + getCleanNumber("#specGrav3") + getCleanNumber("#specGrav4") + getCleanNumber("#specGrav5")) / 5;
+            $("#avgSpecGrav").val(commaFormatted(Number(avgSpecGrav).toFixed(3)));
+            $("#avgSpecGravHidden").val(Number(avgSpecGrav));
+        }
+    </script>
+   
+    <div class="form-horizontal">
+        <h4>Specific Gravity Measurement Entry Form</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RawMaterialCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.DisplayFor(model=>model.RawMaterialCode)
+            </div>
+            @Html.LabelFor(model => model.LabTechUserID, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.DropDownList("LabTechUserID",(SelectList)ViewBag.QCTech, String.Empty)
+                @Html.ValidationMessageFor(model => model.LabTechUserID)
+            </div>           
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.RawMaterialLotCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.DisplayFor(model=>model.RawMaterialLotCode)
+            </div>
+          
+            @Html.LabelFor(model => model.DateEntered, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @*@Html.TextBoxFor(model => model.DateEntered, "{0:MM/dd/yyyy}")*@
+                @*@Html.EditorFor(model => model.DateEntered)*@
+                <input class="easyui-datetimebox" value="@Model.DateEntered" name="dt">
+                @Html.ValidationMessageFor(model => model.DateEntered)></div>
+        </div>
+            <div class="col-md-2"></div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DenIso, new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.DenIso)
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <div class="col-md-3">
+                        <div class="col-md-5">
+                            <b>Weight Dry</b>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <div >
+                            <b>Weight Submerged</b>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="col-md-5">
+                            <b>Dry-Sub</b>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="col-md-5">
+                            <b>Specific Gravity</b>
+                        </div>
+                        <div class="col-md-1">
+
+                        </div>
+                    </div>
+
+
+                </div>
+        
+
+                @for (int i = 1; i <= 5; i++)
+                {               
+                    
+                    <div class="form-group">
+
+                        <div class="col-md-3">
+                            <div class="col-md-1">
+                                <b>@i</b>
+                            </div>
+                            <div class="col-md-1">
+                                @Html.EditorFor(model => model.Details.Where(s => s.Order == i && s.Submerged == false)
+                                .DefaultIfEmpty(new RawMaterialQCSpecificGravityDetailViewModel()).First().Value, null, i.ToString("dryWeight0"))
+                                @Html.ValidationMessageFor(model => model.Details.FirstOrDefault().Value)
+                            </div>
+                       </div>
+                        <div class="col-md-3">
+                            <div class="col-md-1">
+                                <b>@i</b>
+                            </div>
+                            <div class="col-md-1">
+                                @Html.EditorFor(model => model.Details.Where(s => s.Order == i && s.Submerged == true)
+                                .DefaultIfEmpty(new RawMaterialQCSpecificGravityDetailViewModel()).First().Value, null, i.ToString("subWeight0"))
+                                @Html.ValidationMessageFor(model => model.Details.FirstOrDefault().Value)
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="col-md-1">
+                                <b>@i</b>
+                            </div>
+                            <div class="col-md-1">
+                                @Html.TextBox(i.ToString("drySub0"), 0.0000, "{0:N4}", new { @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-1">
+                                <b>@i</b>
+                            </div>
+                            <div class="col-md-1">
+                               @Html.TextBox(i.ToString("specGrav0"), 0.0000, "{0:N3}", new { @disabled = "disabled" })
+                            </div>
+                        </div>
+
+                     
+                    </div>
+                 
+                }
+        <div class="form-group">
+            <div class="col-md-12" style="text-align:right;" align="right">
+                <div class="col-md-9">
+                    <b>Average:</b>
+                </div>
+                <div class="col-md-1">
+                    @Html.TextBoxFor(model => model.AverageGravity, "{0:N3}", new {@id = "avgSpecGrav", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.AverageGravity, new { @id = "avgSpecGravHidden", @readonly = "readonly", @style = "display:none;" })
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="col-md-3">
+                        <input type="button" onclick="javascript:window.print()" value="Print Report" class="btn btn-default btn-shadow" />
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <button class="btn btn-default btn-shadow"
+                                onclick="$(this).parents('form:first').submit(); return false;">
+                            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Return to QC Form
+                        </button>
+                        @*<input type="submit" value="Return to QC Form" class="btn btn-default" />*@
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><br />
+}

@@ -1,0 +1,157 @@
+﻿@model TPO.Model.Scrim.TPOCurrentScrimModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlScrim1Type").change(function () {
+            var typeID = $(this).val();
+            loadScrim1Rolls(typeID);
+        });
+
+        $("#ddlScrim2Type").change(function () {
+            var typeID = $(this).val();
+            loadScrim2Rolls(typeID);
+        });
+
+        $("#ddlFleeceType").change(function () {
+            var typeID = $(this).val();
+            loadFleeceRolls(typeID);
+        });
+
+        $("#ddlLineID").change(function () {
+            var lineID = $(this).val();
+            window.location.href = "/CurrentScrim/Edit/" + lineID;
+        });
+
+
+    });
+
+
+
+    function loadScrim1Rolls(typeID) {
+        $("#ddlScrim1Roll").empty();
+        $.ajax(
+            {
+                url: "/ScrimRoll/ListByType/",
+                type: 'get',
+                data: typeID,
+                success: function (data) {
+                    $("#ddlScrim1Roll").html(data);
+                },
+                error: function (jqXHR, textStatus, error) {
+                    alert(error);
+                }
+            });
+    }
+    function loadScrim2Rolls(typeID) {
+        $("#ddlScrim2Roll").empty();
+        $.ajax(
+            {
+                url: "/ScrimRoll/ListByType/",
+                type: 'get',
+                data: typeID,
+                success: function (data) {
+                    $("#ddlScrim2Roll").html(data);
+                },
+                error: function (jqXHR, textStatus, error) {
+                    alert(error);
+                }
+            });
+    }
+    function loadFleeceRolls(typeID) {
+        $("#ddlFleeceRoll").empty();
+        $.ajax(
+            {
+                url: "/ScrimRoll/ListByType/",
+                type: 'get',
+                data: typeID,
+                success: function (data) {
+                    $("#ddlFleeceRoll").html(data);
+                },
+                error: function (jqXHR, textStatus, error) {
+                    alert(error);
+                }
+            });
+    }
+</script>
+
+
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LineID, new { @class = "control-label col-md-2" })<br/>
+            @Html.DropDownListFor(model => model.LineID, (SelectList)ViewBag.ProductionLine, new { @id = "ddlLineID" })
+        </div>
+
+        <div class="form-group">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            Scrim 1
+                        </td>
+                        <td>
+                            Scrim 2
+                        </td>
+                        <td>
+                            Fleece
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Current Roll Type:
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.Scrim1TypeID, (SelectList)ViewBag.ScrimType, new { @id = "ddlScrim1Type" })
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.Scrim2TypeID, (SelectList)ViewBag.ScrimType, new { @id = "ddlScrim2Type" })
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.FleeceTypeID, (SelectList)ViewBag.ScrimType, new { @id = "ddlFleeceType" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Current Roll No:
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.Scrim1RollID, null, new { @id = "ddlScrim1Roll" })
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.Scrim2RollID, null, new { @id = "ddlScrim2Roll" })
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.FleeceRollID, null, new { @id = "ddlFleeceRoll" })
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-primary btn-shadow"
+                        onclick="$(this).parents('form:first').submit(); return false;">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Create
+                </button>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,262 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+
+@if (Model.ProductionLineId > 0)
+{
+    <table id="dgReworkScrap" class="easyui-datagrid"></table>
+
+    <div id="dlgRwScrapEdit" class="easyui-dialog" title="Update Production Scrap" data-options="iconCls:'icon-save'" style="width:550px;height:400px;padding:10px">
+        <table class="col-lg-offset-2">
+            <tr>
+                <td>
+                    <input id="rwsID" type="hidden">
+                    <input id="rwsPlantID" type="hidden">
+                    <input id="rwsWorkOrderID" type="hidden">
+                    <input id="rwsTypeID" type="hidden">
+                    <input id="rwsShiftID" type="hidden">
+                    <input id="rwsProdDate" class="easyui-datebox" type="hidden" />
+                    <input id="rwsDateEntered" class="easyui-datebox" type="hidden" />
+                    <input id="rwsLastModified" class="easyui-datebox" type="hidden" />
+                    <input id="rwsEnteredBy" type="hidden">
+                    <input id="rwsModifiedBy" type="hidden">
+                </td>
+            </tr>
+            <tr id="productionDateDT">
+                <td>
+                    <label>Production Date:</label>
+                </td>
+                <td>
+                    <input id="prodDateDT" class="easyui-datebox" style="width:100px">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Shift:</label>
+                </td>
+                <td>
+                    <input id="shiftTypeDTSelection" class="easyui-combogrid" style="width:100px;" data-options="
+                    panelWidth: 500,
+                    loadMsg:'Loading',
+                    idField: 'Id',
+                    textField: 'Code',
+                    url: '/ProductionShiftType/GetAllShiftTypeResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Component',width:20},
+                    {field:'ShortDescription',title:'Component',width:150}
+                    ]],onSelect: shiftTypeDTSelected,
+                    fitColumns: true">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Occurence:</label>
+                </td>
+                <td>
+                    <input id="occuredDate" class="easyui-datetimebox style=" width:150px">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Time (min):</label>
+                </td>
+                <td>
+                    <input id="timeDT" type="number" class="easyui-numberbox" data-options="min:0,precision:0" style="width:100px" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Downtime Type:</label>
+                </td>
+                <td>
+                    <input id="downTimeTypeSelection" class="easyui-combogrid" style="width:120px;" data-options="
+                    loadMsg:'Loading',
+                    idField: 'ID',
+                    textField: 'Description',
+                    url: '/TPODownTimeEntry/GetAllDownTimeTypeResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Description',title:'Type',width:60}
+                    ]],onSelect: downTimeTypeSelected,
+                    fitColumns: true">
+                </td>
+            </tr>
+            <tr id="sectionOfLine">
+                <td>
+                    <label id="sectionLabel"></label>
+                </td>
+                <td>
+                    <input id="sectionOfLineSelection" class="easyui-combogrid" style="width:200px;" data-options="
+                    loadMsg:'Loading',
+                    idField: 'Id',
+                    textField: 'Description',
+                    method: 'get',
+                    columns: [[
+                    {field:'Description',title:'Type/Reason',width:100}
+                    ]],onSelect: sectionOfLineSelected,
+                    fitColumns: true">
+                </td>
+            </tr>
+            <tr id="component">
+                <td>
+                    <label>Component:</label>
+                </td>
+                <td>
+                    <input id="componentSelection" class="easyui-combogrid" style="width:200px;" data-options="
+                    loadMsg:'Loading',
+                    idField: 'ID',
+                    textField: 'Description',
+                    url: '/TPODownTimeEntry/GetEquipmentComponentByGroupResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Description',title:'Component',width:100}
+                    ]],onSelect: componentSelected,
+                    fitColumns: true">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Comments:</label>
+                </td>
+                <td>
+                    <textarea id="commentDT" rows="4" cols="50"></textarea>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <span class="col-lg-offset-3">
+            <button class="btn btn-success btn-shadow"
+                    onclick="saveRwProd(); return false;">
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+            </button>
+            <button class="btn btn-default btn-shadow"
+                    onclick="$('#dlgRwScrapEdit').dialog('close');return false;">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+            </button>
+        </span>
+    </div>
+
+    <script type="text/javascript">
+        var rwScrapUrlSet = false;
+        var rwsDlgUrlsSet = false;
+
+        $(document).ready(function()
+        {
+            createReworkScrapGrid();
+            createRwScrapEditDialog();
+        });
+        function createReworkScrapGrid()
+        {
+            $("#dgReworkScrap").datagrid(
+                {
+                    idField: 'Id',
+                    onDblClickRow: rwScrapRowDblClicked,
+                    columns: [[
+                        { field: 'Id', hidden: true },
+                        {field:'PlantId',hidden:true},
+                        {field:'WorkOrderID',hidden:true},
+                        {field:'TypeID',hidden:true},
+                        {field:'ShiftID',hidden:true},
+                        {field:'ProductionDate', title:'Production Date', formatter: formatDate},
+                        {field:'DateEntered',hidden:true},
+                        {field:'EnteredBy',hidden:true},
+                        {field:'LastModified',hidden:true},
+                        {field:'ModifiedBy',hidden:true}
+                    ]]
+                });
+        }
+        function createRwScrapEditDialog()
+        {
+            $('#dlgRwProdEdit').dialog(
+                {
+                    autoOpen: false,
+                    modal: true
+                });
+        }
+        function setRwScrapUrl()
+        {
+            if (!rwScrapUrlSet) {
+                $('#dgReworkScrap').datagrid(
+                    {
+                        url: '/ReworkProductionEntry/',
+                        method: 'get',
+                        queryParams:
+                            {
+                                lineID: @Model.ProductionLineId
+                            }
+                    });
+                rwProdUrlSet = true;
+            }
+        }
+        function rwScrapRowDblClicked(rowIndex, rowData)
+        {
+            displayEditRwScrap(rowData);
+        }
+        function displayEditRwScrap(rowData)
+        {
+            bindRwScrap(rowData);
+            if (!rwsDlgUrlsSet)
+            {
+                //set dialog urls
+                rwsDlgUrlsSet = true;
+            }
+            $('#dlgRwScrapEdit').dialog('open');
+        }
+        function bindRwScrap(rwScrap)
+        {
+            $('#rwsID').val(rwScrap.Id);
+            $('#rwsPlantID').val(rwScrap.PlantId);
+            $("#rwsWorkOrderID").val(rwScrap.WorkOrderID);
+            $('#rwsTypeID').val(rwScrap.TypeID);
+            $('#rwsShiftID').val(rwScrap.ShiftID);
+            $('#rwsProdDate').datebox('setValue', formatDate(rwScrap.ProductionDate));
+            $('#rwsDateEntered').datebox('setValue', formatDate(rwScrap.DateEntered));
+            $('#rwsLastModified').datebox('setValue', formatDate(rwScrap.LastModified));
+            $('#rwsEnteredBy').val(rwScrap.EnteredBy);
+            $('#rwsModifiedBy').val(rwScrap.ModifiedBy);
+        }
+        function getRwScrap()
+        {
+            var rwScrap =
+                {
+                    "Id": $('#rwsID').val(),
+                    "PlantId": $('#rwsPlantID').val(),
+                    "WorkOrderID": $('#rwsWorkOrderID').val(),
+                    "TypeID": $('#rwsTypeID').val(),
+                    "ShiftID": $('#rwsShiftID').val(),
+                    "ProductionDate": $('#rwsProdDate').datebox('getValue'),
+                    "DateEntered": $('#rwsDateEntered').datebox('getValue'),
+                    "LastModified": $('#rwsLastModified').datebox('getValue'),
+                    "EnteredBy": $('#rwsEnteredBy').val(),
+                    "ModifiedBy": $('#rwsModifiedBy').val()
+                };
+            return rwScrap;
+        }
+        function saveRwScrap()
+        {
+            showLoadingDialog();
+
+            $.ajax(
+                {
+                    url: '/ProductionEntryController/UpdateReworkAction',
+                    method: 'post',
+                    data: getRwScrap,
+                    success: function(data)
+                    {
+                        $('#dlgRwScrapEdit').dialog('close');
+                    },
+                    error: function()
+                    {
+
+                    },
+                    complete: function()
+                    {
+                        closeLoadingDialog();
+                    }
+                });
+        }
+        function deleteRwScrap()
+        {
+
+        }
+    </script>
+}

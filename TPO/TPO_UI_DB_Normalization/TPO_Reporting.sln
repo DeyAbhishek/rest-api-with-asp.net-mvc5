@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TPO_Reporting", "TPO_Reporting\TPO_Reporting.sqlproj", "{3CD5B01A-B9EF-4493-8AA5-2F7D38BC3C72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPO_Reporting_Model", "TPO_Reporting_Model\TPO_Reporting_Model.csproj", "{CEFB2958-C708-4C54-BE06-BA3FE21B47C6}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs12.thinketg.com/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = TPO_Reporting\\TPO_Reporting.sqlproj
+		SccProjectName1 = TPO_Reporting
+		SccLocalPath1 = TPO_Reporting
+		SccProjectUniqueName2 = TPO_Reporting_Model\\TPO_Reporting_Model.csproj
+		SccProjectName2 = TPO_Reporting_Model
+		SccLocalPath2 = TPO_Reporting_Model
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CD5B01A-B9EF-4493-8AA5-2F7D38BC3C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CD5B01A-B9EF-4493-8AA5-2F7D38BC3C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CD5B01A-B9EF-4493-8AA5-2F7D38BC3C72}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3CD5B01A-B9EF-4493-8AA5-2F7D38BC3C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CD5B01A-B9EF-4493-8AA5-2F7D38BC3C72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CD5B01A-B9EF-4493-8AA5-2F7D38BC3C72}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CEFB2958-C708-4C54-BE06-BA3FE21B47C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEFB2958-C708-4C54-BE06-BA3FE21B47C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEFB2958-C708-4C54-BE06-BA3FE21B47C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEFB2958-C708-4C54-BE06-BA3FE21B47C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,380 @@
+﻿
+<h3>Enter Line Scrap</h3>
+
+    <div id="divEnterLineScrap">
+        <table id="lineScrapDataGrid" class="easyui-datagrid" title="Enter Line Scrap" style="width:1000px;"
+               data-options="iconCls: 'icon-edit',
+           singleSelect: true,
+           toolbar: '#lineScrapTab',
+           url: '/EnterLineScrap/GetLineScrapResult',
+           method: 'get' ,
+           onDblClickRow: onLineScrapDblClickRow,
+           pagination: true,
+           pageSize: 15,
+           pageList:[15,25,50],
+           rownumbers: true,
+           fitColumns: true
+           ">
+
+            <thead>
+                <tr>
+                   <th data-options="field:'Id',hidden:true"></th>
+                    <th data-options="field:'LengthUoMID',hidden:true"></th>
+                    <th data-options="field:'WeightUoMID',hidden:true"></th>
+                    <th data-options="field:'WidthUoMID',hidden:true"></th>
+                    <th data-options="field:'LineScrapCodeGroupID',hidden:true"></th>
+                    <th data-options="field:'LineScrapCodeID',hidden:true"></th>
+                    <th data-options="field:'TypeID',hidden:true"></th>
+                    <th data-options="field:'Code'">Scrap Roll ID</th>
+                    <th data-options="field:'ProductionDate', formatter: formatDate">Production Date</th>
+                    <th data-options="field:'ProductionShiftCode'">Shift</th>
+                    <th data-options="field:'WorkOrderCode'">Work Order</th>
+                    <th data-options="field:'Length'">Length</th>
+                    <th data-options="field: 'UnitOfMeasureCode'"></th> 
+                   <th data-options="field:'Width'">Width</th>
+                    <th data-options="field: 'UnitOfMeasure2Code'"></th>
+                    <th data-options="field:'Weight'">Weight</th>
+                    <th data-options="field: 'UnitOfMeasure1Code'"></th>
+                    <th data-options="field:'TPOLineScrapCodeGroupDescription'" >Scrap Group</th>
+                    <th data-options="field:'TPOLineScrapCodeDescription'" >Scrap Code</th>
+                    <th data-options="field:'TPOLineScrapTypeDescription'">Disposition</th>
+                    <th data-options="field:'Comment'">Comment</th>
+                    <th data-options="field:'DateEntered',hidden:true"></th>
+                    <th data-options="field:'EnteredBy',hidden:true"></th>
+                    <th data-options="field:'LastModified',hidden:true"></th>
+                    <th data-options="field:'ModifiedBy',hidden:true"></th>
+                </tr>
+            </thead>
+
+        </table>
+
+        <div id="lineScrapTab">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="  lineScrapCreate() ">Create New</a>
+           </div>
+    </div>
+
+
+        
+
+
+<div id="dialogBox1" class="easyui-dialog" title="EnterLine Scrap" data-options="iconCls:'icon-save'" 
+     style="width:400px;height:200px;padding:10px">
+    <form id="enterLineScrap">
+
+        <table>
+            <tr>
+                <td>
+                    <input type="text" value="1" id="lineScrapWorkOrder" hidden />
+                    <input type="hidden" id="lineScrapId" />
+                    <input type="hidden" id="lineScrapDateEntered" />
+                    <input type="hidden" id="lineScrapEnteredBy" />
+                    <input type="hidden" id="lineScrapLastModified" />
+                    <input type="hidden" id="lineScrapModifiedBy" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Scrap Roll ID:</label>
+                </td>
+                <td>
+                    @*<input id="scrapRollID" class="easyui-numberbox" style="width:100px">*@
+                    <input id="scrapRollID" type="text" style="width:100px">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Production Date:</label>
+                </td>
+                <td>
+                    <input id="lineScrapProductionDate" class="easyui-datebox" style="width:100px">
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <label>Shift:</label>
+                </td>
+                <td>
+                    <input id="productionShiftSelection" class="easyui-combogrid" style="width:100px;" data-options="
+                    idField: 'Id',
+                    textField: 'Code',
+                    url: '/EnterLineScrap/GetProductionShift',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'',width:50},
+                    ]],
+                    fitColumns: true">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>Length :</label>
+                </td>
+                <td>
+                    <input type="text" id="lineScrapLength" data-options="min:0,precision:0" />
+                </td>
+                <td>
+                    <input id="lsLengthUoM" class="easyui-combogrid" style="width:100px;"
+                           data-options="
+                    idField: 'Id',
+                    textField: 'Code',
+                    url: '/EnterLineScrap/GetAllLengthUoMResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'',width:100}
+                    ]],
+                    fitColumns: true">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Width :</label>
+                </td>
+                <td>
+                    <input type="text" id="lineScrapWidth" data-options="min:0,precision:0" />
+                </td>
+                <td>
+                    <input id="lsWidthUoM" class="easyui-combogrid" style="width:100px;"
+                           data-options="
+                    idField: 'Id',
+                    textField: 'Code',
+                    url: '/EnterLineScrap/GetAllWidthUoMResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'',width:30}
+                    ]],
+                    fitColumns: true">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Weight :</label>
+                </td>
+                <td>
+                    <input type="text" id="lineScrapWeight"  data-options="min:0,precision:0" />
+                </td>
+                <td>
+                    <input id="lsWeightUoM" class="easyui-combogrid" style="width:100px;"
+                           data-options="
+                    idField: 'Id',
+                    textField: 'Code',
+                    url: '/EnterLineScrap/GetAllWeightUoMResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'',width:30}
+                    ]],
+                    fitColumns: true">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Scrap Group:</label>
+                </td>
+                <td>
+                    <input id="scrapGroupSelection" class="easyui-combogrid"
+                           style="width:120px;" data-options="
+                    idField: 'Id',
+                    textField: 'Description',
+                    url: '/EnterLineScrap/GetGroupResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Description',title:'',width:120}
+                    ]],
+                       onSelect: scrapGroupSelected,
+                    fitColumns: true">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>Scrap Code:</label>
+                </td>
+                <td>
+                    <input id="scrapCodeSelection" class="easyui-combogrid"
+                           style="width:120px;" data-options="
+                    idField: 'Id',
+                    textField: 'Description',
+                    url: '/EnterLineScrap/GetScrapCodeResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Description',title:'',width:120}
+                    ]],
+                    fitColumns: true">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>Disposition :</label>
+                </td>
+                <td>
+                    <input id="dispositionSelection" class="easyui-combogrid"
+                           style="width:120px;" data-options="
+                    idField: 'ID',
+                    textField: 'Description',
+                    url: '/EnterLineScrap/GetDispositionResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Description',title:'Type',width:120}
+                    ]],
+                    fitColumns: true">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Comments:</label>
+                </td>
+                <td>
+                    <textarea id="lineScrapComment" rows="4" cols="50"></textarea>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-success btn-shadow" onclick="saveLineScrap(); return false;">                           
+                        <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                    </button>
+                    <button class="btn btn-default btn-shadow"
+                            onclick="  $('#dialogBox1').dialog('close'); return false;">
+                        <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                    </button>
+
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+    
+
+    $(function () {
+        $("#dialogBox1").dialog({
+            autoOpen: false,
+            height: 600,
+            width: 500,
+            modal: true,
+            title: "Enter Line Scrap"
+        });
+        $("#dialogBox1").dialog("close");
+    });
+    function lineScrapCreate() {
+        var shiftID = $('#ShiftId').val();
+        var prodDate = $("#ProductionDate").val();
+        var workOrderID = $("#WorkOrderId").val();
+
+        $('#productionShiftSelection').combogrid('setValue', shiftID);
+        $('#lineScrapWorkOrder').val(workOrderID);
+        $('#lineScrapProductionDate').datebox('setValue', prodDate);
+        $('#dialogBox1').dialog('open');
+    }
+
+
+    function onLineScrapDblClickRow(rowIndex, rowData) {
+
+        $('#dialogBox1').dialog('open');
+
+        $('#scrapRollID').val(rowData.Code);
+        $('#productionShiftSelection').combogrid('setValue', rowData.ShiftID);
+        $('#lineScrapProductionDate').datebox('setValue', rowData.ProductionDate);
+        $('#lineScrapWorkOrder').val(rowData.WorkOrderID);
+        $('#lineScrapLength').val(rowData.Length);
+        $('#lineScrapWidth').val(rowData.Width);
+        $('#lineScrapWeight').val(rowData.Weight);
+        $('#lsLengthUoM').combogrid('setValue', rowData.LengthUoMID);
+        $('#lsWeightUoM').combogrid('setValue', rowData.WeightUoMID);
+        $('#lsWidthUoM').combogrid('setValue', rowData.WidthUoMID);
+        $('#scrapGroupSelection').combogrid('setValue', rowData.LineScrapCodeGroupID);
+        $('#scrapCodeSelection').combogrid('setValue', rowData.LineScrapCodeID);
+        $('#dispositionSelection').combogrid('setValue', rowData.TypeID);
+        $('#lineScrapComment').val(rowData.Comment);
+        $('#lineScrapId').val(rowData.Id);
+        $('#lineScrapDateEntered').val(rowData.DateEntered);
+        $('#lineScrapEnteredBy').val(rowData.EnteredBy);
+        $('#lineScrapLastModified').val(rowData.LastModified);
+        $('#lineScrapModifiedBy').val(rowData.ModifiedBy);
+        
+           
+    }
+
+    $(document).ready(function () {
+
+    });  
+
+    function scrapGroupSelected(record) {
+        var val = $('#scrapGroupSelection').combogrid('getValue');
+        $('#scrapCodeSelection').combogrid(
+        {
+            queryParams:
+            {
+                groupID: val
+            }
+        });
+      
+    }
+
+    function demo() {
+        $('#dialogBox1').dialog('close');
+
+    }
+
+    function saveLineScrap()
+    {
+        
+        var myJSONObject = {
+            "Id": $('#lineScrapId').val(),
+            "Code": $('#scrapRollID').val(),
+            "ShiftID":  $('#productionShiftSelection').combogrid('getValue'),
+            "ProductionShiftCode": 1,
+            "ProductionDate": $('#lineScrapProductionDate').datebox('getValue'),
+            "WorkOrderID": $('#lineScrapWorkOrder').val(),
+            "Length": $('#lineScrapLength').val(),
+            "Width": $('#lineScrapWidth').val(),
+            "Weight": $('#lineScrapWeight').val(),
+            "LengthUoMID": $('#lsLengthUoM').combogrid('getValue'),
+            "WidthUoMID": $('#lsWidthUoM').combogrid('getValue'),
+            "WeightUoMID": $('#lsWeightUoM').combogrid('getValue'),
+            "LineScrapCodeGroupID": $('#scrapGroupSelection').combogrid('getValue'),
+            "LineScrapCodeID": $('#scrapCodeSelection').combogrid('getValue'),
+            "TypeID": $('#dispositionSelection').combogrid('getValue'),
+            "Comment": $('#lineScrapComment').val(),
+            "DateEntered": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt($('#lineScrapDateEntered').val().substr(1,6)))),
+            "EnteredBy": $('#lineScrapEnteredBy').val(),
+            "LastModified": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt($('#lineScrapLastModified').val().substr(1,6)))),
+            "ModifiedBy": $('#lineScrapModifiedBy').val()
+        };
+        
+        
+        $.ajax({
+            url: '/EnterLineScrap/LineScrapAjaxCreate',
+            type: 'POST',
+            cache: false,
+            data: myJSONObject,
+            success: function (data) {
+                // alert("Save Success");
+                $('#lineScrapDataGrid').datagrid('reload');
+            },
+            error: function (data) {
+                //  alert("Save Failed!!!!");
+                $('#lineScrapDataGrid').datagrid('reload');
+            }
+        });
+        $("#dialogBox1").dialog("close");
+        return false;
+    }
+
+    function loadEnterLineScrap() {
+        $('#lineScrapDataGrid').datagrid({
+            url: '/EnterLineScrap/GetLineScrapResult'
+        });
+        $('#lineScrapDataGrid').datagrid('load');
+    }
+</script>
+
+

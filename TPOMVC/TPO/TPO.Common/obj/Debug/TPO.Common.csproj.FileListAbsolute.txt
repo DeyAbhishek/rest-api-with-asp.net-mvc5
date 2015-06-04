@@ -1,0 +1,13 @@
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\bin\Debug\TPO.Common.dll
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\bin\Debug\TPO.Common.pdb
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\bin\Debug\TPO.Data.dll
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\bin\Debug\EntityFramework.dll
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\bin\Debug\TPO.Data.pdb
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\bin\Debug\EntityFramework.xml
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\obj\Debug\TPO.Common.csprojResolveAssemblyReference.cache
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\obj\Debug\TPO.Common.Resources.General.resources
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\obj\Debug\TPO.Common.Resources.Shoals.resources
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\obj\Debug\TPO.Common.Resources.Wellford.resources
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\obj\Debug\TPO.Common.csproj.GenerateResource.Cache
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\obj\Debug\TPO.Common.dll
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Common\obj\Debug\TPO.Common.pdb

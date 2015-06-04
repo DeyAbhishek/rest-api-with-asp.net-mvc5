@@ -1,0 +1,527 @@
+﻿@model TPO.Web.Models.TPOProduct
+@{
+    ViewBag.Title = "TPO Products";
+}
+<h2>TPO Products</h2>
+
+
+@using (Html.BeginForm("Edit", "TPOProduct", FormMethod.Post, new { id = "TPOProductForm" }))
+{
+    //@Html.ValidationSummary(true);
+    @Html.HiddenFor(model => model.Id, new { @id = "onCreate" })
+    @Html.HiddenFor(model => model.PlantId)
+    @Html.HiddenFor(model => model.TPOProductLabelDetail.ID)
+    @Html.HiddenFor(model => model.ProductLabelID)
+    
+    <table id="details" class="col-lg-offset-1">
+        <tr>
+            <td><span id="combogridLabel"><label>Select Product to Edit:</label></span></td>
+            <td>
+                <span id="combogridBox">
+                <input id="productSelection" class="easyui-combogrid" style="width: 250px" data-options="
+                panelWidth: 500,
+                loadMsg: 'Loading',
+                idField: 'Id',
+                textField: 'ProductCode',
+                value: '@Model.ProductCode',
+                url: '/TPOProduct/GetAllProductResult',
+                method: 'get',
+                columns: [[
+                {field:'ProductCode',title:'Code',width:60},
+                {field:'ProductDesc',title:'Description',width:100}
+                ]],
+                onSelect: productSelected,
+                fitColumns: true
+                ">
+                </span>
+            </td>
+            <td>
+                <button id="addNewProduct" class="btn btn-primary btn-shadow">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Enter New Product
+                </button>
+                <button id="copyProduct" class="btn btn-default btn-shadow">
+                    <span class="glyphicon glyphicon-download"></span>&nbsp;&nbsp;Copy Selected Product
+                </button>
+
+                @if (Model.Id != 0)
+                {
+                    <button id="setFormulation" class="btn btn-default btn-shadow">
+                        <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Set Formulations
+                    </button>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.ProductCode)</td>
+            <td>@Html.TextBoxFor(model => model.ProductCode, new { @id = "productCode", @class = "textboxClass", style = "width:150px" })</td>
+            <td>@Html.ValidationMessageFor(model => model.ProductCode)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.ProductDesc)</td>
+            <td>@Html.TextBoxFor(model => model.ProductDesc, new { @id = "productDesc", @class = "textboxClass", style = "width:250px" })</td>
+            <td>@Html.ValidationMessageFor(model => model.ProductDesc)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Active)</td>
+            <td>
+                <select id="active" name="@Html.NameFor(model => model.Active)" class="easyui-combobox" style="width:100px;">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </td>
+        </tr>
+        <tr><td></td></tr>
+        <tr>
+            <td></td>
+            <td><b>&nbsp;&nbsp;Measurement<span class="getSpace">UoM</span></b></td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Thick)</td>
+            <td>@Html.TextBoxFor(model => model.Thick, new { @id = "thick", @class = "textboxClass", style = "width:100px" })
+                <span class="whiteSpace">
+                    <input name="@Html.NameFor(model => model.ThickUnit)" id="thicknessSelection" class="easyui-combogrid" style="width:100px" data-options="
+                    panelWidth: 200,
+                    idField: 'Id',
+                    textField: 'Code',
+                    value: '@Model.ThickUnit',
+                    url: '/IMProduct/GetAllThicknessUomResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Code',width:60},
+                    {field:'Description',title:'Description',width:100}
+                    ]],
+                    fitColumns: true
+                    ">
+                </span>
+            @Html.ValidationMessageFor(model => model.ThickUnit)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Width)</td>
+            <td>@Html.TextBoxFor(model => model.Width, new { @id = "width", @class = "textboxClass", style = "width:100px" })
+                <span class="whiteSpace">
+                    <input name="@Html.NameFor(model => model.LengthWidthUnit)" id="lengthSelection" class="easyui-combogrid" style="width:100px" data-options="
+                    panelWidth: 200,
+                    idField: 'Id',
+                    textField: 'Code',
+                    value: '@Model.LengthWidthUnit',
+                    url: '/IMProduct/GetAllWidthUomResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Code',width:60},
+                    {field:'Description',title:'Description',width:100}
+                    ]],
+                    fitColumns: true
+                    ">
+                </span>
+            @Html.ValidationMessageFor(model => model.LengthWidthUnit)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.MasRollLength)</td>
+            <td>@Html.TextBoxFor(model => model.MasRollLength, new { @id = "masRollLength", @class = "textboxClass", style = "width:100px" })<span class="textSpace">ft</span></td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.ContRollLength)</td>
+            <td>@Html.TextBoxFor(model => model.ContRollLength, new { @id = "contRollLength", @class = "textboxClass", style = "width:100px" })<span class="textSpace">ft</span></td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.AreaUnit)</td>
+            <td><span class="emptySpace"></span><span class="getSpace">
+                <input name="@Html.NameFor(model => model.AreaUnit)" id="areaSelection" class="easyui-combogrid" style="width:100px" data-options="
+                    panelWidth: 200,
+                    idField: 'Id',
+                    textField: 'Code',
+                    value: '@Model.AreaUnit',
+                    url: '/IMProduct/GetAllAreaUomResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Code',width:60},
+                    {field:'Description',title:'Description',width:100}
+                    ]],
+                    fitColumns: true
+                    ">
+                </span>
+            @Html.ValidationMessageFor(model => model.AreaUnit)
+            </td>
+            
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.WeightUnit)</td>
+            <td><span class="emptySpace"></span><span class="getSpace">
+                <input name="@Html.NameFor(model => model.WeightUnit)" id="weightSelection" class="easyui-combogrid" style="width:100px" data-options="
+                    panelWidth: 200,
+                    idField: 'Id',
+                    textField: 'Code',
+                    value: '@Model.WeightUnit',
+                    url: '/IMProduct/GetAllWeightUomResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Code',width:60},
+                    {field:'Description',title:'Description',width:100}
+                    ]],
+                    fitColumns: true
+                    ">
+                </span>
+            @Html.ValidationMessageFor(model => model.WeightUnit)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.WtperArea)</td>
+            <td>@Html.TextBoxFor(model => model.WtperArea, new { @id = "wtPerArea", @class = "textboxClass", style = "width:100px" })<span class="textSpace">lb / sqft</span></td>
+        </tr>   
+        <tr>
+            <td>@Html.LabelFor(model => model.ScrimTypeID)</td>
+            <td>
+                <input name="@Html.NameFor(model => model.ScrimTypeID)" id="scrimTypeSelection" class="easyui-combogrid" style="width:150px" data-options="
+                    panelWidth: 500,
+                    loadMsg: 'Loading',
+                    idField: 'Id',
+                    textField: 'Code',
+                    value: '@Model.ScrimTypeID',
+                    url: '/ScrimRoll/GetScrimTypeResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Code',width:60},
+                    {field:'Description',title:'Description',width:100}
+                    ]],
+                    fitColumns: true
+                    ">
+            @Html.ValidationMessageFor(model => model.ScrimTypeID)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.QtyMade)</td>
+            <td>@Html.TextBoxFor(model => model.QtyMade, new { @id = "qtyMade", @class = "textboxClass", style = "width:100px" })</td>
+        </tr>
+        </table>
+        <p class="col-lg-offset-1"><small>&nbsp;&nbsp;* Production Quantity is the number of rolls that are made at one.<br />&nbsp;&nbsp;If a 10 foot roll is slit into two 5 foot rolls at the winder, then<br />&nbsp;&nbsp;the quantity should be set to 2.</small></p>
+    <table class="col-lg-offset-1">
+        <tr><td></td></tr>
+        <tr>
+            <td></td>
+            <td><b><span class="emptySpace">&nbsp;&nbsp;Palletized</span><span class="getSpace">Not Palletized</span></b></td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.RollsPerLotPal)</td>
+            <td><span class="emptySpace">@Html.TextBoxFor(model => model.RollsPerLotPal, new { @id = "rollsPerLotPal", @class = "textboxClass", style = "width:100px" })</span>
+                <span class="whiteSpace">@Html.TextBoxFor(model => model.RollsPerLot, new { @id = "rollsPerLot", @class = "textboxClass", style = "width:100px" })</span>
+            </td>
+        </tr>
+    </table>
+    <p class="col-lg-offset-1"><small>&nbsp;&nbsp;*For rolls produced that do not come from a Master Roll this<br />&nbsp;&nbsp;is how many rolls are placed in one lot of product.</small></p>
+    <table class="col-lg-offset-1">
+        <tr>
+            <td>@Html.LabelFor(model => model.TPOProductLabelDetail.ID)</td>
+            <td><span class="getSpace">@Html.TextBoxFor(model => model.TPOProductLabelDetail.Label2, new { @id = "labelTwo", @class = "textboxClass", style = "width:250px" })</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <span class="getSpace">@Html.TextBoxFor(model => model.TPOProductLabelDetail.Label3, new { @id = "labelThree", @class = "textboxClass", style = "width:250px" })</span>
+            </td>
+        </tr>
+        
+    </table>
+    <p class="col-lg-offset-1"><small>&nbsp;&nbsp;*A roll label will contain 4 lines, line 1 is the roll number, lines 2-3 will contain<br />&nbsp;&nbsp;the info entered into this fields, line 4 will be the roll length.</small></p>
+    <table class="col-lg-offset-1">
+        <tr>
+            <td>@Html.LabelFor(model => model.UseCELogo)</td>
+            <td>
+                <select id="displayLogo" name="@Html.NameFor(model => model.UseCELogo)" class="easyui-combobox" style="width:100px;">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <span class="col-lg-offset-2">
+        <button class="btn btn-success btn-shadow"
+                onclick="$(this).parents('form:first').submit(); return false;">
+            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+        </button>
+        <button class="btn btn-default btn-shadow"
+                onclick="window.location.href = '@Url.Action("Edit", "TPOProduct")';return false;">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+        </button>
+    </span>
+}
+
+<br /><br />
+<div class="col-lg-offset-3">
+    
+</div>
+<br />
+
+
+<div id="MyDialog">
+    <table>
+        <tr><td></td></tr>
+        <tr>
+            <td>Enter New Product Code</td>
+            <td><input id="newProduct" class="text" type="text" name="Code" /></td>
+        </tr>
+    </table>
+    <br /><br />
+    <span class="col-lg-offset-2">
+        <button class="btn btn-default btn-shadow" onclick="updateProduct()">
+            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;OK
+        </button>
+        <button class="btn btn-default btn-shadow"
+                onclick="closeDialog()">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+        </button>
+    </span>
+</div>
+
+<div id="formulationDialog">
+    
+    <div id="grid">
+        <table id="dg" class="easyui-datagrid" title="Set Formulation" style="height: 300px;width: 600px"
+               data-options="iconCls: 'icon-edit',
+           singleselect: true,
+           toolbar: '#tb' ,
+           url: '/TPOFormulationLineProduct/GetAllFormulationLineProductResult',
+           method: 'get',
+           onClickRow: onClickRow,
+           pagination: true,
+           rownumbers: true,
+           fitColumns: true
+           ">
+            <thead>
+                <tr>
+                    <th data-options="field:'ProdLineLineDesc',width: 180">Production Line</th>
+                    <th data-options="field:'TPOFormulationID', width: 100,
+                    formatter:function(value,row){
+                            return row.TPOFormulationID;
+                        },
+                        editor:{
+                            type:'combogrid',
+                            options:{
+                                panelWidth: 500,
+                                idField: 'Id',
+                                textField: 'Id',
+                                url: '/TPOFormulation/GetAllFormulationResult',
+                                method: 'get',
+                                columns: [[
+                                {field:'Id',title:'Form #',width:60},
+                                {field:'Description',title:'Formulation',width:100},
+                                {field:'Extruders',title:'Extruder',width:60}
+                                ]],
+                                fitColumns: true
+                            }
+                        }">Form #</th>
+                    <th data-options="field:'TPOFormulationDescription', width: 200">Formulation</th>
+                    <th data-options="field:'TPOFormulationExtruders'"># of Extruder</th>
+                </tr>
+            </thead>
+        </table>
+        <div id="tb">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" accept() ">Save Changes</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Undo</a>
+        </div>
+    </div>
+    <br />
+    <span class="col-lg-offset-5">
+        <button class="btn btn-default btn-shadow"
+                onclick="closeDialog()">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+        </button>
+    </span>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var val = $("#productSelection").combogrid('getValue');
+        if (val == 0) {
+            $("#productSelection").combogrid('setValue', '- - - Select - - - ');
+            $("#lengthSelection").combogrid('setValue', '- - Select - -');
+            $("#areaSelection").combogrid('setValue', '- - Select - -');
+            $("#thicknessSelection").combogrid('setValue', '- - Select - -');
+            $("#weightSelection").combogrid('setValue', '- - Select - -');
+            $("#scrimTypeSelection").combogrid('setValue', '- - - Select - - - ');
+        }
+    });
+
+    $(function () {
+        $("#MyDialog").dialog({
+            autoOpen: false,
+            height: 150,
+            width: 350,
+            modal: true,
+            title: "Add Product"
+        });
+        $("#MyDialog").dialog("close");
+        $("#addNewProduct").click(function (e) {
+            $("#MyDialog").dialog("open");
+            e.preventDefault();
+            $("#combogridLabel").hide();
+            $("#combogridBox").hide();
+            $("#lengthSelection").combogrid('setValue', '- - Select - -');
+            $("#areaSelection").combogrid('setValue', '- - Select - -');
+            $("#thicknessSelection").combogrid('setValue', '- - Select - -');
+            $("#weightSelection").combogrid('setValue', '- - Select - -');
+            $("#scrimTypeSelection").combogrid('setValue', 'NA');
+            $("#thick").val(0);
+            $("#width").val(0);
+            $("#masRollLength").val(0);
+            $("#contRollLength").val(0);
+            $("#labelTwo").val('');
+            $("#labelThree").val('');
+            $("#wtPerArea").val(0);
+            $("#qtyMade").val(1);
+            $("#rollsPerLotPal").val(1);
+            $("#rollsPerLot").val(1);
+            $("#productCode").val('');
+            $("#productDesc").val('');
+            $("#label").val('');
+        });
+        $("#MyDialog").dialog("close");
+        $("#copyProduct").click(function (e) {
+            $("#MyDialog").dialog("open");
+            e.preventDefault();
+            $("#combogridLabel").hide();
+            $("#combogridBox").hide();
+        });
+    });
+
+    $(function () {
+        $("#formulationDialog").dialog({
+            autoOpen: false,
+            height: 420,
+            width: 620,
+            modal: true,
+            title: "Set Formulation"
+        });
+        $("#formulationDialog").dialog("close");
+        $("#setFormulation").click(function (e) {
+            $("#formulationDialog").dialog("open");
+            e.preventDefault();
+            var product = '@Model.Id';
+            var plant = '@Model.PlantId';
+            $('#dg').datagrid({
+                queryParams: {
+                    productId: product,
+                    plantId: plant
+                }
+            });
+        });
+    });
+    function updateProduct() {
+        var product = $("#newProduct").val();
+        $("#productCode").val(product);
+        $("#onCreate").val(0);
+        $("#MyDialog").dialog("close");
+    }
+
+    function closeDialog() {
+        $("#combogridLabel").show();
+        $("#combogridBox").show();
+        $("#MyDialog").dialog("close");
+        $("#formulationDialog").dialog("close");
+    }
+
+    function productSelected(record) {
+        //record is the row position that is returned as well if needed
+        var val = $("#productSelection").combogrid('getValue');
+        window.location = "/TPOProduct/Edit/" + val;
+    }
+
+    var editIndex = undefined;
+    function endEditing() {
+        if (editIndex == undefined) {
+            return true;
+        }
+        if ($('#dg').datagrid('validateRow', editIndex)) {
+            var ed = $('#dg').datagrid('getEditor', { index: editIndex, field: 'Id' });
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function onClickRow(index) {
+        if (editIndex != undefined) {
+            return false;
+        }
+
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+
+    function reloadGrid() {
+        $('#dg').datagrid('load');
+    }
+
+    function accept() {
+        if (endEditing()) {
+            $('#dg').datagrid('acceptChanges');
+
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+                $.ajax({
+                    url: '/TPOProduct/AjaxTypeUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row) },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dg').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+
+    function reject() {
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+</script>
+
+<style type="text/css">
+    
+    td {
+        padding-top: 0.35em;
+        padding-bottom: 0.35em;
+        padding: 5px;
+    }
+
+    .getSpace {
+        padding-left: 4em;
+    }
+
+    .textSpace {
+        padding-left: 2em;
+    }
+
+    .whiteSpace {
+        padding-left: 1.5em;
+    }
+
+    .emptySpace {
+        padding-left: 5em;
+    }
+
+    .textboxClass {
+        line-height: normal;
+        padding-bottom: 2.9px !important;
+    }
+</style>

@@ -1,0 +1,378 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+<h3>Enter Downtime Partial View!</h3>
+
+<div id="grid">
+    <table id="downtimeGrid" class="easyui-datagrid" title="DownTime Entry" style="height: 300px;width: 1000px"
+           data-options="iconCls: 'icon-edit',
+           singleselect: true,
+           toolbar: '#downtimeTb' ,
+           method: 'get',
+           onDblClickRow: onDblClickDownTimeRow,
+           pagination: true,
+           rownumbers: true,
+           fitColumns: true
+           ">
+        <thead>
+            <tr>
+                <th data-options="field:'ProductionDate', width: 180, formatter: formatDate">Production Date</th>
+                <th data-options="field:'ProductionShiftTypeCode', width: 100">Shift</th>
+                <th data-options="field:'TypeID', width: 400, formatter:reasonScript">Reason</th>
+                <th data-options="field:'DownTimeMinutes', width: 70">Downtime</th>
+                <th data-options="field:'Comment', width: 200">Comment</th>
+                <th data-options="field:'DateOccurred', formatter: formatDate">Time</th>
+                <th data-options="field:'WorkOrderCode'">Work Order</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="downtimeTb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" createNewDTEntry() ">Create New</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" deleteExistingDTEntry() ">Delete</a>
+    </div>
+</div>
+
+<div id="dialogBox" class="easyui-dialog" title="Add/Update Downtime Entry" data-options="iconCls:'icon-save'" style="width:550px;height:400px;padding:10px">
+    <table class="col-lg-offset-2">
+        <tr>
+            <td>
+                <input id="idDT" type="number" hidden>
+                <input id="plantIDDT" type="number" hidden>
+                <input id="productIDDT" type="number" hidden>
+                <input id="workOrderIDDT" type="number" hidden>
+                <input id="typeIDDT" type="number" hidden>
+                <input id="shiftIDDT" type="number" hidden>
+                <input id="equipmentIDDT" type="number" hidden>
+                <input id="equipmentGroupIDDT" type="number" hidden>
+                <input id="reasonIDDT" type="number" hidden>
+                <span id="dateEnter"><input id="dateEnteredDT" class="easyui-datebox"></span>
+                <input id="enteredByDT" type="text" hidden> 
+            </td>
+        </tr>
+        <tr id="productionDateDT">
+            <td>
+                <label>Production Date:</label>
+            </td>
+            <td>
+                <input id="prodDateDT" class="easyui-datebox" style="width:100px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Shift:</label>
+            </td>
+            <td>
+                <input id="shiftTypeDTSelection" class="easyui-combogrid" style="width:100px;" data-options="
+                    panelWidth: 500,
+                    loadMsg:'Loading',
+                    idField: 'Id',
+                    textField: 'Code',
+                    url: '/ProductionShiftType/GetAllShiftTypeResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Code',title:'Component',width:20},
+                    {field:'ShortDescription',title:'Component',width:150}
+                    ]],onSelect: shiftTypeDTSelected,
+                    fitColumns: true">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Occurence:</label>
+            </td>
+            <td>
+                <input id="occuredDate" class="easyui-datetimebox style=" width:150px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Time (min):</label>
+            </td>
+            <td>
+                <input id="timeDT" type="number" class="easyui-numberbox" data-options="min:0,precision:0" style="width:100px" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Downtime Type:</label>
+            </td>
+            <td>
+                <input id="downTimeTypeSelection" class="easyui-combogrid" style="width:120px;" data-options="
+                    loadMsg:'Loading',
+                    idField: 'ID',
+                    textField: 'Description',
+                    url: '/TPODownTimeEntry/GetAllDownTimeTypeResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Description',title:'Type',width:60}
+                    ]],onSelect: downTimeTypeSelected,
+                    fitColumns: true">
+            </td>
+        </tr>
+        <tr id="sectionOfLine">
+            <td>
+                <label id="sectionLabel"></label>
+            </td>
+            <td>
+                <input id="sectionOfLineSelection" class="easyui-combogrid" style="width:200px;" data-options="
+                    loadMsg:'Loading',
+                    idField: 'Id',
+                    textField: 'Description',
+                    method: 'get',
+                    columns: [[
+                    {field:'Description',title:'Type/Reason',width:100}
+                    ]],onSelect: sectionOfLineSelected,
+                    fitColumns: true">
+            </td>
+        </tr>
+        <tr id="component">
+            <td>
+                <label>Component:</label>
+            </td>
+            <td>
+                <input id="componentSelection" class="easyui-combogrid" style="width:200px;" data-options="
+                    loadMsg:'Loading',
+                    idField: 'ID',
+                    textField: 'Description',
+                    url: '/TPODownTimeEntry/GetEquipmentComponentByGroupResult',
+                    method: 'get',
+                    columns: [[
+                    {field:'Description',title:'Component',width:100}
+                    ]],onSelect: componentSelected,
+                    fitColumns: true">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Comments:</label>
+            </td>
+            <td>
+                <textarea id="commentDT" rows="4" cols="50"></textarea>
+            </td>
+        </tr>
+        </table>
+    <br />
+    <span class="col-lg-offset-3">
+        <button class="btn btn-success btn-shadow"
+                onclick="saveDownTimeEntry(); return false;">
+            <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+        </button>
+        <button class="btn btn-default btn-shadow"
+                onclick="$('#dialogBox').dialog('close');return false;">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+        </button>
+    </span>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#dialogBox").dialog({
+            autoOpen: false,
+            height: 400,
+            width: 550,
+            modal: true,
+            title: "Add/Update Downtime Entry"
+        });
+        $("#dialogBox").dialog("close");
+    });
+
+    function downTimeTypeSelected(record) {
+        $("#sectionOfLine").show();
+        var type = $("#downTimeTypeSelection").combogrid('getValue');
+        if (type == 1) {
+            $("#sectionLabel").text("Section of Line:");
+            $("#sectionOfLineSelection").combogrid(
+            {
+                url: '/TPODownTimeEntry/GetEquimentGroupResult'
+            });
+            $('#sectionOfLineSelection').combogrid('setValue', ' - select - ');
+            $("#component").show();
+            $("#componentSelection").combogrid('disable');
+        }
+        else {
+            $("#component").hide();
+            $("#sectionLabel").text("Downtime Reason:");
+            $("#sectionOfLineSelection").combogrid(
+            {
+                url: '/TPODownTimeEntry/GetReasonsByTypeResult',
+                queryParams:
+                {
+                    typeID: type
+                }
+            });
+            $('#sectionOfLineSelection').combogrid('setValue', ' - select - ');
+        }
+        $("#typeIDDT").val(type);
+    }
+
+    function sectionOfLineSelected(record) {
+        var group = $("#sectionOfLineSelection").combogrid('getValue');
+        $("#componentSelection").combogrid('enable');
+        $("#componentSelection").combogrid(
+            {
+                queryParams:
+                {
+                    groupID: group
+                }
+            });
+        $('#componentSelection').combogrid('setValue', ' - select - ');
+
+        if ($("#typeIDDT").val() == 1) {
+            $("#equipmentGroupIDDT").val(group);
+            $("#reasonIDDT").val(null);
+        }
+        else {
+            $("#reasonIDDT").val(group);
+            $("#equipmentGroupIDDT").val(null);
+            $("#equipmentIDDT").val(null);
+        }
+    }
+
+    function componentSelected(record) {
+        var component = $("#componentSelection").combogrid('getValue');
+        $("#equipmentIDDT").val(component);
+    }
+
+    function shiftTypeDTSelected(record) {
+        var shiftDT = $("#shiftTypeDTSelection").combogrid('getValue');
+        $("#shiftIDDT").val(shiftDT);
+    }
+
+    function reasonScript(value, row) {
+        if (row.TypeID == 1) {
+            var reason = row.DownTimeTypeDescription + " - " + row.DownTimeEquipmentGroupDescription + " - " + row.DownTimeEquipmentDescription;
+            return reason;
+        }
+        else {
+            return row.DownTimeTypeDescription + " - " + row.DownTimeReasonDescription;
+        }
+    }
+
+    function onDblClickDownTimeRow(rowIndex, rowData) {
+        $('#dialogBox').dialog('open');
+        @*alert('@Model.WorkOrderId');*@
+        $('#productionDateDT').show();
+        $('#dateEnter').hide();
+        $("#idDT").val(rowData.ID);
+        $("#shiftIDDT").val(rowData.ShiftID);
+        $("#typeIDDT").val(rowData.TypeID);
+        $("#equipmentIDDT").val(rowData.EquipmentID);
+        $("#equipmentGroupIDDT").val(rowData.DownTimeEquipmentGroupID);
+        $("#reasonIDDT").val(rowData.ReasonID);
+        $("#productIDDT").val(rowData.ProductID);
+        $("#workOrderIDDT").val(rowData.WorkOrderID);
+        $("#plantIDDT").val(rowData.PlantID);
+        $("#prodDateDT").datebox('setValue', formatDate(rowData.ProductionDate));
+        $('#shiftTypeDTSelection').combogrid('setValue', rowData.ProductionShiftTypeCode)
+        $("#occuredDate").datetimebox('setValue', rowData.DateOccurred);
+        $('#downTimeTypeSelection').combogrid('setValue', rowData.DownTimeTypeDescription);
+        $('#timeDT').numberbox('setValue', rowData.DownTimeMinutes);
+        if (rowData.TypeID == 1) {
+            $("#sectionOfLine").show();
+            $("#sectionLabel").text("Section of Line:");
+            $('#sectionOfLineSelection').combogrid('setValue', rowData.DownTimeEquipmentGroupDescription);
+            $("#component").show();
+            $("#componentSelection").combogrid('enable');
+            $('#componentSelection').combogrid('setValue', rowData.DownTimeEquipmentDescription);
+        }
+        else {
+            $("#component").hide();
+            $("#sectionOfLine").show();
+            $("#sectionLabel").text("Downtime Reason:");
+            $('#sectionOfLineSelection').combogrid('setValue', rowData.DownTimeReasonDescription);
+        }
+        $('#commentDT').text(rowData.Comment);
+        $('#enteredByDT').val(rowData.EnteredBy);
+        $('#dateEnteredDT').datebox('setValue', formatDate(rowData.DateEntered));
+    }
+
+    function createNewDTEntry() {
+        $('#dialogBox').dialog('open');
+        $('#productionDateDT').hide();
+        $('#dateEnter').hide();
+        $("#idDT").val(0);
+        $("#workOrderIDDT").val($("#WorkOrderId").val());
+        $("#plantIDDT").val('@Model.PlantId');
+        $("#prodDateDT").datebox('setValue', $("#ProductionDate").val());
+        $('#shiftTypeDTSelection').combogrid('setValue', ' - select - ')
+        $("#occuredDate").datebox('setValue', '');
+        $('#downTimeTypeSelection').combogrid('setValue', ' - select - ');
+        $('#timeDT').numberbox('clear');
+        $('#commentDT').text('');
+        $("#sectionOfLine").hide();
+        $("#component").hide();
+    }
+
+    function saveDownTimeEntry() {
+        var entryDT =
+            {
+                "ID": $('#idDT').val(),
+                "TypeID": $('#typeIDDT').val(),
+                "ShiftID": $('#shiftIDDT').val(),
+                "EquipmentID": $('#equipmentIDDT').val(),
+                "DownTimeEquipmentGroupID": $('#equipmentGroupIDDT').val(),
+                "ReasonID": $('#reasonIDDT').val(),
+                "ProductID": $('#productIDDT').val(),
+                "WorkOrderID": $('#workOrderIDDT').val(),
+                "PlantID": $('#plantIDDT').val(),
+                "LineID": '@Model.ProductionLineId',
+                "DownTimeMinutes": $('#timeDT').val(),
+                "Comment": $('#commentDT').val(),
+                "ProductionDate": $('#prodDateDT').datebox('getValue'),
+                "DateOccurred": $('#occuredDate').datebox('getValue'),
+                "EnteredBy": $('#enteredByDT').val(),
+                "DateEntered": $('#dateEnteredDT').datebox('getValue')
+            }
+        $.ajax({
+            url: '/TPODownTimeEntry/AjaxTypeUpdate',
+            type: 'POST',
+            data: entryDT,
+            success: function (data, textStatus, jqXHR) {
+                if (data.ActionStatus == "ok") {
+                    $('#downtimeGrid').datagrid('reload');
+                }
+                displayMessage(data.ActionType, data.ActionMessage);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+            }
+        });
+        $('#dialogBox').dialog('close')
+    }
+
+    function deleteExistingDTEntry() {
+        var row = $('#downtimeGrid').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPODownTimeEntry/AjaxTypeDelete',
+                type: 'POST',
+                cache: false,
+                data: row,
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#downtimeGrid').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+    }
+
+    function loadDownTimeDataGrid() {
+        $('#downtimeGrid').datagrid({
+            url: '/TPODownTimeEntry/GetDownTimeByLineResult',
+            queryParams: { lineID: '@Model.ProductionLineId' }
+        });
+        $('#downtimeGrid').datagrid('load');
+    }
+</script>
+
+<style type="text/css">
+    td {
+        padding-top: 0.35em;
+        padding-bottom: 0.35em;
+        padding: 5px;
+    }
+</style>

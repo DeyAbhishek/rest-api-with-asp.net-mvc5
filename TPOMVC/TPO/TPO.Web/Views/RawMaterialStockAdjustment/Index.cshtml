@@ -1,0 +1,190 @@
+﻿@model TPO.Web.Models.RawMaterialStockAdjustmentModel
+@{
+    ViewBag.Title = "Raw Material Stock Adjustment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-left:50px;">
+    <h2>Raw Material Stock Adjustment</h2>
+
+    @using (Html.BeginForm())
+    {
+
+    <div id="rawMaterialPanel">
+        <label for="rawMaterialSelect" style="width:100px;">Raw Material:</label>
+        <input id="rawMaterialSelect" class="easyui-combogrid" style="width:250px;" data-options="
+               panelWidth: 250,
+               loadMsg: 'Loading',
+               idField: 'Id',
+               textField: 'Code',
+               url:'/RawMaterial/GetAllRawMaterialResult',
+               method:'get',
+               columns:[[
+                     {field: 'Code', title:'Raw Material', width: 100},
+                     {field: 'Description', title:'Description', width: 150}]
+               ],
+               onSelect:rawMaterialSelected,
+               fitColumns:true
+               " />
+        <span id="rawMaterialDescription" style="margin-left:15px;font-weight:bold;font-size:14px;"></span>
+    </div>
+                      
+    <div id="lotPanel">
+        <label for="lotSelect" style="width:100px;">Select Lot:</label>
+        <input id="lotSelect" class="easyui-combogrid" style="width:250px;" data-options="
+        panelWidth: 600,
+        loadMsg: 'Loading',
+        idField: 'Id',
+        textField: 'LotNumber',
+        method: 'get',
+        columns: [[
+            {field:'ID', title:'ID', hidden: true},
+            {field:'LotNumber', title:'Lot Number', width:100},
+            {field:'DateEntered', title:'Receipt Date', formatter: formatDate, width:75},
+            {field:'QuantityAvailable', title:'Available Qty', width:75},
+            {field:'QuantityReceived', title:'Receipt Qty', width:75},
+            {field:'QuantityUsedThisLot', title:'Used Qty', width:75},
+            {field:'UoMCode', title:'UOM', width:50}
+        ]],
+        onSelect: lotSelected,
+        fitColumns: true" />
+        <input id="showUsed" type="checkbox" style="margin-left:15px;margin-right:3px;"/>
+        <label for="showUsed">Include Used</label>
+    </div>
+    <p></p> 
+    <div id="adjustPanel">
+        <h4>
+            <span>Current Stock Level: </span>
+            <span id="currentLevel"></span>
+            <span id="currentLevelUoM"></span>
+        </h4>
+        <p></p> 
+        <select id="adjustType" class="easyui-combobox" data-options="panelHeight:50" style="width:150px;">
+            <option value="1">Adjust Stock By</option>
+            <option value="2">Adjust Stock To</option>
+        </select>
+        <input type="text" id="adjustAmount" style="width:150px;" />
+        <select id="adjustUom" class="easyui-combobox" data-options="panelHeight:50" style="width:50px;">
+            <option value="9">lb</option>
+            <option value="8">kg</option>
+        </select>
+        <p></p> 
+        <label for="adjustReason">Adjustment Reason</label><br />
+        <textarea id="adjustReason" rows="2" style="width:750px;"></textarea>
+        <p></p>
+        <p></p>  
+        <input type="button"
+               value="Save"
+               class="btn btn-success lot-id-label btn-shadow"
+               id="saveButton" />
+        <input type="button"
+               value="Cancel"
+               class="btn btn-default lot-id-label btn-shadow"
+               onclick="javascript: window.location.href = '/';" />
+
+        
+    </div>
+     
+    @Html.HiddenFor(model => model.RawMaterialId)
+    @Html.HiddenFor(model => model.LotNumber)
+    @Html.HiddenFor(model => model.AdjustmentType)
+    @Html.HiddenFor(model => model.AdjustmentAmount)
+    @Html.HiddenFor(model => model.AdjustmentUoM)
+    @Html.HiddenFor(model => model.AdjustmentReason)           
+}
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#lotPanel").hide();
+            $("#adjustPanel").hide();
+
+            $("#saveButton").click(function () {
+                Save();
+                return false;
+            });
+            $("#showUsed").click(function () {
+                rawMaterialSelected(null);
+            });
+        });
+
+        function rawMaterialSelected(row) {
+            $("#adjustPanel").hide();
+            $("#adjustType").selectedIndex = 0;
+            $("#adjustAmount").val("");
+            $("#adjustUom").selectedIndex = 0;
+            $("#adjustReason").val("");
+
+            var record = $("#rawMaterialSelect").combogrid("grid").datagrid("getSelected");
+            $("#rawMaterialDescription").text(record.Description);
+            $("#RawMaterialId").val(record.Id);
+            $("#lotPanel").show();
+
+            if ( $("#showUsed").prop("checked"))
+            {
+                $("#lotSelect").combogrid({
+                    url: '/RawMaterialStockAdjustment/GetUsedLots',
+                    queryParams: { rawMaterialId: record.Id }
+                });
+            }
+            else {
+                $("#lotSelect").combogrid({
+                    url: '/RawMaterialStockAdjustment/GetLots',
+                    queryParams: { rawMaterialId: record.Id }
+                });
+            }
+
+            return false;
+        }
+        function lotSelected(row) {
+            var record = $("#lotSelect").combogrid("grid").datagrid("getSelected");
+
+            $("#LotNumber").val(record.Id);
+            $("#currentLevel").text(record.QuantityAvailable);
+            $("#currentLevelUoM").text(record.UoMCode);
+
+            $("#adjustPanel").show();
+            return false;
+        }
+        function Save() {
+            $("#AdjustmentType").val($("#adjustType").combo('getValue'));
+            $("#AdjustmentAmount").val($("#adjustAmount").val());
+            $("#AdjustmentUoM").val($("#adjustUom").combo('getValue'));
+            $("#AdjustmentReason").val($("#adjustReason").val());
+
+            var options = {
+                url: '/RawMaterialStockAdjustment/Save',
+                type: 'post',
+                data: $("form").serialize()
+            };
+            $.ajax(options)
+                .success(function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dg').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                })
+                .error(function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                });
+
+        }
+        function ShowSuccess() {
+            $("#alertDIV").css("display", "block").addClass('alert-success');
+            $("#alertP").css("display", "block").text("The item was saved.");
+            $('#dg').datagrid('reload');
+        }
+        function ShowError(errMessage) {
+            $("#alertDIV").css("display", "block").addClass('alert-danger');
+            $("#alertP").css("display", "block").text("The item could not be saved. Error:" + errMessage);
+            $('#dg').datagrid('reload');
+        }
+    </script>
+    
+    <style type="text/css">
+        #adjustAmount{
+            line-height: normal;
+            padding-bottom: 2.9px !important;
+        }
+    </style>
+}

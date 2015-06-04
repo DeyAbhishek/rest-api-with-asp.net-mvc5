@@ -1,0 +1,15 @@
+﻿CREATE TABLE [dbo].[TPOQCPlyDetail]
+(
+	[TPOQCID] INT NOT NULL PRIMARY KEY, 
+    [Ply1] NCHAR(10) NULL, 
+    [Ply2] FLOAT NULL, 
+    [Ply3] FLOAT NULL, 
+    [Ply4] FLOAT NULL, 
+    [Ply5] FLOAT NULL, 
+    [Ply6] FLOAT NULL, 
+    [DateEntered] DATETIME NOT NULL, 
+    [EnteredBy] NVARCHAR(100) NOT NULL, 
+    [LastModified] DATETIME NOT NULL, 
+    [ModifiedBy] NVARCHAR(100) NOT NULL, 
+    CONSTRAINT [FK_TPOQCPlyDetail_TPOQC] FOREIGN KEY ([TPOQCID]) REFERENCES [TPOQC]([ID])
+)

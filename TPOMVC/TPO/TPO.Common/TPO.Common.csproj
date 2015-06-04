@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{72DBC9AB-F9D7-479D-ACE0-9F649952D85C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TPO.Common</RootNamespace>
+    <AssemblyName>TPO.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV|AnyCPU'">
+    <OutputPath>bin\DEV\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV|x64'">
+    <OutputPath>bin\x64\DEV\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|AnyCPU'">
+    <OutputPath>bin\QA\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|x64'">
+    <OutputPath>bin\x64\QA\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants\DefaultUsers.cs" />
+    <Compile Include="Constants\MessageKeys.cs" />
+    <Compile Include="Constants\ResponseMessage.cs" />
+    <Compile Include="Constants\Roles.cs" />
+    <Compile Include="Constants\SettingKeys.cs" />
+    <Compile Include="DTOs\DownTimeDto.cs" />
+    <Compile Include="DTOs\DownTimeEquipmentDto.cs" />
+    <Compile Include="DTOs\DownTimeEquipmentGroupDto.cs" />
+    <Compile Include="DTOs\DownTimeReasonDto.cs" />
+    <Compile Include="DTOs\DownTimeTypeDto.cs" />
+    <Compile Include="DTOs\IMProdDto.cs" />
+    <Compile Include="DTOs\IMProductTypeDto.cs" />
+    <Compile Include="DTOs\ProdCommentDto.cs" />
+    <Compile Include="DTOs\ProdDateChangeDto.cs" />
+    <Compile Include="DTOs\ProdLineRollConfigDto.cs" />
+    <Compile Include="DTOs\ProdLineTypeDto.cs" />
+    <Compile Include="DTOs\ProductionShiftDto.cs" />
+    <Compile Include="DTOs\ProductionLineScheduleDto.cs" />
+    <Compile Include="DTOs\ProductionShiftTypeDto.cs" />
+    <Compile Include="DTOs\ProductionBudgetDto.cs" />
+    <Compile Include="DTOs\ProductionShiftUseDto.cs" />
+    <Compile Include="DTOs\QCVisualInspectionTypeDto.cs" />
+    <Compile Include="DTOs\RawMaterialActionDto.cs" />
+    <Compile Include="DTOs\ReworkProductionEntryDto.cs" />
+    <Compile Include="DTOs\RoleAssignmentDto.cs" />
+    <Compile Include="DTOs\RoleDto.cs" />
+    <Compile Include="DTOs\SupervisorOnShiftDto.cs" />
+    <Compile Include="DTOs\TestLimitTypeDto.cs" />
+    <Compile Include="DTOs\TPOBatchDto.cs" />
+    <Compile Include="DTOs\TPOCProductRollDto.cs" />
+    <Compile Include="DTOs\TPOFormulationLineProductDto.cs" />
+    <Compile Include="DTOs\TPOLineScrapDto.cs" />
+    <Compile Include="DTOs\TPOLineScrapTypeDto.cs" />
+    <Compile Include="DTOs\TPOProductStandardCostDto.cs" />
+    <Compile Include="DTOs\TPOQCLimitDto.cs" />
+    <Compile Include="DTOs\TPOReclaimActionDto.cs" />
+    <Compile Include="DTOs\TPOReclaimWIPDto.cs" />
+    <Compile Include="DTOs\FailPropertyDto.cs" />
+    <Compile Include="DTOs\IMProductDto.cs" />
+    <Compile Include="DTOs\MessageDto.cs" />
+    <Compile Include="DTOs\PlantDto.cs" />
+    <Compile Include="DTOs\ProdLinesPerformDto.cs" />
+    <Compile Include="DTOs\ProdLinesPerformProdDto.cs" />
+    <Compile Include="DTOs\ProductionLinesDto.cs" />
+    <Compile Include="DTOs\RawMaterialQcRedHoldDto.cs" />
+    <Compile Include="DTOs\RawMaterialDto.cs" />
+    <Compile Include="DTOs\RawMaterialQcSpecificGravityDetailDto.cs" />
+    <Compile Include="DTOs\RawMaterialReceivedDto.cs" />
+    <Compile Include="DTOs\RawMaterialReceivedSizeLimitDto.cs" />
+    <Compile Include="DTOs\RawMaterialSpecificGravityDto.cs" />
+    <Compile Include="DTOs\RawMaterialQcDto.cs" />
+    <Compile Include="DTOs\RawMaterialTestDto.cs" />
+    <Compile Include="DTOs\ScrimActionDto.cs" />
+    <Compile Include="DTOs\ScrimActionReasonDto.cs" />
+    <Compile Include="DTOs\ScrimActionTypeDto.cs" />
+    <Compile Include="DTOs\ScrimRollDto.cs" />
+    <Compile Include="DTOs\ScrimTypeDto.cs" />
+    <Compile Include="DTOs\RawMaterialVendorDto.cs" />
+    <Compile Include="DTOs\SecurityRoleDto.cs" />
+    <Compile Include="DTOs\TPOCurrentRawMaterialDto.cs" />
+    <Compile Include="DTOs\TPOCurrentScrimDto.cs" />
+    <Compile Include="DTOs\TPOExtruderDto.cs" />
+    <Compile Include="DTOs\TPOFormulationDto.cs" />
+    <Compile Include="DTOs\TPOFormulationRawMaterialDto.cs" />
+    <Compile Include="DTOs\TPOLineScrapCodeDto.cs" />
+    <Compile Include="DTOs\TPOLineScrapCodeGroupDto.cs" />
+    <Compile Include="DTOs\TPOProductDto.cs" />
+    <Compile Include="DTOs\TPOReclaimActionTypeDto.cs" />
+    <Compile Include="DTOs\TPOReworkActionDto.cs" />
+    <Compile Include="DTOs\TPOReworkActionTypeDto.cs" />
+    <Compile Include="DTOs\TPOReworkRollDto.cs" />
+    <Compile Include="DTOs\UnitOfMeasureDefaultDto.cs" />
+    <Compile Include="DTOs\UnitOfMeasureDto.cs" />
+    <Compile Include="DTOs\UnitOfMeasureTypeDto.cs" />
+    <Compile Include="DTOs\UoMConversionDto.cs" />
+    <Compile Include="DTOs\UserDto.cs" />
+    <Compile Include="DTOs\UserPlantDto.cs" />
+    <Compile Include="DTOs\WorkOrderDto.cs" />
+    <Compile Include="DTOs\WorkOrderShiftDataDto.cs" />
+    <Compile Include="DTOs\WorkOrderShiftDataFormulationDto.cs" />
+    <Compile Include="Enums\ActionTypeMessage.cs" />
+    <Compile Include="Enums\SecurityTask.cs" />
+    <Compile Include="Interfaces\IProductEntryDto.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\General.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>General.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Shoals.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Shoals.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Wellford.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Wellford.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TPO.Data\TPO.Data.csproj">
+      <Project>{ebc7fa16-9ddb-426e-acc7-ea3459887741}</Project>
+      <Name>TPO.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\General.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>General.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Shoals.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Shoals.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Wellford.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Wellford.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

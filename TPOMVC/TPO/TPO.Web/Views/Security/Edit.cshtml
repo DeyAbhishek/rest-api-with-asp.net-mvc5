@@ -1,0 +1,143 @@
+﻿@using MvcCheckBoxList.Model
+@model TPO.Web.Models.SecurityEditModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-left:25px;">
+    <h2>Edit User: @Html.DisplayFor(model => model.FullName)</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="easyui-tabs" style="width:500px;">
+            <div title="General Information" style="padding:20px;">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FullName, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+                        <div class="col-sm-12">
+                            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FullName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PlantId, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+                        <div class="col-sm-12">
+                            @Html.DropDownListFor(model => model.PlantId, Model.PlantList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PlantId)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Username, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+                        <div class="col-sm-12">
+                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Username)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DateEntered, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+                        <div class="col-sm-12">
+                            @Html.DisplayTextFor(model => model.DateEntered)
+                            @Html.ValidationMessageFor(model => model.DateEntered)
+                            @Html.HiddenFor(model => model.DateEntered)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EnteredBy, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+                        <div class="col-sm-12">
+                            @Html.DisplayTextFor(model => model.EnteredBy)
+                            @Html.ValidationMessageFor(model => model.EnteredBy)
+                            @Html.HiddenFor(model => model.EnteredBy)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastModified, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+                        <div class="col-sm-12">
+                            @Html.DisplayTextFor(model => model.LastModified)
+                            @Html.ValidationMessageFor(model => model.LastModified)
+                            @Html.HiddenFor(model => model.LastModified)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ModifiedBy, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+                        <div class="col-sm-12">
+                            @Html.DisplayTextFor(model => model.ModifiedBy)
+                            @Html.ValidationMessageFor(model => model.ModifiedBy)
+                            @Html.HiddenFor(model => model.ModifiedBy)
+                        </div>
+                    </div>
+                </div>
+            <div title="Related Plants" style="padding:20px;">
+                @Html.CheckBoxListFor(model => model.SelectedPlants.Plants,
+                    model => model.PlantList,
+                    security => security.Value,
+                    security => security.Text,
+                    model => model.RelatedPlantList,
+                    Position.Vertical)
+            </div>
+            <div title="Functional Groups" style="padding:20px;">
+                @Html.CheckBoxListFor(model => model.SelectedRoles.Roles,
+                    model => model.RoleList,
+                    security => security.Text,
+                    security => security.Text,
+                    model => model.RoleAssignmentList,
+                    Position.Vertical)
+            </div>
+            <div title="Reset Password" style="padding:20px;">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+                    <div class="col-sm-12">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ConfirmPassword, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+                    <div class="col-sm-12">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:20px;margin-bottom:20px;">
+            <span class="col-lg-offset-2">
+                <button class="btn btn-success btn-shadow"
+                        onclick="$(this).parents('form:first').submit(); return false;">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                </button>
+                <button class="btn btn-default btn-shadow" id="cancel">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>
+            </span>
+        </div>
+    }
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            enforceDefaultPlant();
+        });
+
+        $("#cancel").click(function (event) {
+            event.preventDefault();
+            window.location.href = "/Security/";
+        });
+
+        $("#PlantId").change(function () {
+            enforceDefaultPlant();
+        });
+
+        function enforceDefaultPlant() {
+            var defaultPlant = "#PlantId" + $("#PlantId").val();
+            $(defaultPlant)
+                .prop("checked", "checked")
+                .prop("disabled", true);
+            $(".plantListItem").not(defaultPlant).removeProp("disabled");
+
+        }
+
+    </script>
+}

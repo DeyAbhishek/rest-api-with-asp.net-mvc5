@@ -1,0 +1,226 @@
+﻿@model TPO.DL.Models.RawMaterialQCRedHold
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RawMaterialQCRedHold</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HoldLotID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoldLotID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RedComments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RedComments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RedCorrectionAction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RedCorrectionAction)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoldDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoldDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoldComments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoldComments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ManagerDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManagerDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ManagerComments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManagerComments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrimeBoxCar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrimeBoxCar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrimeUOM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrimeUOM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReworkBoxCar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReworkBoxCar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReworkUOM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReworkUOM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScrapBoxCar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScrapBoxCar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScrapUOM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScrapUOM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateEntered)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnteredBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FailProperty.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FailProperty.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Plant.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plant.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User1.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User1.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User2.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User2.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RawMaterialReceived.RawMaterialID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RawMaterialReceived.RawMaterialID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User3.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User3.Username)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

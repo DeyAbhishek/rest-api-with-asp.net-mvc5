@@ -1,0 +1,212 @@
+﻿
+@model TPO.Web.Models.TPOMonthlyProductionBudgetModel
+
+@{
+    ViewBag.Title = "TPO Monthly Production Budget";
+}
+
+<h2>TPO Monthly Production Budget</h2>
+
+@using (Html.BeginForm())
+{
+   
+     <label for="yearSelection" style="width:100px;">Select Year : </label>
+    <input id="yearSelection" class="easyui-combogrid" style="width:80px" data-options="
+        panelWidth: 80,
+        loadMsg: 'Loading...',
+        idField: 'Key',
+        textField: 'Value',
+        url: '/TPOMonthlyProductionBudget/GetYears/',
+        method: 'get',
+        columns: [[
+            {field: 'Value',title: 'Year', width:150}
+        ]],
+        onSelect: productionBudgetSelected,
+        fitColumns: true
+      " />
+
+    <br />
+    <br />
+    <div id="divBudget" style="display:none;">
+        <table id="dg" class="easyui-datagrid"  style="width:250px;"
+               data-options="iconCls: 'icon-edit',
+           singleSelect: true,
+           toolbar: '#tb',
+           url: '/TPOMonthlyProductionBudget/BudgetGrid',
+           method: 'get' ,
+           onClickRow: onClickRow,
+           rownumbers: true,
+           fitColumns: true
+           ">
+
+
+        </table>
+       
+        <label for="total" style="width:70px;">Total : </label>
+        <input type="text" id="total" name="total" style="border: none;"/>
+        <br/><br/>
+        <div class="col-md-12">
+            
+            <button class="btn btn-default btn-shadow"
+                    onclick="accept(); return false;">
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+            </button>&nbsp;&nbsp;
+            <button class="btn btn-default btn-shadow"
+                    onclick="reject();  return false;">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+            </button>
+
+        </div>
+
+    </div>
+    <br/>
+
+}
+<script type="text/javascript">
+
+
+    $('#dg').datagrid({
+        columns: [[
+            { field: 'ID', hidden: true },
+            { field: 'Year', hidden: true },
+            {field: 'Month', hidden: true},
+            { field: 'MonthName', title: 'Month' },
+            { field: 'Budget', title: 'Production Budget (sqft)', editor: 'text', formatter: formatNumberAsCommaSeparatedInt }
+        ]]
+    });
+
+
+    function formatNumberAsCommaSeparatedInt(value, row, index) {
+        if (value == null) return value;
+        value = Math.round(value);
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    $(document).ready(function () {
+        //var d = new Date();
+        //var n = d.getFullYear();
+
+        $('#yearSelection').combogrid('setValue', 'Select');
+
+    });
+
+    var editIndex = undefined;
+
+    function endEditing() {
+        if (editIndex == undefined) {
+            return true;
+        }
+        if ($('#dg').datagrid('validateRow', editIndex)) {
+            var ed = $('#dg').datagrid('getEditor', { index: editIndex, field: 'Id' });
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function onClickRow(index) {
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+
+    function append() {
+        if (endEditing()) {
+            $('#dg').datagrid('appendRow', { status: 'P' });
+            editIndex = $('#dg').datagrid('getRows').length - 1;
+            $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+        }
+    }
+
+    function accept() {
+        if (endEditing()) {
+            $('#dg').datagrid('acceptChanges');
+
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+
+                var myJSONObject = {
+                    "ID": row.ID,
+                    "Month": row.Month,
+                    "Year": row.Year,
+                    "MonthName": row.MonthName,
+                    "Budget" : row.Budget
+                };
+
+                $.ajax({
+                    url: '/TPOMonthlyProductionBudget/BudgetAjaxUpdate/',
+                    type: 'POST',
+                    cache: false,
+                    data: { id: JSON.stringify(myJSONObject) },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            var rows = $('#dg').datagrid('getRows');
+                            var total = 0;
+                            for (var i = 0; i < rows.length; i++) {
+                                var t = parseInt(rows[i].Budget);
+                                total = total + t;
+                            }
+                            var d = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            $('#total').val(d);
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+
+                //var rows = $('#dg').datagrid('getRows');
+                //var total = 0;
+                //for (var i = 0; i < rows.length; i++) {
+                //    total += rows.Budget;
+                //}
+                //$('#total').val(total);
+            }
+        }
+    }
+
+    function reject() {
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+
+
+    function productionBudgetSelected(record) {
+        var val = $("#yearSelection").combogrid('getValue');
+
+        $("#dg").datagrid(
+        {
+            //loadFilter: pagerFilter,
+            queryParams:
+            {
+                typeID: val
+            }
+        });
+       $.ajax({
+            url: '/TPOMonthlyProductionBudget/BudgetTotalResult/',
+            type: 'GET',
+            data: { typeID: val },
+            success: function (data) {
+                //if (data == null) return data;
+                //value = Math.round(value);
+                var d = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                $('#total').val(d);
+            }
+        });
+
+       $("#divBudget").show();
+
+    }
+
+
+</script>

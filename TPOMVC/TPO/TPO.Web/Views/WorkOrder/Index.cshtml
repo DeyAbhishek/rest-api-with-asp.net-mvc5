@@ -1,0 +1,494 @@
+﻿@{
+    ViewBag.Title = "Work Orders";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal" style="margin-left:25px;">
+        <hr />
+        <h2>Work Orders</h2>
+        <br />
+        <div class="form-group">
+            <label for="ddlLines">Line:</label>
+            <input id="ddlLines" class="easyui-combogrid" style="width:120px" data-options="
+                   idField: 'ID',
+                   textField: 'LineDesc',
+                   loadMsg: 'Loading',
+                   url: '/CurrentScrim/GetProductionLinesResult/',
+                   method: 'get',
+                   fitColumns: true,
+                   columns: [[
+                   { field: 'LineDesc', title: 'Line' }
+                   ]],
+                   onSelect: lineSelected
+                   " />
+            &nbsp;
+            <label for="cbViewComplete">Show Completed Work Orders</label>
+            <input id="cbViewComplete" type="checkbox" onchange="loadGrid();" />
+        </div>
+
+        <input id="hiddenLineTypeCode" type="hidden" />
+
+        <div id="divGrid" class="form-group" style="display:none;">
+            <table id="dgWorkOrders" class="easyui-datagrid"></table>
+            <div id="workOrderTb">
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls: 'icon-add', plain: true" onclick="newWorkOrder();">Create New</a>
+            </div>
+        </div>
+
+    </div>
+}
+
+<script type="text/javascript">
+    var workOrderCount = 0;
+
+    $(function () {
+        createGrid();
+        var lineID = $("#ddlLines").combogrid('getValue');
+        if (lineID <= 0) {
+            $("#ddlLines").combogrid('setValue', "Select");
+        }
+    })
+    function lineSelected(line) {
+        var lineID = $("#ddlLines").combogrid('getValue');
+        if (lineID > 0) {
+            $("#divGrid").show();
+        } else {
+            $("#divGrid").hide();
+        }
+        setLineType();
+        setWorkOrderCount();
+        handleColumns();
+        loadGrid();
+    }
+    function setLineType() {
+        var lineID = $("#ddlLines").combogrid('getValue');
+        if (lineID > 0) {
+            $.ajax(
+                {
+                    url: '/ProdLineManagement/GetTypeByLineID/',
+                    method: 'get',
+                    data: { lineID: lineID },
+                    async: false,
+                    success: function (data, textStatus, jqXHR) {
+                        $("#hiddenLineTypeCode").val(data.ProdLineTypeCode);
+                    }
+                });
+        }
+    }
+    function setWorkOrderCount() {
+        $.ajax(
+            {
+                url: '/WorkOrder/Count/',
+                method: 'get',
+                data: { lineID: $("#ddlLines").combogrid('getValue') },
+                async: false,
+                success: function (count, textStatus, jqXHR) {
+                    workOrderCount = count;
+                }
+            });
+    }
+    function handleColumns() {
+        var typeCode = $("#hiddenLineTypeCode").val();
+        var colOption = $("#dgWorkOrders").datagrid('getColumnOption', 'RunArea');
+        if (typeCode != '') {
+            switch (typeCode) {
+                case 'TPO':
+                    {
+                        hideColumn('dgWorkOrders', 'IMProductID');
+                        showColumn('dgWorkOrders', 'TPOProductID');
+                        var uom = getDefaultUoM();
+                        colOption.title = 'Run Qty (' + uom + ')'
+                        var grid = $("#ddlLines").combogrid('grid');
+                        var line = grid.datagrid('getSelected');
+                        if (line.TPOMorC == 'C') {
+                            showColumn('dgWorkOrders', 'Pal');
+                        } else {
+                            hideColumn('dgWorkOrders', 'Pal');
+                        }
+                    } break;
+                case 'IM':
+                    {
+                        hideColumn('dgWorkOrders', 'Pal');
+                        hideColumn('dgWorkOrders', 'TPOProductID');
+                        showColumn('dgWorkOrders', 'IMProductID');
+                        colOption.title = 'Run Qty (Pieces)'
+                    } break;
+                case 'CO':
+                    {
+                        hideColumn('dgWorkOrders', 'IMProductID');
+                        showColumn('dgWorkOrders', 'Pal');
+                        showColumn('dgWorkOrders', 'TPOProductID');
+                        var uom = getDefaultUoM();
+                        colOption.title = 'Run Qty (' + uom + ')'
+                    } break;
+                default:
+                    {
+
+                    }
+            }
+        }
+    }
+    function loadGrid() {
+        var lineID = $("#ddlLines").combogrid('getValue');
+        var viewCompleted = $("#cbViewComplete").prop('checked');
+        $("#dgWorkOrders").datagrid(
+            {
+                queryParams:
+                    {
+                        lineID: lineID,
+                        viewCompleted: viewCompleted
+                    }
+            });
+    }
+    function createGrid() {
+        var tpoProducts = {};
+        var imProducts = {};
+
+        //Load TPOProducts,
+        $.ajax(
+            {
+                url: '/TPOProduct/GetByPlantResult',
+                method: 'get',
+                cache: false,
+                async: false,
+                success: function (data, textStatus, jqXHR) {
+                    tpoProducts = data;
+                }
+            });
+        //Load IMProducts
+        $.ajax(
+            {
+                url: '/IMProduct/GetByPlantResult',
+                method: 'get',
+                cache: false,
+                async: false,
+                success: function (data, textStatus, jqXHR) {
+                    imProducts = data;
+                }
+            });
+
+
+
+        $("#dgWorkOrders").datagrid(
+            {
+                toolbar: '#workOrderTb',
+                singleSelect: true,
+                idField: 'Id',
+                url: '/WorkOrder/WorkOrdersByLine/',
+                method: 'get',
+                fitColumns: true,
+                columns: [[
+                    { field: 'Id', hidden: true },
+                    { field: 'PlantId', hidden: true },
+                    { field: 'LineID', hidden: true },
+                    {
+                        field: 'Reorder', align: 'center',
+                        formatter: function (value, row, index) {
+                            if (workOrderCount > 1) {
+                                var up = '<button class="btn btn-link" onclick="moveUp(this); return false;"><span class="glyphicon glyphicon-arrow-up"></span></button>';
+                                var down = '<button class="btn btn-link" onclick="moveDown(this); return false;"><span class="glyphicon glyphicon-arrow-down"></span></button>';
+                                if (row.RunOrder == 1) {
+                                    return down;
+                                } else if (row.RunOrder == workOrderCount) {
+                                    return up;
+                                } else {
+                                    return up + down;
+                                }
+                            }
+                        }
+                    },
+                    { field: 'RunOrder', hidden: true },
+                    { field: 'Code', editor: { type: 'text', required: true, options: { maxlength: 10 } }, title: 'Work Order', width: 60 },
+                    { field: 'RunArea', title: 'Run Qty', editor: { type: 'numberbox', required: true }, width: 100, formatter: formatNumberAsCommaSeparatedInt },
+                    {
+                        field: 'TPOProductID', title: 'Product', width: 150,
+                        editor:
+                            {
+                                type: 'combogrid',
+                                options:
+                                {
+                                    idField: 'Id',
+                                    columns: [[
+                                              { field: 'ProductCode', title: 'Product Code', width: 100 },
+                                              { field: 'Description', title: 'Description', width: 100 }
+                                    ]],
+                                    textField: 'ProductCode',
+                                    data: tpoProducts,
+                                    panelWidth: 225
+                                }
+                            },
+                        formatter: function (value) {
+                            for (var i = 0; i < tpoProducts.length; i++) {
+                                if (tpoProducts[i].Id == value) { return tpoProducts[i].ProductCode; }
+                            }
+                            return "";
+                        }
+                    },
+                    {
+                        field: 'IMProductID', title: 'Product', hidden: true, width: 100,
+                        editor:
+                            {
+                                type: 'combogrid',
+                                options:
+                                {
+                                    idField: 'Id',
+                                    columns: [[
+                                              { field: 'Code', title: 'Code', width: 100 },
+                                              { field: 'Description', title: 'Description', width: 100 }
+                                    ]],
+                                    textField: 'Code',
+                                    data: imProducts,
+                                    panelWidth: 225
+                                }
+                            },
+                        formatter: function (value) {
+                            for (var i = 0; i < imProducts.length; i++) {
+                                if (imProducts[i].Id == value) { return imProducts[i].Code; }
+                            }
+                            return "";
+                        }
+                    },
+                    {
+                        field: 'Complete', title: 'Order Complete', align: 'center',
+                        editor:
+                            {
+                                type: 'workingcheckbox'
+                            }, formatter: function (value, row, index) {
+                                if (value == true) {
+                                    return "Yes";
+                                } else { return "No"; }
+                            }
+                    },
+                    {
+                        field: 'Pal', title: 'Palletize Product', align: 'center',
+                        editor:
+                            {
+                                type: 'workingcheckbox'
+                            }, formatter: function (value, row, index) {
+                                if (value == true) {
+                                    return "Yes";
+                                } else { return "No"; }
+                            }
+                    },
+                    { field: 'Comment', title: 'Comments', editor: { type: 'workingtextarea', options: { rows: 4, cols: 200 } }, width: 500 },
+                    { field: 'EnteredBy', hidden: true },
+                    { field: 'DateEntered', hidden: true },
+                    { field: 'ModifiedBy', hidden: true },
+                    { field: 'LastModified', hidden: true },
+                    {
+                        field: 'Action', align: 'center', width: 160,
+                        formatter: function (value, row, index) {
+                            if (row.editing) {
+                                var s = '<a href="#" onclick="saveWorkOrder(this)">Save</a> ';
+                                var c = '<a href="#" onclick="cancelEdit(\'dgWorkOrders\', this)">Cancel</a>';
+                                return s + c;
+                            } else {
+                                var e = '<a href="#" onclick="editRow(\'dgWorkOrders\', this)">Edit</a> ';
+                                var d = '<a href="#" onclick="deleteWorkOrder(this)">Delete</a>';
+                                return e + d;
+                            }
+                        }
+                    }
+                ]],
+                onBeforeEdit: function (index, row) {
+                    row.editing = true;
+                    hideColumn('dgWorkOrders', 'Reorder');
+                    updateActions('dgWorkOrders', index);
+                },
+                onAfterEdit: function (index, row) {
+                    row.editing = false;
+                    showColumn('dgWorkOrders', 'Reorder');
+                    updateActions('dgWorkOrders', index);
+                },
+                onCancelEdit: function (index, row) {
+                    row.editing = false;
+                    showColumn('dgWorkOrders', 'Reorder');
+                    updateActions('dgWorkOrders', index);
+                }
+            });
+    }
+    function newWorkOrder() {
+        $("#dgWorkOrders").datagrid('appendRow',
+            {
+                Id: 0,
+                PlantId: 0,
+                LineID: 0,
+                TPOProductID: null,
+                IMProductID: null,
+                Code: '',
+                RunOrder: 0,
+                RunArea: 0,
+                Pal: false,
+                Complete: false,
+                Comment: '',
+                DateEntered: new Date().toJSON(),
+                EnteredBy: '',
+                LastModified: new Date().toJSON(),
+                ModifiedBy: ''
+            });
+        var index = $("#dgWorkOrders").datagrid('getRows').length - 1;
+        $("#dgWorkOrders").datagrid('beginEdit', index);
+    }
+    function saveWorkOrder(target) {
+        if (validateRow('dgWorkOrders', target)) {
+            var index = getRowIndex(target);
+            endEdit('dgWorkOrders', target);
+            var row = $("#dgWorkOrders").datagrid('getRows')[index];
+            var lineID = $("#ddlLines").combogrid('getValue');
+
+            if (row) {
+                var rowID = row.Id;
+                var workOrder =
+                    {
+                        "Id": row.Id,
+                        "PlantId": row.PlantId,
+                        "LineID": lineID,
+                        "TPOProductID": row.TPOProductID,
+                        "IMProductID": row.IMProductID,
+                        "Code": row.Code,
+                        "RunOrder": row.RunOrder,
+                        "RunArea": row.RunArea,
+                        "Pal": row.Pal,
+                        "Complete": row.Complete,
+                        "Comment": row.Comment,
+                        "EnteredBy": row.EnteredBy,
+                        "DateEntered": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.DateEntered.substr(6)))),
+                        "ModifiedBy": row.ModifiedBy,
+                        "LastModified": $.datepicker.formatDate('mm/dd/yy', new Date(parseInt(row.LastModified.substr(6))))
+                    }
+                $("#dgWorkOrders").datagrid('loading');
+                $.ajax(
+                    {
+                        url: '/WorkOrder/UpdateWorkOrder',
+                        method: 'post',
+                        data: workOrder,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.ResponseMessage.ActionStatus == "ok") {
+                                if (rowID == 0) {
+                                    //New work order
+                                    workOrderCount++;
+
+                                    //Need to update row above
+                                    if (index > 0) {
+                                        $("#dgWorkOrders").datagrid('updateRow',
+                                            {
+                                                index: index - 1,
+                                                row: {}
+                                            });
+                                    }
+                                }
+                                $("#dgWorkOrders").datagrid('updateRow',
+                                {
+                                    index: index,
+                                    row:
+                                        {
+                                            Id: data.Id,
+                                            PlantId: data.PlantId,
+                                            IMProductID: data.IMProductID,
+                                            TPOProductID: data.TPOProductID,
+                                            RunOrder: data.RunOrder,
+                                            Complete: data.Complete,
+                                            Pal: data.Pal,
+                                            EnteredBy: data.EnteredBy,
+                                            DateEntered: data.DateEntered,
+                                            ModifiedBy: data.ModifiedBy,
+                                            LastModified: data.LastModified
+                                        }
+                                });
+                            }
+                            displayMessage(data.ResponseMessage.ActionType, data.ResponseMessage.ActionMessage);
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        }, complete: function (jqXHR, textStatus) {
+                            $("#dgWorkOrders").datagrid('loaded');
+                        }
+                    });
+            }
+        }
+    }
+
+    function deleteWorkOrder(target) {
+        $.messager.confirm('Confirm', 'Delete this item?', function (r) {
+            if (r) {
+                var index = getRowIndex(target);
+                var row = $("#dgWorkOrders").datagrid('getRows')[index];
+                if (row) {
+                    var id = row.Id;
+                    $("#dgWorkOrders").datagrid('loading');
+                    $.ajax(
+                        {
+                            url: '/WorkOrder/DeleteWorkOrder/' + id,
+                            type: 'post',
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.ActionStatus == "ok") {
+                                    workOrderCount--;
+                                    loadGrid();
+                                    //$("#dgWorkOrders").datagrid('deleteRow', index);
+                                }
+                                displayMessage(data.ActionType, data.ActionMessage);
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                displayMessage(data.ActionType, data.ActionMessage);
+                            }, complete: function (jqXHR, textStatus) {
+                                $("#dgWorkOrders").datagrid('loaded');
+                            }
+                        });
+                }
+            }
+        });
+    }
+    function getDefaultUoM() {
+        var uom = '';
+        $.ajax(
+            {
+                url: '/UnitOfMeasure/GetDefaultUoMByType',
+                data: { typeCode: 'A' },
+                type: 'get',
+                async: false,
+                success: function (data, textStatus, jqXHR) {
+                    uom = data.Code;
+                }
+            });
+        return uom;
+    }
+    function moveUp(target) {
+        var index = getRowIndex(target);
+        var row = $("#dgWorkOrders").datagrid('getRows')[index];
+        row.RunOrder--;
+        $("#dgWorkOrders").datagrid('loading');
+        $.ajax(
+            {
+                url: '/WorkOrder/Reorder/',
+                data: { workOrderID: row.Id, newOrder: row.RunOrder },
+                method: 'post',
+                success: function (data, textStatus, jqXHR) {
+                    loadGrid();
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }, complete: function (jqXHR, textStatus) {
+                    $("#dgWorkOrders").datagrid('loaded');
+                }
+            });
+    }
+    function moveDown(target) {
+        var index = getRowIndex(target);
+        var row = $("#dgWorkOrders").datagrid('getRows')[index];
+        row.RunOrder++;
+        $("#dgWorkOrders").datagrid('loading');
+        $.ajax(
+            {
+                url: '/WorkOrder/Reorder/',
+                data: { workOrderID: row.Id, newOrder: row.RunOrder },
+                method: 'post',
+                success: function (data, textStatus, jqXHR) {
+                    loadGrid();
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }, complete: function (jqXHR, textStatus) {
+                    $("#dgWorkOrders").datagrid('loaded');
+                }
+            });
+    }
+</script>
+

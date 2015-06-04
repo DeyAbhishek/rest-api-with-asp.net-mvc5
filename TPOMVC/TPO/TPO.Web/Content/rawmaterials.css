@@ -1,0 +1,109 @@
+﻿/******** QC *******/
+.rm-qc-container 
+{
+    overflow:hidden;
+    width:100%;
+}
+.rm-qc-test 
+{
+    float:left;
+    width:200px;
+    margin:10px;
+    font-weight:bold;
+    font-size:14px;
+    border:1px solid black;
+}
+
+.rm-qc-test-header
+{
+    width:100%;
+    padding:5px;
+    border-bottom:1px solid black;
+}
+
+.rm-qc-value
+{
+    width:100%;
+    padding:5px;
+    margin-top:2px;
+}
+
+.rm-qc-spec
+{
+    width:100%;
+    text-align:center;
+    padding:3px;
+    margin-top:2px;
+}
+
+
+/*Raw Material QC Styles*/
+
+.raw-material-qc-comments{
+    position:relative;left:-780px;width:100%;top:50px;
+}
+
+.raw-material-qc-red-hold-bt
+{
+    margin-left:200px;
+}
+
+#RawMaterialLotQC{
+    margin: 7px 0 0 0;
+}
+
+#RawMaterialQC{
+    margin: 7px 0 0 0;
+}
+
+#RawMaterialQCLotTest{
+    margin: 7px 0 0 0;
+}
+
+.txt-box-car-tested{
+    margin: 7px 0 0 0;
+}
+
+.last-modified{
+    margin: 7px 0 0 0;
+}
+
+#RawMaterialQCLotList{
+    margin: 7px 0 0 0;
+    font-family: Comic Sans MS, Arial;
+}
+
+.lot-id-label{
+    margin: 7px 0 0 0;
+}
+
+#RawMaterialLotQC{
+    font-family: courier, Arial;
+}
+
+#RawMaterialQC{
+    font-family: courier, Arial;
+}
+
+#RawMaterialQCLotTest{
+    font-family: courier, Arial;
+}
+
+#RawMaterialEnteredBy{
+    font-family: courier, Arial;
+}
+
+/* styles for qc errors */
+.qc-validation-error {
+    background-color: #b94a48;
+    color: #b94a48;
+    font: bold;
+}
+
+/*.txt-comments{
+    width:800px;
+    height:300px;
+    max-width:800px !important;
+}*/
+
+/********* End QC **********/

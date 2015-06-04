@@ -1,0 +1,257 @@
+﻿@model TPO.DL.Models.RawMaterialQC
+
+@{
+    ViewBag.Title = "HoldFormEdit";
+}
+
+<h3>HoldForm</h3>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RawMaterialLotID, "Lot Number: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.EditorFor(model => model.RawMaterialLotID)
+                @Html.ValidationMessageFor(model => model.RawMaterialLotID)
+            </div>
+            <div class="col-md-2"></div>
+            @Html.LabelFor(model => model.QCTechUserID, "QC Tech: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.DropDownList("QCTechUserID", String.Empty)
+                @Html.ValidationMessageFor(model => model.QCTechUserID)
+            </div>
+        </div>
+
+        <p></p>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BoxCarTested, "Box\\Car Tested: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.EditorFor(model => model.BoxCarTested)
+                @Html.ValidationMessageFor(model => model.BoxCarTested)
+            </div>
+            <div class="col-md-2"></div>
+            @Html.LabelFor(model => model.QCTechUserID, "Shift Supervisor: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.DropDownList("QCTechUserID", String.Empty)
+                @Html.ValidationMessageFor(model => model.QCTechUserID)
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.PlantID, "PlantID", new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.DropDownList("PlantID", String.Empty)
+                @Html.ValidationMessageFor(model => model.PlantID)
+            </div>
+
+            <div class="col-md-2"></div>
+            @Html.LabelFor(model => model.QCTechUserID, "Lead Operator: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.DropDownList("QCTechUserID", String.Empty)
+                @Html.ValidationMessageFor(model => model.QCTechUserID)
+            </div>
+        </div>
+
+        <hr /><p></p>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RawMaterialID, new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.EditorFor(model => model.RawMaterialID)
+                @Html.ValidationMessageFor(model => model.RawMaterialID)
+            </div>
+
+        </div>
+
+        <p>           
+        </p><br />
+        <div class="form-group">
+          <div class="col-md-4">
+              @Html.ActionLink("[Red Form]", "RedFormEdit", new { id = Model.ID })
+              @Html.ActionLink("[Hold Form]", "HoldFormEdit", new { id = Model.ID })
+          </div>           
+       </div>
+      <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateEntered, "Date:", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateEntered)
+                @Html.ValidationMessageFor(model => model.DateEntered)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comments, "Comments:", new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+
+                @Html.TextAreaFor(model => model.Comments, new { style = "width:1500px;height:100px" })<p></p>
+
+                @Html.ValidationMessageFor(model => model.Comments)
+            </div>
+        </div>
+
+        <div><h3>Management Action Take</h3></div>
+
+
+
+
+        <div class="form-group">
+                      
+            @Html.LabelFor(model => model.QCTechUserID, "Manager: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.DropDownList("QCTechUserID", String.Empty)
+                @Html.ValidationMessageFor(model => model.QCTechUserID)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateEntered, "Date:", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateEntered)
+                @Html.ValidationMessageFor(model => model.DateEntered)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comments, "Comments:", new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+
+                @Html.TextAreaFor(model => model.Comments, new { style = "width:1000px;height:100px" })
+
+                @Html.ValidationMessageFor(model => model.Comments)
+            </div>
+            <div class="col-md-2"></div>
+                <div class="col-md-7">
+
+                    <table border="1" align="center" width="350">
+                        <caption><h4>QC Downgrades</h4></caption>
+
+                        <tr align="center">
+                            <th><b>Classification</b></th>
+                            <th><b>Boxes\Cars</b></th>
+                            <th><b>lb</b></th>
+                        </tr>
+                        <tr align="center">
+                            <td>Prime</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr align="center">
+                            <td>Rework</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr align="center">
+                            <td>Scrap</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+
+                    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+
+<hr /><p></p>
+
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.VisualInspection, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.VisualInspection)
+                @Html.ValidationMessageFor(model => model.VisualInspection)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.SpecGrav, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.SpecGrav)
+                @Html.ValidationMessageFor(model => model.SpecGrav)
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.EnteredBy, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.EnteredBy)
+                @Html.ValidationMessageFor(model => model.EnteredBy)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.LastModified, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.LastModified)
+                @Html.ValidationMessageFor(model => model.LastModified)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.ModifiedBy)
+                @Html.ValidationMessageFor(model => model.ModifiedBy)
+            </div>
+        </div>
+
+
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+<div>
+    @Html.ActionLink("Cancel", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

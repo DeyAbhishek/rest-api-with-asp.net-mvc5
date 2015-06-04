@@ -1,0 +1,201 @@
+﻿@model IEnumerable<TPO.DL.Models.RawMaterialTest>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RawMaterialID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UseColorTest)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ColorLimit1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ColorLimit2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UseMFTest)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MFLimit1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MFLimit2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UseACTest)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACLimit1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACLimit2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UseMoistTest)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoistLimit1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoistLimit2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UseCBTest)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CBLimit1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CBLimit2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UseSpecGrav)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UseVisual)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TestFrequency)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastModified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Plant.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TestLimitType.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TestLimitType1.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TestLimitType2.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TestLimitType3.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TestLimitType4.Code)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RawMaterialID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UseColorTest)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ColorLimit1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ColorLimit2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UseMFTest)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MFLimit1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MFLimit2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UseACTest)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACLimit1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACLimit2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UseMoistTest)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MoistLimit1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MoistLimit2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UseCBTest)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CBLimit1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CBLimit2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UseSpecGrav)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UseVisual)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TestFrequency)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateEntered)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EnteredBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastModified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plant.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TestLimitType.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TestLimitType1.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TestLimitType2.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TestLimitType3.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TestLimitType4.Code)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

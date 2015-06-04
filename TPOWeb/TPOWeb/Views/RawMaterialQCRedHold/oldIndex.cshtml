@@ -1,0 +1,97 @@
+﻿@model IEnumerable<TPO.DL.Models.RawMaterialQCRedHold>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Raw Material QC Red & Hold Page</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HoldLotID)
+           
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RawMaterialReceived.RawMaterialID)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.FailProperty.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Plant.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User1.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User2.Username)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.User3.Username)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td style="background-color:yellow" align="center" width="10%">
+            @Html.DisplayFor(modelItem => item.HoldLotID)<p></p>
+            @Html.ActionLink("[Hold Form]", "HoldFormEdit", new { id = item.ID })<p></p>
+            @Html.ActionLink("[Red Form]", "RedFormEdit", new { id = item.ID })
+        </td>
+
+        <td style="background-color:lightgrey" align="center" width="10%">
+            @Html.DisplayFor(modelItem => item.RawMaterialReceived.RawMaterialID)
+        </td>
+          
+        <td>
+            @Html.DisplayFor(modelItem => item.DateEntered)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EnteredBy)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.FailProperty.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plant.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User1.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User2.Username)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.User3.Username)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

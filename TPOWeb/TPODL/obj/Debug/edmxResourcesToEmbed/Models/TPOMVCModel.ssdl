@@ -1,0 +1,3744 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TPOMVCApplicationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DownTime">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="WorkOrderID" Type="int" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="ReasonID" Type="int" Nullable="false" />
+    <Property Name="ShiftID" Type="int" Nullable="false" />
+    <Property Name="EquipmentID" Type="int" />
+    <Property Name="DateOccurred" Type="datetime" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar(max)" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DownTimeEquipment">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DownTimeTypeID" Type="int" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LineID" Type="int" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="DownTimeEquipmentGroupID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DownTimeEquipmentGroup">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="DownTimeTypeID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Description" Type="nchar" MaxLength="100" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FailProperty">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IMProd">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="ProdLineID" Type="int" Nullable="false" />
+    <Property Name="IMProductID" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="ProdDate" Type="date" Nullable="false" />
+    <Property Name="ProdShift" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="PartsCarton" Type="int" Nullable="false" />
+    <Property Name="CartonWeight" Type="float" Nullable="false" />
+    <Property Name="WeightUOM" Type="int" Nullable="false" />
+    <Property Name="BatchNumber" Type="int" Nullable="false" />
+    <Property Name="IMQCID" Type="int" Nullable="false" />
+    <Property Name="WorkOrderID" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="500" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="AdhesionManufacturesDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="IMProducts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="20" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IMProductTypeID" Type="int" Nullable="false" />
+    <Property Name="PartsPerCartoon" Type="int" Nullable="false" />
+    <Property Name="CartoonPerLot" Type="int" Nullable="false" />
+    <Property Name="RawMaterialID" Type="int" Nullable="false" />
+    <Property Name="ThickUOM" Type="int" Nullable="false" />
+    <Property Name="WeightUOM" Type="int" Nullable="false" />
+    <Property Name="MinimumThick" Type="float" Nullable="false" />
+    <Property Name="MinimumWeight" Type="float" Nullable="false" />
+    <Property Name="Label1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Label2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Label3" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IMProductType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="ThickLabel1" Type="nvarchar" MaxLength="25" />
+    <Property Name="ThickLabel2" Type="nvarchar" MaxLength="25" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IMQC">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="ProdLineID" Type="int" Nullable="false" />
+    <Property Name="IMProductID" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="ProdDate" Type="date" Nullable="false" />
+    <Property Name="LabTechnician" Type="nvarchar" MaxLength="50" />
+    <Property Name="Operator" Type="nvarchar" MaxLength="50" />
+    <Property Name="Color" Type="float" />
+    <Property Name="PassFail" Type="nvarchar" MaxLength="10" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="500" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Plant">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdDteChng">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocID" Type="int" Nullable="false" />
+    <Property Name="LineCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="ChangeType" Type="int" Nullable="false" />
+    <Property Name="DateChange" Type="datetime" Nullable="false" />
+    <Property Name="RotationStart" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdLineRollConfig">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LineRollName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdLines">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LineDescCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="LineDesc" Type="nvarchar" MaxLength="50" />
+    <Property Name="LineTypeID" Type="int" Nullable="false" />
+    <Property Name="LabelID" Type="int" Nullable="false" />
+    <Property Name="CrntWOID" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="TPOMorC" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="RepOrder" Type="int" Nullable="false" />
+    <Property Name="RCComp" Type="nvarchar" MaxLength="25" />
+    <Property Name="LocID" Type="int" Nullable="false" />
+    <Property Name="ModDate" Type="datetime" Nullable="false" />
+    <Property Name="LineRollConfigID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdLinesPerform">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocID" Type="int" Nullable="false" />
+    <Property Name="LineCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Uptime" Type="float" Nullable="false" />
+    <Property Name="Yield" Type="float" Nullable="false" />
+    <Property Name="Throughput" Type="float" Nullable="false" />
+    <Property Name="TPLabel" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="OEE" Type="float" Nullable="false" />
+    <Property Name="TPTUse" Type="nvarchar" MaxLength="2" Nullable="false" />
+    <Property Name="DateChange" Type="datetime" Nullable="false" />
+    <Property Name="SchedFactor" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdLinesPerformProd">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocID" Type="int" Nullable="false" />
+    <Property Name="ProdLineID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="Throughput" Type="float" Nullable="false" />
+    <Property Name="DateChange" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdLineType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProdLineType" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="ProdLineTypeDesc" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LineRollConfigID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdSupervisorOnShift">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDCode" Type="int" Nullable="false" />
+    <Property Name="LocID" Type="int" Nullable="false" />
+    <Property Name="LineIDCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="ProdDate" Type="datetime" Nullable="false" />
+    <Property Name="ProdShiftID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="DateMod" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductionBudget">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Budget" Type="float" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductionBudgetType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductionLineSchedule">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="ShiftID" Type="int" Nullable="false" />
+    <Property Name="ProductionDate" Type="date" Nullable="false" />
+    <Property Name="MinutesScheduled" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductionShift">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="StartTime" Type="time" Precision="0" Nullable="false" />
+    <Property Name="EndTime" Type="time" Precision="0" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductionShiftType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="2000" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductionShiftUse">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="ShiftID" Type="int" Nullable="false" />
+    <Property Name="UseShift" Type="bit" Nullable="false" />
+    <Property Name="Day1Minutes" Type="int" Nullable="false" />
+    <Property Name="Day2Minutes" Type="int" Nullable="false" />
+    <Property Name="Day3Minutes" Type="int" Nullable="false" />
+    <Property Name="Day4Minutes" Type="int" Nullable="false" />
+    <Property Name="Day5Minutes" Type="int" Nullable="false" />
+    <Property Name="Day6Minutes" Type="int" Nullable="false" />
+    <Property Name="Day7Minutes" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="QCKickout">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LotID" Type="int" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="RollID" Type="int" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="ShiftID" Type="int" Nullable="false" />
+    <Property Name="QCTechID" Type="int" />
+    <Property Name="LeadOperatorID" Type="int" />
+    <Property Name="SupervisorID" Type="int" />
+    <Property Name="KickoutDate" Type="datetime" Nullable="false" />
+    <Property Name="RollLengthFT" Type="float" />
+    <Property Name="RollLengthIN" Type="float" />
+    <Property Name="RollLengthFTSet" Type="float" />
+    <Property Name="RollLengthINSet" Type="float" />
+    <Property Name="TackLine" Type="float" />
+    <Property Name="LapLine" Type="float" />
+    <Property Name="WeldLine" Type="float" />
+    <Property Name="DateLine" Type="float" />
+    <Property Name="WeldToLapLine" Type="float" />
+    <Property Name="CutStraight" Type="bit" />
+    <Property Name="SheetFlat" Type="bit" />
+    <Property Name="GESpec" Type="bit" />
+    <Property Name="EdgeFlat" Type="bit" />
+    <Property Name="UnwindStraight" Type="bit" />
+    <Property Name="CoreWrinkles" Type="bit" />
+    <Property Name="PrintOK" Type="bit" />
+    <Property Name="ThickAlarmVerified" Type="bit" />
+    <Property Name="CameraVerified" Type="bit" />
+    <Property Name="Passed" Type="bit" />
+    <Property Name="Comment" Type="nvarchar(max)" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="QCPrintSpecification">
+    <Key>
+      <PropertyRef Name="PlantID" />
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="Min" Type="float" Nullable="false" />
+    <Property Name="Max" Type="float" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="QCPrintSpecificationType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="QCRedHold">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="RollID" Type="int" Nullable="false" />
+    <Property Name="FailPropertyID" Type="int" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="LotNumber" Type="int" Nullable="false" />
+    <Property Name="HoldLotNumber" Type="int" />
+    <Property Name="QCTechID" Type="int" />
+    <Property Name="LeadOperatorID" Type="int" />
+    <Property Name="SupervisorID" Type="int" />
+    <Property Name="ManagerID" Type="int" />
+    <Property Name="RedDate" Type="date" Nullable="false" />
+    <Property Name="Zone" Type="nvarchar" MaxLength="50" />
+    <Property Name="RedComments" Type="nvarchar(max)" />
+    <Property Name="RedCorrectionAction" Type="nvarchar" MaxLength="500" />
+    <Property Name="HoldDate" Type="date" />
+    <Property Name="HoldComments" Type="nvarchar(max)" />
+    <Property Name="ManagerDate" Type="date" />
+    <Property Name="ManagerComments" Type="nvarchar(max)" />
+    <Property Name="PrimeRolls" Type="float" Nullable="false" />
+    <Property Name="PrimeArea" Type="float" Nullable="false" />
+    <Property Name="ReworkRolls" Type="float" Nullable="false" />
+    <Property Name="ReworkArea" Type="float" Nullable="false" />
+    <Property Name="SCRolls" Type="float" Nullable="false" />
+    <Property Name="SCArea" Type="float" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterialAction">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="ReasonID" Type="int" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="WorkOrderID" Type="int" Nullable="false" />
+    <Property Name="ShiftID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="LotNumber" Type="int" />
+    <Property Name="ProductionDate" Type="date" Nullable="false" />
+    <Property Name="Quantity" Type="float" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="RawMaterialID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterialActionReason">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterialActionType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="LastModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterialQC">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="QCTechUserID" Type="int" />
+    <Property Name="VisualInspection" Type="bit" />
+    <Property Name="SpecGrav" Type="float" />
+    <Property Name="ColorCoA" Type="float" />
+    <Property Name="ColorFS" Type="float" />
+    <Property Name="MFCoA" Type="float" />
+    <Property Name="MFFS" Type="float" />
+    <Property Name="ACCoA" Type="float" />
+    <Property Name="ACFS" Type="float" />
+    <Property Name="MoistCoA" Type="float" />
+    <Property Name="MoistFS" Type="float" />
+    <Property Name="CBCoA" Type="float" />
+    <Property Name="CBFS" Type="float" />
+    <Property Name="BoxCarTested" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="RawMaterialReceivedID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterialQCRedHold">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="RawMaterialReceivedID" Type="int" Nullable="false" />
+    <Property Name="FailPropertyID" Type="int" />
+    <Property Name="HoldLotNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="QCTechID" Type="int" />
+    <Property Name="LeadOperatorID" Type="int" />
+    <Property Name="SupervisorID" Type="int" />
+    <Property Name="ManagerID" Type="int" />
+    <Property Name="RedDate" Type="date" />
+    <Property Name="Zone" Type="nvarchar" MaxLength="50" />
+    <Property Name="RedComments" Type="nvarchar(max)" />
+    <Property Name="RedCorrectionAction" Type="nvarchar" MaxLength="500" />
+    <Property Name="HoldDate" Type="date" />
+    <Property Name="HoldComments" Type="nvarchar(max)" />
+    <Property Name="ManagerDate" Type="date" />
+    <Property Name="ManagerComments" Type="nvarchar(max)" />
+    <Property Name="PrimeBoxCar" Type="float" Nullable="false" />
+    <Property Name="PrimeUOM" Type="float" Nullable="false" />
+    <Property Name="ReworkBoxCar" Type="float" Nullable="false" />
+    <Property Name="ReworkUOM" Type="float" Nullable="false" />
+    <Property Name="ScrapBoxCar" Type="float" Nullable="false" />
+    <Property Name="ScrapUOM" Type="float" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="RawMaterialQCID" Type="int" />
+  </EntityType>
+  <EntityType Name="RawMaterialReceived">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LotNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="RawMaterialID" Type="int" Nullable="false" />
+    <Property Name="CoA" Type="nvarchar" MaxLength="50" />
+    <Property Name="QuantityShipped" Type="float" Nullable="false" />
+    <Property Name="QuantityReceived" Type="float" Nullable="false" />
+    <Property Name="QuantityNotReceived" Type="float" Nullable="false" />
+    <Property Name="QuantityUsedThisLot" Type="float" Nullable="false" />
+    <Property Name="ReceivedSizeLimitID" Type="int" Nullable="false" />
+    <Property Name="UOMID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterialReceivedSizeLimit">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="View" Type="bit" Nullable="false" />
+    <Property Name="LowLimit" Type="float" Nullable="false" />
+    <Property Name="HighLimit" Type="float" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterials">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PricePerUOM" Type="float" Nullable="false" />
+    <Property Name="Density" Type="float" Nullable="false" />
+    <Property Name="Stock" Type="float" Nullable="false" />
+    <Property Name="FSBPID" Type="nchar" MaxLength="10" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="UOMID" Type="int" Nullable="false" />
+    <Property Name="RawMaterialVendorID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterialSpecificGravity">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RawMaterialQCID" Type="int" Nullable="false" />
+    <Property Name="LabTechUserID" Type="int" />
+    <Property Name="DenIso" Type="float" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterialSpecificGravityDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RawMaterialSpecGravID" Type="int" Nullable="false" />
+    <Property Name="Submerged" Type="bit" Nullable="false" />
+    <Property Name="Value" Type="float" Nullable="false" />
+    <Property Name="Order" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterialTest">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="UseColorTest" Type="bit" Nullable="false" />
+    <Property Name="ColorLimitTypeID" Type="int" />
+    <Property Name="ColorLimit1" Type="float" />
+    <Property Name="ColorLimit2" Type="float" />
+    <Property Name="UseMFTest" Type="bit" Nullable="false" />
+    <Property Name="MFLimitTypeID" Type="int" />
+    <Property Name="MFLimit1" Type="float" />
+    <Property Name="MFLimit2" Type="float" />
+    <Property Name="UseACTest" Type="bit" Nullable="false" />
+    <Property Name="ACLimitTypeID" Type="int" />
+    <Property Name="ACLimit1" Type="float" />
+    <Property Name="ACLimit2" Type="float" />
+    <Property Name="UseMoistTest" Type="bit" Nullable="false" />
+    <Property Name="MoistLimitTypeID" Type="int" />
+    <Property Name="MoistLimit1" Type="float" />
+    <Property Name="MoistLimit2" Type="float" />
+    <Property Name="UseCBTest" Type="bit" Nullable="false" />
+    <Property Name="CBLimitTypeID" Type="int" />
+    <Property Name="CBLimit1" Type="float" />
+    <Property Name="CBLimit2" Type="float" />
+    <Property Name="UseSpecGrav" Type="bit" />
+    <Property Name="UseVisual" Type="bit" />
+    <Property Name="TestFrequency" Type="nvarchar" MaxLength="50" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="RawMaterialID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RawMaterialVendor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="Vendor" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoleAssignment">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ScrimAction">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LineID" Type="int" />
+    <Property Name="ShiftID" Type="int" />
+    <Property Name="WorkOrderID" Type="int" />
+    <Property Name="RollID" Type="int" />
+    <Property Name="ScrimRollID" Type="int" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="ReasonID" Type="int" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="ActionLength" Type="float" Nullable="false" />
+    <Property Name="ActionWeight" Type="float" Nullable="false" />
+    <Property Name="StartLength" Type="float" Nullable="false" />
+    <Property Name="StartWeight" Type="float" Nullable="false" />
+    <Property Name="EndLength" Type="float" Nullable="false" />
+    <Property Name="EndWeight" Type="float" Nullable="false" />
+    <Property Name="ActionDate" Type="datetime" Nullable="false" />
+    <Property Name="FleeceProd" Type="bit" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ScrimActionReason">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ScrimActionType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ScrimRoll">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="TypeID" Type="int" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LotNumber" Type="int" />
+    <Property Name="WovenLotNumber" Type="int" />
+    <Property Name="WeightUoMID" Type="int" Nullable="false" />
+    <Property Name="LengthUoMID" Type="int" Nullable="false" />
+    <Property Name="WovenDate" Type="datetime" />
+    <Property Name="DateReceived" Type="datetime" Nullable="false" />
+    <Property Name="Length" Type="float" Nullable="false" />
+    <Property Name="Weight" Type="float" Nullable="false" />
+    <Property Name="TareWeight" Type="float" Nullable="false" />
+    <Property Name="ReceivedLength" Type="float" Nullable="false" />
+    <Property Name="ReceivedWeight" Type="float" Nullable="false" />
+    <Property Name="ReceivedTareWeight" Type="float" Nullable="false" />
+    <Property Name="LengthUsed" Type="float" Nullable="false" />
+    <Property Name="WeightUsed" Type="float" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ScrimType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="WidthUoMID" Type="int" Nullable="false" />
+    <Property Name="WeightUoMID" Type="int" Nullable="false" />
+    <Property Name="LengthUoMID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Width" Type="float" Nullable="false" />
+    <Property Name="Length" Type="float" Nullable="false" />
+    <Property Name="Weight" Type="float" Nullable="false" />
+    <Property Name="IsLiner" Type="bit" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="AreaUoMID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TestLimitType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TPOCProductRoll">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="WorkOrderID" Type="int" Nullable="false" />
+    <Property Name="ShiftID" Type="int" Nullable="false" />
+    <Property Name="MasterRollID" Type="int" />
+    <Property Name="LengthUoMID" Type="int" Nullable="false" />
+    <Property Name="WeightUoMID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="ProductionDate" Type="date" Nullable="false" />
+    <Property Name="Length" Type="float" Nullable="false" />
+    <Property Name="Weight" Type="float" Nullable="false" />
+    <Property Name="BatchNumber" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+    <Property Name="Modified" Type="bit" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TPOCurrentRawMaterial">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LineID" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="RawMaterialReceivedID" Type="int" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TPOCurrentScrim">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="Scrim1RollID" Type="int" />
+    <Property Name="Scrim1TypeID" Type="int" />
+    <Property Name="Scrim2RollID" Type="int" />
+    <Property Name="Scrim2TypeID" Type="int" />
+    <Property Name="FleeceRollID" Type="int" />
+    <Property Name="FleeceTypeID" Type="int" />
+    <Property Name="LineID" Type="nvarchar" MaxLength="25" />
+    <Property Name="ScrimPos" Type="nvarchar" MaxLength="2" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TPOExtruder">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TPOFormulation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="Extruders" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TPOFormulationLineProduct">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ProdLineID" Type="int" Nullable="false" />
+    <Property Name="TPOProductID" Type="int" Nullable="false" />
+    <Property Name="TPOFormulationID" Type="int" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TPOFormulationRawMaterials">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TPOFormulationID" Type="int" Nullable="false" />
+    <Property Name="TPOExtruderID" Type="int" Nullable="false" />
+    <Property Name="FeedNumber" Type="int" Nullable="false" />
+    <Property Name="RawMaterialID" Type="int" Nullable="false" />
+    <Property Name="CompPerc" Type="float" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TPOProductCapCoreDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CapThickMin" Type="float" />
+    <Property Name="CapThickAvg" Type="float" />
+    <Property Name="CapThickMax" Type="float" />
+    <Property Name="CoreThickMin" Type="float" />
+    <Property Name="CoreThickAvg" Type="float" />
+    <Property Name="CoreThickMax" Type="float" />
+    <Property Name="CapAshMin" Type="float" />
+    <Property Name="CapAshMax" Type="float" />
+    <Property Name="CoreAshMin" Type="float" />
+    <Property Name="CoreAshMax" Type="float" />
+  </EntityType>
+  <EntityType Name="TPOProductCEDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UseCELogo" Type="bit" Nullable="false" />
+    <Property Name="CEForceTestUoM" Type="int" />
+    <Property Name="CETensMinMD" Type="float" />
+    <Property Name="CEElongMinMD" Type="float" />
+    <Property Name="CETensMinTD" Type="float" />
+    <Property Name="CEElongMinTD" Type="float" />
+    <Property Name="CETearMinMD" Type="float" />
+    <Property Name="CETearMinTD" Type="float" />
+  </EntityType>
+  <EntityType Name="TPOProductDimDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DimStab80" Type="float" />
+    <Property Name="DimStabTemp" Type="float" />
+    <Property Name="DimStabTempCE" Type="float" />
+    <Property Name="DimStabTempUoM" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TPOProductGrabDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GrabTensMinMD" Type="float" />
+    <Property Name="GrabElongMinMD" Type="float" />
+    <Property Name="GrabTearMin" Type="float" />
+    <Property Name="GrabTensMinTD" Type="float" />
+    <Property Name="GrabElongMinTD" Type="float" />
+    <Property Name="GrabTearMinTD" Type="float" />
+  </EntityType>
+  <EntityType Name="TPOProductLabelDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Label1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Label2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Label3" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TPOProducts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="ProductDesc" Type="nvarchar" MaxLength="50" />
+    <Property Name="Thick" Type="float" Nullable="false" />
+    <Property Name="ThickUnit" Type="int" Nullable="false" />
+    <Property Name="Width" Type="float" Nullable="false" />
+    <Property Name="MasRollLength" Type="float" Nullable="false" />
+    <Property Name="ContRollLength" Type="float" Nullable="false" />
+    <Property Name="LengthWidthUnit" Type="int" Nullable="false" />
+    <Property Name="AreaUnit" Type="int" Nullable="false" />
+    <Property Name="WeightUnit" Type="int" Nullable="false" />
+    <Property Name="ScrimTypeID" Type="int" Nullable="false" />
+    <Property Name="QtyMade" Type="int" Nullable="false" />
+    <Property Name="WtperArea" Type="float" Nullable="false" />
+    <Property Name="ProductLabelID" Type="int" Nullable="false" />
+    <Property Name="FormNo" Type="int" Nullable="false" />
+    <Property Name="RollsPerLot" Type="int" Nullable="false" />
+    <Property Name="ThickTestUoM" Type="int" Nullable="false" />
+    <Property Name="WidthTestUoM" Type="int" Nullable="false" />
+    <Property Name="ForceTestUoM" Type="int" Nullable="false" />
+    <Property Name="ThickMin" Type="float" />
+    <Property Name="ThickMax" Type="float" />
+    <Property Name="WidthMin" Type="float" />
+    <Property Name="WidthMax" Type="float" />
+    <Property Name="GEWidthMin" Type="float" />
+    <Property Name="GEWidthMax" Type="float" />
+    <Property Name="GEThicknessMin" Type="float" />
+    <Property Name="PlyAdhMin" Type="float" />
+    <Property Name="PlyAdhAvg" Type="float" />
+    <Property Name="ProductCapCoreID" Type="int" Nullable="false" />
+    <Property Name="ProductGrabID" Type="int" Nullable="false" />
+    <Property Name="DimStab" Type="float" />
+    <Property Name="UseSecThick" Type="bit" Nullable="false" />
+    <Property Name="ThickTestUoM2" Type="int" Nullable="false" />
+    <Property Name="WeldTestMin" Type="float" />
+    <Property Name="WeldTestMax" Type="float" />
+    <Property Name="ProductCEID" Type="int" Nullable="false" />
+    <Property Name="PunctMinTD" Type="float" />
+    <Property Name="PunctUoM" Type="int" Nullable="false" />
+    <Property Name="ThickAvgMin" Type="float" />
+    <Property Name="ThickAvgMax" Type="float" />
+    <Property Name="RollsPerLotPal" Type="int" Nullable="false" />
+    <Property Name="IsREPEL" Type="bit" Nullable="false" />
+    <Property Name="ThickAvg" Type="float" />
+    <Property Name="ProductDimID" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TPOProductStandardCost">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="TPOProductID" Type="int" Nullable="false" />
+    <Property Name="StandartCost" Type="float" Nullable="false" />
+    <Property Name="StandardWeightPerArea" Type="float" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UnitOfMeasure">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UnitOfMeasureType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="Enteredby" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WorkOrder">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LineID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="PlantID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="RunOrder" Type="int" Nullable="false" />
+    <Property Name="RunArea" Type="float" Nullable="false" />
+    <Property Name="Pal" Type="bit" Nullable="false" />
+    <Property Name="Complete" Type="bit" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar(max)" />
+    <Property Name="DateEntered" Type="datetime" Nullable="false" />
+    <Property Name="EnteredBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_DownTime_DownTimeEquipment">
+    <End Role="DownTimeEquipment" Type="Self.DownTimeEquipment" Multiplicity="0..1" />
+    <End Role="DownTime" Type="Self.DownTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DownTimeEquipment">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownTime">
+        <PropertyRef Name="EquipmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DownTime_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="DownTime" Type="Self.DownTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownTime">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DownTime_ProdLine">
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="1" />
+    <End Role="DownTime" Type="Self.DownTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownTime">
+        <PropertyRef Name="LineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DownTime_ProductionShift">
+    <End Role="ProductionShift" Type="Self.ProductionShift" Multiplicity="1" />
+    <End Role="DownTime" Type="Self.DownTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionShift">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownTime">
+        <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DownTime_WorkOrder">
+    <End Role="WorkOrder" Type="Self.WorkOrder" Multiplicity="1" />
+    <End Role="DownTime" Type="Self.DownTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkOrder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownTime">
+        <PropertyRef Name="WorkOrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DownTimeEquipment_DownTimeEquipmentGroup">
+    <End Role="DownTimeEquipmentGroup" Type="Self.DownTimeEquipmentGroup" Multiplicity="1" />
+    <End Role="DownTimeEquipment" Type="Self.DownTimeEquipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DownTimeEquipmentGroup">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownTimeEquipment">
+        <PropertyRef Name="DownTimeEquipmentGroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DownTimeEquipment_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="DownTimeEquipment" Type="Self.DownTimeEquipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownTimeEquipment">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DownTimeEquipment_ProdLine">
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="0..1" />
+    <End Role="DownTimeEquipment" Type="Self.DownTimeEquipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownTimeEquipment">
+        <PropertyRef Name="LineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DownTimeEquipmentGroup_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="DownTimeEquipmentGroup" Type="Self.DownTimeEquipmentGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownTimeEquipmentGroup">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DownTimeEquipmentGroup_ProdLine">
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="1" />
+    <End Role="DownTimeEquipmentGroup" Type="Self.DownTimeEquipmentGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DownTimeEquipmentGroup">
+        <PropertyRef Name="LineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProd_IMProducts">
+    <End Role="IMProducts" Type="Self.IMProducts" Multiplicity="1" />
+    <End Role="IMProd" Type="Self.IMProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IMProducts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProd">
+        <PropertyRef Name="IMProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProd_IMQC">
+    <End Role="IMQC" Type="Self.IMQC" Multiplicity="1" />
+    <End Role="IMProd" Type="Self.IMProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IMQC">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProd">
+        <PropertyRef Name="IMQCID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProd_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="IMProd" Type="Self.IMProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProd">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProd_ProdLines">
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="1" />
+    <End Role="IMProd" Type="Self.IMProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProd">
+        <PropertyRef Name="ProdLineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProd_UnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="IMProd" Type="Self.IMProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProd">
+        <PropertyRef Name="WeightUOM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProd_WorkOrder">
+    <End Role="WorkOrder" Type="Self.WorkOrder" Multiplicity="1" />
+    <End Role="IMProd" Type="Self.IMProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkOrder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProd">
+        <PropertyRef Name="WorkOrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProducts_IMProductType">
+    <End Role="IMProductType" Type="Self.IMProductType" Multiplicity="1" />
+    <End Role="IMProducts" Type="Self.IMProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IMProductType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProducts">
+        <PropertyRef Name="IMProductTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProducts_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="IMProducts" Type="Self.IMProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProducts">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProducts_RawMaterials">
+    <End Role="RawMaterials" Type="Self.RawMaterials" Multiplicity="1" />
+    <End Role="IMProducts" Type="Self.IMProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterials">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProducts">
+        <PropertyRef Name="RawMaterialID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProducts_UnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="IMProducts" Type="Self.IMProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProducts">
+        <PropertyRef Name="ThickUOM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMProducts_UnitOfMeasure1">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="IMProducts" Type="Self.IMProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMProducts">
+        <PropertyRef Name="WeightUOM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMQC_IMProducts">
+    <End Role="IMProducts" Type="Self.IMProducts" Multiplicity="1" />
+    <End Role="IMQC" Type="Self.IMQC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IMProducts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMQC">
+        <PropertyRef Name="IMProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMQC_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="IMQC" Type="Self.IMQC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMQC">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMQC_ProdLines">
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="1" />
+    <End Role="IMQC" Type="Self.IMQC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IMQC">
+        <PropertyRef Name="ProdLineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdDteChng_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ProdDteChng" Type="Self.ProdDteChng" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdDteChng">
+        <PropertyRef Name="LocID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdLines_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdLines">
+        <PropertyRef Name="LocID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdLines_ProdLineRollConfig">
+    <End Role="ProdLineRollConfig" Type="Self.ProdLineRollConfig" Multiplicity="1" />
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLineRollConfig">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdLines">
+        <PropertyRef Name="LineRollConfigID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdLines_ProdLineType">
+    <End Role="ProdLineType" Type="Self.ProdLineType" Multiplicity="1" />
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLineType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdLines">
+        <PropertyRef Name="LineTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdLinesPerform_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ProdLinesPerform" Type="Self.ProdLinesPerform" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdLinesPerform">
+        <PropertyRef Name="LocID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdLinesPerformProd_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ProdLinesPerformProd" Type="Self.ProdLinesPerformProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdLinesPerformProd">
+        <PropertyRef Name="LocID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdLinesPerformProd_ProdLines">
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="1" />
+    <End Role="ProdLinesPerformProd" Type="Self.ProdLinesPerformProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdLinesPerformProd">
+        <PropertyRef Name="ProdLineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdLinesPerformProd_TPOProducts">
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="1" />
+    <End Role="ProdLinesPerformProd" Type="Self.ProdLinesPerformProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOProducts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdLinesPerformProd">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdLineType_ProdLineRollConfig">
+    <End Role="ProdLineRollConfig" Type="Self.ProdLineRollConfig" Multiplicity="1" />
+    <End Role="ProdLineType" Type="Self.ProdLineType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLineRollConfig">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdLineType">
+        <PropertyRef Name="LineRollConfigID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdLineType_ProdLineType">
+    <End Role="ProdLineType" Type="Self.ProdLineType" Multiplicity="1" />
+    <End Role="ProdLineType1" Type="Self.ProdLineType" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLineType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdLineType1">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdSupervisorOnShift_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ProdSupervisorOnShift" Type="Self.ProdSupervisorOnShift" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdSupervisorOnShift">
+        <PropertyRef Name="LocID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdSupervisorOnShift_ProductionShift">
+    <End Role="ProductionShift" Type="Self.ProductionShift" Multiplicity="1" />
+    <End Role="ProdSupervisorOnShift" Type="Self.ProdSupervisorOnShift" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionShift">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProdSupervisorOnShift">
+        <PropertyRef Name="ProdShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductCEDetail_UnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="0..1" />
+    <End Role="TPOProductCEDetail" Type="Self.TPOProductCEDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProductCEDetail">
+        <PropertyRef Name="CEForceTestUoM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductDimDetail_UnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOProductDimDetail" Type="Self.TPOProductDimDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProductDimDetail">
+        <PropertyRef Name="DimStabTempUoM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionBudget_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ProductionBudget" Type="Self.ProductionBudget" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductionBudget">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionBudget_ProductionBudgetType">
+    <End Role="ProductionBudgetType" Type="Self.ProductionBudgetType" Multiplicity="1" />
+    <End Role="ProductionBudget" Type="Self.ProductionBudget" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionBudgetType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductionBudget">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionLineSchedule_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ProductionLineSchedule" Type="Self.ProductionLineSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductionLineSchedule">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionLineSchedule_ProductionShift">
+    <End Role="ProductionShift" Type="Self.ProductionShift" Multiplicity="1" />
+    <End Role="ProductionLineSchedule" Type="Self.ProductionLineSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionShift">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductionLineSchedule">
+        <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionShift_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ProductionShift" Type="Self.ProductionShift" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductionShift">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionShift_ProductionShiftType">
+    <End Role="ProductionShiftType" Type="Self.ProductionShiftType" Multiplicity="1" />
+    <End Role="ProductionShift" Type="Self.ProductionShift" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionShiftType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductionShift">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionShiftUse_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ProductionShiftUse" Type="Self.ProductionShiftUse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductionShiftUse">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionShiftUse_ProductionShift">
+    <End Role="ProductionShift" Type="Self.ProductionShift" Multiplicity="1" />
+    <End Role="ProductionShiftUse" Type="Self.ProductionShiftUse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionShift">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductionShiftUse">
+        <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCKickout_LeadOperatorID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="QCKickout" Type="Self.QCKickout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCKickout">
+        <PropertyRef Name="LeadOperatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCKickout_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="QCKickout" Type="Self.QCKickout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCKickout">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCKickout_ProductionShift">
+    <End Role="ProductionShift" Type="Self.ProductionShift" Multiplicity="1" />
+    <End Role="QCKickout" Type="Self.QCKickout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionShift">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCKickout">
+        <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCKickout_QCTechID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="QCKickout" Type="Self.QCKickout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCKickout">
+        <PropertyRef Name="QCTechID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCKickout_SupervisorID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="QCKickout" Type="Self.QCKickout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCKickout">
+        <PropertyRef Name="SupervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCKickout_TPOCProductRoll">
+    <End Role="TPOCProductRoll" Type="Self.TPOCProductRoll" Multiplicity="1" />
+    <End Role="QCKickout" Type="Self.QCKickout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOCProductRoll">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCKickout">
+        <PropertyRef Name="RollID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCPrintSpecification_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="QCPrintSpecification" Type="Self.QCPrintSpecification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCPrintSpecification">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCPrintSpecification_QCPrintSpecificationType">
+    <End Role="QCPrintSpecificationType" Type="Self.QCPrintSpecificationType" Multiplicity="1" />
+    <End Role="QCPrintSpecification" Type="Self.QCPrintSpecification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QCPrintSpecificationType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCPrintSpecification">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCRedHold_FailProperty">
+    <End Role="FailProperty" Type="Self.FailProperty" Multiplicity="0..1" />
+    <End Role="QCRedHold" Type="Self.QCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FailProperty">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCRedHold">
+        <PropertyRef Name="FailPropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCRedHold_LeadOperatorID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="QCRedHold" Type="Self.QCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCRedHold">
+        <PropertyRef Name="LeadOperatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCRedHold_ManagerID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="QCRedHold" Type="Self.QCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCRedHold">
+        <PropertyRef Name="ManagerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCRedHold_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="QCRedHold" Type="Self.QCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCRedHold">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCRedHold_QCTechID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="QCRedHold" Type="Self.QCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCRedHold">
+        <PropertyRef Name="QCTechID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCRedHold_SupervisorID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="QCRedHold" Type="Self.QCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCRedHold">
+        <PropertyRef Name="SupervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCRedHold_TPOCProductRoll">
+    <End Role="TPOCProductRoll" Type="Self.TPOCProductRoll" Multiplicity="1" />
+    <End Role="QCRedHold" Type="Self.QCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOCProductRoll">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QCRedHold">
+        <PropertyRef Name="RollID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialAction_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="RawMaterialAction" Type="Self.RawMaterialAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialAction">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialAction_ProdLines">
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="1" />
+    <End Role="RawMaterialAction" Type="Self.RawMaterialAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialAction">
+        <PropertyRef Name="LineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialAction_ProductionShift">
+    <End Role="ProductionShift" Type="Self.ProductionShift" Multiplicity="1" />
+    <End Role="RawMaterialAction" Type="Self.RawMaterialAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionShift">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialAction">
+        <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialAction_RawMaterialActionReason">
+    <End Role="RawMaterialActionReason" Type="Self.RawMaterialActionReason" Multiplicity="0..1" />
+    <End Role="RawMaterialAction" Type="Self.RawMaterialAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterialActionReason">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialAction">
+        <PropertyRef Name="ReasonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialAction_RawMaterialActionType">
+    <End Role="RawMaterialActionType" Type="Self.RawMaterialActionType" Multiplicity="1" />
+    <End Role="RawMaterialAction" Type="Self.RawMaterialAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterialActionType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialAction">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialAction_RawMaterials">
+    <End Role="RawMaterials" Type="Self.RawMaterials" Multiplicity="1" />
+    <End Role="RawMaterialAction" Type="Self.RawMaterialAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterials">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialAction">
+        <PropertyRef Name="RawMaterialID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialAction_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="RawMaterialAction" Type="Self.RawMaterialAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialAction">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialAction_WorkOrder">
+    <End Role="WorkOrder" Type="Self.WorkOrder" Multiplicity="1" />
+    <End Role="RawMaterialAction" Type="Self.RawMaterialAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkOrder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialAction">
+        <PropertyRef Name="WorkOrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQC_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="RawMaterialQC" Type="Self.RawMaterialQC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQC">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQC_QCTechUser">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="RawMaterialQC" Type="Self.RawMaterialQC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQC">
+        <PropertyRef Name="QCTechUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQC_RawMaterialReceived">
+    <End Role="RawMaterialReceived" Type="Self.RawMaterialReceived" Multiplicity="1" />
+    <End Role="RawMaterialQC" Type="Self.RawMaterialQC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterialReceived">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQC">
+        <PropertyRef Name="RawMaterialReceivedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQCRedHold_FailProperty">
+    <End Role="FailProperty" Type="Self.FailProperty" Multiplicity="0..1" />
+    <End Role="RawMaterialQCRedHold" Type="Self.RawMaterialQCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FailProperty">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQCRedHold">
+        <PropertyRef Name="FailPropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQCRedHold_LeadOperatorID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="RawMaterialQCRedHold" Type="Self.RawMaterialQCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQCRedHold">
+        <PropertyRef Name="LeadOperatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQCRedHold_ManagerID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="RawMaterialQCRedHold" Type="Self.RawMaterialQCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQCRedHold">
+        <PropertyRef Name="ManagerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQCRedHold_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="RawMaterialQCRedHold" Type="Self.RawMaterialQCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQCRedHold">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQCRedHold_QCTechID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="RawMaterialQCRedHold" Type="Self.RawMaterialQCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQCRedHold">
+        <PropertyRef Name="QCTechID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQCRedHold_RawMaterialQCID">
+    <End Role="RawMaterialQC" Type="Self.RawMaterialQC" Multiplicity="0..1" />
+    <End Role="RawMaterialQCRedHold" Type="Self.RawMaterialQCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterialQC">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQCRedHold">
+        <PropertyRef Name="RawMaterialQCID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQCRedHold_RawMaterialReceived">
+    <End Role="RawMaterialReceived" Type="Self.RawMaterialReceived" Multiplicity="1" />
+    <End Role="RawMaterialQCRedHold" Type="Self.RawMaterialQCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterialReceived">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQCRedHold">
+        <PropertyRef Name="RawMaterialReceivedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialQCRedHold_SupervisorID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="RawMaterialQCRedHold" Type="Self.RawMaterialQCRedHold" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialQCRedHold">
+        <PropertyRef Name="SupervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialReceived_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="RawMaterialReceived" Type="Self.RawMaterialReceived" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialReceived">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialReceived_RawMaterialReceivedSizeLimit">
+    <End Role="RawMaterialReceivedSizeLimit" Type="Self.RawMaterialReceivedSizeLimit" Multiplicity="1" />
+    <End Role="RawMaterialReceived" Type="Self.RawMaterialReceived" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterialReceivedSizeLimit">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialReceived">
+        <PropertyRef Name="ReceivedSizeLimitID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialReceived_RawMaterials">
+    <End Role="RawMaterials" Type="Self.RawMaterials" Multiplicity="1" />
+    <End Role="RawMaterialReceived" Type="Self.RawMaterialReceived" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterials">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialReceived">
+        <PropertyRef Name="RawMaterialID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialReceived_UnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="RawMaterialReceived" Type="Self.RawMaterialReceived" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialReceived">
+        <PropertyRef Name="UOMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialReceivedSizeLimit_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="RawMaterialReceivedSizeLimit" Type="Self.RawMaterialReceivedSizeLimit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialReceivedSizeLimit">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterials_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="RawMaterials" Type="Self.RawMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterials">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterials_RawMaterialVendor">
+    <End Role="RawMaterialVendor" Type="Self.RawMaterialVendor" Multiplicity="1" />
+    <End Role="RawMaterials" Type="Self.RawMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterialVendor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterials">
+        <PropertyRef Name="RawMaterialVendorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterials_UnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="RawMaterials" Type="Self.RawMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterials">
+        <PropertyRef Name="UOMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialSpecificGravity_RawMaterialQC">
+    <End Role="RawMaterialQC" Type="Self.RawMaterialQC" Multiplicity="1" />
+    <End Role="RawMaterialSpecificGravity" Type="Self.RawMaterialSpecificGravity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterialQC">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialSpecificGravity">
+        <PropertyRef Name="RawMaterialQCID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialSpecificGravity_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="RawMaterialSpecificGravity" Type="Self.RawMaterialSpecificGravity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialSpecificGravity">
+        <PropertyRef Name="LabTechUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialSpecificGravityDetail_RawMaterialSpecificGravity">
+    <End Role="RawMaterialSpecificGravity" Type="Self.RawMaterialSpecificGravity" Multiplicity="1" />
+    <End Role="RawMaterialSpecificGravityDetail" Type="Self.RawMaterialSpecificGravityDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterialSpecificGravity">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialSpecificGravityDetail">
+        <PropertyRef Name="RawMaterialSpecGravID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialTest_ACLimitType">
+    <End Role="TestLimitType" Type="Self.TestLimitType" Multiplicity="0..1" />
+    <End Role="RawMaterialTest" Type="Self.RawMaterialTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestLimitType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialTest">
+        <PropertyRef Name="ACLimitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialTest_CBLimitType">
+    <End Role="TestLimitType" Type="Self.TestLimitType" Multiplicity="0..1" />
+    <End Role="RawMaterialTest" Type="Self.RawMaterialTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestLimitType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialTest">
+        <PropertyRef Name="CBLimitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialTest_ColorLimitType">
+    <End Role="TestLimitType" Type="Self.TestLimitType" Multiplicity="0..1" />
+    <End Role="RawMaterialTest" Type="Self.RawMaterialTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestLimitType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialTest">
+        <PropertyRef Name="ColorLimitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialTest_MFLimitType">
+    <End Role="TestLimitType" Type="Self.TestLimitType" Multiplicity="0..1" />
+    <End Role="RawMaterialTest" Type="Self.RawMaterialTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestLimitType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialTest">
+        <PropertyRef Name="MFLimitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialTest_MoistLimitType">
+    <End Role="TestLimitType" Type="Self.TestLimitType" Multiplicity="0..1" />
+    <End Role="RawMaterialTest" Type="Self.RawMaterialTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestLimitType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialTest">
+        <PropertyRef Name="MoistLimitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialTest_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="RawMaterialTest" Type="Self.RawMaterialTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialTest">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialTest_RawMaterials">
+    <End Role="RawMaterials" Type="Self.RawMaterials" Multiplicity="1" />
+    <End Role="RawMaterialTest" Type="Self.RawMaterialTest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterials">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialTest">
+        <PropertyRef Name="RawMaterialID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RawMaterialVendor_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="RawMaterialVendor" Type="Self.RawMaterialVendor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RawMaterialVendor">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleAssignment_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="RoleAssignment" Type="Self.RoleAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoleAssignment">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleAssignment_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="RoleAssignment" Type="Self.RoleAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoleAssignment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimAction_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ScrimAction" Type="Self.ScrimAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimAction">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimAction_ProductionShift">
+    <End Role="ProductionShift" Type="Self.ProductionShift" Multiplicity="0..1" />
+    <End Role="ScrimAction" Type="Self.ScrimAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionShift">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimAction">
+        <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimAction_ScrimActionReason">
+    <End Role="ScrimActionReason" Type="Self.ScrimActionReason" Multiplicity="0..1" />
+    <End Role="ScrimAction" Type="Self.ScrimAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScrimActionReason">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimAction">
+        <PropertyRef Name="ReasonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimAction_ScrimActionType">
+    <End Role="ScrimActionType" Type="Self.ScrimActionType" Multiplicity="1" />
+    <End Role="ScrimAction" Type="Self.ScrimAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScrimActionType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimAction">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimAction_ScrimRoll">
+    <End Role="ScrimRoll" Type="Self.ScrimRoll" Multiplicity="1" />
+    <End Role="ScrimAction" Type="Self.ScrimAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScrimRoll">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimAction">
+        <PropertyRef Name="ScrimRollID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimAction_TPOCProductRoll">
+    <End Role="TPOCProductRoll" Type="Self.TPOCProductRoll" Multiplicity="0..1" />
+    <End Role="ScrimAction" Type="Self.ScrimAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOCProductRoll">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimAction">
+        <PropertyRef Name="RollID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimAction_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="ScrimAction" Type="Self.ScrimAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimAction">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimAction_WorkOrder">
+    <End Role="WorkOrder" Type="Self.WorkOrder" Multiplicity="0..1" />
+    <End Role="ScrimAction" Type="Self.ScrimAction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkOrder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimAction">
+        <PropertyRef Name="WorkOrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimActionType_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ScrimActionType" Type="Self.ScrimActionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimActionType">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimRoll_LengthUnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="ScrimRoll" Type="Self.ScrimRoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimRoll">
+        <PropertyRef Name="LengthUoMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimRoll_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ScrimRoll" Type="Self.ScrimRoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimRoll">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimRoll_ScrimType">
+    <End Role="ScrimType" Type="Self.ScrimType" Multiplicity="0..1" />
+    <End Role="ScrimRoll" Type="Self.ScrimRoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScrimType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimRoll">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimRoll_WeightUnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="ScrimRoll" Type="Self.ScrimRoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimRoll">
+        <PropertyRef Name="WeightUoMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimType_AreaUnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="ScrimType" Type="Self.ScrimType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimType">
+        <PropertyRef Name="AreaUoMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimType_LengthUnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="ScrimType" Type="Self.ScrimType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimType">
+        <PropertyRef Name="LengthUoMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimType_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="ScrimType" Type="Self.ScrimType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimType">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimType_WeightUnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="ScrimType" Type="Self.ScrimType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimType">
+        <PropertyRef Name="WeightUoMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScrimType_WidthUnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="ScrimType" Type="Self.ScrimType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ScrimType">
+        <PropertyRef Name="WidthUoMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCProductRoll_LengthUnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOCProductRoll" Type="Self.TPOCProductRoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCProductRoll">
+        <PropertyRef Name="LengthUoMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCProductRoll_MasterRollID">
+    <End Role="TPOCProductRoll" Type="Self.TPOCProductRoll" Multiplicity="0..1" />
+    <End Role="TPOCProductRoll1" Type="Self.TPOCProductRoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOCProductRoll">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCProductRoll1">
+        <PropertyRef Name="MasterRollID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCProductRoll_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="TPOCProductRoll" Type="Self.TPOCProductRoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCProductRoll">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCProductRoll_ProductionShift">
+    <End Role="ProductionShift" Type="Self.ProductionShift" Multiplicity="1" />
+    <End Role="TPOCProductRoll" Type="Self.TPOCProductRoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionShift">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCProductRoll">
+        <PropertyRef Name="ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCProductRoll_WeightUnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOCProductRoll" Type="Self.TPOCProductRoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCProductRoll">
+        <PropertyRef Name="WeightUoMID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCProductRoll_WorkOrder">
+    <End Role="WorkOrder" Type="Self.WorkOrder" Multiplicity="1" />
+    <End Role="TPOCProductRoll" Type="Self.TPOCProductRoll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkOrder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCProductRoll">
+        <PropertyRef Name="WorkOrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCurrentRawMaterial_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="TPOCurrentRawMaterial" Type="Self.TPOCurrentRawMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCurrentRawMaterial">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCurrentRawMaterial_RawMaterialReceived">
+    <End Role="RawMaterialReceived" Type="Self.RawMaterialReceived" Multiplicity="0..1" />
+    <End Role="TPOCurrentRawMaterial" Type="Self.TPOCurrentRawMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterialReceived">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCurrentRawMaterial">
+        <PropertyRef Name="RawMaterialReceivedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCurrentScrim_FleeceRoll">
+    <End Role="ScrimRoll" Type="Self.ScrimRoll" Multiplicity="0..1" />
+    <End Role="TPOCurrentScrim" Type="Self.TPOCurrentScrim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScrimRoll">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCurrentScrim">
+        <PropertyRef Name="FleeceRollID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCurrentScrim_FleeceType">
+    <End Role="ScrimType" Type="Self.ScrimType" Multiplicity="0..1" />
+    <End Role="TPOCurrentScrim" Type="Self.TPOCurrentScrim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScrimType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCurrentScrim">
+        <PropertyRef Name="FleeceTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCurrentScrim_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="TPOCurrentScrim" Type="Self.TPOCurrentScrim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCurrentScrim">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCurrentScrim_Scrim1Roll">
+    <End Role="ScrimRoll" Type="Self.ScrimRoll" Multiplicity="0..1" />
+    <End Role="TPOCurrentScrim" Type="Self.TPOCurrentScrim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScrimRoll">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCurrentScrim">
+        <PropertyRef Name="Scrim1RollID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCurrentScrim_Scrim1Type">
+    <End Role="ScrimType" Type="Self.ScrimType" Multiplicity="0..1" />
+    <End Role="TPOCurrentScrim" Type="Self.TPOCurrentScrim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScrimType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCurrentScrim">
+        <PropertyRef Name="Scrim1TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCurrentScrim_Scrim2Roll">
+    <End Role="ScrimRoll" Type="Self.ScrimRoll" Multiplicity="0..1" />
+    <End Role="TPOCurrentScrim" Type="Self.TPOCurrentScrim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScrimRoll">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCurrentScrim">
+        <PropertyRef Name="Scrim2RollID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOCurrentScrim_Scrim2Type">
+    <End Role="ScrimType" Type="Self.ScrimType" Multiplicity="0..1" />
+    <End Role="TPOCurrentScrim" Type="Self.TPOCurrentScrim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScrimType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOCurrentScrim">
+        <PropertyRef Name="Scrim2TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOFormLineProd_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="TPOFormulationLineProduct" Type="Self.TPOFormulationLineProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOFormulationLineProduct">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOFormLineProd_ProdLines">
+    <End Role="ProdLines" Type="Self.ProdLines" Multiplicity="1" />
+    <End Role="TPOFormulationLineProduct" Type="Self.TPOFormulationLineProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdLines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOFormulationLineProduct">
+        <PropertyRef Name="ProdLineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOFormLineProd_TPOFormulation">
+    <End Role="TPOFormulation" Type="Self.TPOFormulation" Multiplicity="1" />
+    <End Role="TPOFormulationLineProduct" Type="Self.TPOFormulationLineProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOFormulation">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOFormulationLineProduct">
+        <PropertyRef Name="TPOFormulationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOFormLineProd_TPOProducts">
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="1" />
+    <End Role="TPOFormulationLineProduct" Type="Self.TPOFormulationLineProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOProducts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOFormulationLineProduct">
+        <PropertyRef Name="TPOProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOFormRawMaterials_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="TPOFormulationRawMaterials" Type="Self.TPOFormulationRawMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOFormulationRawMaterials">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOFormRawMaterials_RawMaterials">
+    <End Role="RawMaterials" Type="Self.RawMaterials" Multiplicity="1" />
+    <End Role="TPOFormulationRawMaterials" Type="Self.TPOFormulationRawMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RawMaterials">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOFormulationRawMaterials">
+        <PropertyRef Name="RawMaterialID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOFormRawMaterials_TPOExtruder">
+    <End Role="TPOExtruder" Type="Self.TPOExtruder" Multiplicity="1" />
+    <End Role="TPOFormulationRawMaterials" Type="Self.TPOFormulationRawMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOExtruder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOFormulationRawMaterials">
+        <PropertyRef Name="TPOExtruderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOFormRawMaterials_TPOFormulation">
+    <End Role="TPOFormulation" Type="Self.TPOFormulation" Multiplicity="1" />
+    <End Role="TPOFormulationRawMaterials" Type="Self.TPOFormulationRawMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOFormulation">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOFormulationRawMaterials">
+        <PropertyRef Name="TPOFormulationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOFormulation_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="TPOFormulation" Type="Self.TPOFormulation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOFormulation">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_ProductCapCoreDetail">
+    <End Role="TPOProductCapCoreDetail" Type="Self.TPOProductCapCoreDetail" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOProductCapCoreDetail">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="ProductCapCoreID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_ProductCEDetail">
+    <End Role="TPOProductCEDetail" Type="Self.TPOProductCEDetail" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOProductCEDetail">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="ProductCEID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_ProductDimDetail">
+    <End Role="TPOProductDimDetail" Type="Self.TPOProductDimDetail" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOProductDimDetail">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="ProductDimID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_ProductGrabDetail">
+    <End Role="TPOProductGrabDetail" Type="Self.TPOProductGrabDetail" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOProductGrabDetail">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="ProductGrabID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_ProductLabelDetail">
+    <End Role="TPOProductLabelDetail" Type="Self.TPOProductLabelDetail" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOProductLabelDetail">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="ProductLabelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_UnitOfMeasure">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="ThickUnit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_UnitOfMeasure1">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="LengthWidthUnit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_UnitOfMeasure2">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="AreaUnit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_UnitOfMeasure3">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="ThickTestUoM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_UnitOfMeasure4">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="WidthTestUoM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_UnitOfMeasure5">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="ForceTestUoM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_UnitOfMeasure6">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="ThickTestUoM2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProducts_UnitOfMeasure7">
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="1" />
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProducts">
+        <PropertyRef Name="PunctUoM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProductStandartCost_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="TPOProductStandardCost" Type="Self.TPOProductStandardCost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProductStandardCost">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TPOProductStandartCost_TPOProducts">
+    <End Role="TPOProducts" Type="Self.TPOProducts" Multiplicity="1" />
+    <End Role="TPOProductStandardCost" Type="Self.TPOProductStandardCost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TPOProducts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TPOProductStandardCost">
+        <PropertyRef Name="TPOProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UnitOfMeasure_UnitOfMeasureType">
+    <End Role="UnitOfMeasureType" Type="Self.UnitOfMeasureType" Multiplicity="1" />
+    <End Role="UnitOfMeasure" Type="Self.UnitOfMeasure" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitOfMeasureType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UnitOfMeasure">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkOrder_Plant">
+    <End Role="Plant" Type="Self.Plant" Multiplicity="1" />
+    <End Role="WorkOrder" Type="Self.WorkOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plant">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WorkOrder">
+        <PropertyRef Name="PlantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TPOMVCApplicationModelStoreContainer">
+    <EntitySet Name="DownTime" EntityType="Self.DownTime" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DownTimeEquipment" EntityType="Self.DownTimeEquipment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DownTimeEquipmentGroup" EntityType="Self.DownTimeEquipmentGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FailProperty" EntityType="Self.FailProperty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IMProd" EntityType="Self.IMProd" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IMProducts" EntityType="Self.IMProducts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IMProductType" EntityType="Self.IMProductType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IMQC" EntityType="Self.IMQC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Plant" EntityType="Self.Plant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdDteChng" EntityType="Self.ProdDteChng" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdLineRollConfig" EntityType="Self.ProdLineRollConfig" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdLines" EntityType="Self.ProdLines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdLinesPerform" EntityType="Self.ProdLinesPerform" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdLinesPerformProd" EntityType="Self.ProdLinesPerformProd" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdLineType" EntityType="Self.ProdLineType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdSupervisorOnShift" EntityType="Self.ProdSupervisorOnShift" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionBudget" EntityType="Self.ProductionBudget" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionBudgetType" EntityType="Self.ProductionBudgetType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionLineSchedule" EntityType="Self.ProductionLineSchedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionShift" EntityType="Self.ProductionShift" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionShiftType" EntityType="Self.ProductionShiftType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionShiftUse" EntityType="Self.ProductionShiftUse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QCKickout" EntityType="Self.QCKickout" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QCPrintSpecification" EntityType="Self.QCPrintSpecification" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QCPrintSpecificationType" EntityType="Self.QCPrintSpecificationType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QCRedHold" EntityType="Self.QCRedHold" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialAction" EntityType="Self.RawMaterialAction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialActionReason" EntityType="Self.RawMaterialActionReason" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialActionType" EntityType="Self.RawMaterialActionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialQC" EntityType="Self.RawMaterialQC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialQCRedHold" EntityType="Self.RawMaterialQCRedHold" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialReceived" EntityType="Self.RawMaterialReceived" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialReceivedSizeLimit" EntityType="Self.RawMaterialReceivedSizeLimit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterials" EntityType="Self.RawMaterials" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialSpecificGravity" EntityType="Self.RawMaterialSpecificGravity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialSpecificGravityDetail" EntityType="Self.RawMaterialSpecificGravityDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialTest" EntityType="Self.RawMaterialTest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RawMaterialVendor" EntityType="Self.RawMaterialVendor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoleAssignment" EntityType="Self.RoleAssignment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ScrimAction" EntityType="Self.ScrimAction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ScrimActionReason" EntityType="Self.ScrimActionReason" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ScrimActionType" EntityType="Self.ScrimActionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ScrimRoll" EntityType="Self.ScrimRoll" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ScrimType" EntityType="Self.ScrimType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestLimitType" EntityType="Self.TestLimitType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOCProductRoll" EntityType="Self.TPOCProductRoll" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOCurrentRawMaterial" EntityType="Self.TPOCurrentRawMaterial" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOCurrentScrim" EntityType="Self.TPOCurrentScrim" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOExtruder" EntityType="Self.TPOExtruder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOFormulation" EntityType="Self.TPOFormulation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOFormulationLineProduct" EntityType="Self.TPOFormulationLineProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOFormulationRawMaterials" EntityType="Self.TPOFormulationRawMaterials" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOProductCapCoreDetail" EntityType="Self.TPOProductCapCoreDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOProductCEDetail" EntityType="Self.TPOProductCEDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOProductDimDetail" EntityType="Self.TPOProductDimDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOProductGrabDetail" EntityType="Self.TPOProductGrabDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOProductLabelDetail" EntityType="Self.TPOProductLabelDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOProducts" EntityType="Self.TPOProducts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TPOProductStandardCost" EntityType="Self.TPOProductStandardCost" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UnitOfMeasure" EntityType="Self.UnitOfMeasure" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UnitOfMeasureType" EntityType="Self.UnitOfMeasureType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkOrder" EntityType="Self.WorkOrder" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DownTime_DownTimeEquipment" Association="Self.FK_DownTime_DownTimeEquipment">
+      <End Role="DownTimeEquipment" EntitySet="DownTimeEquipment" />
+      <End Role="DownTime" EntitySet="DownTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DownTime_Plant" Association="Self.FK_DownTime_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="DownTime" EntitySet="DownTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DownTime_ProdLine" Association="Self.FK_DownTime_ProdLine">
+      <End Role="ProdLines" EntitySet="ProdLines" />
+      <End Role="DownTime" EntitySet="DownTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DownTime_ProductionShift" Association="Self.FK_DownTime_ProductionShift">
+      <End Role="ProductionShift" EntitySet="ProductionShift" />
+      <End Role="DownTime" EntitySet="DownTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DownTime_WorkOrder" Association="Self.FK_DownTime_WorkOrder">
+      <End Role="WorkOrder" EntitySet="WorkOrder" />
+      <End Role="DownTime" EntitySet="DownTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DownTimeEquipment_DownTimeEquipmentGroup" Association="Self.FK_DownTimeEquipment_DownTimeEquipmentGroup">
+      <End Role="DownTimeEquipmentGroup" EntitySet="DownTimeEquipmentGroup" />
+      <End Role="DownTimeEquipment" EntitySet="DownTimeEquipment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DownTimeEquipment_Plant" Association="Self.FK_DownTimeEquipment_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="DownTimeEquipment" EntitySet="DownTimeEquipment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DownTimeEquipment_ProdLine" Association="Self.FK_DownTimeEquipment_ProdLine">
+      <End Role="ProdLines" EntitySet="ProdLines" />
+      <End Role="DownTimeEquipment" EntitySet="DownTimeEquipment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DownTimeEquipmentGroup_Plant" Association="Self.FK_DownTimeEquipmentGroup_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="DownTimeEquipmentGroup" EntitySet="DownTimeEquipmentGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DownTimeEquipmentGroup_ProdLine" Association="Self.FK_DownTimeEquipmentGroup_ProdLine">
+      <End Role="ProdLines" EntitySet="ProdLines" />
+      <End Role="DownTimeEquipmentGroup" EntitySet="DownTimeEquipmentGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProd_IMProducts" Association="Self.FK_IMProd_IMProducts">
+      <End Role="IMProducts" EntitySet="IMProducts" />
+      <End Role="IMProd" EntitySet="IMProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProd_IMQC" Association="Self.FK_IMProd_IMQC">
+      <End Role="IMQC" EntitySet="IMQC" />
+      <End Role="IMProd" EntitySet="IMProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProd_Plant" Association="Self.FK_IMProd_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="IMProd" EntitySet="IMProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProd_ProdLines" Association="Self.FK_IMProd_ProdLines">
+      <End Role="ProdLines" EntitySet="ProdLines" />
+      <End Role="IMProd" EntitySet="IMProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProd_UnitOfMeasure" Association="Self.FK_IMProd_UnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="IMProd" EntitySet="IMProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProd_WorkOrder" Association="Self.FK_IMProd_WorkOrder">
+      <End Role="WorkOrder" EntitySet="WorkOrder" />
+      <End Role="IMProd" EntitySet="IMProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProducts_IMProductType" Association="Self.FK_IMProducts_IMProductType">
+      <End Role="IMProductType" EntitySet="IMProductType" />
+      <End Role="IMProducts" EntitySet="IMProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProducts_Plant" Association="Self.FK_IMProducts_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="IMProducts" EntitySet="IMProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProducts_RawMaterials" Association="Self.FK_IMProducts_RawMaterials">
+      <End Role="RawMaterials" EntitySet="RawMaterials" />
+      <End Role="IMProducts" EntitySet="IMProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProducts_UnitOfMeasure" Association="Self.FK_IMProducts_UnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="IMProducts" EntitySet="IMProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMProducts_UnitOfMeasure1" Association="Self.FK_IMProducts_UnitOfMeasure1">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="IMProducts" EntitySet="IMProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMQC_IMProducts" Association="Self.FK_IMQC_IMProducts">
+      <End Role="IMProducts" EntitySet="IMProducts" />
+      <End Role="IMQC" EntitySet="IMQC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMQC_Plant" Association="Self.FK_IMQC_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="IMQC" EntitySet="IMQC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMQC_ProdLines" Association="Self.FK_IMQC_ProdLines">
+      <End Role="ProdLines" EntitySet="ProdLines" />
+      <End Role="IMQC" EntitySet="IMQC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdDteChng_Plant" Association="Self.FK_ProdDteChng_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ProdDteChng" EntitySet="ProdDteChng" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdLines_Plant" Association="Self.FK_ProdLines_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ProdLines" EntitySet="ProdLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdLines_ProdLineRollConfig" Association="Self.FK_ProdLines_ProdLineRollConfig">
+      <End Role="ProdLineRollConfig" EntitySet="ProdLineRollConfig" />
+      <End Role="ProdLines" EntitySet="ProdLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdLines_ProdLineType" Association="Self.FK_ProdLines_ProdLineType">
+      <End Role="ProdLineType" EntitySet="ProdLineType" />
+      <End Role="ProdLines" EntitySet="ProdLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdLinesPerform_Plant" Association="Self.FK_ProdLinesPerform_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ProdLinesPerform" EntitySet="ProdLinesPerform" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdLinesPerformProd_Plant" Association="Self.FK_ProdLinesPerformProd_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ProdLinesPerformProd" EntitySet="ProdLinesPerformProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdLinesPerformProd_ProdLines" Association="Self.FK_ProdLinesPerformProd_ProdLines">
+      <End Role="ProdLines" EntitySet="ProdLines" />
+      <End Role="ProdLinesPerformProd" EntitySet="ProdLinesPerformProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdLinesPerformProd_TPOProducts" Association="Self.FK_ProdLinesPerformProd_TPOProducts">
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+      <End Role="ProdLinesPerformProd" EntitySet="ProdLinesPerformProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdLineType_ProdLineRollConfig" Association="Self.FK_ProdLineType_ProdLineRollConfig">
+      <End Role="ProdLineRollConfig" EntitySet="ProdLineRollConfig" />
+      <End Role="ProdLineType" EntitySet="ProdLineType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdLineType_ProdLineType" Association="Self.FK_ProdLineType_ProdLineType">
+      <End Role="ProdLineType" EntitySet="ProdLineType" />
+      <End Role="ProdLineType1" EntitySet="ProdLineType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdSupervisorOnShift_Plant" Association="Self.FK_ProdSupervisorOnShift_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ProdSupervisorOnShift" EntitySet="ProdSupervisorOnShift" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdSupervisorOnShift_ProductionShift" Association="Self.FK_ProdSupervisorOnShift_ProductionShift">
+      <End Role="ProductionShift" EntitySet="ProductionShift" />
+      <End Role="ProdSupervisorOnShift" EntitySet="ProdSupervisorOnShift" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductCEDetail_UnitOfMeasure" Association="Self.FK_ProductCEDetail_UnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOProductCEDetail" EntitySet="TPOProductCEDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductDimDetail_UnitOfMeasure" Association="Self.FK_ProductDimDetail_UnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOProductDimDetail" EntitySet="TPOProductDimDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionBudget_Plant" Association="Self.FK_ProductionBudget_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ProductionBudget" EntitySet="ProductionBudget" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionBudget_ProductionBudgetType" Association="Self.FK_ProductionBudget_ProductionBudgetType">
+      <End Role="ProductionBudgetType" EntitySet="ProductionBudgetType" />
+      <End Role="ProductionBudget" EntitySet="ProductionBudget" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionLineSchedule_Plant" Association="Self.FK_ProductionLineSchedule_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ProductionLineSchedule" EntitySet="ProductionLineSchedule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionLineSchedule_ProductionShift" Association="Self.FK_ProductionLineSchedule_ProductionShift">
+      <End Role="ProductionShift" EntitySet="ProductionShift" />
+      <End Role="ProductionLineSchedule" EntitySet="ProductionLineSchedule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionShift_Plant" Association="Self.FK_ProductionShift_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ProductionShift" EntitySet="ProductionShift" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionShift_ProductionShiftType" Association="Self.FK_ProductionShift_ProductionShiftType">
+      <End Role="ProductionShiftType" EntitySet="ProductionShiftType" />
+      <End Role="ProductionShift" EntitySet="ProductionShift" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionShiftUse_Plant" Association="Self.FK_ProductionShiftUse_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ProductionShiftUse" EntitySet="ProductionShiftUse" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionShiftUse_ProductionShift" Association="Self.FK_ProductionShiftUse_ProductionShift">
+      <End Role="ProductionShift" EntitySet="ProductionShift" />
+      <End Role="ProductionShiftUse" EntitySet="ProductionShiftUse" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCKickout_LeadOperatorID" Association="Self.FK_QCKickout_LeadOperatorID">
+      <End Role="User" EntitySet="User" />
+      <End Role="QCKickout" EntitySet="QCKickout" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCKickout_Plant" Association="Self.FK_QCKickout_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="QCKickout" EntitySet="QCKickout" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCKickout_ProductionShift" Association="Self.FK_QCKickout_ProductionShift">
+      <End Role="ProductionShift" EntitySet="ProductionShift" />
+      <End Role="QCKickout" EntitySet="QCKickout" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCKickout_QCTechID" Association="Self.FK_QCKickout_QCTechID">
+      <End Role="User" EntitySet="User" />
+      <End Role="QCKickout" EntitySet="QCKickout" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCKickout_SupervisorID" Association="Self.FK_QCKickout_SupervisorID">
+      <End Role="User" EntitySet="User" />
+      <End Role="QCKickout" EntitySet="QCKickout" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCKickout_TPOCProductRoll" Association="Self.FK_QCKickout_TPOCProductRoll">
+      <End Role="TPOCProductRoll" EntitySet="TPOCProductRoll" />
+      <End Role="QCKickout" EntitySet="QCKickout" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCPrintSpecification_Plant" Association="Self.FK_QCPrintSpecification_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="QCPrintSpecification" EntitySet="QCPrintSpecification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCPrintSpecification_QCPrintSpecificationType" Association="Self.FK_QCPrintSpecification_QCPrintSpecificationType">
+      <End Role="QCPrintSpecificationType" EntitySet="QCPrintSpecificationType" />
+      <End Role="QCPrintSpecification" EntitySet="QCPrintSpecification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCRedHold_FailProperty" Association="Self.FK_QCRedHold_FailProperty">
+      <End Role="FailProperty" EntitySet="FailProperty" />
+      <End Role="QCRedHold" EntitySet="QCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCRedHold_LeadOperatorID" Association="Self.FK_QCRedHold_LeadOperatorID">
+      <End Role="User" EntitySet="User" />
+      <End Role="QCRedHold" EntitySet="QCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCRedHold_ManagerID" Association="Self.FK_QCRedHold_ManagerID">
+      <End Role="User" EntitySet="User" />
+      <End Role="QCRedHold" EntitySet="QCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCRedHold_Plant" Association="Self.FK_QCRedHold_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="QCRedHold" EntitySet="QCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCRedHold_QCTechID" Association="Self.FK_QCRedHold_QCTechID">
+      <End Role="User" EntitySet="User" />
+      <End Role="QCRedHold" EntitySet="QCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCRedHold_SupervisorID" Association="Self.FK_QCRedHold_SupervisorID">
+      <End Role="User" EntitySet="User" />
+      <End Role="QCRedHold" EntitySet="QCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCRedHold_TPOCProductRoll" Association="Self.FK_QCRedHold_TPOCProductRoll">
+      <End Role="TPOCProductRoll" EntitySet="TPOCProductRoll" />
+      <End Role="QCRedHold" EntitySet="QCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialAction_Plant" Association="Self.FK_RawMaterialAction_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="RawMaterialAction" EntitySet="RawMaterialAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialAction_ProdLines" Association="Self.FK_RawMaterialAction_ProdLines">
+      <End Role="ProdLines" EntitySet="ProdLines" />
+      <End Role="RawMaterialAction" EntitySet="RawMaterialAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialAction_ProductionShift" Association="Self.FK_RawMaterialAction_ProductionShift">
+      <End Role="ProductionShift" EntitySet="ProductionShift" />
+      <End Role="RawMaterialAction" EntitySet="RawMaterialAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialAction_RawMaterialActionReason" Association="Self.FK_RawMaterialAction_RawMaterialActionReason">
+      <End Role="RawMaterialActionReason" EntitySet="RawMaterialActionReason" />
+      <End Role="RawMaterialAction" EntitySet="RawMaterialAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialAction_RawMaterialActionType" Association="Self.FK_RawMaterialAction_RawMaterialActionType">
+      <End Role="RawMaterialActionType" EntitySet="RawMaterialActionType" />
+      <End Role="RawMaterialAction" EntitySet="RawMaterialAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialAction_RawMaterials" Association="Self.FK_RawMaterialAction_RawMaterials">
+      <End Role="RawMaterials" EntitySet="RawMaterials" />
+      <End Role="RawMaterialAction" EntitySet="RawMaterialAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialAction_User" Association="Self.FK_RawMaterialAction_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="RawMaterialAction" EntitySet="RawMaterialAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialAction_WorkOrder" Association="Self.FK_RawMaterialAction_WorkOrder">
+      <End Role="WorkOrder" EntitySet="WorkOrder" />
+      <End Role="RawMaterialAction" EntitySet="RawMaterialAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQC_Plant" Association="Self.FK_RawMaterialQC_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="RawMaterialQC" EntitySet="RawMaterialQC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQC_QCTechUser" Association="Self.FK_RawMaterialQC_QCTechUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="RawMaterialQC" EntitySet="RawMaterialQC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQC_RawMaterialReceived" Association="Self.FK_RawMaterialQC_RawMaterialReceived">
+      <End Role="RawMaterialReceived" EntitySet="RawMaterialReceived" />
+      <End Role="RawMaterialQC" EntitySet="RawMaterialQC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQCRedHold_FailProperty" Association="Self.FK_RawMaterialQCRedHold_FailProperty">
+      <End Role="FailProperty" EntitySet="FailProperty" />
+      <End Role="RawMaterialQCRedHold" EntitySet="RawMaterialQCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQCRedHold_LeadOperatorID" Association="Self.FK_RawMaterialQCRedHold_LeadOperatorID">
+      <End Role="User" EntitySet="User" />
+      <End Role="RawMaterialQCRedHold" EntitySet="RawMaterialQCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQCRedHold_ManagerID" Association="Self.FK_RawMaterialQCRedHold_ManagerID">
+      <End Role="User" EntitySet="User" />
+      <End Role="RawMaterialQCRedHold" EntitySet="RawMaterialQCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQCRedHold_Plant" Association="Self.FK_RawMaterialQCRedHold_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="RawMaterialQCRedHold" EntitySet="RawMaterialQCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQCRedHold_QCTechID" Association="Self.FK_RawMaterialQCRedHold_QCTechID">
+      <End Role="User" EntitySet="User" />
+      <End Role="RawMaterialQCRedHold" EntitySet="RawMaterialQCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQCRedHold_RawMaterialQCID" Association="Self.FK_RawMaterialQCRedHold_RawMaterialQCID">
+      <End Role="RawMaterialQC" EntitySet="RawMaterialQC" />
+      <End Role="RawMaterialQCRedHold" EntitySet="RawMaterialQCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQCRedHold_RawMaterialReceived" Association="Self.FK_RawMaterialQCRedHold_RawMaterialReceived">
+      <End Role="RawMaterialReceived" EntitySet="RawMaterialReceived" />
+      <End Role="RawMaterialQCRedHold" EntitySet="RawMaterialQCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialQCRedHold_SupervisorID" Association="Self.FK_RawMaterialQCRedHold_SupervisorID">
+      <End Role="User" EntitySet="User" />
+      <End Role="RawMaterialQCRedHold" EntitySet="RawMaterialQCRedHold" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialReceived_Plant" Association="Self.FK_RawMaterialReceived_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="RawMaterialReceived" EntitySet="RawMaterialReceived" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialReceived_RawMaterialReceivedSizeLimit" Association="Self.FK_RawMaterialReceived_RawMaterialReceivedSizeLimit">
+      <End Role="RawMaterialReceivedSizeLimit" EntitySet="RawMaterialReceivedSizeLimit" />
+      <End Role="RawMaterialReceived" EntitySet="RawMaterialReceived" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialReceived_RawMaterials" Association="Self.FK_RawMaterialReceived_RawMaterials">
+      <End Role="RawMaterials" EntitySet="RawMaterials" />
+      <End Role="RawMaterialReceived" EntitySet="RawMaterialReceived" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialReceived_UnitOfMeasure" Association="Self.FK_RawMaterialReceived_UnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="RawMaterialReceived" EntitySet="RawMaterialReceived" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialReceivedSizeLimit_Plant" Association="Self.FK_RawMaterialReceivedSizeLimit_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="RawMaterialReceivedSizeLimit" EntitySet="RawMaterialReceivedSizeLimit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterials_Plant" Association="Self.FK_RawMaterials_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="RawMaterials" EntitySet="RawMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterials_RawMaterialVendor" Association="Self.FK_RawMaterials_RawMaterialVendor">
+      <End Role="RawMaterialVendor" EntitySet="RawMaterialVendor" />
+      <End Role="RawMaterials" EntitySet="RawMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterials_UnitOfMeasure" Association="Self.FK_RawMaterials_UnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="RawMaterials" EntitySet="RawMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialSpecificGravity_RawMaterialQC" Association="Self.FK_RawMaterialSpecificGravity_RawMaterialQC">
+      <End Role="RawMaterialQC" EntitySet="RawMaterialQC" />
+      <End Role="RawMaterialSpecificGravity" EntitySet="RawMaterialSpecificGravity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialSpecificGravity_User" Association="Self.FK_RawMaterialSpecificGravity_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="RawMaterialSpecificGravity" EntitySet="RawMaterialSpecificGravity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialSpecificGravityDetail_RawMaterialSpecificGravity" Association="Self.FK_RawMaterialSpecificGravityDetail_RawMaterialSpecificGravity">
+      <End Role="RawMaterialSpecificGravity" EntitySet="RawMaterialSpecificGravity" />
+      <End Role="RawMaterialSpecificGravityDetail" EntitySet="RawMaterialSpecificGravityDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialTest_ACLimitType" Association="Self.FK_RawMaterialTest_ACLimitType">
+      <End Role="TestLimitType" EntitySet="TestLimitType" />
+      <End Role="RawMaterialTest" EntitySet="RawMaterialTest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialTest_CBLimitType" Association="Self.FK_RawMaterialTest_CBLimitType">
+      <End Role="TestLimitType" EntitySet="TestLimitType" />
+      <End Role="RawMaterialTest" EntitySet="RawMaterialTest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialTest_ColorLimitType" Association="Self.FK_RawMaterialTest_ColorLimitType">
+      <End Role="TestLimitType" EntitySet="TestLimitType" />
+      <End Role="RawMaterialTest" EntitySet="RawMaterialTest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialTest_MFLimitType" Association="Self.FK_RawMaterialTest_MFLimitType">
+      <End Role="TestLimitType" EntitySet="TestLimitType" />
+      <End Role="RawMaterialTest" EntitySet="RawMaterialTest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialTest_MoistLimitType" Association="Self.FK_RawMaterialTest_MoistLimitType">
+      <End Role="TestLimitType" EntitySet="TestLimitType" />
+      <End Role="RawMaterialTest" EntitySet="RawMaterialTest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialTest_Plant" Association="Self.FK_RawMaterialTest_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="RawMaterialTest" EntitySet="RawMaterialTest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialTest_RawMaterials" Association="Self.FK_RawMaterialTest_RawMaterials">
+      <End Role="RawMaterials" EntitySet="RawMaterials" />
+      <End Role="RawMaterialTest" EntitySet="RawMaterialTest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RawMaterialVendor_Plant" Association="Self.FK_RawMaterialVendor_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="RawMaterialVendor" EntitySet="RawMaterialVendor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleAssignment_Role" Association="Self.FK_RoleAssignment_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="RoleAssignment" EntitySet="RoleAssignment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleAssignment_User" Association="Self.FK_RoleAssignment_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="RoleAssignment" EntitySet="RoleAssignment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimAction_Plant" Association="Self.FK_ScrimAction_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ScrimAction" EntitySet="ScrimAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimAction_ProductionShift" Association="Self.FK_ScrimAction_ProductionShift">
+      <End Role="ProductionShift" EntitySet="ProductionShift" />
+      <End Role="ScrimAction" EntitySet="ScrimAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimAction_ScrimActionReason" Association="Self.FK_ScrimAction_ScrimActionReason">
+      <End Role="ScrimActionReason" EntitySet="ScrimActionReason" />
+      <End Role="ScrimAction" EntitySet="ScrimAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimAction_ScrimActionType" Association="Self.FK_ScrimAction_ScrimActionType">
+      <End Role="ScrimActionType" EntitySet="ScrimActionType" />
+      <End Role="ScrimAction" EntitySet="ScrimAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimAction_ScrimRoll" Association="Self.FK_ScrimAction_ScrimRoll">
+      <End Role="ScrimRoll" EntitySet="ScrimRoll" />
+      <End Role="ScrimAction" EntitySet="ScrimAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimAction_TPOCProductRoll" Association="Self.FK_ScrimAction_TPOCProductRoll">
+      <End Role="TPOCProductRoll" EntitySet="TPOCProductRoll" />
+      <End Role="ScrimAction" EntitySet="ScrimAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimAction_User" Association="Self.FK_ScrimAction_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="ScrimAction" EntitySet="ScrimAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimAction_WorkOrder" Association="Self.FK_ScrimAction_WorkOrder">
+      <End Role="WorkOrder" EntitySet="WorkOrder" />
+      <End Role="ScrimAction" EntitySet="ScrimAction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimActionType_Plant" Association="Self.FK_ScrimActionType_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ScrimActionType" EntitySet="ScrimActionType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimRoll_LengthUnitOfMeasure" Association="Self.FK_ScrimRoll_LengthUnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="ScrimRoll" EntitySet="ScrimRoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimRoll_Plant" Association="Self.FK_ScrimRoll_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ScrimRoll" EntitySet="ScrimRoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimRoll_ScrimType" Association="Self.FK_ScrimRoll_ScrimType">
+      <End Role="ScrimType" EntitySet="ScrimType" />
+      <End Role="ScrimRoll" EntitySet="ScrimRoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimRoll_WeightUnitOfMeasure" Association="Self.FK_ScrimRoll_WeightUnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="ScrimRoll" EntitySet="ScrimRoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimType_AreaUnitOfMeasure" Association="Self.FK_ScrimType_AreaUnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="ScrimType" EntitySet="ScrimType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimType_LengthUnitOfMeasure" Association="Self.FK_ScrimType_LengthUnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="ScrimType" EntitySet="ScrimType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimType_Plant" Association="Self.FK_ScrimType_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="ScrimType" EntitySet="ScrimType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimType_WeightUnitOfMeasure" Association="Self.FK_ScrimType_WeightUnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="ScrimType" EntitySet="ScrimType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScrimType_WidthUnitOfMeasure" Association="Self.FK_ScrimType_WidthUnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="ScrimType" EntitySet="ScrimType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCProductRoll_LengthUnitOfMeasure" Association="Self.FK_TPOCProductRoll_LengthUnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOCProductRoll" EntitySet="TPOCProductRoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCProductRoll_MasterRollID" Association="Self.FK_TPOCProductRoll_MasterRollID">
+      <End Role="TPOCProductRoll" EntitySet="TPOCProductRoll" />
+      <End Role="TPOCProductRoll1" EntitySet="TPOCProductRoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCProductRoll_Plant" Association="Self.FK_TPOCProductRoll_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="TPOCProductRoll" EntitySet="TPOCProductRoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCProductRoll_ProductionShift" Association="Self.FK_TPOCProductRoll_ProductionShift">
+      <End Role="ProductionShift" EntitySet="ProductionShift" />
+      <End Role="TPOCProductRoll" EntitySet="TPOCProductRoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCProductRoll_WeightUnitOfMeasure" Association="Self.FK_TPOCProductRoll_WeightUnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOCProductRoll" EntitySet="TPOCProductRoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCProductRoll_WorkOrder" Association="Self.FK_TPOCProductRoll_WorkOrder">
+      <End Role="WorkOrder" EntitySet="WorkOrder" />
+      <End Role="TPOCProductRoll" EntitySet="TPOCProductRoll" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCurrentRawMaterial_Plant" Association="Self.FK_TPOCurrentRawMaterial_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="TPOCurrentRawMaterial" EntitySet="TPOCurrentRawMaterial" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCurrentRawMaterial_RawMaterialReceived" Association="Self.FK_TPOCurrentRawMaterial_RawMaterialReceived">
+      <End Role="RawMaterialReceived" EntitySet="RawMaterialReceived" />
+      <End Role="TPOCurrentRawMaterial" EntitySet="TPOCurrentRawMaterial" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCurrentScrim_FleeceRoll" Association="Self.FK_TPOCurrentScrim_FleeceRoll">
+      <End Role="ScrimRoll" EntitySet="ScrimRoll" />
+      <End Role="TPOCurrentScrim" EntitySet="TPOCurrentScrim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCurrentScrim_FleeceType" Association="Self.FK_TPOCurrentScrim_FleeceType">
+      <End Role="ScrimType" EntitySet="ScrimType" />
+      <End Role="TPOCurrentScrim" EntitySet="TPOCurrentScrim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCurrentScrim_Plant" Association="Self.FK_TPOCurrentScrim_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="TPOCurrentScrim" EntitySet="TPOCurrentScrim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCurrentScrim_Scrim1Roll" Association="Self.FK_TPOCurrentScrim_Scrim1Roll">
+      <End Role="ScrimRoll" EntitySet="ScrimRoll" />
+      <End Role="TPOCurrentScrim" EntitySet="TPOCurrentScrim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCurrentScrim_Scrim1Type" Association="Self.FK_TPOCurrentScrim_Scrim1Type">
+      <End Role="ScrimType" EntitySet="ScrimType" />
+      <End Role="TPOCurrentScrim" EntitySet="TPOCurrentScrim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCurrentScrim_Scrim2Roll" Association="Self.FK_TPOCurrentScrim_Scrim2Roll">
+      <End Role="ScrimRoll" EntitySet="ScrimRoll" />
+      <End Role="TPOCurrentScrim" EntitySet="TPOCurrentScrim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOCurrentScrim_Scrim2Type" Association="Self.FK_TPOCurrentScrim_Scrim2Type">
+      <End Role="ScrimType" EntitySet="ScrimType" />
+      <End Role="TPOCurrentScrim" EntitySet="TPOCurrentScrim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOFormLineProd_Plant" Association="Self.FK_TPOFormLineProd_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="TPOFormulationLineProduct" EntitySet="TPOFormulationLineProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOFormLineProd_ProdLines" Association="Self.FK_TPOFormLineProd_ProdLines">
+      <End Role="ProdLines" EntitySet="ProdLines" />
+      <End Role="TPOFormulationLineProduct" EntitySet="TPOFormulationLineProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOFormLineProd_TPOFormulation" Association="Self.FK_TPOFormLineProd_TPOFormulation">
+      <End Role="TPOFormulation" EntitySet="TPOFormulation" />
+      <End Role="TPOFormulationLineProduct" EntitySet="TPOFormulationLineProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOFormLineProd_TPOProducts" Association="Self.FK_TPOFormLineProd_TPOProducts">
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+      <End Role="TPOFormulationLineProduct" EntitySet="TPOFormulationLineProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOFormRawMaterials_Plant" Association="Self.FK_TPOFormRawMaterials_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="TPOFormulationRawMaterials" EntitySet="TPOFormulationRawMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOFormRawMaterials_RawMaterials" Association="Self.FK_TPOFormRawMaterials_RawMaterials">
+      <End Role="RawMaterials" EntitySet="RawMaterials" />
+      <End Role="TPOFormulationRawMaterials" EntitySet="TPOFormulationRawMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOFormRawMaterials_TPOExtruder" Association="Self.FK_TPOFormRawMaterials_TPOExtruder">
+      <End Role="TPOExtruder" EntitySet="TPOExtruder" />
+      <End Role="TPOFormulationRawMaterials" EntitySet="TPOFormulationRawMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOFormRawMaterials_TPOFormulation" Association="Self.FK_TPOFormRawMaterials_TPOFormulation">
+      <End Role="TPOFormulation" EntitySet="TPOFormulation" />
+      <End Role="TPOFormulationRawMaterials" EntitySet="TPOFormulationRawMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOFormulation_Plant" Association="Self.FK_TPOFormulation_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="TPOFormulation" EntitySet="TPOFormulation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_Plant" Association="Self.FK_TPOProducts_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_ProductCapCoreDetail" Association="Self.FK_TPOProducts_ProductCapCoreDetail">
+      <End Role="TPOProductCapCoreDetail" EntitySet="TPOProductCapCoreDetail" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_ProductCEDetail" Association="Self.FK_TPOProducts_ProductCEDetail">
+      <End Role="TPOProductCEDetail" EntitySet="TPOProductCEDetail" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_ProductDimDetail" Association="Self.FK_TPOProducts_ProductDimDetail">
+      <End Role="TPOProductDimDetail" EntitySet="TPOProductDimDetail" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_ProductGrabDetail" Association="Self.FK_TPOProducts_ProductGrabDetail">
+      <End Role="TPOProductGrabDetail" EntitySet="TPOProductGrabDetail" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_ProductLabelDetail" Association="Self.FK_TPOProducts_ProductLabelDetail">
+      <End Role="TPOProductLabelDetail" EntitySet="TPOProductLabelDetail" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_UnitOfMeasure" Association="Self.FK_TPOProducts_UnitOfMeasure">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_UnitOfMeasure1" Association="Self.FK_TPOProducts_UnitOfMeasure1">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_UnitOfMeasure2" Association="Self.FK_TPOProducts_UnitOfMeasure2">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_UnitOfMeasure3" Association="Self.FK_TPOProducts_UnitOfMeasure3">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_UnitOfMeasure4" Association="Self.FK_TPOProducts_UnitOfMeasure4">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_UnitOfMeasure5" Association="Self.FK_TPOProducts_UnitOfMeasure5">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_UnitOfMeasure6" Association="Self.FK_TPOProducts_UnitOfMeasure6">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProducts_UnitOfMeasure7" Association="Self.FK_TPOProducts_UnitOfMeasure7">
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProductStandartCost_Plant" Association="Self.FK_TPOProductStandartCost_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="TPOProductStandardCost" EntitySet="TPOProductStandardCost" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TPOProductStandartCost_TPOProducts" Association="Self.FK_TPOProductStandartCost_TPOProducts">
+      <End Role="TPOProducts" EntitySet="TPOProducts" />
+      <End Role="TPOProductStandardCost" EntitySet="TPOProductStandardCost" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UnitOfMeasure_UnitOfMeasureType" Association="Self.FK_UnitOfMeasure_UnitOfMeasureType">
+      <End Role="UnitOfMeasureType" EntitySet="UnitOfMeasureType" />
+      <End Role="UnitOfMeasure" EntitySet="UnitOfMeasure" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Plant" Association="Self.FK_User_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkOrder_Plant" Association="Self.FK_WorkOrder_Plant">
+      <End Role="Plant" EntitySet="Plant" />
+      <End Role="WorkOrder" EntitySet="WorkOrder" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

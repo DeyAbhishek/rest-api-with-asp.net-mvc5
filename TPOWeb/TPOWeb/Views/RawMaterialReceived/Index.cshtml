@@ -1,0 +1,314 @@
+﻿@model IEnumerable<TPO.Model.RawMaterials.RawMaterialReceived>
+@{ViewBag.Title = "Raw Material Receipt Summary";}
+<h2>Raw Material Receipt Summary</h2>
+
+@using (Html.BeginForm("Index", "RawMaterialReceived", FormMethod.Post, new { id = "TheForm" }))
+{
+    @Html.DisplayNameFor(model => model.RawMaterialCode)
+    <input id="rawMaterialSelection" class="easyui-combogrid" style="width:250px" data-options="
+        panelWidth: 500,
+        idField: 'RawMaterialId',
+        textField: 'RawMaterialCode',
+        url: '/RawMaterialReceived/GetAllRawMaterialResult',
+        method: 'get',
+        columns: [[
+            {field:'RawMaterialCode',title:'Raw Material',width:60},
+            {field:'RawMaterialName',title:'Description',width:100}
+        ]],
+        onSelect: rawMaterialSelected,
+        fitColumns: true
+
+    ">
+    @*<button class="btn btn-success btn-shadow leftMar20px"
+            onclick="window.location.href = '@Url.Action("Create", "RawMaterialReceived")';return false;">
+        <span class="glyphicon glyphicon-plus"></span>&nbsp;Create New
+    </button>*@
+}
+<br />
+@*<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RawMaterialCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LotNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastModified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RawMaterialCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LotNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEntered, "{0:MM/dd/yyyy}")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnteredBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastModified, "{0:MM/dd/yyyy}")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td>
+            <td>
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Edit", "RawMaterialReceived", new { id = item.ID })';return false;">
+                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+                </button>
+                <button class="btn btn-danger btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Delete", "RawMaterialReceived", new { id = item.ID })';return false;">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+                </button>
+
+            </td>
+        </tr>
+    }
+</table>*@
+
+@if (Model.Any())
+{
+    <table id="dg" class="easyui-datagrid" title="Raw Materials" style="height: 250px;"
+           data-options="iconCls: 'icon-edit',
+           singleselect: true,
+           toolbar: '#tb' ,
+           url: '/RawMaterialReceived/RawMaterialsRecievedGridByType/' ,
+           method: 'get',
+           pagination: true,
+           rownumbers: true,
+           fitColumns: true,
+           onClickRow: onClickRow,
+           queryParams:{ID:@Model.FirstOrDefault().RawMaterialID}">
+        <thead>
+            <tr>
+                <th data-options="field:'ID'">Material Receipt</th>
+                <th data-options="field:'LotNumber',editor:'text'">Material Lot No</th>
+                <th data-options="field:'DateEntered',editor:'datebox',formatter:formatDate">Received Date</th>
+                <th data-options="field:'EnteredBy',editor:'text'">Received By</th>
+                <th data-options="field:'LastModified',editor:'datebox',formatter:formatDate">Last Modified Date</th>
+                <th data-options="field:'ModifiedBy',editor:'text'">Last Modified By</th>
+                <th data-options="field:'UoMCode',editor:'text'">Material UOM</th>
+                <th data-options="field:'PlantCode',editor:'text'">Plant Code</th>
+                <th data-options="field:'CoA',editor:'text'">C of A</th>
+                <th data-options="field:'QuantityShipped',editor:'text'">Quantity Shipped</th>
+                <th data-options="field:'QuantityReceived',editor:'text'">Quantity Received</th>
+                <th data-options="field:'QuantityNotReceived',editor:'text'">Quantity Rejected</th>
+            </tr>
+        </thead>
+
+    </table>
+
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" append() ">Create New</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeit() ">Delete</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" accept() ">Save Changes</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Cancel</a>
+    </div>
+}
+else
+{
+    <h1>No records are present.</h1>
+}
+
+
+<script type="text/javascript">
+    var editIndex = undefined;
+    function endEditing(){
+        if (editIndex == undefined){return true}
+        if ($('#dg').datagrid('validateRow', editIndex)){
+            var ed = $('#dg').datagrid('getEditor', {index:editIndex,field:'ID'});
+            //var productname = $(ed.target).combobox('getText');
+            //$('#dg').datagrid('getRows')[editIndex]['productname'] = productname;
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRow(index){
+        if (editIndex != index){
+            if (endEditing()){
+                $('#dg').datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+    function append(){
+        if (endEditing()){
+            $('#dg').datagrid('appendRow',{status:'P'});
+            editIndex = $('#dg').datagrid('getRows').length-1;
+            $('#dg').datagrid('selectRow', editIndex)
+                    .datagrid('beginEdit', editIndex);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    function removeit(){
+        if (editIndex == undefined) { return }
+
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+
+            var myJSONObject = {
+                "ID": row.ID,
+                "LotNumber": row.LotNumber,
+                "DateEntered": row.DateEntered,
+                "EnteredBy": row.EnteredBy,
+                "LastModified": row.LastModified,
+                "ModifiedBy": row.ModifiedBy,
+                "UoMCode": row.UoMCode,
+                "PlantCode": row.PlantCode,
+                "CoA": row.CoA,
+                "QuantityShipped": row.QuantityShipped,
+                "QuantityReceived": row.QuantityReceived,
+                "QuantityNotReceived": row.QuantityNotReceived
+            };
+
+            $.ajax({
+                url: '/RawMaterialReceived/RawMaterialAjaxDelete',
+                type: 'POST',
+                data: { id: JSON.stringify(myJSONObject) },
+                success: function (data, textStatus, jqXHR) {
+                    $("#alertDIV").css("display", "block").addClass('alert-success');
+                    $("#alertP").css("display", "block").text("The item was deleted.");
+                    $('#dg').datagrid('reload');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $("#alertDIV").css("display", "block").addClass('alert-danger');
+                    $("#alertP").css("display", "block").text("The item could not be deleted.");
+                    $('#dg').datagrid('reload');
+                }
+            });
+
+        }
+
+
+
+
+
+        $('#dg').datagrid('cancelEdit', editIndex)
+                .datagrid('deleteRow', editIndex);
+        editIndex = undefined;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    function accept(){
+        if (endEditing()){
+            $('#dg').datagrid('acceptChanges');
+
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+
+                var myJSONObject = {
+                    "ID": row.ID,
+                    "LotNumber": row.LotNumber,
+                    "DateEntered": row.DateEntered,
+                    "EnteredBy": row.EnteredBy,
+                    "LastModified": row.LastModified,
+                    "ModifiedBy": row.ModifiedBy,
+                    "UoMCode": row.UoMCode,
+                    "PlantCode": row.PlantCode,
+                    "CoA": row.CoA,
+                    "QuantityShipped": row.QuantityShipped,
+                    "QuantityReceived": row.QuantityReceived,
+                    "QuantityNotReceived": row.QuantityNotReceived
+                };
+
+                $.ajax({
+                    url: '/RawMaterialReceived/RawMaterialAjaxCreate',
+                    type: 'POST',
+                    data: { id: JSON.stringify(myJSONObject) },
+                    success: function (data, textStatus, jqXHR) {
+                        $("#alertDIV").css("display", "block").addClass('alert-success');
+                        $("#alertP").css("display", "block").text("The item was saved.");
+                        $('#dg').datagrid('reload');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#alertDIV").css("display", "block").addClass('alert-danger');
+                        $("#alertP").css("display", "block").text("The item could not be saved.");
+                        $('#dg').datagrid('reload');
+                    }
+                });
+
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function reject(){
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+
+    function formatDate(val, row) {
+        if (val != undefined) {
+            var date = new Date(parseInt(val.substr(6)));
+            var day = date.getDate();
+            var month = date.getMonth();
+            var year = date.getFullYear();
+            var finalDate = day + '/' + month + '/' + year;
+            return finalDate;
+        } else {
+            return new Date();
+        }
+    }
+
+    function rawMaterialSelected(record) {
+        //record is the row position that is returned as well if needed
+        var val = $("#rawMaterialSelection").combogrid('getValue');
+        var url = "/RawMaterialReceived/Index/" + val;
+        window.location = url;
+    }
+
+</script>

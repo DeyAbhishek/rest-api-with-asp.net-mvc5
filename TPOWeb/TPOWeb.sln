@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPOWeb", "TPOWeb\TPOWeb.csproj", "{8F9E8F6E-F75B-49A9-B89D-89889C24F7AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPO.DL", "TPODL\TPO.DL.csproj", "{CC45198C-AEFC-4FAC-ADDA-35858B7A3703}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPO.BL", "TPO.BL\TPO.BL.csproj", "{7FA614AA-49BC-475B-8C28-55EBC7352D32}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CC45198C-AEFC-4FAC-ADDA-35858B7A3703} = {CC45198C-AEFC-4FAC-ADDA-35858B7A3703}
+		{AF1DCFF6-9E73-43D5-B9FB-439835CD39F2} = {AF1DCFF6-9E73-43D5-B9FB-439835CD39F2}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPO.Model", "TPO.Model\TPO.Model.csproj", "{AF1DCFF6-9E73-43D5-B9FB-439835CD39F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPO.Domain", "TPO.Domain\TPO.Domain.csproj", "{C67BDD32-95D8-4209-9293-4EA2AC66551B}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs12.thinketg.com/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = TPOWeb\\TPOWeb.csproj
+		SccProjectName1 = TPOWeb
+		SccLocalPath1 = TPOWeb
+		SccProjectUniqueName2 = TPO.BL\\TPO.BL.csproj
+		SccProjectName2 = TPO.BL
+		SccLocalPath2 = TPO.BL
+		SccProjectUniqueName3 = TPODL\\TPO.DL.csproj
+		SccProjectName3 = TPODL
+		SccLocalPath3 = TPODL
+		SccProjectUniqueName4 = TPO.Model\\TPO.Model.csproj
+		SccProjectName4 = TPO.Model
+		SccLocalPath4 = TPO.Model
+		SccProjectUniqueName5 = TPO.Domain\\TPO.Domain.csproj
+		SccProjectName5 = TPO.Domain
+		SccLocalPath5 = TPO.Domain
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F9E8F6E-F75B-49A9-B89D-89889C24F7AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F9E8F6E-F75B-49A9-B89D-89889C24F7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F9E8F6E-F75B-49A9-B89D-89889C24F7AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F9E8F6E-F75B-49A9-B89D-89889C24F7AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC45198C-AEFC-4FAC-ADDA-35858B7A3703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC45198C-AEFC-4FAC-ADDA-35858B7A3703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC45198C-AEFC-4FAC-ADDA-35858B7A3703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC45198C-AEFC-4FAC-ADDA-35858B7A3703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FA614AA-49BC-475B-8C28-55EBC7352D32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FA614AA-49BC-475B-8C28-55EBC7352D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FA614AA-49BC-475B-8C28-55EBC7352D32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FA614AA-49BC-475B-8C28-55EBC7352D32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF1DCFF6-9E73-43D5-B9FB-439835CD39F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF1DCFF6-9E73-43D5-B9FB-439835CD39F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF1DCFF6-9E73-43D5-B9FB-439835CD39F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF1DCFF6-9E73-43D5-B9FB-439835CD39F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C67BDD32-95D8-4209-9293-4EA2AC66551B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C67BDD32-95D8-4209-9293-4EA2AC66551B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C67BDD32-95D8-4209-9293-4EA2AC66551B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C67BDD32-95D8-4209-9293-4EA2AC66551B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

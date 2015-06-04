@@ -1,0 +1,1151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TPOMVCApplicationModelStoreContainer" CdmEntityContainer="TPOMVCApplicationEntities">
+    <EntitySetMapping Name="Plants">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.Plant">
+        <MappingFragment StoreEntitySet="Plant">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionShifts">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProductionShift">
+        <MappingFragment StoreEntitySet="ProductionShift">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionShiftTypes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProductionShiftType">
+        <MappingFragment StoreEntitySet="ProductionShiftType">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialActions">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialAction">
+        <MappingFragment StoreEntitySet="RawMaterialAction">
+          <ScalarProperty Name="LotNumber" ColumnName="LotNumber" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <ScalarProperty Name="WorkOrderID" ColumnName="WorkOrderID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="RawMaterialID" ColumnName="RawMaterialID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialActionReasons">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialActionReason">
+        <MappingFragment StoreEntitySet="RawMaterialActionReason">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialActionTypes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialActionType">
+        <MappingFragment StoreEntitySet="RawMaterialActionType">
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialQCs">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialQC">
+        <MappingFragment StoreEntitySet="RawMaterialQC">
+          <ScalarProperty Name="RawMaterialReceivedID" ColumnName="RawMaterialReceivedID" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="BoxCarTested" ColumnName="BoxCarTested" />
+          <ScalarProperty Name="CBFS" ColumnName="CBFS" />
+          <ScalarProperty Name="CBCoA" ColumnName="CBCoA" />
+          <ScalarProperty Name="MoistFS" ColumnName="MoistFS" />
+          <ScalarProperty Name="MoistCoA" ColumnName="MoistCoA" />
+          <ScalarProperty Name="ACFS" ColumnName="ACFS" />
+          <ScalarProperty Name="ACCoA" ColumnName="ACCoA" />
+          <ScalarProperty Name="MFFS" ColumnName="MFFS" />
+          <ScalarProperty Name="MFCoA" ColumnName="MFCoA" />
+          <ScalarProperty Name="ColorFS" ColumnName="ColorFS" />
+          <ScalarProperty Name="ColorCoA" ColumnName="ColorCoA" />
+          <ScalarProperty Name="SpecGrav" ColumnName="SpecGrav" />
+          <ScalarProperty Name="VisualInspection" ColumnName="VisualInspection" />
+          <ScalarProperty Name="QCTechUserID" ColumnName="QCTechUserID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialReceiveds">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialReceived">
+        <MappingFragment StoreEntitySet="RawMaterialReceived">
+          <ScalarProperty Name="UOMID" ColumnName="UOMID" />
+          <ScalarProperty Name="ReceivedSizeLimitID" ColumnName="ReceivedSizeLimitID" />
+          <ScalarProperty Name="QuantityUsedThisLot" ColumnName="QuantityUsedThisLot" />
+          <ScalarProperty Name="QuantityNotReceived" ColumnName="QuantityNotReceived" />
+          <ScalarProperty Name="QuantityReceived" ColumnName="QuantityReceived" />
+          <ScalarProperty Name="QuantityShipped" ColumnName="QuantityShipped" />
+          <ScalarProperty Name="CoA" ColumnName="CoA" />
+          <ScalarProperty Name="LotNumber" ColumnName="LotNumber" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="RawMaterialID" ColumnName="RawMaterialID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialTests">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialTest">
+        <MappingFragment StoreEntitySet="RawMaterialTest">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="TestFrequency" ColumnName="TestFrequency" />
+          <ScalarProperty Name="UseVisual" ColumnName="UseVisual" />
+          <ScalarProperty Name="UseSpecGrav" ColumnName="UseSpecGrav" />
+          <ScalarProperty Name="CBLimit2" ColumnName="CBLimit2" />
+          <ScalarProperty Name="CBLimit1" ColumnName="CBLimit1" />
+          <ScalarProperty Name="CBLimitTypeID" ColumnName="CBLimitTypeID" />
+          <ScalarProperty Name="UseCBTest" ColumnName="UseCBTest" />
+          <ScalarProperty Name="MoistLimit2" ColumnName="MoistLimit2" />
+          <ScalarProperty Name="MoistLimit1" ColumnName="MoistLimit1" />
+          <ScalarProperty Name="MoistLimitTypeID" ColumnName="MoistLimitTypeID" />
+          <ScalarProperty Name="UseMoistTest" ColumnName="UseMoistTest" />
+          <ScalarProperty Name="ACLimit2" ColumnName="ACLimit2" />
+          <ScalarProperty Name="ACLimit1" ColumnName="ACLimit1" />
+          <ScalarProperty Name="ACLimitTypeID" ColumnName="ACLimitTypeID" />
+          <ScalarProperty Name="UseACTest" ColumnName="UseACTest" />
+          <ScalarProperty Name="MFLimit2" ColumnName="MFLimit2" />
+          <ScalarProperty Name="MFLimit1" ColumnName="MFLimit1" />
+          <ScalarProperty Name="MFLimitTypeID" ColumnName="MFLimitTypeID" />
+          <ScalarProperty Name="UseMFTest" ColumnName="UseMFTest" />
+          <ScalarProperty Name="ColorLimit2" ColumnName="ColorLimit2" />
+          <ScalarProperty Name="ColorLimit1" ColumnName="ColorLimit1" />
+          <ScalarProperty Name="ColorLimitTypeID" ColumnName="ColorLimitTypeID" />
+          <ScalarProperty Name="UseColorTest" ColumnName="UseColorTest" />
+          <ScalarProperty Name="RawMaterialID" ColumnName="RawMaterialID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ScrimActionReasons">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ScrimActionReason">
+        <MappingFragment StoreEntitySet="ScrimActionReason">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ScrimActionTypes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ScrimActionType">
+        <MappingFragment StoreEntitySet="ScrimActionType">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ScrimTypes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ScrimType">
+        <MappingFragment StoreEntitySet="ScrimType">
+          <ScalarProperty Name="AreaUoMID" ColumnName="AreaUoMID" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="IsLiner" ColumnName="IsLiner" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="LengthUoMID" ColumnName="LengthUoMID" />
+          <ScalarProperty Name="WeightUoMID" ColumnName="WeightUoMID" />
+          <ScalarProperty Name="WidthUoMID" ColumnName="WidthUoMID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestLimitTypes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TestLimitType">
+        <MappingFragment StoreEntitySet="TestLimitType">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitOfMeasures">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.UnitOfMeasure">
+        <MappingFragment StoreEntitySet="UnitOfMeasure">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitOfMeasureTypes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.UnitOfMeasureType">
+        <MappingFragment StoreEntitySet="UnitOfMeasureType">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="Enteredby" ColumnName="Enteredby" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WorkOrders">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.WorkOrder">
+        <MappingFragment StoreEntitySet="WorkOrder">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Complete" ColumnName="Complete" />
+          <ScalarProperty Name="Pal" ColumnName="Pal" />
+          <ScalarProperty Name="RunArea" ColumnName="RunArea" />
+          <ScalarProperty Name="RunOrder" ColumnName="RunOrder" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleAssignments">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RoleAssignment">
+        <MappingFragment StoreEntitySet="RoleAssignment">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ScrimActions">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ScrimAction">
+        <MappingFragment StoreEntitySet="ScrimAction">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="FleeceProd" ColumnName="FleeceProd" />
+          <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+          <ScalarProperty Name="EndWeight" ColumnName="EndWeight" />
+          <ScalarProperty Name="EndLength" ColumnName="EndLength" />
+          <ScalarProperty Name="StartWeight" ColumnName="StartWeight" />
+          <ScalarProperty Name="StartLength" ColumnName="StartLength" />
+          <ScalarProperty Name="ActionWeight" ColumnName="ActionWeight" />
+          <ScalarProperty Name="ActionLength" ColumnName="ActionLength" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="ScrimRollID" ColumnName="ScrimRollID" />
+          <ScalarProperty Name="RollID" ColumnName="RollID" />
+          <ScalarProperty Name="WorkOrderID" ColumnName="WorkOrderID" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ScrimRolls">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ScrimRoll">
+        <MappingFragment StoreEntitySet="ScrimRoll">
+          <ScalarProperty Name="WovenLotNumber" ColumnName="WovenLotNumber" />
+          <ScalarProperty Name="LotNumber" ColumnName="LotNumber" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="WeightUsed" ColumnName="WeightUsed" />
+          <ScalarProperty Name="LengthUsed" ColumnName="LengthUsed" />
+          <ScalarProperty Name="ReceivedTareWeight" ColumnName="ReceivedTareWeight" />
+          <ScalarProperty Name="ReceivedWeight" ColumnName="ReceivedWeight" />
+          <ScalarProperty Name="ReceivedLength" ColumnName="ReceivedLength" />
+          <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="DateReceived" ColumnName="DateReceived" />
+          <ScalarProperty Name="WovenDate" ColumnName="WovenDate" />
+          <ScalarProperty Name="LengthUoMID" ColumnName="LengthUoMID" />
+          <ScalarProperty Name="WeightUoMID" ColumnName="WeightUoMID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOCProductRolls">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOCProductRoll">
+        <MappingFragment StoreEntitySet="TPOCProductRoll">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="WeightUoMID" ColumnName="WeightUoMID" />
+          <ScalarProperty Name="LengthUoMID" ColumnName="LengthUoMID" />
+          <ScalarProperty Name="MasterRollID" ColumnName="MasterRollID" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <ScalarProperty Name="WorkOrderID" ColumnName="WorkOrderID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOCurrentScrims">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOCurrentScrim">
+        <MappingFragment StoreEntitySet="TPOCurrentScrim">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="ScrimPos" ColumnName="ScrimPos" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="FleeceTypeID" ColumnName="FleeceTypeID" />
+          <ScalarProperty Name="FleeceRollID" ColumnName="FleeceRollID" />
+          <ScalarProperty Name="Scrim2TypeID" ColumnName="Scrim2TypeID" />
+          <ScalarProperty Name="Scrim2RollID" ColumnName="Scrim2RollID" />
+          <ScalarProperty Name="Scrim1TypeID" ColumnName="Scrim1TypeID" />
+          <ScalarProperty Name="Scrim1RollID" ColumnName="Scrim1RollID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FailProperties">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.FailProperty">
+        <MappingFragment StoreEntitySet="FailProperty">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QCRedHolds">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.QCRedHold">
+        <MappingFragment StoreEntitySet="QCRedHold">
+          <ScalarProperty Name="HoldLotNumber" ColumnName="HoldLotNumber" />
+          <ScalarProperty Name="LotNumber" ColumnName="LotNumber" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SCArea" ColumnName="SCArea" />
+          <ScalarProperty Name="SCRolls" ColumnName="SCRolls" />
+          <ScalarProperty Name="ReworkArea" ColumnName="ReworkArea" />
+          <ScalarProperty Name="ReworkRolls" ColumnName="ReworkRolls" />
+          <ScalarProperty Name="PrimeArea" ColumnName="PrimeArea" />
+          <ScalarProperty Name="PrimeRolls" ColumnName="PrimeRolls" />
+          <ScalarProperty Name="ManagerComments" ColumnName="ManagerComments" />
+          <ScalarProperty Name="ManagerDate" ColumnName="ManagerDate" />
+          <ScalarProperty Name="HoldComments" ColumnName="HoldComments" />
+          <ScalarProperty Name="HoldDate" ColumnName="HoldDate" />
+          <ScalarProperty Name="RedCorrectionAction" ColumnName="RedCorrectionAction" />
+          <ScalarProperty Name="RedComments" ColumnName="RedComments" />
+          <ScalarProperty Name="Zone" ColumnName="Zone" />
+          <ScalarProperty Name="RedDate" ColumnName="RedDate" />
+          <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+          <ScalarProperty Name="SupervisorID" ColumnName="SupervisorID" />
+          <ScalarProperty Name="LeadOperatorID" ColumnName="LeadOperatorID" />
+          <ScalarProperty Name="QCTechID" ColumnName="QCTechID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="FailPropertyID" ColumnName="FailPropertyID" />
+          <ScalarProperty Name="RollID" ColumnName="RollID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialQCRedHolds">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialQCRedHold">
+        <MappingFragment StoreEntitySet="RawMaterialQCRedHold">
+          <ScalarProperty Name="HoldLotNumber" ColumnName="HoldLotNumber" />
+          <ScalarProperty Name="RawMaterialQCID" ColumnName="RawMaterialQCID" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="ScrapUOM" ColumnName="ScrapUOM" />
+          <ScalarProperty Name="ScrapBoxCar" ColumnName="ScrapBoxCar" />
+          <ScalarProperty Name="ReworkUOM" ColumnName="ReworkUOM" />
+          <ScalarProperty Name="ReworkBoxCar" ColumnName="ReworkBoxCar" />
+          <ScalarProperty Name="PrimeUOM" ColumnName="PrimeUOM" />
+          <ScalarProperty Name="PrimeBoxCar" ColumnName="PrimeBoxCar" />
+          <ScalarProperty Name="ManagerComments" ColumnName="ManagerComments" />
+          <ScalarProperty Name="ManagerDate" ColumnName="ManagerDate" />
+          <ScalarProperty Name="HoldComments" ColumnName="HoldComments" />
+          <ScalarProperty Name="HoldDate" ColumnName="HoldDate" />
+          <ScalarProperty Name="RedCorrectionAction" ColumnName="RedCorrectionAction" />
+          <ScalarProperty Name="RedComments" ColumnName="RedComments" />
+          <ScalarProperty Name="Zone" ColumnName="Zone" />
+          <ScalarProperty Name="RedDate" ColumnName="RedDate" />
+          <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+          <ScalarProperty Name="SupervisorID" ColumnName="SupervisorID" />
+          <ScalarProperty Name="LeadOperatorID" ColumnName="LeadOperatorID" />
+          <ScalarProperty Name="QCTechID" ColumnName="QCTechID" />
+          <ScalarProperty Name="FailPropertyID" ColumnName="FailPropertyID" />
+          <ScalarProperty Name="RawMaterialReceivedID" ColumnName="RawMaterialReceivedID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialSpecificGravities">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialSpecificGravity">
+        <MappingFragment StoreEntitySet="RawMaterialSpecificGravity">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="DenIso" ColumnName="DenIso" />
+          <ScalarProperty Name="LabTechUserID" ColumnName="LabTechUserID" />
+          <ScalarProperty Name="RawMaterialQCID" ColumnName="RawMaterialQCID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialSpecificGravityDetails">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialSpecificGravityDetail">
+        <MappingFragment StoreEntitySet="RawMaterialSpecificGravityDetail">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Submerged" ColumnName="Submerged" />
+          <ScalarProperty Name="RawMaterialSpecGravID" ColumnName="RawMaterialSpecGravID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOCurrentRawMaterials">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOCurrentRawMaterial">
+        <MappingFragment StoreEntitySet="TPOCurrentRawMaterial">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="RawMaterialReceivedID" ColumnName="RawMaterialReceivedID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IMProds">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.IMProd">
+        <MappingFragment StoreEntitySet="IMProd">
+          <ScalarProperty Name="AdhesionManufacturesDate" ColumnName="AdhesionManufacturesDate" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="WorkOrderID" ColumnName="WorkOrderID" />
+          <ScalarProperty Name="IMQCID" ColumnName="IMQCID" />
+          <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+          <ScalarProperty Name="WeightUOM" ColumnName="WeightUOM" />
+          <ScalarProperty Name="CartonWeight" ColumnName="CartonWeight" />
+          <ScalarProperty Name="PartsCarton" ColumnName="PartsCarton" />
+          <ScalarProperty Name="ProdShift" ColumnName="ProdShift" />
+          <ScalarProperty Name="ProdDate" ColumnName="ProdDate" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="IMProductID" ColumnName="IMProductID" />
+          <ScalarProperty Name="ProdLineID" ColumnName="ProdLineID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IMProducts">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.IMProduct">
+        <MappingFragment StoreEntitySet="IMProducts">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="Label3" ColumnName="Label3" />
+          <ScalarProperty Name="Label2" ColumnName="Label2" />
+          <ScalarProperty Name="Label1" ColumnName="Label1" />
+          <ScalarProperty Name="MinimumWeight" ColumnName="MinimumWeight" />
+          <ScalarProperty Name="MinimumThick" ColumnName="MinimumThick" />
+          <ScalarProperty Name="WeightUOM" ColumnName="WeightUOM" />
+          <ScalarProperty Name="ThickUOM" ColumnName="ThickUOM" />
+          <ScalarProperty Name="RawMaterialID" ColumnName="RawMaterialID" />
+          <ScalarProperty Name="CartoonPerLot" ColumnName="CartoonPerLot" />
+          <ScalarProperty Name="PartsPerCartoon" ColumnName="PartsPerCartoon" />
+          <ScalarProperty Name="IMProductTypeID" ColumnName="IMProductTypeID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IMProductTypes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.IMProductType">
+        <MappingFragment StoreEntitySet="IMProductType">
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="ThickLabel2" ColumnName="ThickLabel2" />
+          <ScalarProperty Name="ThickLabel1" ColumnName="ThickLabel1" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IMQCs">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.IMQC">
+        <MappingFragment StoreEntitySet="IMQC">
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="PassFail" ColumnName="PassFail" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Operator" ColumnName="Operator" />
+          <ScalarProperty Name="LabTechnician" ColumnName="LabTechnician" />
+          <ScalarProperty Name="ProdDate" ColumnName="ProdDate" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="IMProductID" ColumnName="IMProductID" />
+          <ScalarProperty Name="ProdLineID" ColumnName="ProdLineID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProdDteChngs">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProdDteChng">
+        <MappingFragment StoreEntitySet="ProdDteChng">
+          <ScalarProperty Name="RotationStart" ColumnName="RotationStart" />
+          <ScalarProperty Name="DateChange" ColumnName="DateChange" />
+          <ScalarProperty Name="ChangeType" ColumnName="ChangeType" />
+          <ScalarProperty Name="LineCode" ColumnName="LineCode" />
+          <ScalarProperty Name="LocID" ColumnName="LocID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProdLineRollConfigs">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProdLineRollConfig">
+        <MappingFragment StoreEntitySet="ProdLineRollConfig">
+          <ScalarProperty Name="LineRollName" ColumnName="LineRollName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProdLines">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProdLine">
+        <MappingFragment StoreEntitySet="ProdLines">
+          <ScalarProperty Name="LineRollConfigID" ColumnName="LineRollConfigID" />
+          <ScalarProperty Name="ModDate" ColumnName="ModDate" />
+          <ScalarProperty Name="LocID" ColumnName="LocID" />
+          <ScalarProperty Name="RCComp" ColumnName="RCComp" />
+          <ScalarProperty Name="RepOrder" ColumnName="RepOrder" />
+          <ScalarProperty Name="TPOMorC" ColumnName="TPOMorC" />
+          <ScalarProperty Name="CrntWOID" ColumnName="CrntWOID" />
+          <ScalarProperty Name="LabelID" ColumnName="LabelID" />
+          <ScalarProperty Name="LineTypeID" ColumnName="LineTypeID" />
+          <ScalarProperty Name="LineDesc" ColumnName="LineDesc" />
+          <ScalarProperty Name="LineDescCode" ColumnName="LineDescCode" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProdLinesPerforms">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProdLinesPerform">
+        <MappingFragment StoreEntitySet="ProdLinesPerform">
+          <ScalarProperty Name="SchedFactor" ColumnName="SchedFactor" />
+          <ScalarProperty Name="DateChange" ColumnName="DateChange" />
+          <ScalarProperty Name="TPTUse" ColumnName="TPTUse" />
+          <ScalarProperty Name="OEE" ColumnName="OEE" />
+          <ScalarProperty Name="TPLabel" ColumnName="TPLabel" />
+          <ScalarProperty Name="Throughput" ColumnName="Throughput" />
+          <ScalarProperty Name="Yield" ColumnName="Yield" />
+          <ScalarProperty Name="Uptime" ColumnName="Uptime" />
+          <ScalarProperty Name="LineCode" ColumnName="LineCode" />
+          <ScalarProperty Name="LocID" ColumnName="LocID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProdLinesPerformProds">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProdLinesPerformProd">
+        <MappingFragment StoreEntitySet="ProdLinesPerformProd">
+          <ScalarProperty Name="DateChange" ColumnName="DateChange" />
+          <ScalarProperty Name="Throughput" ColumnName="Throughput" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="ProdLineID" ColumnName="ProdLineID" />
+          <ScalarProperty Name="LocID" ColumnName="LocID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProdLineTypes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProdLineType">
+        <MappingFragment StoreEntitySet="ProdLineType">
+          <ScalarProperty Name="LineRollConfigID" ColumnName="LineRollConfigID" />
+          <ScalarProperty Name="ProdLineTypeDesc" ColumnName="ProdLineTypeDesc" />
+          <ScalarProperty Name="ProdLineType1" ColumnName="ProdLineType" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProdSupervisorOnShifts">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProdSupervisorOnShift">
+        <MappingFragment StoreEntitySet="ProdSupervisorOnShift">
+          <ScalarProperty Name="DateMod" ColumnName="DateMod" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProdShiftID" ColumnName="ProdShiftID" />
+          <ScalarProperty Name="ProdDate" ColumnName="ProdDate" />
+          <ScalarProperty Name="LineIDCode" ColumnName="LineIDCode" />
+          <ScalarProperty Name="LocID" ColumnName="LocID" />
+          <ScalarProperty Name="IDCode" ColumnName="IDCode" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionBudgets">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProductionBudget">
+        <MappingFragment StoreEntitySet="ProductionBudget">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Budget" ColumnName="Budget" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionBudgetTypes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProductionBudgetType">
+        <MappingFragment StoreEntitySet="ProductionBudgetType">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionLineSchedules">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProductionLineSchedule">
+        <MappingFragment StoreEntitySet="ProductionLineSchedule">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="MinutesScheduled" ColumnName="MinutesScheduled" />
+          <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionShiftUses">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.ProductionShiftUse">
+        <MappingFragment StoreEntitySet="ProductionShiftUse">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Day7Minutes" ColumnName="Day7Minutes" />
+          <ScalarProperty Name="Day6Minutes" ColumnName="Day6Minutes" />
+          <ScalarProperty Name="Day5Minutes" ColumnName="Day5Minutes" />
+          <ScalarProperty Name="Day4Minutes" ColumnName="Day4Minutes" />
+          <ScalarProperty Name="Day3Minutes" ColumnName="Day3Minutes" />
+          <ScalarProperty Name="Day2Minutes" ColumnName="Day2Minutes" />
+          <ScalarProperty Name="Day1Minutes" ColumnName="Day1Minutes" />
+          <ScalarProperty Name="UseShift" ColumnName="UseShift" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QCKickouts">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.QCKickout">
+        <MappingFragment StoreEntitySet="QCKickout">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Passed" ColumnName="Passed" />
+          <ScalarProperty Name="CameraVerified" ColumnName="CameraVerified" />
+          <ScalarProperty Name="ThickAlarmVerified" ColumnName="ThickAlarmVerified" />
+          <ScalarProperty Name="PrintOK" ColumnName="PrintOK" />
+          <ScalarProperty Name="CoreWrinkles" ColumnName="CoreWrinkles" />
+          <ScalarProperty Name="UnwindStraight" ColumnName="UnwindStraight" />
+          <ScalarProperty Name="EdgeFlat" ColumnName="EdgeFlat" />
+          <ScalarProperty Name="GESpec" ColumnName="GESpec" />
+          <ScalarProperty Name="SheetFlat" ColumnName="SheetFlat" />
+          <ScalarProperty Name="CutStraight" ColumnName="CutStraight" />
+          <ScalarProperty Name="WeldToLapLine" ColumnName="WeldToLapLine" />
+          <ScalarProperty Name="DateLine" ColumnName="DateLine" />
+          <ScalarProperty Name="WeldLine" ColumnName="WeldLine" />
+          <ScalarProperty Name="LapLine" ColumnName="LapLine" />
+          <ScalarProperty Name="TackLine" ColumnName="TackLine" />
+          <ScalarProperty Name="RollLengthINSet" ColumnName="RollLengthINSet" />
+          <ScalarProperty Name="RollLengthFTSet" ColumnName="RollLengthFTSet" />
+          <ScalarProperty Name="RollLengthIN" ColumnName="RollLengthIN" />
+          <ScalarProperty Name="RollLengthFT" ColumnName="RollLengthFT" />
+          <ScalarProperty Name="KickoutDate" ColumnName="KickoutDate" />
+          <ScalarProperty Name="SupervisorID" ColumnName="SupervisorID" />
+          <ScalarProperty Name="LeadOperatorID" ColumnName="LeadOperatorID" />
+          <ScalarProperty Name="QCTechID" ColumnName="QCTechID" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="RollID" ColumnName="RollID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="LotID" ColumnName="LotID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QCPrintSpecifications">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.QCPrintSpecification">
+        <MappingFragment StoreEntitySet="QCPrintSpecification">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Max" ColumnName="Max" />
+          <ScalarProperty Name="Min" ColumnName="Min" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QCPrintSpecificationTypes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.QCPrintSpecificationType">
+        <MappingFragment StoreEntitySet="QCPrintSpecificationType">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterials">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterial">
+        <MappingFragment StoreEntitySet="RawMaterials">
+          <ScalarProperty Name="RawMaterialVendorID" ColumnName="RawMaterialVendorID" />
+          <ScalarProperty Name="UOMID" ColumnName="UOMID" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="FSBPID" ColumnName="FSBPID" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="Density" ColumnName="Density" />
+          <ScalarProperty Name="PricePerUOM" ColumnName="PricePerUOM" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialVendors">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialVendor">
+        <MappingFragment StoreEntitySet="RawMaterialVendor">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOExtruders">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOExtruder">
+        <MappingFragment StoreEntitySet="TPOExtruder">
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOFormulations">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOFormulation">
+        <MappingFragment StoreEntitySet="TPOFormulation">
+          <ScalarProperty Name="Extruders" ColumnName="Extruders" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOFormulationLineProducts">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOFormulationLineProduct">
+        <MappingFragment StoreEntitySet="TPOFormulationLineProduct">
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="TPOFormulationID" ColumnName="TPOFormulationID" />
+          <ScalarProperty Name="TPOProductID" ColumnName="TPOProductID" />
+          <ScalarProperty Name="ProdLineID" ColumnName="ProdLineID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOFormulationRawMaterials">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOFormulationRawMaterial">
+        <MappingFragment StoreEntitySet="TPOFormulationRawMaterials">
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="CompPerc" ColumnName="CompPerc" />
+          <ScalarProperty Name="RawMaterialID" ColumnName="RawMaterialID" />
+          <ScalarProperty Name="FeedNumber" ColumnName="FeedNumber" />
+          <ScalarProperty Name="TPOExtruderID" ColumnName="TPOExtruderID" />
+          <ScalarProperty Name="TPOFormulationID" ColumnName="TPOFormulationID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOProductCapCoreDetails">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOProductCapCoreDetail">
+        <MappingFragment StoreEntitySet="TPOProductCapCoreDetail">
+          <ScalarProperty Name="CoreAshMax" ColumnName="CoreAshMax" />
+          <ScalarProperty Name="CoreAshMin" ColumnName="CoreAshMin" />
+          <ScalarProperty Name="CapAshMax" ColumnName="CapAshMax" />
+          <ScalarProperty Name="CapAshMin" ColumnName="CapAshMin" />
+          <ScalarProperty Name="CoreThickMax" ColumnName="CoreThickMax" />
+          <ScalarProperty Name="CoreThickAvg" ColumnName="CoreThickAvg" />
+          <ScalarProperty Name="CoreThickMin" ColumnName="CoreThickMin" />
+          <ScalarProperty Name="CapThickMax" ColumnName="CapThickMax" />
+          <ScalarProperty Name="CapThickAvg" ColumnName="CapThickAvg" />
+          <ScalarProperty Name="CapThickMin" ColumnName="CapThickMin" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOProductCEDetails">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOProductCEDetail">
+        <MappingFragment StoreEntitySet="TPOProductCEDetail">
+          <ScalarProperty Name="CETearMinTD" ColumnName="CETearMinTD" />
+          <ScalarProperty Name="CETearMinMD" ColumnName="CETearMinMD" />
+          <ScalarProperty Name="CEElongMinTD" ColumnName="CEElongMinTD" />
+          <ScalarProperty Name="CETensMinTD" ColumnName="CETensMinTD" />
+          <ScalarProperty Name="CEElongMinMD" ColumnName="CEElongMinMD" />
+          <ScalarProperty Name="CETensMinMD" ColumnName="CETensMinMD" />
+          <ScalarProperty Name="CEForceTestUoM" ColumnName="CEForceTestUoM" />
+          <ScalarProperty Name="UseCELogo" ColumnName="UseCELogo" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOProductDimDetails">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOProductDimDetail">
+        <MappingFragment StoreEntitySet="TPOProductDimDetail">
+          <ScalarProperty Name="DimStabTempUoM" ColumnName="DimStabTempUoM" />
+          <ScalarProperty Name="DimStabTempCE" ColumnName="DimStabTempCE" />
+          <ScalarProperty Name="DimStabTemp" ColumnName="DimStabTemp" />
+          <ScalarProperty Name="DimStab80" ColumnName="DimStab80" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOProductGrabDetails">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOProductGrabDetail">
+        <MappingFragment StoreEntitySet="TPOProductGrabDetail">
+          <ScalarProperty Name="GrabTearMinTD" ColumnName="GrabTearMinTD" />
+          <ScalarProperty Name="GrabElongMinTD" ColumnName="GrabElongMinTD" />
+          <ScalarProperty Name="GrabTensMinTD" ColumnName="GrabTensMinTD" />
+          <ScalarProperty Name="GrabTearMin" ColumnName="GrabTearMin" />
+          <ScalarProperty Name="GrabElongMinMD" ColumnName="GrabElongMinMD" />
+          <ScalarProperty Name="GrabTensMinMD" ColumnName="GrabTensMinMD" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOProductLabelDetails">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOProductLabelDetail">
+        <MappingFragment StoreEntitySet="TPOProductLabelDetail">
+          <ScalarProperty Name="Label3" ColumnName="Label3" />
+          <ScalarProperty Name="Label2" ColumnName="Label2" />
+          <ScalarProperty Name="Label1" ColumnName="Label1" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOProducts">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOProduct">
+        <MappingFragment StoreEntitySet="TPOProducts">
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ProductDimID" ColumnName="ProductDimID" />
+          <ScalarProperty Name="ThickAvg" ColumnName="ThickAvg" />
+          <ScalarProperty Name="IsREPEL" ColumnName="IsREPEL" />
+          <ScalarProperty Name="RollsPerLotPal" ColumnName="RollsPerLotPal" />
+          <ScalarProperty Name="ThickAvgMax" ColumnName="ThickAvgMax" />
+          <ScalarProperty Name="ThickAvgMin" ColumnName="ThickAvgMin" />
+          <ScalarProperty Name="PunctUoM" ColumnName="PunctUoM" />
+          <ScalarProperty Name="PunctMinTD" ColumnName="PunctMinTD" />
+          <ScalarProperty Name="ProductCEID" ColumnName="ProductCEID" />
+          <ScalarProperty Name="WeldTestMax" ColumnName="WeldTestMax" />
+          <ScalarProperty Name="WeldTestMin" ColumnName="WeldTestMin" />
+          <ScalarProperty Name="ThickTestUoM2" ColumnName="ThickTestUoM2" />
+          <ScalarProperty Name="UseSecThick" ColumnName="UseSecThick" />
+          <ScalarProperty Name="DimStab" ColumnName="DimStab" />
+          <ScalarProperty Name="ProductGrabID" ColumnName="ProductGrabID" />
+          <ScalarProperty Name="ProductCapCoreID" ColumnName="ProductCapCoreID" />
+          <ScalarProperty Name="PlyAdhAvg" ColumnName="PlyAdhAvg" />
+          <ScalarProperty Name="PlyAdhMin" ColumnName="PlyAdhMin" />
+          <ScalarProperty Name="GEThicknessMin" ColumnName="GEThicknessMin" />
+          <ScalarProperty Name="GEWidthMax" ColumnName="GEWidthMax" />
+          <ScalarProperty Name="GEWidthMin" ColumnName="GEWidthMin" />
+          <ScalarProperty Name="WidthMax" ColumnName="WidthMax" />
+          <ScalarProperty Name="WidthMin" ColumnName="WidthMin" />
+          <ScalarProperty Name="ThickMax" ColumnName="ThickMax" />
+          <ScalarProperty Name="ThickMin" ColumnName="ThickMin" />
+          <ScalarProperty Name="ForceTestUoM" ColumnName="ForceTestUoM" />
+          <ScalarProperty Name="WidthTestUoM" ColumnName="WidthTestUoM" />
+          <ScalarProperty Name="ThickTestUoM" ColumnName="ThickTestUoM" />
+          <ScalarProperty Name="RollsPerLot" ColumnName="RollsPerLot" />
+          <ScalarProperty Name="FormNo" ColumnName="FormNo" />
+          <ScalarProperty Name="ProductLabelID" ColumnName="ProductLabelID" />
+          <ScalarProperty Name="WtperArea" ColumnName="WtperArea" />
+          <ScalarProperty Name="QtyMade" ColumnName="QtyMade" />
+          <ScalarProperty Name="ScrimTypeID" ColumnName="ScrimTypeID" />
+          <ScalarProperty Name="WeightUnit" ColumnName="WeightUnit" />
+          <ScalarProperty Name="AreaUnit" ColumnName="AreaUnit" />
+          <ScalarProperty Name="LengthWidthUnit" ColumnName="LengthWidthUnit" />
+          <ScalarProperty Name="ContRollLength" ColumnName="ContRollLength" />
+          <ScalarProperty Name="MasRollLength" ColumnName="MasRollLength" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="ThickUnit" ColumnName="ThickUnit" />
+          <ScalarProperty Name="Thick" ColumnName="Thick" />
+          <ScalarProperty Name="ProductDesc" ColumnName="ProductDesc" />
+          <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TPOProductStandardCosts">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.TPOProductStandardCost">
+        <MappingFragment StoreEntitySet="TPOProductStandardCost">
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="StandardWeightPerArea" ColumnName="StandardWeightPerArea" />
+          <ScalarProperty Name="StandartCost" ColumnName="StandartCost" />
+          <ScalarProperty Name="TPOProductID" ColumnName="TPOProductID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DownTimeEquipments">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.DownTimeEquipment">
+        <MappingFragment StoreEntitySet="DownTimeEquipment">
+          <ScalarProperty Name="DownTimeEquipmentGroupID" ColumnName="DownTimeEquipmentGroupID" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="DownTimeTypeID" ColumnName="DownTimeTypeID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DownTimeEquipmentGroups">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.DownTimeEquipmentGroup">
+        <MappingFragment StoreEntitySet="DownTimeEquipmentGroup">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="DownTimeTypeID" ColumnName="DownTimeTypeID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DownTimes">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.DownTime">
+        <MappingFragment StoreEntitySet="DownTime">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="DateOccurred" ColumnName="DateOccurred" />
+          <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+          <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="WorkOrderID" ColumnName="WorkOrderID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="LineID" ColumnName="LineID" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RawMaterialReceivedSizeLimits">
+      <EntityTypeMapping TypeName="TPOMVCApplicationModel.RawMaterialReceivedSizeLimit">
+        <MappingFragment StoreEntitySet="RawMaterialReceivedSizeLimit">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+          <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+          <ScalarProperty Name="HighLimit" ColumnName="HighLimit" />
+          <ScalarProperty Name="LowLimit" ColumnName="LowLimit" />
+          <ScalarProperty Name="View" ColumnName="View" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="PlantID" ColumnName="PlantID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

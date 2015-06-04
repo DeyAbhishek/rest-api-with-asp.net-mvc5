@@ -1,0 +1,272 @@
+﻿@model TPO.Web.Models.RawMaterialQCRedHoldViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h3>TPO QC Red &amp; Hold Form</h3>
+        <hr />
+        @Html.HiddenFor(model => model.PlantId)
+        @Html.HiddenFor(model => model.RawMaterialQCId)
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.RawMaterialReceivedId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RawMaterialReceived, "Raw Material: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.DisplayFor(model => model.RawMaterialReceived)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.QCTechId, "QC Tech: ", new { @class = "control-label col-md-2" })
+                <div class="col-md-1">
+                    @Html.DropDownListFor(model => model.QCTechId, (SelectList)ViewBag.QCTechs, "-- Select --")
+                    @Html.ValidationMessageFor(model => model.QCTechId)
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RawMaterialQCId, "Lot Number: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.DisplayFor(model => model.RawMaterialQCId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SupervisorId, "Shift Supervisor: ", new { @class = "control-label col-md-2" })
+                <div class="col-md-1">
+                    @Html.DropDownListFor(model => model.SupervisorId, (SelectList)ViewBag.Supervisors, "-- Select --")
+                    @Html.ValidationMessageFor(model => model.SupervisorId)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BoxCarTested, "Box \\ Car Tested: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.DisplayFor(model => model.BoxCarTested)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.LeadOperatorId, "Lead Operator: ", new { @class = "control-label col-md-2" })
+                <div class="col-md-1">
+                    @Html.DropDownListFor(model => model.LeadOperatorId, (SelectList)ViewBag.LeadOperators, "-- Select --")
+                    @Html.ValidationMessageFor(model => model.LeadOperatorId)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            </div>
+            <hr />
+
+            <div id="tabs-container">
+                <ul class="tabs-menu">
+                    <li class="current"><a href="#tab-red">Red Form</a></li>
+                    <li class=""><a href="#tab-hold">Hold Form</a></li>
+                </ul>
+                <div class="tab">
+                    <div id="tab-red" class="tab-content">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RedDate, "Date: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                <input class="easyui-datebox" value="@Model.RedDate" name="reddate">
+                                @Html.ValidationMessageFor(model => model.RedDate)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FailPropertyId, "Property Failing: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.FailPropertyId, (SelectList)ViewBag.FailProperties, string.Empty)
+                                @Html.ValidationMessageFor(model => model.FailPropertyId)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Zone, "Zone: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.Zone)
+                                @Html.ValidationMessageFor(model => model.Zone)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RedComments, "Comments: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.RedComments, new { style = "width:1000px;height:105px" })
+                                @Html.ValidationMessageFor(model => model.RedComments)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RedCorrectionAction, "Corrective Action: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.RedCorrectionAction, new { style = "width:1000px;height:105px" })
+                                @Html.ValidationMessageFor(model => model.RedCorrectionAction)
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-hold" class="tab-content">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HoldDate, "Date: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                <input class="easyui-datebox" value="@Model.HoldDate" name="holddate">
+                                @Html.ValidationMessageFor(model => model.HoldDate)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HoldLotNumber, "Lot: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-1">
+                                @Html.EditorFor(model => model.HoldLotNumber)
+                                @Html.ValidationMessageFor(model => model.HoldLotNumber)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HoldComments, "Comments: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(model => model.HoldComments, new { rows = 5, cols = 70, @style = "max-width: 1000px;" })
+                                @Html.ValidationMessageFor(model => model.HoldComments)
+                            </div>
+                        </div>
+
+                        <h4>Management Action Taken</h4>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ManagerID, "Manager: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.ManagerID, (SelectList)ViewBag.Managers, "-- Select --")
+                                @Html.ValidationMessageFor(model => model.ManagerID)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ManagerDate, "Date: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                <input class="easyui-datebox" value="@Model.ManagerDate" name="managerdate">
+                                @Html.ValidationMessageFor(model => model.ManagerDate)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ManagerComments, "Comments: ", new { @class = "control-label col-md-3" })
+                            <div class="col-md-5">
+                                @Html.TextAreaFor(model => model.ManagerComments, new { rows = 9, cols = 50 })
+                                @Html.ValidationMessageFor(model => model.ManagerComments)
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <table border="1" align="center" width="290" style="margin-left: 3em;">
+                                    <caption><h4>QC Downgrades</h4></caption>
+
+                                    <tr>
+                                        <th align="center" style="padding: 1.5em;"><b>Classification</b></th>
+                                        <th align="center" style="padding: 1.5em;"><b>Boxes\Cars</b></th>
+                                        <th align="center" style="padding: 1.5em;"><b>lb</b></th>
+                                    </tr>
+                                    <tr>
+
+                                        <td align="center" style="padding: 1.5em;">Prime</td>
+                                        <td align="center" style="padding: 1.5em; background-color: grey;">
+                                            <div class="editor-field">
+                                                @Html.EditorFor(model => model.PrimeBoxCar)
+                                            </div>
+                                        </td>
+                                        <td align="center" style="padding: 1.5em; background-color: grey;">
+                                            <div class="editor-field">
+                                                @Html.EditorFor(model => model.PrimeUOM)
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td align="center" style="padding: 1.5em;">Rework</td>
+                                        <td align="center" style="padding: 1.5em; background-color: grey;">
+                                            <div class="editor-field">
+                                                @Html.EditorFor(model => model.ReworkBoxCar)
+                                            </div>
+                                        </td>
+                                        <td align="center" style="padding: 1.5em; background-color: grey;">
+                                            <div class="editor-field">
+                                                @Html.EditorFor(model => model.ReworkUOM)
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td align="center" style="padding: 1.5em;">Scrap</td>
+                                        <td align="center" style="padding: 1.5em; background-color: grey;">
+                                            <div class="editor-field">
+                                                @Html.EditorFor(model => model.ScrapBoxCar)
+                                            </div>
+                                        </td>
+                                        <td align="center" style="padding: 1.5em; background-color: grey;">
+                                            <div class="editor-field">
+                                                @Html.EditorFor(model => model.ScrapUOM)
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @*<input type="submit" value="Save" class="btn btn-default" />
+                    @Html.ActionLink("Close", "Edit", "RawMaterialQC", new { ID = Model.RawMaterialQCId }, new { @class = "btn btn-default" })*@
+                <button class="btn btn-success btn-shadow"
+                        onclick="$(this).parents('form:first').submit(); return false;">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                </button>
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Edit", "RawMaterialQC", new { ID = Model.RawMaterialQCId })';return false;">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+
+
+
+
+<!-- Jquery code to run tabs -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".tabs-menu a").click(function (event) {
+            //prevent url change
+            event.preventDefault();
+            //add css to current tab for style
+            $(this).parent().addClass("current");
+            //remove style from any other tab
+            $(this).parent().siblings().removeClass("current");
+            //get tab id from href of menu link
+            var currentTabID = $(this).attr("href");
+            //hide all other tabs
+            $(".tab-content").not(currentTabID).css("display", "none");
+            //display current tab
+            $(currentTabID).fadeIn();
+        });
+    });
+</script>

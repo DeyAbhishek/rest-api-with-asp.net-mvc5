@@ -1,0 +1,160 @@
+﻿@model IEnumerable<TPO.DL.Models.RawMaterialQC>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RawMaterialID)
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RawMaterialLotID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VisualInspection)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpecGrav)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ColorCoA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ColorFS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MFCoA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MFFS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACCoA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACFS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoistCoA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoistFS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CBCoA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CBFS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BoxCarTested)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastModified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Plant.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RawMaterialID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RawMaterialLotID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VisualInspection)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpecGrav)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ColorCoA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ColorFS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MFCoA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MFFS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACCoA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACFS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MoistCoA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MoistFS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CBCoA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CBFS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BoxCarTested)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateEntered)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EnteredBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastModified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifiedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plant.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Username)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

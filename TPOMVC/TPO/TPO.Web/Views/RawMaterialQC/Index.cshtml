@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Raw Material QC Testing";
+}
+
+@*<style>
+        /*Move this to Site.CSS if all controls can be extended after demo*/
+        input, select, textarea{
+            max-width: 550px;
+        }
+    </style>*@
+@using (Html.BeginForm("index", "RawMaterialQC", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-group">
+        <div class="col-md-6">
+            <h2>Raw Material QC Testing</h2>
+            <table style="white-space:nowrap;">
+                <tr>
+                    <td><span class="col-md-4 control-label raw-material-label">Raw Material</span></td>
+                    <td>
+                        <input id="RawMaterialQC" class="easyui-combogrid" style="width:250px" data-options="
+                            panelWidth: 500,
+                            loadMsg: 'Loading...',
+                            idField: 'Id',
+                            textField: 'Code',
+                            url: '/RawMaterial/GetAllRawMaterialResult',
+                            method: 'get',
+                            columns: [[
+                            {field:'Code',title:'Code',width:60},
+                            {field:'Description',title:'Description',width:100}
+                            ]],onSelect: rawMaterialQC,
+                            fitColumns: true">
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="col-md-4 control-label  lot-id-label">Lot Number</span></td>
+                    <td>
+                        <div id="LotQC">
+                            <input id="RawMaterialLotQC" class="easyui-combogrid" style="width:250px" data-options="
+                            panelWidth: 500,
+                            loadMsg: 'Loading...',
+                            idField: 'Id',
+                            textField: 'LotNumber',
+                            url: '/RawMaterialReceived/GetRawMatReceivedResult',
+                            method: 'get',
+                            columns: [[
+                            {field:'LotNumber',title:'Lot Code',width:100},
+                            {field:'DateEnteredDisplay',title:'Date Entered', width:50}
+                            ]],onSelect: rawMaterialLotQC,
+                             fitColumns: true">
+                        </div>
+                    </td>
+                    <td>
+                        <input type="button"
+                               value="Lot Not In List"
+                               class="btn btn-default lot-id-label btn-shadow"
+                               onclick="javascript: window.location.href = '@Url.Action("Create","RawMaterialReceived")';" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}
+
+
+<div id="testDIV">
+    <table id="dg" class="easyui-datagrid" title="Double-Click Row to see Details"
+           data-options="iconCls: 'icon-edit',
+                                        singleSelect: true,
+                                        toolbar: '#tb',
+                                        url: '/RawMaterialQC/RawMaterialQCsGridByReceived',
+                                        method: 'get',
+                                        onDblClickRow: onDblClickRow,
+                                        pagination: true,
+                                        pageSize: 15,
+                                        rownumbers: true,
+                                        width: 750,
+                                        pageList:[15,25,50]">
+        <thead>
+            <tr>
+                <th data-options="field:'DateEntered',formatter:formatDate">Test Date/Time</th>
+                <th data-options="field:'QcTechName'">QC Tech</th>
+                <th data-options="field:'BoxCarTested'">Box/Car Tested</th>
+                <th data-options="field:'Comments'">Comments</th>
+                <th data-options="field:'EnteredBy'">Entered By</th>
+                <th data-options="field:'LastModified',formatter:formatDate">Last Modified</th>
+                <th data-options="field:'ModifiedBy'">Last Modified By</th>
+            </tr>
+        </thead>
+
+    </table>
+
+    <div id="tb">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" newQC() ">New Test</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick=" viewQC() ">View Test Details</a>
+        </div>
+</div>
+
+<script>
+
+    function onDblClickRow(rowIndex, rowData) {
+
+        if (rowData) {
+            var id = rowData.Id;
+            var url = "/RawMaterialQC/Edit/" + id;
+            window.location.href = url;
+        }
+    }
+
+    function rawMaterialQC(record) {
+        var val = $("#RawMaterialQC").combogrid('getValue');
+        $(".lot-id-label").css("display", "block");
+        $('#LotQC').show();
+        $('#RawMaterialLotQC').combogrid({
+            queryParams: {
+                rawMatID: val
+            }
+        });
+        $("#RawMaterialLotQC").combogrid('setValue', '- - - Select - - - ');
+    }
+
+    function rawMaterialLotQC(record) {
+        var val = $("#RawMaterialLotQC").combogrid('getValue');
+        $("#RawMaterialQCLotTest").css("display", "block");
+        $(".btn-not-in-list").css("display", "block");
+        $("#testDIV").show();
+
+        $('#dg').datagrid({
+            queryParams: {
+                receivedID: val
+            }
+        });
+
+        return false;
+    }
+
+    function viewQC() {
+        var id = $('#dg').datagrid('getSelected').Id;
+        var url = "/RawMaterialQC/Edit/" + id;
+        window.location.href = url;
+    }
+
+    function newQC() {
+        var val = $("#RawMaterialLotQC").combogrid('getValue');
+        var url = "/RawMaterialQC/Create/" + val;
+        window.location.href = url;
+    }
+
+
+    @*//Manipulate the display of controls*@
+    $(document).ready(function () {
+        if (window.location.search.substr(1).split('?') == "") {
+            $("#testDIV").hide();
+            $('#LotQC').hide();
+            $(".lot-id-label").css("display", "none");
+            $("#RawMaterialQCLotTest").css("display", "none");
+            $("#RawMaterialQC").combogrid('setValue', '- - - Select - - - ');
+            $("#RawMaterialLotQC").combogrid('setValue', '- - - Select - - - ');
+        }
+    });
+
+    function showDate(val, row) {
+        return new Date(val).toLocaleDateString();
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

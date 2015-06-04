@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7FA614AA-49BC-475B-8C28-55EBC7352D32}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TPO.BL</RootNamespace>
+    <AssemblyName>TPO.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationLog\ApplicationLog.cs" />
+    <Compile Include="ApplicationLog\IApplicationLog.cs" />
+    <Compile Include="Repositories\Message\Constants\Icons.cs" />
+    <Compile Include="Repositories\Message\Constants\Labels.cs" />
+    <Compile Include="Repositories\Message\Constants\MessageKeys.cs" />
+    <Compile Include="Repositories\Message\Constants\Responses.cs" />
+    <Compile Include="Repositories\Message\Constants\StoredProcedures.cs" />
+    <Compile Include="Production\ProductionLine.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RawMaterials\RawMaterial.cs" />
+    <Compile Include="RawMaterials\RawMaterialQC.cs" />
+    <Compile Include="RawMaterials\RawMaterialQCRedHold.cs" />
+    <Compile Include="RawMaterials\RawMaterialQCSpecificGravity.cs" />
+    <Compile Include="RawMaterials\RawMaterialReceived.cs" />
+    <Compile Include="RawMaterials\RawMaterialTest.cs" />
+    <Compile Include="Reference\ScrimType.cs" />
+    <Compile Include="Reference\TestLimitType.cs" />
+    <Compile Include="Reference\UnitOfMeasure.cs" />
+    <Compile Include="Repositories\Message\IMessageRepository.cs" />
+    <Compile Include="Repositories\Message\MessageRepository.cs" />
+    <Compile Include="Repositories\ProductionLine\IProductionLineRepository.cs" />
+    <Compile Include="Repositories\ProductionLine\ProductionLineRepository.cs" />
+    <Compile Include="Repositories\RawMaterial\CurrentRawMaterial\CurrentRawMaterialRepository.cs" />
+    <Compile Include="Repositories\RawMaterial\CurrentRawMaterial\ICurrentRawMaterialRepository.cs" />
+    <Compile Include="Repositories\RawMaterial\RawMaterialQCRedHold\IRawMaterialQCRedHoldRepository.cs" />
+    <Compile Include="Repositories\RawMaterial\RawMaterialQCRedHold\RawMaterialQCRedHoldRepository.cs" />
+    <Compile Include="Repositories\RawMaterial\RawMaterialQCSpecificGravity\IRawMaterialQCSpecificGravityRepository.cs" />
+    <Compile Include="Repositories\RawMaterial\RawMaterialQCSpecificGravity\RawMaterialQCSpecificGravityRepository.cs" />
+    <Compile Include="Repositories\RawMaterial\RawMaterialReceived\IRawMaterialReceivedRepository.cs" />
+    <Compile Include="Repositories\RawMaterial\RawMaterialReceived\RawMaterialReceivedRepository.cs" />
+    <Compile Include="Repositories\User\IUserRepository.cs" />
+    <Compile Include="Repositories\User\UserRepository.cs" />
+    <Compile Include="Scrim\ScrimRoll.cs" />
+    <Compile Include="Scrim\TPOCurrentScrim.cs" />
+    <Compile Include="Security\Role.cs" />
+    <Compile Include="Security\User.cs" />
+    <Compile Include="System\SystemSettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TPO.Domain\TPO.Domain.csproj">
+      <Project>{c67bdd32-95d8-4209-9293-4ea2ac66551b}</Project>
+      <Name>TPO.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TPO.Model\TPO.Model.csproj">
+      <Project>{af1dcff6-9e73-43d5-b9fb-439835cd39f2}</Project>
+      <Name>TPO.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TPODL\TPO.DL.csproj">
+      <Project>{cc45198c-aefc-4fac-adda-35858b7a3703}</Project>
+      <Name>TPO.DL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

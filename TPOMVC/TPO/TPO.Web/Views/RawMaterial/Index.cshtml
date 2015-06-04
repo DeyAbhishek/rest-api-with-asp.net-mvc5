@@ -1,0 +1,190 @@
+﻿@model TPO.Web.Models.RawMaterial
+
+@using System.Web.UI.WebControls
+
+@{
+    ViewBag.Title = "Raw Material List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div style="margin:20px 0;"></div>
+
+<table id="dg" class="easyui-datagrid" title="Raw Material" style="width:960px;height:auto"
+       data-options="
+    iconCls: 'icon-edit',
+    singleSelect: true,
+    toolbar: '#tb',
+    url: '../RawMaterial/GetAllRawMaterialResult',
+    method: 'get',
+    cache: false,
+    rownumbers: true,
+    onClickRow: onClickRow,
+    pagination: true,
+    pageSize:15,
+    pageList:[15,25,50]
+    "></table>
+
+<div id="tb" style="height:auto">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">Create New</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">Delete</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">Save Changes</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">Undo</a>
+</div>
+
+<script type="text/javascript">
+    function formatNumberAsCommaSeparatedInt(value, row, index) {
+        if (value == null) return value;
+        value = Math.round(value);
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    $('#dg').datagrid({
+        columns: [[
+            { field: 'Id', title: 'ID', hidden: false },
+            {
+                field: 'Code',
+                title: 'Raw Material',
+                width: 160, editor: 'text'
+            },
+            { field: 'Description', title: 'Description', width: 160, editor: 'text' },
+            { field: 'Stock', title: 'Stock', width: 80},
+            {
+                field: 'UoMId', title: 'UoM', width: 80,
+                formatter: function (value, row, index) {
+                    return row.UoM;
+                },
+                editor: {
+                    type: 'combobox',
+                    options: {
+                        valueField: 'Id',
+                        textField: 'Code',
+                        method: 'get',
+                        url: '../RawMaterial/GetAllWeightUoMResult',
+                        required:true
+                    }
+                }
+            },
+            {
+                field: 'RawMaterialVendorId', title: 'Vendor Name', width: 160,
+                formatter: function(value, row, index) {
+                    return row.VendorName;
+                },
+                editor: {
+                    type: 'combobox',
+                    options: {
+                        valueField: 'Id',
+                        textField: 'Vendor',
+                        method: 'get',
+                        url: '../RawMaterial/GetAllRawMaterialVendorResult',
+                        required:true
+                    }
+                }
+            },
+            { field: 'FSBPID', title: 'Firestone ID', width: 160, editor: 'text' }
+        ]]
+    });
+    var editIndex = undefined;
+    function endEditing() {
+        if (editIndex == undefined) { return true; }
+        if ($('#dg').datagrid('validateRow', editIndex)) {
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onClickRow(index) {
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#dg').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editIndex = index;
+            } else {
+                $('#dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+    function append() {
+        if (endEditing()) {
+            $('#dg').datagrid('appendRow', {
+                UoMId: @Model.UoMDefaults.Where(u => u.UomTypeCode == "W").First().UoMID,
+                UoM: '@Model.UoMDefaults.Where(u => u.UomTypeCode == "W").First().UoMCode',
+                VendorName: '@Model.DefaultVendorName',
+                RawMaterialVendorId: @Model.DefaultVendorId
+
+                });
+            editIndex = $('#dg').datagrid('getRows').length - 1;
+            $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+        }
+    }
+    function removeit() {
+        if (editIndex == undefined) {
+            return; }
+
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+
+            $.ajax({
+                url: '../RawMaterial/AjaxRawMaterialDelete',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dg').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndex = undefined;
+    }
+    function reloadGrid() {
+        $('#dg').datagrid('load');
+    }
+
+    function reload() {
+        $('#dg').datagrid('reload');
+    }
+    function accept() {
+        if (endEditing()) {
+            $('#dg').datagrid('acceptChanges');
+
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+                $.ajax({
+                    url: '../RawMaterial/AjaxRawMaterialUpdate',
+                    type: 'POST',
+                    cache: false,
+                    data: { row: JSON.stringify(row) },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ActionStatus == "ok") {
+                            $('#dg').datagrid('reload');
+                        }
+                        displayMessage(data.ActionType, data.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    }
+                });
+            }
+        }
+    }
+    function reject() {
+        $('#dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+    function getChanges() {
+        var rows = $('#dg').datagrid('getChanges');
+        alert(rows.length + ' rows are changed!');
+    }
+</script>
+

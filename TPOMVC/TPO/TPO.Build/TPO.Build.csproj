@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{87265CDE-3CA2-4222-923C-25BDCD7C7631}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TPO.Build</RootNamespace>
+    <AssemblyName>TPO.Build</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="MSBuild\DeployDB.proj" />
+    <None Include="MSBuild\DeployWeb.proj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Misc\app_offline.htm" />
+    <Content Include="Profiles\DB\DevCIDatabase.publish.xml" />
+    <Content Include="Profiles\DB\DevDatabase.publish.xml" />
+    <Content Include="Profiles\DB\QADatabase.publish.xml" />
+    <Content Include="SQL\ForRelease\1.00.00\Post\001_table_SecurityTask_Populate.sql" />
+    <Content Include="SQL\ForRelease\1.00.00\Post\002_table_webpages_Roles_Populate.sql" />
+    <Content Include="SQL\ForRelease\1.00.00\Post\003_table_webpages_RolesSecurityTasks_Populate.sql" />
+    <Content Include="SQL\ForRelease\1.00.00\Pre\001_TEMPLATE_.sql" />
+    <Content Include="SQL\ForRelease\1.00.00\Pre\002_sproc_TEMPLATE_create.sql" />
+    <Content Include="SQL\ForRelease\1.00.00\Pre\003_TPOLineScrap.sql" />
+    <Content Include="SQL\ForRelease\1.00.00\Pre\004_TPOReworkRoll.sql" />
+    <Content Include="SQL\ForRelease\1.00.00\Pre\005_TPOReworkAction.sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

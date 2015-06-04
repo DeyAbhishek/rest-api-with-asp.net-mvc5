@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>TPO_Reporting</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{3cd5b01a-b9ef-4493-8aa5-2f7d38bc3c72}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>TPO_Reporting</RootNamespace>
+    <AssemblyName>TPO_Reporting</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Comment.sql" />
+    <Build Include="DownTime.sql" />
+    <Build Include="DownTimeType.sql" />
+    <Build Include="Plant.sql" />
+    <Build Include="ProductionShiftType.sql" />
+    <Build Include="ProductionShift.sql" />
+    <Build Include="ScrimType.sql" />
+    <Build Include="ScrimRoll.sql" />
+    <Build Include="ScrimActionType.sql" />
+    <Build Include="DownTimeEquipment.sql" />
+    <Build Include="EndOfRun.sql" />
+    <Build Include="WorkOrder.sql" />
+    <Build Include="TPOLineScrap.sql" />
+    <Build Include="TPOLineScrapType.sql" />
+    <Build Include="TPOLineScrapCode.sql" />
+    <Build Include="TPOReclaimActionType.sql" />
+    <Build Include="TPOReclaimAction.sql" />
+    <Build Include="ReclaimType.sql" />
+    <Build Include="TPOReworkRoll.sql" />
+    <Build Include="DownTimeReason.sql" />
+    <Build Include="IMLineScrap.sql" />
+    <Build Include="IMLineScrapReason.sql" />
+    <Build Include="IMLineScrapType.sql" />
+    <Build Include="IMQC.sql" />
+    <Build Include="IMQCDetail.sql" />
+    <Build Include="SupervisorOnShift.sql" />
+    <Build Include="ProductionBudget.sql" />
+    <Build Include="ProductionBudgetType.sql" />
+    <Build Include="QCKickout.sql" />
+    <Build Include="RawMaterialActionType.sql" />
+    <Build Include="RawMaterialAction.sql" />
+    <Build Include="QCRedHold.sql" />
+    <Build Include="FailProperty.sql" />
+    <Build Include="RawMaterialActionReason.sql" />
+    <Build Include="RawMaterialQC.sql" />
+    <Build Include="RawMaterialReceived.sql" />
+    <Build Include="RawMaterialReceivedSizeLimit.sql" />
+    <Build Include="RawMaterialTest.sql" />
+    <Build Include="TestLimitType.sql" />
+    <Build Include="ScrimAction.sql" />
+    <Build Include="ScrimActionReason.sql" />
+    <Build Include="TPOBatch.sql" />
+    <Build Include="TPOExtruder.sql" />
+    <Build Include="TPOFormulation.sql" />
+    <Build Include="TPOFormulationLineProduct.sql" />
+    <Build Include="TPORawMaterialFormulation.sql" />
+    <Build Include="TPOQC.sql" />
+    <Build Include="TPOQCCapThicknessDetail.sql" />
+    <Build Include="TPOReclaimWIP.sql" />
+    <Build Include="TPOReworkAction.sql" />
+    <Build Include="TPOReworkActionType.sql" />
+    <Build Include="TPOSpecificGravity.sql" />
+    <Build Include="TPOSpecificGravityWeightDetail.sql" />
+    <Build Include="TPOSpecificGravityWeightDetailType.sql" />
+    <Build Include="UnitOfMeasureConversion.sql" />
+    <Build Include="UnitOfMeasureDefault.sql" />
+    <Build Include="QCPrintSpecificationType.sql" />
+    <Build Include="QCPrintSpecification.sql" />
+    <Build Include="TPOQCOverallThicknessDetail.sql" />
+    <Build Include="TPOQCThicknessFromEdgeDetail.sql" />
+    <Build Include="TPOQCCoreThicknessDetail.sql" />
+    <Build Include="TPOQCPlyDetail.sql" />
+    <Build Include="TPOQCGrabTensileDetail.sql" />
+    <Build Include="TPOQCGrabElongationDetail.sql" />
+    <Build Include="TPOQCGrabTearingDetail.sql" />
+    <Build Include="TPOQCFlashTensileDetail.sql" />
+    <Build Include="TPOQCFlashElongationDetail.sql" />
+    <Build Include="TPOQCFlashTearingDetail.sql" />
+    <Build Include="TPOQCWeldStrengthDetail.sql" />
+    <Build Include="TPOQCPunctureDetail.sql" />
+    <Build Include="TPOQC2X2Detail.sql" />
+    <Build Include="TPOQCAshDetail.sql" />
+    <Build Include="TPOQCSpecificGravityDetail.sql" />
+    <Build Include="TPOQCColorDetail.sql" />
+    <Build Include="TPOQCPrintMeasurementDetail.sql" />
+    <Build Include="TPOQCGumDetail.sql" />
+    <Build Include="TPOQCDimensionalStabilityDetail.sql" />
+    <Build Include="TPOQCType.sql" />
+    <Build Include="User.sql" />
+    <Build Include="EndOfRunRework.sql" />
+    <Build Include="EndOfRunTPOFeeder.sql" />
+    <Build Include="IMProduction.sql" />
+    <Build Include="ProductionLineSchedule.sql" />
+    <Build Include="ProductionShiftUse.sql" />
+    <Build Include="TPOCProductRoll.sql" />
+    <Build Include="UnitOfMeasureType.sql" />
+    <Build Include="UnitOfMeasure.sql" />
+    <Build Include="TPOCurrentScrim.sql" />
+    <Build Include="RawMaterialSpecificGravity.sql" />
+    <Build Include="RawMaterialSpecificGravityDetail.sql" />
+    <Build Include="TPOCurrentRawMaterial.sql" />
+    <Build Include="RawMaterialQCRedHold.sql" />
+    <Build Include="ProdLinesPerformProd.sql" />
+    <Build Include="ProdSupervisorOnShift.sql" />
+    <Build Include="ProdLines.sql" />
+    <Build Include="ProdLineType.sql" />
+    <Build Include="ProdLineRollConfig.sql" />
+    <Build Include="ProdDteChng.sql" />
+    <Build Include="ProdLinesPerform.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="TPO_Reporting.refactorlog" />
+  </ItemGroup>
+</Project>

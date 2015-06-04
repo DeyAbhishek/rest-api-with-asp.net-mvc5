@@ -1,0 +1,80 @@
+﻿@model IEnumerable<TPO.DL.Models.RawMaterialSpecificGravity>
+
+@using TPO.DL.Models;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>RawMaterialSpecificGravity</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DenIso)
+           
+
+        </th>
+                
+        <th>
+            @Html.DisplayNameFor(model => model.ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RawMaterialQC.RawMaterialID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.DateEntered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnteredBy)
+        </th>
+        
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+       
+        <td style="background-color:lightgrey" align="center" width="5%">
+
+            @Html.DisplayFor(modelItem => item.DenIso)
+            @Html.ActionLink("<Detail>", "GravityDetail", new { id = item.ID })
+
+        </td>
+        
+        
+        <td style="background-color:yellow" align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>      
+        <td align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.RawMaterialQC.RawMaterialID)
+        </td>
+        <td align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.User.Username)
+        </td>
+        
+        <td align="center" width="10%">
+            @Html.DisplayFor(modelItem => item.DateEntered)
+        </td>
+        <td align="center" width="1%">
+            @Html.DisplayFor(modelItem => item.EnteredBy)
+        </td>
+    
+       
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+          
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

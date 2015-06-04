@@ -1,0 +1,10 @@
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Data\bin\Debug\TPO.Data.dll.config
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Data\bin\Debug\TPO.Data.dll
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Data\bin\Debug\TPO.Data.pdb
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Data\bin\Debug\EntityFramework.dll
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Data\bin\Debug\EntityFramework.xml
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Data\obj\Debug\TPO.Data.csprojResolveAssemblyReference.cache
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Data\obj\Debug\TPO.Data.dll
+C:\Users\adey\Source\Workspaces\TPO UI\TPOMVC\TPO\TPO.Data\obj\Debug\TPO.Data.pdb

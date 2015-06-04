@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "End Of Shift Data / Work Order";
+}
+
+<h2>End Of Shift Data / Work Order</h2>
+
+<div id="endOfShiftDataDiv">
+    <div id="matrixDiv">
+        <input type="hidden" id="formulationId" />
+        <input type="hidden" id="rmUse" />
+        <table border="1" cellpadding="10">
+            <tr>
+                <td></td>
+                <td><b>Length (<span id="UoML"></span>)</b></td>
+                <td><b>Weight (<span id="UoMW"></span>)</b></td>
+                <td><b>% of Total</b></td>
+                <td><b># of Rolls</b></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>Prime</b></td>
+                <td><input type="text" id="Len1" disabled /></td>
+                <td><input type="text" id="Wt1" disabled /></td>
+                <td><input type="text" id="Perc1" disabled /></td>
+                <td><input type="text" id="Rolls1" disabled /></td>
+                <td></td>
+                <td><b>Shift Totals</b></td>
+            </tr>
+            <tr>
+                <td><b>Rework</b></td>
+                <td><input type="text" id="Len2" disabled /></td>
+                <td><input type="text" id="Wt2" disabled /></td>
+                <td><input type="text" id="Perc2" disabled /></td>
+                <td></td>
+                <td><b>Total Down Time (min)</b></td>
+                <td><input type="text" id="DTShift" disabled /></td>
+            </tr>
+            <tr>
+                <td><b>Reclaim</b></td>
+                <td><input type="text" id="Len3" disabled /></td>
+                <td><input type="text" id="Wt3" disabled /></td>
+                <td><input type="text" id="Perc3" disabled /></td>
+                <td></td>
+                <td><b>Scheduled Run Time (min)</b></td>
+                <td><input type="text" id="ST" disabled /></td>
+            </tr>
+            <tr>
+                <td><b>Landfill</b></td>
+                <td><input type="text" id="Len4" disabled /></td>
+                <td><input type="text" id="Wt4" disabled /></td>
+                <td><input type="text" id="Perc4" disabled /></td>
+                <td></td>
+                <td><b>Uptime (%)</b></td>
+                <td><input type="text" id="Uptime" disabled /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><b>Down Time (min)</b></td>
+                <td><input type="text" id="DT" disabled /></td>
+                <td></td>
+                <td></td>
+                <td><b>FPY (%)</b></td>
+                <td><input type="text" id="ShiftFPY" disabled /></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        Adhesive Usage : &nbsp; &nbsp;
+        <input id=adhesiveUsageSelection" class="easyui-combogrid" style="width:250px" data-options="
+        panelWidth: 500,
+        loadMsg: 'Loading...',
+        @*idField: 'Id',
+        textField: 'Code',
+        url: '/',
+        method: 'get',
+        columns: [[
+            {field:'Code',title:'Code',width:60},
+            {field:'Description',title:'Description',width:100}
+        ]],*@
+        onSelect: adhesiveUsageSelected,
+        fitColumns: true
+     " />
+        &nbsp; &nbsp;
+        <input id="adhesiveUsageTextBox" type="text" />
+    </div>
+
+    </div>

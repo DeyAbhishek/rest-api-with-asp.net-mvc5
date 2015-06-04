@@ -1,0 +1,181 @@
+﻿@model TPO.Web.Models.EquipmentRunTimeModel
+@{
+    ViewBag.Title = "Equipment Run Time";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="margin-left:25px;">
+    @using (@Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <h2 style="margin-bottom:10px;">Equipment Run Time</h2>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductionLineId, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+            <div class="col-sm-12">
+                @Html.DropDownListFor(model => model.ProductionLineId, Model.ProductionLineList, new { @class = "form-control filterElement" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.WeekStarting, new { @class = "col-sm-2 control-label", @style = "width:150px;" })
+            <div class="col-sm-12">
+                @Html.DropDownListFor(model => model.WeekStarting, Model.WeekStartingList, new { @class = "form-control filterElement" })
+            </div>
+        </div>
+    }
+    <div id="dataGrid">
+        <table id="dg" title="Run Times" class="easyui-datagrid" data-options="
+           singleSelect: true,
+           fitColumns: false,
+           pagination: false,
+           url: '/EquipmentRunTime/FetchGridInfo',
+           method: 'get',
+           onClickRow: onRowClick,
+           width: 600
+           ">
+            <thead>
+                <tr>
+                    <th data-options="field:'ShiftCode'">Shift</th>
+                    <th data-options="field:'Day1', editor: 'numberbox', width: 75, align: 'center'"></th>
+                    <th data-options="field:'Day2', editor: 'numberbox', width: 75, align: 'center'"></th>
+                    <th data-options="field:'Day3', editor: 'numberbox', width: 75, align: 'center'"></th>
+                    <th data-options="field:'Day4', editor: 'numberbox', width: 75, align: 'center'"></th>
+                    <th data-options="field:'Day5', editor: 'numberbox', width: 75, align: 'center'"></th>
+                    <th data-options="field:'Day6', editor: 'numberbox', width: 75, align: 'center'"></th>
+                    <th data-options="field:'Day7', editor: 'numberbox', width: 75, align: 'center'"></th>
+                    <th data-options="field:'Id', hidden:true">Id</th>
+                    <th data-options="field:'ShiftId', hidden:true">ShiftId</th>
+                    <th data-options="field: 'Day1Id', title: 'Day1Id', hidden: true">Day1Id</th>
+                    <th data-options="field: 'Day2Id', title: 'Day2Id', hidden: true">Day2Id</th>
+                    <th data-options="field: 'Day3Id', title: 'Day3Id', hidden: true">Day3Id</th>
+                    <th data-options="field: 'Day4Id', title: 'Day4Id', hidden: true">Day4Id</th>
+                    <th data-options="field: 'Day5Id', title: 'Day5Id', hidden: true">Day5Id</th>
+                    <th data-options="field: 'Day6Id', title: 'Day6Id', hidden: true">Day6Id</th>
+                    <th data-options="field: 'Day7Id', title: 'Day7Id', hidden: true">Day7Id</th>
+
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div style="margin-top:20px;margin-bottom:20px;">
+        <span class="col-lg-offset-2">
+            <button class="btn btn-success btn-shadow" id="save">
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+            </button>
+            <button class="btn btn-default btn-shadow" id="cancel">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+            </button>
+        </span>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#WeekStarting").prop('selectedIndex', '5');
+            FetchGridInformation($("#ProductionLineId").val(), $("#WeekStarting").val());
+        });
+
+        $(".filterElement").change(function () {
+            FetchGridInformation( $("#ProductionLineId").val(), $("#WeekStarting").val() );
+        });
+
+        $("#save").click(function () {
+
+            endEditing();
+
+            var data = {
+                productionLineId: $("#ProductionLineId").val(),
+                week: $("#WeekStarting").val(),
+                rows: $("#dg").datagrid('getRows')
+            }
+
+            var options = {
+                 url: '/EquipmentRunTime/SaveGridInformation',
+                type: 'post',
+                data: data
+            }
+
+            $.ajax(options)
+                .success( function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dg').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                })
+                .error(function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                });
+
+            return false;
+        });
+        $("#cancel").click(function () {
+            location.href = "/";
+            return false;
+        });
+        function FetchGridInformation(prodLine, weekStart)
+        {
+            var startDate = new Date(weekStart);
+
+            for (i = 1; i <= 7; i++) {
+                var colOption = $("#dg").datagrid('getColumnOption', 'Day' + i);
+                var newDate = new Date(weekStart);
+                newDate.setDate(startDate.getDate() + (i - 1));
+                colOption.title = (newDate.getMonth() + 1) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+            }
+                
+            $("#dg").datagrid({
+                queryParams: {
+                    productionLineId: prodLine,
+                    week: weekStart
+                }
+            });
+        }
+
+        
+        var editIndex = undefined;
+
+        function endEditing() {
+            if (editIndex == undefined) {
+                return true;
+            }
+            if ($('#dg').datagrid('validateRow', editIndex)) {
+                $('#dg').datagrid('endEdit', editIndex);
+                editIndex = undefined;
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function onRowClick(index) {
+            if (editIndex != index) {
+                if (endEditing()) {
+                    $('#dg').datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                    editIndex = index;
+                } else {
+                    $('#dg').datagrid('selectRow', editIndex);
+                }
+            }
+        }
+       
+        function addDays(date, amount) {
+            var tzOff = date.getTimezoneOffset() * 60 * 1000,
+                t = date.getTime(),
+                d = new Date(),
+                tzOff2;
+
+            t += (1000 * 60 * 60 * 24) * amount;
+            d.setTime(t);
+
+            tzOff2 = d.getTimezoneOffset() * 60 * 1000;
+            if (tzOff != tzOff2) {
+                var diff = tzOff2 - tzOff;
+                t += diff;
+                d.setTime(t);
+            }
+
+            return d;
+        }
+    </script>
+} 

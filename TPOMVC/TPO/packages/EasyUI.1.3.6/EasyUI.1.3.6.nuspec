@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>EasyUI</id>
+    <version>1.3.6</version>
+    <title>jQuery EasyUI</title>
+    <authors>jeasyui.com</authors>
+    <owners>jeasyui.com</owners>
+    <licenseUrl>http://www.gnu.org/licenses/gpl.txt</licenseUrl>
+    <projectUrl>http://jeasyui.com/</projectUrl>
+    <iconUrl>http://jeasyui.com/favicon.ico</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>easyui is a collection of user-interface plugin based on jQuery.
+easyui provides essential functionality for building modern, interactive, javascript applications.
+using easyui you don't need to write many javascript code, you usually defines user-interface by writing some HTML markup.
+complete framework for HTML5 web page.
+easyui save your time and scales while developing your products.
+easyui is very easy but powerful.</description>
+    <summary>jQuery EasyUI framework helps you build your web pages easily.</summary>
+    <releaseNotes>Version 1.3.6
+* Bug
+ * treegrid: The 'getChecked' method can not return correct checked rows. fixed.
+ * tree: The checkbox does not display properly on async tree when 'onlyLeafCheck' property is true. fixed.
+* Improvement
+ * treegrid: All the selecting and checking methods are extended from datagrid component.
+ * linkbutton: The icon alignment is fully supported, possible values are: 'top','bottom','left','right'.
+ * linkbutton: Add 'size' property, possible values are: 'small','large'.
+ * linkbutton: Add 'onClick' event.
+ * menubutton: Add 'menuAlign' property that allows the user set top level menu alignment.
+ * combo: Add 'panelAlign' property, possible values are: 'left','right'.
+ * calendar: The 'formatter','styler' and 'validator' options are available to custom the calendar dates.
+ * calendar: Add 'onChange' event.
+ * panel: Add 'method','queryParams' and 'loader' options.
+ * panel: Add 'onLoadError' event.
+ * datagrid: Add 'onBeginEdit' event that fires when a row goes into edit mode.
+ * datagrid: Add 'onEndEdit' event that fires when finishing editing but before destroying editors.
+ * datagrid: Add 'sort' method and 'onBeforeSortColumn' event.
+ * datagrid: The 'combogrid' editor has been integrated into datagrid.
+ * datagrid: Add 'ctrlSelect' property that only allows multi-selection when ctrl+click is used.
+ * slider: Add 'converter' option that allows users determine how to convert a value to the slider position or the slider position to the value.
+ * searchbox: Add 'disabled' property.
+ * searchbox: Add 'disable','enable','clear','reset' methods.
+ * spinner: Add 'readonly' property, 'readonly' method and 'onChange' event.</releaseNotes>
+    <copyright>© 2010-2014 www.jeasyui.com</copyright>
+    <tags>jquery easyui</tags>
+    <dependencies>
+      <dependency id="jQuery" version="1.9.1" />
+    </dependencies>
+  </metadata>
+</package>

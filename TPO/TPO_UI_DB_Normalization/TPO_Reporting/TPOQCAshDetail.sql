@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[TPOQCAshDetail]
+(
+	[TPOQCID] INT NOT NULL PRIMARY KEY, 
+    [Core] FLOAT NULL, 
+    [Cap] NCHAR(10) NULL, 
+    [DateEntered] DATETIME NOT NULL, 
+    [EnteredBy] NVARCHAR(100) NOT NULL, 
+    [LastModified] DATETIME NOT NULL, 
+    [ModifiedBy] NVARCHAR(100) NOT NULL, 
+    CONSTRAINT [FK_TPOQCAshDetail_TPOQC] FOREIGN KEY ([TPOQCID]) REFERENCES [TPOQC]([ID])
+)

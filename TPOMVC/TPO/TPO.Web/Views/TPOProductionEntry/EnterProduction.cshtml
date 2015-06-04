@@ -1,0 +1,390 @@
+﻿@model TPO.Web.Models.ProductionEntryViewModel
+
+@if (Model.ProductionLineId > 0)
+{
+
+    <table style="width:960px">
+        <tr style="padding:0">
+            <td align="right">
+                <table border="1">
+                    <tr>
+                        <td>Background Colors:</td>
+                        <td style="background-color:green">QC Pass</td>
+                        <td style="background-color:yellow">QC On-Hold</td>
+                        <td style="background-color:red">QC Fail</td>
+                        <td>No QC Test</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table id="dgEntry" title="Production Entry" style="width:960px;height:350px"></table>
+            </td>
+        </tr>
+    </table>
+
+<div id="tbProdEntry" style="height:auto">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="createNewProdEntry()">Create New</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeProdEntry()">Delete</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="acceptProdEntryChanges()">Save Changes</a>
+</div>
+
+    <div id="dlgProdEntry" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save'" style="width:400px;height:200px;padding:10px">
+        <input id="isNew" type="hidden" />
+        <input id="lengthUoMText" type="hidden" />
+        <input id="weightUoMText" type="hidden" />
+        <table>
+            @if (Model.ProductionLineTypeCode == "CO")
+            {
+                <tr>
+                    <td colspan="2">
+                        <label>Master Roll Comments:</label>
+                        <input id="masterRollComments" class="easyui-textbox" data-options="multiline:true" style="width:300px;height:100px" readonly="readonly" />
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    <label>Current Lot:</label>
+                </td>
+                <td>
+                    <input id="lotList" class="easyui-combobox" style="width:150px" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Roll Length:</label>
+                </td>
+                <td>
+                    <input id="lengthVal" type="text" class="easyui-numberbox" data-options="min:0,precision:2" />
+                    <span id="lengthUoM"><input id="lengthList" class="easyui-combobox" style="width:50px" /></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Roll Weight:</label>
+                </td>
+                <td>
+                    <input id="weightVal" type="text" class="easyui-numberbox" data-options="min:0,precision:2" />
+                    <span id="weightUoM"><input id="weightList" class="easyui-combobox" style="width:50px" /></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Comments:</label>
+                </td>
+                <td>
+                    <input id="comments" type="text" class="easyui-textbox" data-options="multiline:true" style="width:300px;height:100px" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-success btn-shadow"
+                            onclick="saveProdEntry(); return false;">
+                        <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                    </button>
+                    <button class="btn btn-default btn-shadow"
+                            onclick="$('#dlgProdEntry').dialog('close');return false;">
+                        <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                    </button>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+<script type="text/javascript">
+
+    $('#dlgProdEntry').dialog({
+        title: 'Production Entry',
+        width: 450,
+        height: 300,
+        closed: true,
+        cache: false,
+        modal: true
+    });
+
+    $('#dgEntry').datagrid({
+        iconCls: 'icon-edit',
+        singleSelect: true,
+        toolbar: '#tbProdEntry',
+        method: 'get',
+        cache: false,
+        onDblClickRow: onDgEntryDblClickRow,
+        onClickRow: onDgEntryClickRow,
+        pagination: true,
+        pagesize: 10,
+        pagelist: [10, 20, 50],
+        columns: [[
+            { field: 'Id', title: 'Id', hidden: true },
+            { field: 'Code', title: 'Roll ID', width: 120, editor: 'text'},
+            { field: 'ProductionDateStr', title: 'Production Date' },
+            { field: 'ShiftCode', title: 'Shift' },
+            { field: 'WorkOrderCode', title: 'Work Order', width: 120 },
+            {
+                field: 'ProductCode', title: 'Product Code', width: 120,
+                editor: {
+                    type: 'combogrid',
+                    options: {
+                        idField: 'ProductCode',
+                        columns: [[
+                                  { field: 'Id', hiden: true },
+                                  { field: 'ProductCode', title: 'Product Code', width: 100 },
+                                  { field: 'ProductDesc', title: 'Description', width: 100 }
+                        ]],
+                        textField: 'ProductCode',
+                        method: 'get',
+                        url: '/ProductionEntry/GetAllProducts',
+                        required: true,
+                    }
+                }
+
+            },
+            {
+                field: 'Length', title: 'Length',
+                formatter: function (value, row, index) {
+                    return row.Length + ' ' + row.LengthUoM;
+                }
+            },
+            {
+                field: 'Weight', title: 'Width',
+                formatter: function (value, row, index) {
+                    return row.Weight + ' ' + row.WeightUoM;
+                }
+            },
+            { field: 'Comments', title: 'Comments', width: 200 },
+            { field: 'LastModified', hidden: true },
+            { field: 'ModifiedBy', hidden: true },
+            { field: 'Modified', hidden: true },
+            { field: 'LengthUoMID', hidden: true },
+            { field: 'WeightUoMID', hidden: true },
+        ]]
+    });
+
+    function onAcceptProdEntryChanges() {
+
+    }
+
+    function onDgEntryDblClickRow(rowIndex, rowData) {
+        $('#lotList').combobox({
+            valueField: 'RawMaterialReceivedId',
+            textField: 'LotNumber',
+            url: '../TPOProductionEntry/GetCurrentRawMaterials?productionLineId=@Model.ProductionLineId',
+            method: 'get',
+            panelHeight: 'auto',
+            onLoadSuccess: function () {
+                document.getElementById('isNew').value = 'false';
+                document.getElementById('lengthUoMText').value = rowData.LengthUoM;
+                document.getElementById('weightUoMText').value = rowData.WeightUoM;
+                document.getElementById('weightUoM').innerHTML = '<label>' + rowData.WeightUoM + '</label>';
+                document.getElementById('lengthUoM').innerHTML = '<label>' + rowData.LengthUoM + '</label>';
+                $('#dlgProdEntry').dialog('open');
+            }
+        });
+    }
+
+    function createNewProdEntry() {
+        $('#lotList').combobox({
+            valueField: 'Id',
+            textField: 'LotNumber',
+            url: '/TPOProductionEntry/GetCurrentRawMaterials?productionLineId=@Model.ProductionLineId',
+            method: 'get',
+            panelHeight: 'auto',
+            onLoadSuccess: function () {
+                $('#weightList').combobox({
+                    valueField: 'Id',
+                    textField: 'Code',
+                    method: 'get',
+                    url: '/ScrimType/GetAllWeightUoMResult',
+                    panelHeight: 'auto',
+                });
+                $('#lengthList').combobox({
+                    valueField: 'Id',
+                    textField: 'Code',
+                    method: 'get',
+                    url: '/ScrimType/GetAllLengthUoMResult',
+                    panelHeight: 'auto',
+                });
+                $('#weightList').combobox('setValue', 'kg');
+                $('#lengthList').combobox('setValue', 'ft');
+                document.getElementById('isNew').value = 'true';
+                $('#dlgProdEntry').dialog('open');
+            }
+        });
+    }
+    function reloadGrid() {
+        $('#dgEntry').datagrid('load');
+    }
+
+    function reload() {
+        $('#dgEntry').datagrid('reload');
+    }
+
+    function saveProdEntry() {
+        var prodLineId = $("#ProductionLineId").val();
+        var workOrderId = $("#WorkOrderId").val();
+        var shiftId = $("#ShiftId").val();
+        var prodDate = $("#ProductionDate").val();
+        var isNew = document.getElementById('isNew').value;
+        var masterRollId = 0;
+        @if(Model.ProductionLineTypeCode == "CO")
+        {
+            <text>masterRollId = $("MasterRollId").val();</text>
+        }
+        var lengthUoMCode;
+        var weightUoMCode;
+        var lotName = '';
+        var modified = 'true';
+        if (isNew == 'false') {
+            lengthUoMCode = document.getElementById('lengthUoMText').value;
+            weightUoMCode = document.getElementById('weightUoMText').value;
+        }
+        else
+        {
+            lengthUoMCode = $('#lengthList').combobox('getText');
+            weightUoMCode = $('#weightList').combobox('getText');
+            lotName = $('#lotList').combobox('getText');
+        }
+        var length = $('#lengthVal').numberbox('getValue');
+        var weight = $('#weightVal').numberbox('getValue');
+        var comment = $('#comments').val();
+        var rollId = 0;
+        var data = {
+            LineId: prodLineId,
+            ProductId: 0,
+            WorkOrderId: workOrderId,
+            ShiftId: shiftId,
+            MasterRollId: masterRollId,
+            LengthUoMId: 0,
+            WeightUoMId: 0,
+            TPOBatchId: 0,
+            Code: '',
+            ProductionDate: prodDate,
+            Length: length,
+            Weight: weight,
+            BatchNumber: 0,
+            Comments: comment,
+            Modified: 'true',
+            LengthUoM: lengthUoMCode,
+            WeightUoM: weightUoMCode,
+            LotNumber: lotName,
+        };
+        var options = {
+            url: '/TPOProductionEntry/SaveProdEntry',
+            type: 'post',
+            data: { prodEntry: JSON.stringify(data) }
+        };
+        $.ajax(options)
+            .success(function (data, textStatus, jqXHR) {
+                displayMessage(data.ActionType, data.ActionMessage);
+                $('#dlgProdEntry').dialog('close');
+                reload();
+            })
+            .error(function (jqXHR, textStatus, errorThrown) {
+                displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                $('#dlgProdEntry').dialog('close');
+                reload();
+            })
+    }
+    var editDgEntryIndex = undefined;
+
+    function endDgEntryEditing() {
+        if (editDgEntryIndex == undefined) { return true; }
+        if ($('#dgEntry').datagrid('validateRow', editDgEntryIndex)) {
+            $('#dgEntry').datagrid('endEdit', editDgEntryIndex);
+            editDgEntryIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function onDgEntryClickRow(index) {
+        if (editDgEntryIndex != index) {
+            if (endDgEntryEditing()) {
+                $('#dgEntry').datagrid('selectRow', index)
+                    .datagrid('beginEdit', index);
+                editDgEntryIndex = index;
+            } else {
+                $('#dgEntry').datagrid('selectRow', editDgEntryIndex);
+            }
+        }
+    }
+
+    function acceptProdEntryChanges()
+    {
+        if (editIndex == undefined) { return }
+
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPOProductionEntry/UpdateProdEntry',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dgEntry').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndex = undefined;
+    }
+    function removeProdEntry()
+    {
+        if (editIndex == undefined) { return }
+
+        var row = $('#dg').datagrid('getSelected');
+        if (row) {
+            $.ajax({
+                url: '/TPOProductionEntry/RemoveProductionEntry',
+                type: 'POST',
+                cache: false,
+                data: { row: JSON.stringify(row) },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#dgEntry').datagrid('reload');
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });
+        }
+        editIndex = undefined;
+    }
+
+    function loadEnterProduction()
+    {
+        console.log('in loadEnterProduction');
+        $('#dgEntry').datagrid({
+            url: '/TPOProductionEntry/GetAllProductRolls?lineId=@Model.ProductionLineId'
+        });
+        $('#dgEntry').datagrid('load');
+        @if(Model.ProductionLineTypeCode == "IM")
+        {
+            <text>$.ajax({
+                url: '/TPOProductionEntry/GetMasterRollComments?masterRollId=@Model.MasterRollId',
+                type: 'GET',
+                success: function (data, textStatus, jqXHR) {
+                    if (data.ActionStatus == "ok") {
+                        $('#masterRollComments').text('setValue', data);
+                    }
+                    displayMessage(data.ActionType, data.ActionMessage);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                }
+            });</text>
+        }
+    }
+</script>
+}

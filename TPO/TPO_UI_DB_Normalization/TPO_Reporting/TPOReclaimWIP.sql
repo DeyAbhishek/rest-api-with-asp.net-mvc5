@@ -1,0 +1,12 @@
+﻿CREATE TABLE [dbo].[TPOReclaimWIP]
+(
+	[ID] INT NOT NULL PRIMARY KEY IDENTITY, 
+	[PlantID] INT NOT NULL,
+    [Name] NVARCHAR(20) NOT NULL, 
+    [WIP] FLOAT NOT NULL, 
+    [DateEntered] DATETIME NOT NULL, 
+    [EnteredBy] NVARCHAR(100) NOT NULL, 
+    [LastModified] DATETIME NOT NULL, 
+    [ModifiedBy] NVARCHAR(100) NOT NULL, 
+    CONSTRAINT [FK_TPOReclaimWIP_Plant] FOREIGN KEY ([PlantID]) REFERENCES [Plant]([ID])
+)

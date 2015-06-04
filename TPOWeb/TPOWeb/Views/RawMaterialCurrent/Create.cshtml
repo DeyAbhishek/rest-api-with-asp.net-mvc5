@@ -1,0 +1,127 @@
+﻿@model TPOWeb.Models.CurrentRawMaterialViewModel
+
+@{
+    ViewBag.Title = "Create";
+    
+}
+
+<h3>Set Current Raw Material</h3>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.Hidden("PlantID", String.Empty)
+        @Html.HiddenFor(model => model.LastModified)
+        @Html.HiddenFor(model => model.ModifiedBy)
+        @Html.HiddenFor(model => model.DateEntered)
+        @Html.HiddenFor(model => model.EnteredBy)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LineId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("LineId", "Select One")
+                @Html.ValidationMessageFor(model => model.LineId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RawMaterialReceivedCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.RawMaterialReceivedCode, (SelectList)ViewBag.RawMaterialRecievedCode, "Select One", new { @id = "ddlRawMaterialCode" })
+                
+                @Html.ValidationMessageFor(model => model.RawMaterialReceivedCode)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Lot", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.RawMaterialReceivedId, Enumerable.Empty<SelectListItem>(), new { @id = "ddlLots" })
+                @Html.ValidationMessageFor(model => model.RawMaterialReceivedId)
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.DateEntered, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateEntered)
+                @Html.ValidationMessageFor(model => model.DateEntered)
+            </div>
+        </div>*@
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.EnteredBy, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EnteredBy)
+                @Html.ValidationMessageFor(model => model.EnteredBy)
+            </div>
+        </div>*@
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.LastModified, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastModified)
+                @Html.ValidationMessageFor(model => model.LastModified)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModifiedBy, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.ModifiedBy)
+                @Html.ValidationMessageFor(model => model.ModifiedBy)
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @*<input type="submit" value="Create" class="btn btn-default" />*@
+                <button class="btn btn-primary btn-shadow"
+                        onclick="$(this).parents('form:first').submit(); return false;">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Create
+                </button>
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Index","RawMaterialCurrent",new{lineId=Model.LineId})';return false;">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("Cancel", "Index")
+</div>*@
+
+<script>
+    $(function () {
+        $('select#ddlRawMaterialCode').change(function () {
+            var rawMaterialId = $(this).val();
+
+            $.ajax({
+                url: 'GetLotsForRawMaterial',
+                type: 'POST',
+                data: JSON.stringify({ rawMaterialId: rawMaterialId }),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+
+                    $('select#ddlLots').empty();
+
+                    $('select#ddlLots').append('<option value="0">Select One</option>');
+
+                    $.each(data, function (key, lot) {
+                        
+                        $('select#ddlLots').append(
+                                '<option value="' + lot.ID + '">'
+                                + lot.LotID +
+                                '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>

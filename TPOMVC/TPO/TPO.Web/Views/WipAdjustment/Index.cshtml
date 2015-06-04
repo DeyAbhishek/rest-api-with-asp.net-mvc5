@@ -1,0 +1,127 @@
+﻿@model TPO.Web.Models.TPOReclaimWIPModel
+@{
+    ViewBag.Title = "WIP Adjustment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true)
+            <h2>WIP Adjustment</h2>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.ReclaimType, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.ReclaimType, Model.ReclaimTypeList, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Wip, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                   <span id="currentWIPLevel"></span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.AdjustmentType, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.AdjustmentType, Model.AdjustementTypeList, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+               <label for="Wip" class = "control-label col-md-2">WIP Adjustment</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Wip, new { @class = "form-control" })
+                </div>
+            </div>
+            <br /><br />
+            <div class="col-md-12">
+                @*<input type="submit" value="Save" name="Action" class="btn btn-default" />
+                    <input type="submit" value="Cancel" name="Action" class="btn btn-default cancel" formnovalidate="formnovalidate" />*@
+                <button class="btn btn-success btn-shadow" id="save">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Save
+                </button>
+                <button class="btn btn-default btn-shadow"
+                        onclick="window.location.href = '@Url.Action("Index", "Home")';return false;">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>
+
+            </div>
+    </div>
+}
+
+        @section scripts
+{
+            <script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#ReclaimType").val("REPEL");
+        resetWipForm($("#ReclaimType").val());
+
+        $("#ReclaimType").change(function () {
+            resetWipForm(this.value);
+            return false;
+        });
+
+        $("#save").click(function () {
+            Save();
+            $("#ReclaimType").val("REPEL");
+            resetWipForm($("#ReclaimType").val());
+            return false;
+        });
+    });
+
+    function resetWipForm(rt) {
+        var options = {
+            url: '@Url.Action("FetchWIP", "WipAdjustment")',
+                        data: { reclaimType: rt },
+                        type: 'get'
+                    };
+                    $.ajax(options).done(function (data) {
+                        if ( data.Wip == undefined )
+                            data.Wip = 0;
+                        $("#currentWIPLevel").text(data.Wip.toString());
+                    });
+                    $("#AdjustmentType").val("SA");
+                    $("#Wip").val("");
+                }
+
+                function Save() {
+                    var options = {
+                        url: '/WipAdjustment/Save',
+                        type: 'post',
+                        data: $("form").serialize()
+                    };
+                    $.ajax(options)
+                        .success(function (data, textStatus, jqXHR) {
+                            if (data.ActionStatus == "ok") {
+                                $('#dg').datagrid('reload');
+                                $("#ReclaimType").val("REPEL");
+                                resetWipForm($("#ReclaimType").val());
+                            }
+                            displayMessage(data.ActionType, data.ActionMessage);
+                        })
+                        .error(function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        });
+
+                }
+
+                function ShowSuccess() {
+                    $("#alertDIV").css("display", "block").addClass('alert-success');
+                    $("#alertP").css("display", "block").text("The item was saved.");
+                    $('#dg').datagrid('reload');
+                }
+                function ShowError(errMessage) {
+                    $("#alertDIV").css("display", "block").addClass('alert-danger');
+                    $("#alertP").css("display", "block").text("The item could not be saved. Error:" + errMessage);
+                    $('#dg').datagrid('reload');
+                }
+            </script>
+        }

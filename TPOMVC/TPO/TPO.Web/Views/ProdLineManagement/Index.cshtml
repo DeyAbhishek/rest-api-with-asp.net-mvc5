@@ -1,0 +1,376 @@
+﻿
+
+@{
+    ViewBag.Title = "Production Line Management";
+}
+
+<h2>Production Line Management</h2>
+
+<input id="ddlLineTypes" class="easyui-combogrid" style="width:150px;" data-options="
+   idField: 'Id',
+   textField: 'ProdLineTypeDesc',
+   url: '/ProdLineManagement/GetProductionLineTypesResult',
+   loadMsg: 'Loading...',
+   method: 'get',
+   panelWidth: 200,
+   columns: [[
+   {field:'ProdLineTypeCode',title:'Code', width:50},
+   {field:'ProdLineTypeDesc',title:'Description', width:150}
+   ]],
+   onSelect: lineTypeSelected,
+   fitColumns: true
+   " />
+&nbsp;
+&nbsp;
+<button id="btnRollConfig" class="btn btn-primary btn-shadow" style="display:none;">
+    Configure Line Type Rolls
+</button>
+<br/>
+<br/>
+<div id="divInjectionMolding">
+    <table id="dg" class="easyui-datagrid" title="Production Lines" style="width: 700px;"></table>
+
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick=" insertRow() ">Create New</a>
+        @*<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick=" removeit() ">Delete</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick=" acceptInjectionMolding() ">Save Changes</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick=" reject() ">Undo</a>*@
+    </div>
+
+
+</div>
+
+
+
+
+<script type="text/javascript">
+    function createGrid() {
+        var lineRolls =
+            [
+                { Value: 'C', Text: 'Contractor' },
+                { Value: 'M', Text: 'Master' }
+            ];
+        var rollsProcessed =
+            [
+                { Value: 'C', Text: 'Scrap' },
+                { Value: 'M', Text: 'Master' },
+            ];
+        $("#dg").datagrid(
+            {
+                title: 'Production Lines',
+                toolbar: '#tb',
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                idField: 'Id',
+                url: '/ProdLineManagement/GridByType',
+                method: 'get',
+                columns: [[
+                    { field: 'Id', hidden: true },
+                    { field: 'LineDescCode', title: 'Line ID', editor: 'text', width: 75, required: true },
+                    { field: 'LineDesc', editor: 'text', title: 'Line Description', width: 200, required: true },
+                    { field: 'LabelID', editor: 'text', title: 'Label ID Code', width: 100, required: true },
+                    {
+                        field: 'TPOLineRolls', title: 'TPO Line Rolls', width: 130, hidden: true,
+                        editor:
+                            {
+                                type: 'combobox',
+                                options:
+                                    {
+                                        valueField: 'Value',
+                                        textField: 'Text',
+                                        data: lineRolls
+                                    }
+                            }
+                    },
+                    {
+                        field: 'Adhesive', title: 'Adhesive', width: 130, hidden: true,
+                        editor:
+                            {
+                                type: 'combobox',
+                                options:
+                                    {
+                                        valueField: 'Code',
+                                        textField: 'Code',
+                                        method: 'get',
+                                        url: '/RawMaterial/GetAllRawMaterialResult/'
+                                    }
+                            }
+                    },
+                    {
+                        field: 'Compatibilizer', title: 'Compatibilizer', width: 130, hidden: true,
+                        editor:
+                            {
+                                type: 'combobox',
+                                options:
+                                    {
+                                        valueField: 'Code',
+                                        textField: 'Code',
+                                        method: 'get',
+                                        url: '/RawMaterial/GetAllRawMaterialResult/'
+                                    }
+                            }
+                    },
+                    {
+                        field: 'RollsProcessed', title: 'Rolls Processed', width: 130, hidden: true,
+                        editor:
+                            {
+                                type: 'combobox',
+                                options:
+                                    {
+                                        valueField: 'Value',
+                                        textField: 'Text',
+                                        data: rollsProcessed
+                                    }
+                            }
+                    },
+                    {
+                        field: 'Action', width: 75, align: 'center',
+                        formatter: function (value, row, index) {
+                            if (row.editing) {
+                                var s = '<a href="#" onclick="saveRow(this)">Save</a> ';
+                                var c = '<a href="#" onclick="cancelRow(this)">Cancel</a>';
+                                return s + c;
+                            } else {
+                                var e = '<a href="#" onclick="editRow(this)">Edit</a> ';
+                                //return e;
+                                var d = '<a href="#" onclick="deleteRow(this)">Delete</a>';
+                                return e + d;
+                            }
+                        }
+                    }
+                ]],
+                onBeforeEdit: function (index, row) {
+                    row.editing = true;
+                    updateActions(index);
+                },
+                onAfterEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions(index);
+                },
+                onCancelEdit: function (index, row) {
+                    row.editing = false;
+                    updateActions(index);
+                }
+            });
+    }
+    function updateActions(index) {
+        $('#dg').datagrid('updateRow', {
+            index: index,
+            row: {}
+        });
+    }
+    function handleGridColumns() {
+        var grid = $("#ddlLineTypes").combogrid('grid');
+        var row = grid.datagrid('getSelected');
+        if (row) {
+            switch (row.ProdLineTypeCode) {
+                case "TPO":
+                    {
+                        showColumn('TPOLineRolls');
+                        hideColumn('Adhesive');
+                        hideColumn('Compatibilizer');
+                        hideColumn('RollsProcessed');
+                    } break;
+                case "RW":
+                    {
+                        showColumn('RollsProcessed');
+                        hideColumn('TPOLineRolls');
+                        hideColumn('Adhesive');
+                        hideColumn('Compatibilizer');
+                    } break;
+                case "RC":
+                    {
+                        showColumn('Compatibilizer');
+                        hideColumn('TPOLineRolls');
+                        hideColumn('Adhesive');
+                        hideColumn('RollsProcessed');
+                    } break;
+                case "CO":
+                    {
+                        showColumn('Adhesive');
+                        hideColumn('TPOLineRolls');
+                        hideColumn('Compatibilizer');
+                        hideColumn('RollsProcessed');
+                    } break;
+                default:
+                    {
+                        hideColumn('Adhesive');
+                        hideColumn('TPOLineRolls');
+                        hideColumn('Compatibilizer');
+                        hideColumn('RollsProcessed');
+                    }
+            }
+        }
+    }
+    function handleConfigButton() {
+        var typeID = $("#ddlLineTypes").combogrid('getValue');
+        if (typeID > 0) {
+            $("#btnRollConfig").show();
+            return;
+        }
+        $("#btnRollConfig").hide();
+    }
+    function showColumn(fieldName) {
+        $("#dg").datagrid('showColumn', fieldName);
+    }
+    function hideColumn(fieldName) {
+        $("#dg").datagrid('hideColumn', fieldName);
+    }
+    function lineTypeSelected(record) {
+        loadGrid();
+        handleConfigButton();
+        handleGridColumns();
+    }
+    function loadGrid() {
+        var val = $("#ddlLineTypes").combogrid('getValue');
+        $("#dg").datagrid(
+            {
+                queryParams:
+                    {
+                        typeID: val
+                    }
+            });
+    }
+    function getRowIndex(target) {
+        var tr = $(target).closest('tr.datagrid-row');
+        return parseInt(tr.attr('datagrid-row-index'));
+    }
+    function insertRow() {
+        var row = $("#dg").datagrid('getSelected');
+        var index = 0;
+        if (row) {
+            index = $("#dg").datagrid('getRowIndex', row);
+        }
+        $("#dg").datagrid('insertRow',
+            {
+                index: index,
+                row:
+                {
+                    Id: 0,
+                    LineDescCode: '',
+                    LineDesc: '',
+                    LineTypeID: 0,
+                    LabelID: '',
+                    Adhesive: '',
+                    Compatiblizer: '',
+                    RollsProcessed: '',
+                    TPOLineRolls: ''
+                }
+            });
+        $("#dg").datagrid('selectRow', index);
+        $("#dg").datagrid('beginEdit', index);
+    }
+    function editRow(target) {
+        $("#dg").datagrid('beginEdit', getRowIndex(target));
+    }
+    function cancelRow(target) {
+        $("#dg").datagrid('cancelEdit', getRowIndex(target));
+        $("#dg").datagrid('rejectChanges');
+    }
+    function validateRow(target) {
+        return $("#dg").datagrid('validateRow', getRowIndex(target));
+    }
+    function endEditing(target) {
+        $("#dg").datagrid('endEdit', getRowIndex(target));
+    }
+    function saveRow(target) {
+        if (validateRow(target)) {
+            var index = getRowIndex(target);
+            endEditing(target);
+            var row = $('#dg').datagrid('getRows')[index];
+            var typeID = $("#ddlLineTypes").combogrid('getValue');
+
+            if (row) {
+                var line =
+                {
+                    "Id": row.Id,
+                    "LineDescCode": row.LineDescCode,
+                    "LineDesc": row.LineDesc,
+                    "LineTypeID": typeID,
+                    "LabelID": row.LabelID,
+                    "Adhesive": row.Adhesive,
+                    "RollsProcessed": row.RollsProcessed,
+                    "Compatiblizer": row.Compatiblizer,
+                    "TPOLineRolls": row.TPOLineRolls
+                };
+
+                $("#dg").datagrid('loading');
+                $.ajax({
+                    url: '/ProdLineManagement/UpdateProdLineResult/',
+                    type: 'POST',
+                    data: line,
+                    async: false,
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.ResponseMessage.ActionStatus == "ok") {
+                            $("#dg").datagrid('updateRow', {
+                                index: index,
+                                row: {
+                                    Id: data.Id
+                                }
+                            });
+                        }
+                        displayMessage(data.ResponseMessage.ActionType, data.ResponseMessage.ActionMessage);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        $("#dg").datagrid('loaded');
+                    }
+                });
+
+            }
+        }
+    }
+    function deleteRow(target)
+    {
+        $.messager.confirm('Confirm', 'Delete this line?', function (r) {
+            if (r) {
+                var index = getRowIndex(target);
+                var row = $('#dg').datagrid('getRows')[index];
+                if (row) {
+                    var id = row.Id;
+                    $("#dg").datagrid('loading');
+                    $.ajax({
+                        url: '/ProdLineManagement/DeleteLine/' + id,
+                        type: 'POST',
+                        async: false,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.ActionStatus == "ok") {
+                                $("#dg").datagrid('deleteRow', index);
+                            }
+                            displayMessage(data.ActionType, data.ActionMessage);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            displayMessage('@TPO.Common.Resources.General.ResponseTypeError', 'Error: ' + errorThrown + ' Status: ' + jqXHR.status);
+                        },
+                        complete: function (jqXHR, textStatus) {
+                            $("#dg").datagrid('loaded');
+
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        createGrid();
+        handleGridColumns();
+        handleConfigButton();
+        var typeID = $("#ddlLineTypes").combogrid('getValue');
+        if (typeID <= 0)
+        {
+            $("#ddlLineTypes").combogrid('setValue', 'Select Line Type:');
+        }
+        $("#btnRollConfig").click(function () {
+            var val = $("#ddlLineTypes").combogrid('getValue');
+            console.log("val = " + val);
+            window.location.href = "/ProdLineManagement/ConfigLineRoll/?lineTypeId=" + val;
+        });
+    });
+
+</script>
+
+

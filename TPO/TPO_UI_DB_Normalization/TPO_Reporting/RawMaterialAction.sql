@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[RawMaterialAction]
+(
+	[ID] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [PlantID] INT NOT NULL, 
+    [RawMaterialID] INT NOT NULL, 
+    [TypeID] INT NOT NULL, 
+	[ReasonID] INT NULL,
+    [LineID] INT NOT NULL, 
+    [WorkOrderID] INT NOT NULL, 
+    [ShiftID] INT NOT NULL, 
+    [UserID] INT NOT NULL, 
+    [LotID] INT NULL, 
+    [ProductionDate] DATE NOT NULL, 
+    [Quantity] FLOAT NOT NULL, 
+    [DateEntered] DATETIME NOT NULL,
+	[EnteredBy] NVARCHAR(100) NOT NULL,
+	[LastModified] DATETIME NOT NULL,
+	[ModifiedBy] NVARCHAR(100) NOT NULL,
+    CONSTRAINT [FK_RawMaterialAction_Plant] FOREIGN KEY ([PlantID]) REFERENCES [Plant]([ID]),
+	CONSTRAINT [FK_RawMaterialAction_RawMaterialActionType] FOREIGN KEY ([TypeID]) REFERENCES [RawMaterialActionType]([ID]),
+	CONSTRAINT [FK_RawMaterialAction_RawMaterialActionReason] FOREIGN KEY ([ReasonID]) REFERENCES [RawMaterialActionReason]([ID]),
+	CONSTRAINT [FK_RawMaterialAction_WorkOrder] FOREIGN KEY ([WorkOrderID]) REFERENCES [WorkOrder]([ID]),
+	CONSTRAINT [FK_RawMaterialAction_ProductionShift] FOREIGN KEY ([ShiftID]) REFERENCES [ProductionShift]([ID]),
+	CONSTRAINT [FK_RawMaterialAction_User] FOREIGN KEY ([UserID]) REFERENCES [User]([ID])
+)
